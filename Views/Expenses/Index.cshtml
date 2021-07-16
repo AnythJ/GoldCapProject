@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Expense>
+
+@{
+    ViewData["Title"] = "List of Expenses";
+}
+
+<h1 class="text-center">List of Expenses</h1>
+
+
+<div id="view-all">
+    @await Html.PartialAsync("_ViewAll", Model)
+</div>

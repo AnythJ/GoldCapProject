@@ -13,21 +13,21 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control"/>
+                <input asp-for="Amount" class="form-control" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Category" class="control-label"></label>
-                        <input asp-for="Category" class="form-control" />
+                        <select style="height:38px;" asp-for="Category" asp-items="Html.GetEnumSelectList<Ctg>()"></select>
                         <span asp-validation-for="Category" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Date" class="control-label"></label>
-                        <input asp-for="Date" class="form-control"/>
+                        <input id="dateinput" asp-for="Date" style="height:38px;" class="form-control" max="@DateTime.Now" min="@DateTime.Now.AddYears(-2)" />
                         <span asp-validation-for="Date" class="text-danger"></span>
                     </div>
                 </div>
@@ -44,6 +44,14 @@
         </form>
     </div>
 </div>
+
+
+@if (Model.Id == 0)
+{
+<script>
+        $("#dateinput").val("@DateTime.Now.ToString("dd/M/yyyy HH:mm:ss:fff")"); //Needs change
+</script>
+}
 
 
 @section Scripts {

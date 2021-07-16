@@ -1,0 +1,119 @@
+﻿body {
+    color: white;
+    background-color: #6C757D;
+}
+.modal-backdrop {
+    z-index: -1;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.modal-body, .modal-header, .modal-footer {
+    background-color: #212529;
+    color: white;
+}
+
+input[type=text], select, textarea {
+    background-color: #6C757D;
+    border: 1px solid #6C757D;
+    border-radius: 4px;
+    color: white;
+}
+
+.leftside {
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+textarea {
+    color: white;
+}
+
+.modal-title {
+    padding-left: 20px;
+}
+
+span {
+    color: lightgray;
+    font-size: 10px;
+}
+
+select {
+    width: 95%;
+    height: 28px;
+}
+
+#dateinput {
+    width: 95%;
+    height: 28px;
+    background-color: #6C757D;
+    border: 1px solid #6C757D;
+    border-radius: 4px;
+    color: white;
+}
+
+.btn-close {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
+
+/*xxx*/
+
+.table {
+    color: white;
+    height: 100%;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #5f666d;
+    color: white;
+}
+
+.tableContainer {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    border-left: 2px solid white;
+    border-right: 2px solid white;
+    border-top: 6px solid #212529;
+    border-bottom: 6px solid #212529;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+thead.sticky-top {
+    background-color: #474d52;
+}
+
+.btn-info {
+    background-color: #17A2B8;
+    color: white;
+    border-color: #17A2B8;
+}
+
+    .btn-info:hover, .btn-info:focus {
+        background-color: #138496;
+        border-color: #138496;
+        color: white;
+    }
+
+.table td.description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 30ch;
+}
+
+
+#button-column {
+    max-width: 140px;
+}

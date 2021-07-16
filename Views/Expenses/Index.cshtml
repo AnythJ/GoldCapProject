@@ -4,9 +4,12 @@
     ViewData["Title"] = "List of Expenses";
 }
 
-<h1 class="text-center">List of Expenses</h1>
+<h1 class="text-center" style="font-size:20px;">List of Expenses</h1>
 
+@section Styles {
+    <link href="~/css/List.css" rel="stylesheet" />
+}
 
-<div id="view-all">
+<div id="view-all" class="table-responsive tableContainer">
     @await Html.PartialAsync("_ViewAll", Model)
 </div>

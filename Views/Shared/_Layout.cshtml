@@ -5,14 +5,46 @@
     <meta name="viewport" content="width=device-width" />
     <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/site.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200&display=swap" rel="stylesheet">
+
+    @RenderSection("Styles", required: false)
+    <link href="~/css/Layout.css" rel="stylesheet" />
+
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="column side">
+        <div class="logo-container">
+            <a class="nav-link" id="goldcap-logo" asp-controller="home" asp-action="index">GoldCap</a>
+        </div>
+        <div>
+            <ul>
+                <li>
+                    <a asp-controller="home" asp-action="index">Dashboard</a>
+                </li>
+                <li>
+                    <a asp-controller="expenses" asp-action="index">Expenses</a>
+                </li>
+                <li>
+                    <a asp-controller="home" asp-action="index">Categories</a>
+                </li>
+                <li style="border-bottom-style:solid;border-width:thin;border-color:white">
+                    <a asp-controller="home" asp-action="index">About</a>
+                </li>
+            </ul>
+        </div>
     </div>
+
+
+
+
+    <div class="column main">
+            @RenderBody()
+    </div>
+
+
 
     <div class="modal" tabindex="-1" role="dialog" id="form-modal">
         <div class="modal-dialog">
@@ -29,7 +61,9 @@
     </div>
 
     <footer>
+
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/jss/site.js" asp-append-version="true"></script>

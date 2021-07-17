@@ -5,6 +5,12 @@
     Layout = null;
 }
 
+<style>
+    span {
+        color: white;
+        font-size: 15px;
+    }
+</style>
 
 <div class="row">
     <div class="col-md-12">
@@ -13,29 +19,29 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control" />
-                <span asp-validation-for="Amount" class="text-danger"></span>
+                <input id="amountinput" asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount"></span>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Category" class="control-label"></label>
                         <select style="height:38px;" asp-for="Category" asp-items="Html.GetEnumSelectList<Ctg>()"></select>
-                        <span asp-validation-for="Category" class="text-danger"></span>
+                        <span asp-validation-for="Category"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Date" class="control-label"></label>
-                        <input id="dateinput" asp-for="Date" style="height:38px;" class="form-control" max="@DateTime.Now" min="@DateTime.Now.AddYears(-2)" />
-                        <span asp-validation-for="Date" class="text-danger"></span>
+                        <input id="dateinput" asp-for="Date" style="height:38px;" class="form-control"/>
+                        <span asp-validation-for="Date"></span>
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <span asp-validation-for="Description"></span>
             </div>
 
             <div class="form-group">
@@ -49,7 +55,9 @@
 @if (Model.Id == 0)
 {
 <script>
-        $("#dateinput").val("@DateTime.Now.ToString("dd/M/yyyy HH:mm:ss:fff")"); //Needs change
+    // Date format: 17.07.2021 10:50:20
+    @*$("#dateinput").val(@DateTime.Now.ToString("dd/MM/yyyy HH:mm");*@
+    $("#amountinput").val("");
 </script>
 }
 

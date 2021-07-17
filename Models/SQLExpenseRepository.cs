@@ -13,6 +13,8 @@ namespace GoldCap.Models
         {
             this.context = context;
         }
+
+        // EXPENSES
         public Expense GetExpense(int Id)
         {
             return context.Expenses.Find(Id);
@@ -49,6 +51,38 @@ namespace GoldCap.Models
             context.SaveChanges();
 
             return expenseChanges;
+        }
+
+
+        // CATEGORIES
+        public Category GetCategory(int Id)
+        {
+            return context.Categories.Find(Id);
+        }
+
+        public IEnumerable<Category> GetAllCategories()
+        {
+            return context.Categories;
+        }
+
+        public Category AddCategory(Category category)
+        {
+            context.Categories.Add(category);
+            context.SaveChanges();
+
+            return category;
+        }
+
+        public Category DeleteCategory(int id)
+        {
+            var category = context.Categories.Find(id);
+            if(category != null)
+            {
+                context.Categories.Remove(category);
+                context.SaveChanges();
+            }
+
+            return category;
         }
     }
 }

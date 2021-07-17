@@ -7,10 +7,18 @@ namespace GoldCap.Models
 {
     public interface IExpenseRepository
     {
+        // Expense
         Expense GetExpense(int Id);
         IEnumerable<Expense> GetAllExpenses();
         Expense Add(Expense expense);
         Expense Update(Expense expenseChanges);
         Expense Delete(int id);
+
+        // Category
+
+        Category GetCategory(int Id);
+        IEnumerable<Category> GetAllCategories();
+        Category AddCategory(Category category);
+        Category DeleteCategory(int id);
     }
 }

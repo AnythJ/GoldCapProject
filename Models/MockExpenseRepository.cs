@@ -53,5 +53,25 @@ namespace GoldCap.Models
             }
             return expense;
         }
+
+        public Category GetCategory(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Category> GetAllCategories()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category AddCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category DeleteCategory(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

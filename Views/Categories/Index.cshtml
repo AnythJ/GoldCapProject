@@ -17,8 +17,8 @@
                     @Html.DisplayNameFor(model => model.Category.Name)
                 </th>
                 <th>
-                    <form id="createform" asp-action="Create" asp-route-id="@Model.Category.CategoryId" style="text-align:right;">
-                        <input type="hidden" asp-for="Category.CategoryId"/>
+                    <form id="createform" asp-action="Create" asp-route-id="@Model.Category.Id" style="text-align:right;">
+                        <input type="hidden" asp-for="Category.Id" />
                         <span asp-validation-for="Category.Name" style="margin-right:5px;font-size:12px;"></span>
                         <input class="category" asp-for="Category.Name" />
                         <input type="submit" value="Add new" class="btn btn-success btn-sm" />
@@ -34,7 +34,7 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td align="right">
-                        <a class="btn btn-danger btn-sm" asp-controller="Categories" asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
+                        <a class="btn btn-danger btn-sm" asp-controller="Categories" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     </td>
                 </tr>
             }

@@ -1,5 +1,7 @@
 ﻿using GoldCap.Models;
+using GoldCap.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +21,6 @@ namespace GoldCap.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Expenses = _expenseRepository;
             var expenses = _expenseRepository.GetAllExpenses();
 
             return View(expenses);
@@ -31,6 +32,9 @@ namespace GoldCap.Controllers
         [NoDirectAccess]
         public IActionResult CreateOrEdit(int id = 0)
         {
+            List<SelectList> ConvertedList = new List<SelectList>();
+            ViewBag.CategoryList = _expenseRepository.GetAllCategories();
+
             if (id == 0)
                 return View(new Expense());
             else

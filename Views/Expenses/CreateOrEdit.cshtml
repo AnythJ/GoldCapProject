@@ -26,14 +26,14 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Category" class="control-label"></label>
-                        <select style="height:38px;" asp-for="Category" asp-items="Html.GetEnumSelectList<Ctg>()"></select>
+                        <select asp-for="Category" style="height:38px;" asp-items="@(new SelectList(ViewBag.CategoryList,"Name","Name"))"></select>
                         <span asp-validation-for="Category"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Date" class="control-label"></label>
-                        <input id="dateinput" asp-for="Date" style="height:38px;" class="form-control"/>
+                        <input id="dateinput" asp-for="Date" style="height:38px;" class="form-control" />
                         <span asp-validation-for="Date"></span>
                     </div>
                 </div>
@@ -54,11 +54,11 @@
 
 @if (Model.Id == 0)
 {
-<script>
+    <script>
     // Date format: 17.07.2021 10:50:20
     @*$("#dateinput").val(@DateTime.Now.ToString("dd/MM/yyyy HH:mm");*@
     $("#amountinput").val("");
-</script>
+    </script>
 }
 
 

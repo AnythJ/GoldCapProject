@@ -38,6 +38,7 @@ table {
     border-spacing: 0;
     margin: 0;
     padding: 0;
+    min-width: 400px;
 }
 thead.sticky-top {
     background-color: #474d52;

@@ -31,7 +31,7 @@ namespace GoldCap.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _expenseRepository.AddCategory(category);
 
@@ -46,10 +46,10 @@ namespace GoldCap.Controllers
                 };
                 return View("index", invalidModel);
             }
-            
+
         }
 
-        
+
         public IActionResult Delete(int id)
         {
             _expenseRepository.DeleteCategory(id);

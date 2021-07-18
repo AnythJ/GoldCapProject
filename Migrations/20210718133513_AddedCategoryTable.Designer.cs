@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoldCap.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210717151931_AddCategoryTable")]
-    partial class AddCategoryTable
+    [Migration("20210718133513_AddedCategoryTable")]
+    partial class AddedCategoryTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace GoldCap.Migrations
 
             modelBuilder.Entity("GoldCap.Models.Category", b =>
                 {
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -33,36 +33,9 @@ namespace GoldCap.Migrations
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
 
-                    b.HasKey("CategoryId");
+                    b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            CategoryId = 1,
-                            Name = "None"
-                        },
-                        new
-                        {
-                            CategoryId = 2,
-                            Name = "Daily"
-                        },
-                        new
-                        {
-                            CategoryId = 3,
-                            Name = "Food"
-                        },
-                        new
-                        {
-                            CategoryId = 4,
-                            Name = "Electronics"
-                        },
-                        new
-                        {
-                            CategoryId = 5,
-                            Name = "Cloths"
-                        });
                 });
 
             modelBuilder.Entity("GoldCap.Models.Expense", b =>
@@ -76,8 +49,8 @@ namespace GoldCap.Migrations
                         .IsRequired()
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Date")
                         .IsRequired()

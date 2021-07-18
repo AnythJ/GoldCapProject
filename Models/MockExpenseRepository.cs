@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -70,6 +71,16 @@ namespace GoldCap.Models
         }
 
         public Category DeleteCategory(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SelectList GetAllCategoriesToList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Category> GetCategoryList()
         {
             throw new NotImplementedException();
         }

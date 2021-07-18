@@ -2,18 +2,10 @@
 
 namespace GoldCap.Migrations
 {
-    public partial class AddedCategoryTable : Migration
+    public partial class AddedCategoryColumn : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Category",
-                table: "Expenses",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(int),
-                oldType: "int");
-
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -26,22 +18,27 @@ namespace GoldCap.Migrations
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "None" },
+                    { 2, "Daily" },
+                    { 3, "Food" },
+                    { 4, "Electronics" },
+                    { 5, "Drinks" },
+                    { 6, "Cloths" },
+                    { 7, "Insurance" },
+                    { 8, "Cloths" }
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "Category",
-                table: "Expenses",
-                type: "int",
-                nullable: false,
-                defaultValue: 0,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,5 +21,10 @@ namespace GoldCap.Models
         IEnumerable<Category> GetAllCategories();
         Category AddCategory(Category category);
         Category DeleteCategory(int id);
+
+        // NEW
+        List<Category> GetCategoryList();
+
+
     }
 }

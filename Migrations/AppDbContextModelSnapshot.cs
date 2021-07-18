@@ -34,6 +34,48 @@ namespace GoldCap.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "None"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Daily"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Food"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Electronics"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Drinks"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Cloths"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Insurance"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Cloths"
+                        });
                 });
 
             modelBuilder.Entity("GoldCap.Models.Expense", b =>
@@ -47,8 +89,8 @@ namespace GoldCap.Migrations
                         .IsRequired()
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Category")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("Date")
                         .IsRequired()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -83,6 +84,15 @@ namespace GoldCap.Models
             }
 
             return category;
+        }
+
+        // NEW
+        public List<Category> GetCategoryList()
+        {
+            IEnumerable<Category> ctg = context.Categories;
+            List<Category> ctgList = ctg.ToList();
+
+            return ctgList;
         }
     }
 }

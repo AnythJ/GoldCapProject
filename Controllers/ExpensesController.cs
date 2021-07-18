@@ -32,11 +32,18 @@ namespace GoldCap.Controllers
         [NoDirectAccess]
         public IActionResult CreateOrEdit(int id = 0)
         {
-            List<SelectList> ConvertedList = new List<SelectList>();
-            ViewBag.CategoryList = _expenseRepository.GetAllCategories();
+            
 
             if (id == 0)
-                return View(new Expense());
+            {
+                CreateOrEditViewModel viewModel = new CreateOrEditViewModel()
+                {
+                    Expense = new Expense(),
+                    Categories = _expenseRepository.GetCategoryList()
+                };
+
+                return View(viewModel);
+            }
             else
             {
                 var expenseModel = _expenseRepository.GetExpense(id);
@@ -44,7 +51,15 @@ namespace GoldCap.Controllers
                 {
                     return NotFound();
                 }
-                return View(expenseModel);
+                else
+                {
+                    CreateOrEditViewModel viewModel = new CreateOrEditViewModel()
+                    {
+                        Expense = expenseModel,
+                        Categories = _expenseRepository.GetCategoryList()
+                    };
+                    return View(viewModel);
+                }
             }
         }
 
@@ -67,7 +82,15 @@ namespace GoldCap.Controllers
 
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses()) });
             }
-            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) });
+            else
+            {
+                CreateOrEditViewModel viewModel = new CreateOrEditViewModel()
+                {
+                    Expense = expense,
+                    Categories = _expenseRepository.GetCategoryList()
+                };
+                return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", viewModel) });
+            }
         }
 
         [HttpPost, ActionName("Delete")]

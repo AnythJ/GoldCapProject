@@ -43,7 +43,12 @@ namespace GoldCap
             }
 
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes => {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=dashboard}/{action=index}/{id?}");
+            });
+            //app.UseMvcWithDefaultRoute();
         }
     }
 }

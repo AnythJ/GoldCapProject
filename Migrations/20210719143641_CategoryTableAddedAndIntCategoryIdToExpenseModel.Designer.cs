@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoldCap.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210718162056_AddedCategoryColumn")]
-    partial class AddedCategoryColumn
+    [Migration("20210719143641_CategoryTableAddedAndIntCategoryIdToExpenseModel")]
+    partial class CategoryTableAddedAndIntCategoryIdToExpenseModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -91,7 +91,7 @@ namespace GoldCap.Migrations
                         .IsRequired()
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Category")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("Date")

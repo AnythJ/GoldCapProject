@@ -2,10 +2,15 @@
 
 namespace GoldCap.Migrations
 {
-    public partial class AddedCategoryColumn : Migration
+    public partial class CategoryTableAddedAndIntCategoryIdToExpenseModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.RenameColumn(
+                name: "Category",
+                table: "Expenses",
+                newName: "CategoryId");
+
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -39,6 +44,11 @@ namespace GoldCap.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.RenameColumn(
+                name: "CategoryId",
+                table: "Expenses",
+                newName: "Category");
         }
     }
 }

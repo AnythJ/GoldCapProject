@@ -32,18 +32,10 @@ namespace GoldCap.Controllers
         [NoDirectAccess]
         public IActionResult CreateOrEdit(int id = 0)
         {
-            
+            ViewBag.CategoryList = _expenseRepository.GetCategoryList();
 
             if (id == 0)
-            {
-                CreateOrEditViewModel viewModel = new CreateOrEditViewModel()
-                {
-                    Expense = new Expense(),
-                    Categories = _expenseRepository.GetCategoryList()
-                };
-
-                return View(viewModel);
-            }
+                return View(new Expense());
             else
             {
                 var expenseModel = _expenseRepository.GetExpense(id);
@@ -51,15 +43,7 @@ namespace GoldCap.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    CreateOrEditViewModel viewModel = new CreateOrEditViewModel()
-                    {
-                        Expense = expenseModel,
-                        Categories = _expenseRepository.GetCategoryList()
-                    };
-                    return View(viewModel);
-                }
+                return View(expenseModel);
             }
         }
 
@@ -68,6 +52,7 @@ namespace GoldCap.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date")] Expense expense)
         {
+            ViewBag.CategoryList = _expenseRepository.GetCategoryList();
             if (ModelState.IsValid)
             {
                 if (id == 0)
@@ -82,15 +67,7 @@ namespace GoldCap.Controllers
 
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses()) });
             }
-            else
-            {
-                CreateOrEditViewModel viewModel = new CreateOrEditViewModel()
-                {
-                    Expense = expense,
-                    Categories = _expenseRepository.GetCategoryList()
-                };
-                return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", viewModel) });
-            }
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) });
         }
 
         [HttpPost, ActionName("Delete")]

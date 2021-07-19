@@ -1,4 +1,4 @@
-﻿@model CreateOrEditViewModel
+﻿@model Expense
 
 @{
     ViewData["Title"] = "Edit";
@@ -10,43 +10,46 @@
         color: white;
         font-size: 15px;
     }
+    #description-input {
+        color: white;
+        background-color: #6C757D;
+        border-color: #6C757D;
+    }
 </style>
 
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="CreateOrEdit" asp-route-id="@Model.Expense.Id" onsubmit="return jQueryAjaxPost(this);" autocomplete="off">
+        <form asp-action="CreateOrEdit" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPost(this);" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Expense.Id" />
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Expense.Amount" class="control-label"></label>
-                <input id="amountinput" asp-for="Expense.Amount" class="form-control" />
-                <span asp-validation-for="Expense.Amount"></span>
+                <label asp-for="Amount" class="control-label"></label>
+                <input id="amountinput" asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount"></span>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="Expense.Category" class="control-label"></label>
-                        @*<select asp-for="Category" style="height:38px;" asp-items="@(new SelectList(ViewBag.CategoryList,"Name","Name"))"></select>*@
-                        @*<select asp-for="Expense.Category" style="height:38px;" asp-items="@Html.GetEnumSelectList<Ctg>()"></select>*@
-                        <select asp-for="Expense.Category" style="height:38px;" asp-items="@(new SelectList(Model.Categories,"Id","Name"))"></select>
-                        <span asp-validation-for="Expense.Category"></span>
+                        <label asp-for="Category" class="control-label"></label>
+                        <select asp-for="Category" style="height:38px;" asp-items="@(new SelectList(ViewBag.CategoryList,"Name","Name"))"></select>
+                        <span asp-validation-for="Category"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="Expense.Date" class="control-label"></label>
-                        <input id="dateinput" asp-for="Expense.Date" style="height:38px;" class="form-control" />
-                        <span asp-validation-for="Expense.Date"></span>
+                        <label asp-for="Date" class="control-label"></label>
+                        <input id="dateinput" asp-for="Date" style="height:38px;" class="form-control" />
+                        <span asp-validation-for="Date"></span>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="Expense.Description" class="control-label"></label>
-                <input asp-for="Expense.Description" class="form-control" />
-                <span asp-validation-for="Expense.Description"></span>
+                <label asp-for="Description" class="control-label"></label>
+                <textarea style="resize:none;height:90px;" id="description-input" asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="margin-top:15px;text-align:right;">
                 <input type="submit" value="Submit" class="btn btn-primary btn-block" />
             </div>
         </form>
@@ -54,7 +57,7 @@
 </div>
 
 
-@if (Model.Expense.Id == 0)
+@if (Model.Id == 0)
 {
     <script>
     // Date format: 17.07.2021 10:50:20

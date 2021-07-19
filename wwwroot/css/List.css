@@ -48,7 +48,8 @@ select {
 }
 
 #dateinput {
-    width: 95%;
+    width: 221px;
+    margin-right:0;
     height: 28px;
     background-color: #6C757D;
     border: 1px solid #6C757D;
@@ -117,3 +118,4 @@ thead.sticky-top {
 #button-column {
     max-width: 140px;
 }
+

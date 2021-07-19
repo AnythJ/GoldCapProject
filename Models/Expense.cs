@@ -18,7 +18,8 @@ namespace GoldCap.Models
         public decimal? Amount { get; set; }
 
         [DisplayName("Category")]
-        public Ctg Category { get; set; }
+        [Required(ErrorMessage = "Required")]
+        public string Category { get; set; }
 
         [StringLength(135)]
         [DisplayName("Description")]

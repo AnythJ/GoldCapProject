@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GoldCap.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,21 @@ namespace GoldCap.Controllers
 {
     public class DashboardController : Controller
     {
+        private IExpenseRepository _expenseRepository;
+
+        public DashboardController(IExpenseRepository expenseRepository)
+        {
+            _expenseRepository = expenseRepository;
+        }
         public IActionResult Index()
         {
-            return View();
+            var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30));
+
+            ViewBag.Date30 = DateTime.Now.AddDays(-30).Day;
+            int[] daysArray = Helper.Last30DaysArray();
+            ViewBag.daysArray = daysArray;
+
+            return View(model);
         }
     }
 }

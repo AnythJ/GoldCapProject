@@ -48,5 +48,28 @@ namespace GoldCap
                 }
             }
         }
+
+        public static int[] Last30DaysArray()
+        {
+            int manyThis = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+            int manyBefore = DateTime.DaysInMonth(DateTime.Now.AddDays(-30).Year, DateTime.Now.AddDays(-30).Month);
+            if (DateTime.Now.AddDays(-30).Month != DateTime.Now.Month)
+            {
+                int daysInLastMonth = manyBefore - DateTime.Now.AddDays(-30).Day;
+                int[] numberDayLastMonth = Enumerable.Range(DateTime.Now.AddDays(-30).Day, daysInLastMonth+1).ToArray();
+                int daysInThisMoth = DateTime.Now.Day;
+                int [] numberDayThisMonth = Enumerable.Range(1, daysInThisMoth).ToArray();
+
+                int[] newArray = new int[numberDayLastMonth.Length + numberDayThisMonth.Length];
+                Array.Copy(numberDayLastMonth, newArray, numberDayLastMonth.Length);
+                Array.Copy(numberDayThisMonth, 0 , newArray, numberDayLastMonth.Length, numberDayThisMonth.Length);
+
+                return newArray;
+            }
+            else
+            {
+                return Enumerable.Range(1, DateTime.Now.Day).ToArray();
+            }
+        }
     }
 }

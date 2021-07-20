@@ -1,29 +1,94 @@
-﻿@model Expense
+﻿@model IEnumerable<Expense>
 
 @{
     ViewData["Title"] = "Dashboard";
 }
 
-@section Styles{ 
+@section Styles{
 
     <link href="~/css/Highcharts.css" rel="stylesheet" />
 }
+<style>
+    .tableContainer {
+        padding: 0;
+        margin: 0;
+        height: 50%;
+        width: 100%;
+        border-left: 2px solid white;
+        border-right: 2px solid white;
+        border-top: 6px solid #212529;
+        border-bottom: 6px solid #212529;
+    }
 
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
 
-<figure class="highcharts-figure">
-    <div id="container"></div>
-    <p class="highcharts-description">
-        Demonstrating a basic area chart, also known as a mountain chart.
-        Area charts are similar to line charts, but commonly used to visualize
-        volumes.
-    </p>
-</figure>
+    thead.sticky-top {
+        background-color: lightgray;
+    }
+
+</style>
+
+<div>
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+        <p class="highcharts-description">
+            Shows expenses from 30 days ago
+        </p>
+    </figure>
+</div>
+
+<input type="hidden" id="startPoint" value="@ViewBag.Date30" />
+
+<div class="table-responsive tableContainer">
+    <table class="table">
+        <thead class="sticky-top">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>@ViewBag.Date30</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 
 
 
 @section Scripts {
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>

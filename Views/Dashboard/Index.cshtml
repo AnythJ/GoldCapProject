@@ -1,14 +1,4 @@
-﻿@model IEnumerable<Expense>
-
-@{
-    ViewData["Title"] = "Dashboard";
-}
-
-@section Styles{
-
-    <link href="~/css/Highcharts.css" rel="stylesheet" />
-}
-<style>
+﻿<style>
     .tableContainer {
         padding: 0;
         margin: 0;
@@ -28,69 +18,140 @@
     thead.sticky-top {
         background-color: lightgray;
     }
-
 </style>
-
-<div>
-    <figure class="highcharts-figure">
-        <div id="container"></div>
-        <p class="highcharts-description">
-            Shows expenses from 30 days ago
-        </p>
-    </figure>
-</div>
-
-<input type="hidden" id="startPoint" value="@ViewBag.Date30" />
-
-<div class="table-responsive tableContainer">
-    <table class="table">
-        <thead class="sticky-top">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Amount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Category)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Date)
-                </th>
-                <th>@ViewBag.Date30</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Category)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Date)
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-
-
-
-@section Scripts {
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/series-label.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="~/jss/highcharts.js"></script>
-}
+    <title></title>
+</head>
+
+<body>
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+        <p class="highcharts-description">
+            Basic line chart showing trends in a dataset. This chart includes the
+            <code>series-label</code> module, which adds a label to each line for
+            enhanced readability.
+        </p>
+    </figure>
+
+    <script>
+
+        $(document).ready(function () {
+            $.getJSON("Dashboard/GetData", function (result) {
+
+                Highcharts.chart('container', {
+
+                    title: {
+                        text: 'Solar Employment Growth by Sector, 2010-2016'
+                    },
+
+                    subtitle: {
+                        text: 'Source: thesolarfoundation.com'
+                    },
+
+                    yAxis: {
+                        title: {
+                            text: 'Number of Employees'
+                        }
+                    },
+
+                    xAxis: {
+                        accessibility: {
+                            rangeDescription: 'Range: 2010 to 2017'
+                        }
+                    },
+
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle'
+                    },
+
+                    plotOptions: {
+                        series: {
+                            label: {
+                                connectorAllowed: false
+                            },
+                            pointStart: result.day30
+                        }
+                    },
+
+                    series: [{
+                        name: 'Expenses',
+                        data: [
+                            [result.expensesLast30DaysArray[0].date, result.expensesLast30DaysArray[0].amount],
+                            [result.expensesLast30DaysArray[1].date, result.expensesLast30DaysArray[1].amount],
+                            [result.expensesLast30DaysArray[2].date, result.expensesLast30DaysArray[2].amount],
+                            [result.expensesLast30DaysArray[3].date, result.expensesLast30DaysArray[3].amount]
+                        ]
+                    }],
+
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 500
+                            },
+                            chartOptions: {
+                                legend: {
+                                    layout: 'horizontal',
+                                    align: 'center',
+                                    verticalAlign: 'bottom'
+                                }
+                            }
+                        }]
+                    }
+
+                });
+            });
+        })
+    </script>
+
+
+    @*//TABLE*@
+    <div class="table-responsive tableContainer">
+        <table class="table">
+            <thead class="sticky-top">
+                <tr>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.Expenses)
+                {
+                    <tr>
+                        <td>
+                            @item.Amount
+                        </td>
+                        <td>
+                            @item.Category
+                        </td>
+                        <td>
+                            @item.Description
+                        </td>
+                        <td>
+                            @item.Date
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

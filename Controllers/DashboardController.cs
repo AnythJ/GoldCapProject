@@ -17,6 +17,7 @@ namespace GoldCap.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.Expenses = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30));
             var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30));
 
             ViewBag.Date30 = DateTime.Now.AddDays(-30).Day;
@@ -24,6 +25,22 @@ namespace GoldCap.Controllers
             ViewBag.daysArray = daysArray;
 
             return View(model);
+        }
+
+        
+        public JsonResult GetData()
+        {
+            ViewBag.Expenses = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30));
+            DashboardDataModel data = new DashboardDataModel()
+            {
+                ExpensesLast30Days = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)),
+                Last30Days = Helper.Last30DaysArray(),
+                Day30 = DateTime.Now.AddDays(-30).Day,
+                ExpensesLast30DaysArray = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).ToArray()
+            };
+
+            
+            return Json(data);
         }
     }
 }

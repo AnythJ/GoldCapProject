@@ -36,9 +36,9 @@ namespace GoldCap.Controllers
                 ExpensesLast30Days = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)),
                 Last30Days = Helper.Last30DaysArray(),
                 Day30 = DateTime.Now.AddDays(-30).Day,
-                ExpensesLast30DaysArray = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).ToArray()
+                ExpensesLast30DaysArray = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).ToArray(),
+                summed30 = _expenseRepository.GetSumDayExpense30()
             };
-
             
             return Json(data);
         }

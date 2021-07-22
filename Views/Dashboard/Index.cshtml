@@ -31,14 +31,16 @@
 </head>
 
 <body>
-    <figure class="highcharts-figure">
-        <div id="container"></div>
-        <p class="highcharts-description">
-            Basic line chart showing trends in a dataset. This chart includes the
-            <code>series-label</code> module, which adds a label to each line for
-            enhanced readability.
-        </p>
-    </figure>
+    <div>
+        <figure class="highcharts-figure">
+            <div id="container"></div>
+            <p class="highcharts-description">
+                Basic line chart showing trends in a dataset. This chart includes the
+                <code>series-label</code> module, which adds a label to each line for
+                enhanced readability.
+            </p>
+        </figure>
+    </div>
 
     <script>
 
@@ -85,10 +87,10 @@
                     series: [{
                         name: 'Expenses',
                         data: [
-                            [result.expensesLast30DaysArray[0].date, result.expensesLast30DaysArray[0].amount],
-                            [result.expensesLast30DaysArray[1].date, result.expensesLast30DaysArray[1].amount],
-                            [result.expensesLast30DaysArray[2].date, result.expensesLast30DaysArray[2].amount],
-                            [result.expensesLast30DaysArray[3].date, result.expensesLast30DaysArray[3].amount]
+                            [result.expensesLast30DaysArray[0].date, result.summed30[0]],
+                            [result.expensesLast30DaysArray[1].date, result.summed30[1]],
+                            [result.expensesLast30DaysArray[2].date, result.summed30[2]],
+                            [result.expensesLast30DaysArray[3].date, result.summed30[3]]
                         ]
                     }],
 

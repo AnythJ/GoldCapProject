@@ -12,5 +12,6 @@ namespace GoldCap.Models
         public int Day30 { get; set; }
         public string TestString { get; set; }
         public Expense[] ExpensesLast30DaysArray { get; set; }
+        public List<decimal> summed30 { get; set; }
     }
 }

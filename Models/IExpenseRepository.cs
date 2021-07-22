@@ -14,6 +14,7 @@ namespace GoldCap.Models
         Expense Add(Expense expense);
         Expense Update(Expense expenseChanges);
         Expense Delete(int id);
+        List<decimal> GetSumDayExpense30();
 
         // Category
 
@@ -24,6 +25,9 @@ namespace GoldCap.Models
 
         // NEW
         List<Category> GetCategoryList();
+        
+
+       
 
 
     }

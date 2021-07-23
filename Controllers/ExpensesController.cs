@@ -21,7 +21,7 @@ namespace GoldCap.Controllers
 
         public IActionResult Index()
         {
-            var expenses = _expenseRepository.GetAllExpenses();
+            var expenses = _expenseRepository.GetAllExpenses().OrderByDescending(e => e.Date);
 
             return View(expenses);
         }

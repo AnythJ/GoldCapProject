@@ -84,5 +84,25 @@ namespace GoldCap.Models
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Expense> GetLast30Days()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Expense GetExpenseFrom30DaysAgo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Expense> GetSumDayExpense30()
+        {
+            throw new NotImplementedException();
+        }
+
+        List<decimal> IExpenseRepository.GetSumDayExpense30()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

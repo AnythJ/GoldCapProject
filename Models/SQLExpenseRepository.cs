@@ -97,35 +97,24 @@ namespace GoldCap.Models
 
         public List<decimal> GetSumDayExpense30()
         {
-            var expenses = context.Expenses.Where(e => e.Date >= DateTime.Now.AddDays(-30)).AsEnumerable();
+            List<Expense> expensesGrouped = context.Expenses.
+                Where(e => e.Date >= DateTime.Now.AddDays(-30)).AsEnumerable().OrderBy(d => d.Date).ToList();
+            int[] last30 = Helper.Last30DaysArray();
 
-            List<Expense> grouped = expenses.OrderBy(d=>d.Date).ToList();
-            
 
             List<decimal> sumAmounts = new List<decimal>();
-            for (int i = 0; i < 31; i++)
+            for (int i = 0; i < 30; i++)
             {
-                sumAmounts.Add(0); // END HERE 22.07
+                sumAmounts.Add(0);
+            }
+
+            for(int i = 0; i < 30; i++)
+            {
+              // sumAmounts[i] = context.Expenses.Where(d => d.Date.Value.day)
+                //
             }
             
-            int k = 0;
-            for (int i = 0; i <= grouped.Count; i++)
-            {
-                if (i > 0)
-                {
-                    if(grouped[i].Date.Value.Day == grouped[k - (i - 1)].Date.Value.Day && grouped[i].Date.Value.Month == grouped[k - (i - 1)].Date.Value.Month)
-                    {
-                        sumAmounts[k - (i - 1)] += grouped[i].Amount.Value;
-                        k = i;
-                    }
-                    else
-                    {
-                        sumAmounts[i - k] = grouped[i].Amount.Value;
-                    }
-                }
-                else
-                    sumAmounts[0] = grouped[0].Amount.Value;
-            }
+            
 
 
             return sumAmounts;

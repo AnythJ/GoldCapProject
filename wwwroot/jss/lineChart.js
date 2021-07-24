@@ -68,7 +68,7 @@ $(document).ready(function () {
                 },
 
                 series: [{
-                    name: 'Amount',
+                    name: 'Expenses',
                     data: [
                         [result.listLast30[0].amount],
                         [result.listLast30[1].amount],

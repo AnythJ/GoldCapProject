@@ -1,15 +1,11 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     $.getJSON("Dashboard/GetData", function (result) {
         console.log(result),
             Highcharts.chart('container', {
-
                 title: {
                     text: 'Expenses in the last 30 days'
                 },
-
-                //subtitle: {
-                //    text: 'Source: thesolarfoundation.com'
-                //},
 
                 yAxis: {
                     title: {

@@ -100,7 +100,7 @@ namespace GoldCap.Models
             throw new NotImplementedException();
         }
 
-        List<decimal> IExpenseRepository.GetSumDayExpense30()
+        List<_30daysModel> IExpenseRepository.GetSumDayExpense30()
         {
             throw new NotImplementedException();
         }

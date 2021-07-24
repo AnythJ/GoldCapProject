@@ -37,7 +37,7 @@ namespace GoldCap.Models
         public Expense Delete(int id)
         {
             Expense expense = context.Expenses.Find(id);
-            if(expense != null)
+            if (expense != null)
             {
                 context.Expenses.Remove(expense);
                 context.SaveChanges();
@@ -77,7 +77,7 @@ namespace GoldCap.Models
         public Category DeleteCategory(int id)
         {
             var category = context.Categories.Find(id);
-            if(category != null)
+            if (category != null)
             {
                 context.Categories.Remove(category);
                 context.SaveChanges();
@@ -86,7 +86,7 @@ namespace GoldCap.Models
             return category;
         }
 
-        // NEW
+        // DASHBOARD
         public List<Category> GetCategoryList()
         {
             IEnumerable<Category> ctg = context.Categories;
@@ -95,29 +95,35 @@ namespace GoldCap.Models
             return ctgList;
         }
 
-        public List<decimal> GetSumDayExpense30()
+        public List<_30daysModel> GetSumDayExpense30()
         {
-            List<Expense> expensesGrouped = context.Expenses.
-                Where(e => e.Date >= DateTime.Now.AddDays(-30)).AsEnumerable().OrderBy(d => d.Date).ToList();
-            int[] last30 = Helper.Last30DaysArray();
+            List<_30daysModel> finalList = new List<_30daysModel>();
 
-
-            List<decimal> sumAmounts = new List<decimal>();
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i <= 30; i++)
             {
-                sumAmounts.Add(0);
+                var exp = context.Expenses.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-30 + i).Day &&
+                e.Date.Value.Month == DateTime.Now.AddDays(-30 + i).Month)).AsEnumerable();
+
+                _30daysModel model = new _30daysModel()
+                {
+                    Amount = 0,
+                    //TimeStamp = DateTime.Now.AddDays(-30 + i).Day.ToString() + " / " + (ShortMonth)(DateTime.Today.Month)
+                    TimeStamp = DateTime.Now.AddDays(-30 + i).Day.ToString()
+                };
+
+                if (exp != null)
+                {
+                    foreach (var item in exp)
+                    {
+                        model.Amount += (decimal)item.Amount;
+                    }
+                }
+
+
+                finalList.Add(model);
             }
 
-            for(int i = 0; i < 30; i++)
-            {
-              // sumAmounts[i] = context.Expenses.Where(d => d.Date.Value.day)
-                //
-            }
-            
-            
-
-
-            return sumAmounts;
+            return finalList;
         }
     }
 }

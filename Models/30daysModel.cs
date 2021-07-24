@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace GoldCap.Models
 {
-    public class DashboardDataModel
+    public class _30daysModel
     {
-        public int Day30 { get; set; }
-        public List<_30daysModel> ListLast30 { get; set; }
+        public decimal Amount { get; set; }
+        public string TimeStamp { get; set; }
     }
 }

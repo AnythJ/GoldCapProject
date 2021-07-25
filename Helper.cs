@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GoldCap.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -71,5 +72,7 @@ namespace GoldCap
                 return Enumerable.Range(1, DateTime.Now.Day).ToArray();
             }
         }
+
+        
     }
 }

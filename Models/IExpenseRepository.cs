@@ -25,9 +25,11 @@ namespace GoldCap.Models
 
         // NEW
         List<Category> GetCategoryList();
-        
+        List<CategoryChart> GetCategoryRatios();
 
-       
+
+
+
 
 
     }

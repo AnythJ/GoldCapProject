@@ -24,13 +24,18 @@ namespace GoldCap.Controllers
         }
 
         
+        
         public JsonResult GetData()
         {
             ViewBag.Expenses = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30));
+
+
             DashboardDataModel data = new DashboardDataModel()
             {
                 Day30 = DateTime.Now.AddDays(-30).Day,
-                ListLast30 = _expenseRepository.GetSumDayExpense30()
+                ListLast30 = _expenseRepository.GetSumDayExpense30(),
+                CategoryRatios = _expenseRepository.GetCategoryRatios(),
+                CategoryCount = _expenseRepository.GetAllCategories().Count()
             };
             
             return Json(data);

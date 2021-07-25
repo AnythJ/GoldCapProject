@@ -125,5 +125,28 @@ namespace GoldCap.Models
 
             return finalList;
         }
+
+        public List<CategoryChart> GetCategoryRatios()
+        {
+            var categoryNames = context.Categories.Select(n => n.Name).ToList();
+
+            var expenses = context.Expenses.Where(e => (e.Date.Value >= DateTime.Now.AddDays(-30))).AsEnumerable();
+
+            List<CategoryChart> newList = new List<CategoryChart>();
+            
+
+            foreach (var item in categoryNames)
+            {
+                CategoryChart newCat = new CategoryChart();
+                newCat.CategoryName = item;
+                decimal first = (decimal)expenses.Where(c => c.Category == item).Count();
+                decimal second = (decimal)expenses.Count();
+                newCat.CategoryPercentage = (first / second)*100;
+
+                newList.Add(newCat);
+            }
+
+            return newList.OrderByDescending(d => d.CategoryPercentage).ToList<CategoryChart>();
+        }
     }
 }

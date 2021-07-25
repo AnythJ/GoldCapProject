@@ -9,5 +9,7 @@ namespace GoldCap.Models
     {
         public int Day30 { get; set; }
         public List<_30daysModel> ListLast30 { get; set; }
+        public List<CategoryChart> CategoryRatios { get; set; }
+        public int CategoryCount { get; set; }
     }
 }

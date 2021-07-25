@@ -49,9 +49,9 @@
         border: solid 1px rgba(0,0,0,0.5);
     }
 
-    .pie-chart-div:hover {
-        box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.22);
-    }
+        .pie-chart-div:hover {
+            box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.22);
+        }
 
     /*#endregion */
 
@@ -127,7 +127,7 @@
         </figure>
     </div>
 
-    
+
     <div class="pie-chart-div">
         <figure class="highcharts-figure">
             <div id="container-pie"></div>
@@ -137,51 +137,73 @@
     </div>
 
     <script>
-        Highcharts.chart('container-pie', {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                type: 'pie'
-            },
-            title: {
-                text: 'Categories in %'
-            },
-            exporting: {
-                enabled: false
-            },
-            //tooltip: {
-            //    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            //},
-            accessibility: {
-                point: {
-                    valueSuffix: '%'
-                }
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: false,
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                    }
-                }
-            },
-            series: [{
-                name: 'Brands',
-                colorByPoint: true,
-                data: [{
-                    name: 'Chrome',
-                    y: 50,
-                    //sliced: false,
-                    //selected: false
-                }, {
-                    name: 'Internet Explorer',
-                    y: 50
-                }]
-            }]
+        $(document).ready(function () {
+            $.getJSON("Dashboard/GetData", function (result) {
+
+                Highcharts.chart('container-pie', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Categories in %'
+                    },
+                    exporting: {
+                        enabled: false
+                    },
+                    //tooltip: {
+                    //    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    //},
+                    accessibility: {
+                        point: {
+                            valueSuffix: '%'
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                            }
+                        }
+                    },
+                    //series: [{ /*HERE DATA IF PASS*/
+                    //    name: 'Brands',
+                    //    colorByPoint: true,
+                    //    data: [{
+                    //        /*name: result.categoryRatios[0].categoryName,*/
+                    //        name: 'Category',
+                    //        y: result.categoryRatios[0].categoryPercentage
+                    //        //sliced: false,
+                    //        //selected: false
+                    //    }]
+                    //}]
+                    series: (function () {
+                        var series = [],
+
+                        for (var i = 0; i < 3; i++) {
+                            series.push({
+                                name: result.categoryRatios[i].categoryName,
+                                colorByPoint: true,
+                                data: [{
+                                    name: result.categoryRatios[i].categoryName,
+                                    y: result.categoryRatios[i].categoryPercentage
+                                }]
+
+                            });
+                        }
+
+                        return series;
+                    }())
+                });
+
+            });
         });
+
     </script>
 
 

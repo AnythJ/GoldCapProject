@@ -104,5 +104,10 @@ namespace GoldCap.Models
         {
             throw new NotImplementedException();
         }
+
+        public List<CategoryChart> GetCategoryRatios()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

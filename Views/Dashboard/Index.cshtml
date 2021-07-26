@@ -57,7 +57,7 @@
 
     /*#region pieChartCSS */
 
-    .highcharts-figure, .highcharts-data-table table {
+    #pieFigure .highcharts-figure, .highcharts-data-table table {
         min-width: 320px;
         max-width: 800px;
         margin: 1em auto;
@@ -103,6 +103,12 @@
 
 
     /*#endregion */
+
+    .lineChartContainer {
+        min-height: 260px;
+        max-height: 400px;
+        height: 100%;
+    }
 </style>
 @section Styles{
     <link href="~/css/lineChart.css" rel="stylesheet" />
@@ -122,21 +128,21 @@
 
 <body>
     <div class="lineChart-div">
-        <figure class="highcharts-figure" style="float: left;width:100%;max-width:100%;">
-            <div id="container"></div>
+        <figure id="lineFigure" class="highcharts-figure" @*style="float: left;width:100%;max-width:100%;"*@>
+            <div id="container" class="lineChartContainer"></div>
         </figure>
     </div>
 
 
-    <div class="pie-chart-div">
-        <figure class="highcharts-figure">
+    @*<div class="pie-chart-div">
+        <figure id="pieFigure" class="highcharts-figure">
             <div id="container-pie"></div>
             <p class="highcharts-description">
             </p>
         </figure>
-    </div>
+    </div>*@
 
-    <script>
+    @*<script>
         $(document).ready(function () {
             $.getJSON("Dashboard/GetData", function (result) {
 
@@ -171,40 +177,40 @@
                             }
                         }
                     },
-                    //series: [{ /*HERE DATA IF PASS*/
-                    //    name: 'Brands',
-                    //    colorByPoint: true,
-                    //    data: [{
-                    //        /*name: result.categoryRatios[0].categoryName,*/
-                    //        name: 'Category',
-                    //        y: result.categoryRatios[0].categoryPercentage
-                    //        //sliced: false,
-                    //        //selected: false
-                    //    }]
-                    //}]
-                    series: (function () {
-                        var series = [],
+                    series: [{ /*HERE DATA IF PASS*/
+                        name: 'Brands',
+                        colorByPoint: true,
+                        data: [{
+                            /*name: result.categoryRatios[0].categoryName,*/
+                            name: 'Category',
+                            y: result.categoryRatios[0].categoryPercentage
+                            //sliced: false,
+                            //selected: false
+                        }]
+                    }]
+                    //series: (function () {
+                    //    var series = [],
 
-                        for (var i = 0; i < 3; i++) {
-                            series.push({
-                                name: result.categoryRatios[i].categoryName,
-                                colorByPoint: true,
-                                data: [{
-                                    name: result.categoryRatios[i].categoryName,
-                                    y: result.categoryRatios[i].categoryPercentage
-                                }]
+                    //    for (var i = 0; i < 3; i++) {
+                    //        series.push({
+                    //            name: result.categoryRatios[i].categoryName,
+                    //            colorByPoint: true,
+                    //            data: [{
+                    //                name: result.categoryRatios[i].categoryName,
+                    //                y: result.categoryRatios[i].categoryPercentage
+                    //            }]
 
-                            });
-                        }
+                    //        });
+                    //    }
 
-                        return series;
-                    }())
+                    //    return series;
+                    //}())
                 });
 
             });
         });
 
-    </script>
+    </script>*@
 
 
     <!-- #region tableDisplay -->

@@ -29,7 +29,7 @@
     /*#region mainLayout */
     .lineChartRow {
         float: left;
-        height: 25%;
+        height: 300px;
         width: 80%;
     }
     /*#endregion */
@@ -40,6 +40,17 @@
         .shadowDiv:hover {
             box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.22);
         }
+
+
+    /*#region statTable */
+
+    tr {
+        display: inline-block;  
+    }
+
+    
+    /*#endregion */
+
 
 </style>
 @section Styles{
@@ -73,47 +84,39 @@
 
         </div>
 
-        <div style="padding-top:320px;margin:0 0 0 20px;">
+        @*<div style="padding-top:320px;margin:0 0 0 20px;">
             <figure id="pieFigure" class="highcharts-figure shadowDiv" style="float:left;">
                 <div id="container-pie"></div>
                 <p class="highcharts-description">
                 </p>
             </figure>
 
+        </div>*@
+        <div style="margin-left:20px;float:left;">
+            <figure id="pieFigure" class="highcharts-figure shadowDiv" style="float:left;height:350px;">
+                <div id="container-pie" style="height:350px;"></div>
+                <p class="highcharts-description">
+                </p>
+            </figure>
         </div>
-        <div style="padding-top:15px;float:left;">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Average month</th>
-                        </tr>
-                        <tr>
-                            <th>Average year</th>
-                        </tr>
-                        <tr>
-                            <th>Biggest amount</th>
-                        </tr>
-                        <tr>
-                            <th>Average daily</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1000</td>
-                        </tr>
-                        <tr>
-                            <td>1500</td>
-                        </tr>
-                        <tr>
-                            <td>1000</td>
-                        </tr>
-                        <tr>
-                            <td>1500</td>
-                        </tr>
-                    </tbody>
-                </table>
-        </div>
-    </div>
+        <table class="table" style="float:left;width:712px;margin-left:20px;margin-top:16px;">
+            <thead style="">
+                <tr>
+                    <td>Most used categories</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.Expenses)
+                {
+                    <tr>
+                        <td>
+                            @item.Amount
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
 
 
 

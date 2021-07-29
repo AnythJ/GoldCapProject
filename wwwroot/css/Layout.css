@@ -1,4 +1,4 @@
-﻿﻿body {
+﻿body {
     font-family: 'Raleway';
     margin: 0;
     background-color: #6C757D;
@@ -19,8 +19,9 @@
 
 .main {
     width: calc(100% - 220px);
-    margin-left: 240px;
-    padding: 20px 40px 20px 0px;
+    margin-left: 220px;
+    /*padding: 20px 40px 20px 0px;*/
+    padding: 0;
     height: 100%;
 }
 
@@ -80,5 +81,3 @@ li {
 a.nav-link:hover {
     color: #6C757D;
 }
-
-

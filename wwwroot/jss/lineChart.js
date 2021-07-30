@@ -6,13 +6,15 @@ $(document).ready(function () {
         var lineAmounts = [];
         $.each(result.listLast30, function (index, element) {
             lineTimeStamps.push({
-                name: element.timeStamp,
+                y: String(element.timeStamp),
             });
             lineAmounts.push({
-                name: parseFloat(element.listLast30.amount)
+                y: parseFloat(element.amount),
             });
         }),
             console.log(result),
+            console.log(lineTimeStamps),
+            console.log(lineAmounts),
             Highcharts.chart('container', {
                 title: {
                     text: 'Expenses in the last 30 days'
@@ -28,40 +30,40 @@ $(document).ready(function () {
                     title: {
                         text: 'Day of the month'
                     },
-                    //categories: [
-                    //    [result.listLast30[0].timeStamp],
-                    //    [result.listLast30[1].timeStamp],
-                    //    [result.listLast30[2].timeStamp],
-                    //    [result.listLast30[3].timeStamp],
-                    //    [result.listLast30[4].timeStamp],
-                    //    [result.listLast30[5].timeStamp],
-                    //    [result.listLast30[6].timeStamp],
-                    //    [result.listLast30[7].timeStamp],
-                    //    [result.listLast30[8].timeStamp],
-                    //    [result.listLast30[9].timeStamp],
-                    //    [result.listLast30[10].timeStamp],
-                    //    [result.listLast30[11].timeStamp],
-                    //    [result.listLast30[12].timeStamp],
-                    //    [result.listLast30[13].timeStamp],
-                    //    [result.listLast30[14].timeStamp],
-                    //    [result.listLast30[15].timeStamp],
-                    //    [result.listLast30[16].timeStamp],
-                    //    [result.listLast30[17].timeStamp],
-                    //    [result.listLast30[18].timeStamp],
-                    //    [result.listLast30[19].timeStamp],
-                    //    [result.listLast30[20].timeStamp],
-                    //    [result.listLast30[21].timeStamp],
-                    //    [result.listLast30[22].timeStamp],
-                    //    [result.listLast30[23].timeStamp],
-                    //    [result.listLast30[24].timeStamp],
-                    //    [result.listLast30[25].timeStamp],
-                    //    [result.listLast30[26].timeStamp],
-                    //    [result.listLast30[27].timeStamp],
-                    //    [result.listLast30[28].timeStamp],
-                    //    [result.listLast30[29].timeStamp],
-                    //    [result.listLast30[30].timeStamp]
-                    //]
-                    categories: lineTimeStamps
+                    categories: [
+                        [result.listLast30[0].timeStamp],
+                        [result.listLast30[1].timeStamp],
+                        [result.listLast30[2].timeStamp],
+                        [result.listLast30[3].timeStamp],
+                        [result.listLast30[4].timeStamp],
+                        [result.listLast30[5].timeStamp],
+                        [result.listLast30[6].timeStamp],
+                        [result.listLast30[7].timeStamp],
+                        [result.listLast30[8].timeStamp],
+                        [result.listLast30[9].timeStamp],
+                        [result.listLast30[10].timeStamp],
+                        [result.listLast30[11].timeStamp],
+                        [result.listLast30[12].timeStamp],
+                        [result.listLast30[13].timeStamp],
+                        [result.listLast30[14].timeStamp],
+                        [result.listLast30[15].timeStamp],
+                        [result.listLast30[16].timeStamp],
+                        [result.listLast30[17].timeStamp],
+                        [result.listLast30[18].timeStamp],
+                        [result.listLast30[19].timeStamp],
+                        [result.listLast30[20].timeStamp],
+                        [result.listLast30[21].timeStamp],
+                        [result.listLast30[22].timeStamp],
+                        [result.listLast30[23].timeStamp],
+                        [result.listLast30[24].timeStamp],
+                        [result.listLast30[25].timeStamp],
+                        [result.listLast30[26].timeStamp],
+                        [result.listLast30[27].timeStamp],
+                        [result.listLast30[28].timeStamp],
+                        [result.listLast30[29].timeStamp],
+                        [result.listLast30[30].timeStamp]
+                    ]
+                    /*categories: lineTimeStamps*/
                 },
 
                 legend: {

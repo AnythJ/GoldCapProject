@@ -20,6 +20,13 @@ namespace GoldCap.Controllers
             ViewBag.Expenses = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
             var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30));
 
+            var x = _expenseRepository.GetCategoryRatios()
+                .Where(c => c.CategoryPercentage >= _expenseRepository.GetCategoryRatios()[6].CategoryPercentage);
+            if (x != null)
+            {
+                ViewBag.Categories = x;
+            }
+
             return View(model);
         }
 
@@ -27,8 +34,6 @@ namespace GoldCap.Controllers
         
         public JsonResult GetData()
         {
-            ViewBag.Expenses = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30));
-            //ViewBag.Categories = _expenseRepository.GetCategoryRatios().Where(c => c.CategoryPercentage >= _expenseRepository.GetCategoryRatios()) // HERE 29.07
             List<string> newList = new List<string>();
             var xdList = _expenseRepository.GetCategoryRatios();
             foreach(var item in xdList)

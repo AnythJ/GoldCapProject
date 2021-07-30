@@ -44,9 +44,7 @@
 
     /*#region statTable */
 
-    tr {
-        display: inline-block;  
-    }
+    
 
     
     /*#endregion */
@@ -99,29 +97,36 @@
                 </p>
             </figure>
         </div>
-        <table class="table" style="float:left;width:712px;margin-left:20px;margin-top:16px;">
-            <thead style="">
-                <tr>
+        
+    <div style="float:left;width:auto;margin-left:20px;margin-top:16px;max-height:350px;overflow-y:auto;">
+        <table class="table">
+            <thead class="sticky-top">
+                <tr style="font-weight:bold;">
                     <td>Most used categories</td>
+                    <td style="text-align:right;">%</td>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in ViewBag.Expenses)
+                @foreach (var item in ViewBag.Categories)
                 {
-                    <tr>
-                        <td>
-                            @item.Amount
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @item.CategoryName
+                    </td>
+                    <td>
+                        @String.Format("{0:0.00}", item.CategoryPercentage)
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
+    </div>
 
 
 
 
 
 
-
+</div>
 </body>
 </html>

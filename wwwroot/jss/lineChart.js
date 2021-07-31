@@ -22,7 +22,7 @@ $(document).ready(function () {
 
                 yAxis: {
                     title: {
-                        text: 'Amount of expenses'
+                        text: 'Amount of expenses [$]'
                     }
                 },
 
@@ -52,6 +52,13 @@ $(document).ready(function () {
                     name: 'Amount',
                     data: lineAmounts
                 }],
+
+                tooltip: {
+                    formatter: function () {
+                        return 'The value for <b>' + this.x +
+                            '</b> is <b>' + this.y + '</b>'; //HERE 31.07
+                    }
+                },
 
                 responsive: {
                     rules: [{

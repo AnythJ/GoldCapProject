@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th style="text-align:right; padding-right:30px;">
-                <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",null,Context.Request.Scheme)','New expense')" class="btn btn-success btn-sm">New expense</a>
+                <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-success btn-sm">New expense</a>
             </th>
         </tr>
     </thead>

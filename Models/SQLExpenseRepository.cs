@@ -143,7 +143,7 @@ namespace GoldCap.Models
                 decimal second = (decimal)expenses.Count();
                 if (second != 0)
                 {
-                    newCat.CategoryPercentage = (first / second) * 100;
+                    newCat.CategoryPercentage = System.Math.Round((first / second) * 100, 2);
                 }
                 else
                     newCat.CategoryPercentage = 0;

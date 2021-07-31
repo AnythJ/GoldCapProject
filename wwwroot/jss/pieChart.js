@@ -38,8 +38,8 @@
                         },
                         point: {
                             events: { /*Function to trigger selection on Most used categories list at the same time as pie chart selection*/
-                                select: function () {
-
+                                click: function () {
+                                    
                                     var tBody = document.getElementById('tableBody');
                                     var trRows = tBody.getElementsByClassName('trClass');
                                     for (var i = 0; i < trRows.length; i++) {
@@ -47,14 +47,34 @@
                                         trRows[i].style.color = "black";
                                     }
                                     var found;
+                                    
                                     for (var i = 0, row; row = tBody.rows[i]; i++) {
-                                        for (var j = 0, col; col = row.cells[j]; j++) {
-                                            if (col.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim() == this.name) {
-                                                row.style.backgroundColor = "#5f666d";
-                                                row.style.color = "white";
+                                        var idElement = document.getElementById('active');
+
+                                            for (var j = 0, col; col = row.cells[j]; j++) {
+                                                if (col.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim() == this.name) {
+                                                    if (idElement == null || idElement != row) {
+                                                        //active
+                                                        row.style.backgroundColor = "#5f666d";
+                                                        row.style.color = "white";
+                                                        row.setAttribute("id", "active");
+                                                        if (idElement != null) {
+                                                            idElement.setAttribute("id", "");
+                                                        }
+                                                        break;
+                                                        
+                                                    }
+                                                    else {
+                                                        //unactive
+                                                        row.style.backgroundColor = "white";
+                                                        row.style.color = "black";
+                                                        row.setAttribute("id", "");
+                                                    }
+
+                                                }
                                             }
                                         }
-                                    }
+                                    
                                 }
                             }
                         }

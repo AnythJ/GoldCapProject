@@ -35,8 +35,31 @@
                         dataLabels: {
                             enabled: false,
                             format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        },
+                        point: {
+                            events: { /*Function to trigger selection on Most used categories list at the same time as pie chart selection*/
+                                select: function () {
+
+                                    var tBody = document.getElementById('tableBody');
+                                    var trRows = tBody.getElementsByClassName('trClass');
+                                    for (var i = 0; i < trRows.length; i++) {
+                                        trRows[i].style.backgroundColor = "white";
+                                        trRows[i].style.color = "black";
+                                    }
+                                    var found;
+                                    for (var i = 0, row; row = tBody.rows[i]; i++) {
+                                        for (var j = 0, col; col = row.cells[j]; j++) {
+                                            if (col.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim() == this.name) {
+                                                row.style.backgroundColor = "#5f666d";
+                                                row.style.color = "white";
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
+
                 },
                 series: [{
                     name: '',

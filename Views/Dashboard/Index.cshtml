@@ -23,6 +23,12 @@
     thead.sticky-top {
         background-color: lightgray;
     }
+
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        /*background-color: #5f666d;*/
+        background-color: lightgray;
+        color: white;
+    }
     /*#endregion */
     
 
@@ -82,14 +88,6 @@
 
         </div>
 
-        @*<div style="padding-top:320px;margin:0 0 0 20px;">
-            <figure id="pieFigure" class="highcharts-figure shadowDiv" style="float:left;">
-                <div id="container-pie"></div>
-                <p class="highcharts-description">
-                </p>
-            </figure>
-
-        </div>*@
         <div style="margin-left:20px;float:left;">
             <figure id="pieFigure" class="highcharts-figure shadowDiv" style="float:left;height:350px;">
                 <div id="container-pie" style="height:350px;"></div>
@@ -99,17 +97,17 @@
         </div>
         
     <div style="float:left;width:auto;margin-left:20px;margin-top:16px;max-height:350px;overflow-y:auto;">
-        <table class="table">
+        <table class="table table-hover">
             <thead class="sticky-top">
                 <tr style="font-weight:bold;">
-                    <td>Most used categories</td>
+                    <td id="tableRowId">Most used categories</td>
                     <td style="text-align:right;">%</td>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tableBody">
                 @foreach (var item in ViewBag.Categories)
                 {
-                <tr>
+                <tr class="trClass">
                     <td>
                         @item.CategoryName
                     </td>

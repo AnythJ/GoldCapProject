@@ -47,7 +47,7 @@ namespace GoldCap.Controllers
                 ListLast30 = _expenseRepository.GetSumDayExpense30(),
                 CategoryRatios = _expenseRepository.GetCategoryRatios(),
                 CategoryCount = _expenseRepository.GetAllCategories().Count(),
-                TestArray = newList.ToArray() // Test
+                TooltipList = _expenseRepository.GetTooltipList()
             };
             
             return Json(data);

@@ -109,5 +109,10 @@ namespace GoldCap.Models
         {
             throw new NotImplementedException();
         }
+
+        public List<TooltipModel> GetTooltipList()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -104,11 +104,17 @@ namespace GoldCap.Models
                 var exp = context.Expenses.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-30 + i).Day &&
                 e.Date.Value.Month == DateTime.Now.AddDays(-30 + i).Month)).AsEnumerable();
 
+
+                
+                
+                
+                
                 _30daysModel model = new _30daysModel()
                 {
                     Amount = 0,
-                    //TimeStamp = DateTime.Now.AddDays(-30 + i).Day.ToString() + " / " + (ShortMonth)(DateTime.Today.Month)
-                    TimeStamp = DateTime.Now.AddDays(-30 + i).Day.ToString()
+                    TimeStamp = DateTime.Now.AddDays(-30 + i).Day.ToString(),
+                    //Categories = context.Expenses.Where(e => e.Date == DateTime.Now.AddDays(-30 + i))
+                    //.Select(e => e.Category).ToList<string>().Distinct().ToList<string>()
                 };
 
                 if (exp != null)
@@ -147,12 +153,55 @@ namespace GoldCap.Models
                 }
                 else
                     newCat.CategoryPercentage = 0;
-                
+
 
                 newList.Add(newCat);
             }
 
             return newList.OrderByDescending(d => d.CategoryPercentage).ToList<CategoryChart>();
+        }
+
+        public List<TooltipModel> GetTooltipList()
+        {
+            List<TooltipModel> finalList = new List<TooltipModel>();
+            for (int i = 0; i <= 30; i++)
+            {
+                var exp = context.Expenses.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-30 + i).Day &&
+                e.Date.Value.Month == DateTime.Now.AddDays(-30 + i).Month)).AsEnumerable();
+
+
+                var cate = context.Expenses.Where(e => e.Date.Value.Day == DateTime.Today.AddDays(-30 + i).Day
+                && e.Date.Value.Month == DateTime.Today.AddDays(-30 + i).Month).Select(e => e.Category).ToList<string>();
+                List<string> noRepeats = cate.Distinct().ToList();
+
+                List<List<decimal>> amountList = new List<List<decimal>>();
+                
+                if(exp != null)
+                {
+                    List<decimal> smallerList = new List<decimal>();
+                    foreach (var item in noRepeats)
+                    {
+                        var amount = exp.Where(e => e.Category == item).Select(e => e.Amount);
+                        decimal fa = 0;
+                        foreach(var a in amount)
+                        {
+                            fa += (decimal)a;
+                        }
+                        smallerList.Add(fa);
+                    }
+                    amountList.Add(smallerList);
+                }
+
+                TooltipModel model = new TooltipModel()
+                {
+                    CategoryListTooltip = noRepeats,
+                    Amount = amountList
+                };
+
+                finalList.Add(model);
+            }
+
+            return finalList;
         }
     }
 }

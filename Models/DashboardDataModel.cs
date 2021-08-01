@@ -10,6 +10,6 @@ namespace GoldCap.Models
         public List<_30daysModel> ListLast30 { get; set; }
         public List<CategoryChart> CategoryRatios { get; set; }
         public int CategoryCount { get; set; }
-        public string[] TestArray { get; set; }
+        public List<TooltipModel> TooltipList { get; set; }
     }
 }

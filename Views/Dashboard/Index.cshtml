@@ -1,4 +1,6 @@
-﻿<style>
+﻿@model IEnumerable<Expense>
+
+<style>
     body {
         background-color: white;
         color: black;
@@ -7,18 +9,11 @@
     .tableContainer {
         padding: 0;
         margin: 0;
-        height: 400px;
-        width: 700px;
-        border-left: 2px solid white;
-        border-right: 2px solid white;
-        border-top: 6px solid #212529;
-        border-bottom: 6px solid #212529;
+        height: 350px;
+        max-width: calc(80%-609px);
     }
 
-    table {
-        border-collapse: separate;
-        border-spacing: 0;
-    }
+
 
     thead.sticky-top {
         background-color: lightgray;
@@ -29,8 +24,9 @@
         background-color: lightgray;
         color: white;
     }
+
     /*#endregion */
-    
+
 
     /*#region mainLayout */
     .lineChartRow {
@@ -43,6 +39,7 @@
     .shadowDiv {
         box-shadow: 0 19px 38px rgba(0,0,0,0.20), 0 15px 12px rgba(0,0,0,0.22);
     }
+
         .shadowDiv:hover {
             box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.22);
         }
@@ -50,9 +47,9 @@
 
     /*#region statTable */
 
-    
 
-    
+
+
     /*#endregion */
 
 
@@ -95,36 +92,36 @@
                 </p>
             </figure>
         </div>
-        
-    <div style="float:left;width:auto;margin-left:20px;margin-top:16px;max-height:350px;overflow-y:auto;">
-        <table class="table table-hover">
-            <thead class="sticky-top">
-                <tr style="font-weight:bold;">
-                    <td id="tableRowId">Most used categories</td>
-                    <td style="text-align:right;">%</td>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-                @foreach (var item in ViewBag.Categories)
-                {
-                <tr class="trClass">
-                    <td>
-                        @item.CategoryName
-                    </td>
-                    <td>
-                        @String.Format("{0:0.00}", item.CategoryPercentage)
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
+
+        <div class="shadowDiv" style="float:left;width:auto;margin-left:20px;margin-top:16px;max-height:350px;overflow-y:auto;background-color:white;">
+            <table class="table table-hover" style="border-collapse: separate; border-spacing: 0;">
+                <thead class="sticky-top">
+                    <tr style="font-weight:bold;">
+                        <td id="tableRowId">Most used categories</td>
+                        <td style="text-align:right;">%</td>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    @foreach (var item in ViewBag.Categories)
+                    {
+                        <tr class="trClass">
+                            <td>
+                                @item.CategoryName
+                            </td>
+                            <td>
+                                @String.Format("{0:0.00}", item.CategoryPercentage)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="shadowDiv" style="float:left;width:auto;margin-left:20px;margin-top:16px;max-height:350px;overflow-y:auto;background-color:white;">
+            <div id="view-all" class="table-responsive tableContainer">
+                @await Html.PartialAsync("_ViewAll", Model)
+            </div>
+        </div>
     </div>
-
-
-
-
-
-
-</div>
 </body>
 </html>

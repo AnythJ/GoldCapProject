@@ -104,11 +104,6 @@ namespace GoldCap.Models
                 var exp = context.Expenses.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-30 + i).Day &&
                 e.Date.Value.Month == DateTime.Now.AddDays(-30 + i).Month)).AsEnumerable();
 
-
-                
-                
-                
-                
                 _30daysModel model = new _30daysModel()
                 {
                     Amount = 0,

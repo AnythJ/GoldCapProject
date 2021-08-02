@@ -109,15 +109,22 @@ $(document).ready(function () {
                         function cateList(array1, array2) {
                             var firstText = '';
                             for (var i = 0; i < array1.length; i++) {
-                                firstText += '<tr><td>' + array1[i] +'&nbsp;&nbsp;'+ '</td>'+'<td style="text-align: right">'+array2[i]+'</td>'+'</tr>';
+                                firstText += '<tr><td>' + array1[i] +'&nbsp;&nbsp;'+ '</td>'+'<td style="text-align: right">'+array2[i]+'$</td>'+'</tr>';
                             }
-                            
+
                             return firstText;
                         }
                         
-                        
 
-                        return '<small>' + this.point.x +'</small><br/>'+'<table><tr><th>Category</th><th style="text-align: right">$</th></tr>' + cateList(tooltipStrings[this.point.x], tooltipDecimals[this.point.x])+ '</table>';
+                        if (cateList(tooltipStrings[this.point.x], tooltipDecimals[this.point.x]) != '') {
+                            return '<small>' + this.point.x + '</small><br/>' + '<table class="table"><tr><th>Category</th><th style="text-align: right">Amount</th></tr>' +
+                                cateList(tooltipStrings[this.point.x], tooltipDecimals[this.point.x]) + '</table>';
+                        }
+                        else {
+                            return '<small>' + this.point.x + '</small><br/>' + '<p style="font-weight: bold">No expenses</p>';
+                        }
+
+                        
 
 
                         //return 'The value for <b>' + this.x +

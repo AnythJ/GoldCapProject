@@ -21,7 +21,7 @@ $(document).ready(function () {
         }),
             $.each(result.tooltipList, function (index, element) {
                 tooltipStrings.push(
-                    String(element.categoryListTooltip),
+                    element.categoryListTooltip,
                 );
                 //if (element.amount != 0) {
                 //    tooltipDecimals.push(
@@ -99,11 +99,31 @@ $(document).ready(function () {
                 }],
 
                 tooltip: {
+                    useHTML: true,
+                    /*headerFormat: '<small>{point.key}</small>',*/
+                    //pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' +
+                    //    '<td style="text-align: right"><b>{point.y} EUR</b></td></tr>',
+                    //footerFormat: '</table>',
                     formatter: function () {
-                        /*return tooltipStrings[this.point.x] + "=" + tooltipDecimals[this.point.x];*/
-                        return 'The value for <b>' + this.x +
-                            '</b> is <b>' + this.y + '</b>';
-                    }
+
+                        function cateList(array1, array2) {
+                            var firstText = '';
+                            for (var i = 0; i < array1.length; i++) {
+                                firstText += '<tr><td>' + array1[i] +'&nbsp;&nbsp;'+ '</td>'+'<td style="text-align: right">'+array2[i]+'</td>'+'</tr>';
+                            }
+                            
+                            return firstText;
+                        }
+                        
+                        
+
+                        return '<small>' + this.point.x +'</small><br/>'+'<table><tr><th>Category</th><th style="text-align: right">$</th></tr>' + cateList(tooltipStrings[this.point.x], tooltipDecimals[this.point.x])+ '</table>';
+
+
+                        //return 'The value for <b>' + this.x +
+                        //    '</b> is <b>' + this.y + '</b>';
+                    },
+                    
                 },
 
                 responsive: {

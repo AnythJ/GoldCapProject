@@ -11,5 +11,6 @@ namespace GoldCap.Models
         public List<CategoryChart> CategoryRatios { get; set; }
         public int CategoryCount { get; set; }
         public List<TooltipModel> TooltipList { get; set; }
+        public List<Expense> ExpensesList { get; set; }
     }
 }

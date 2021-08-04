@@ -1,4 +1,5 @@
-﻿showInPopup = (url, title) => {
+﻿
+showInPopup = (url, title) => {
     $.ajax({
         type: "GET",
         url: url,
@@ -66,3 +67,12 @@ jQueryAjaxDelete = form => {
     return false;
 }
 
+JqueryAjaxSort = (url, title) => {
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (res) {
+            $('#view-all').html(res.html);
+        }
+    })
+};

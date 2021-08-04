@@ -21,24 +21,17 @@
     <thead class="sticky-top">
         <tr class="align-text-top">
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+                <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort", "Dashboard", new { sortOrder = (ViewBag.AmountSortParm == null ? "Amount" : ViewBag.AmountSortParm) }, Context.Request.Scheme)','Sort')">Amount</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category)
+                <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort","Dashboard",new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)},Context.Request.Scheme)','Sort')">Category</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th style="padding-left:20px;">
-                @Html.DisplayNameFor(model => model.Date)
+                <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort","Dashboard",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
             </th>
-            @*<th style="text-align:right; padding-right:30px;">
-                    <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = 0},Context.Request.Scheme)','New expense')"
-                       class="btn btn-sm" style="padding:0;">
-                        <i class="far fa-plus-square fa-lg" style="font-size: 25px;padding-top:5px;"></i>
-                    </a>
-
-                </th>*@
             <th></th>
         </tr>
     </thead>
@@ -58,15 +51,6 @@
                 <td style="width:220px;padding-left:20px;">
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
-                @*<td align="right" style="padding-right:30px;width:220px;">
-                        <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')"
-                           class="btn btn-primary btn-sm" style="width:31.13px;height:32px;">
-                            <i class="far fa-edit" style="font-size:15px;color:white;"></i>
-                        </a>
-                        <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
-                            <input type="submit" value="&#xf1f8" style="font-size:15px;color:white;" class="btn btn-danger btn-sm"/>
-                        </form>
-                    </td>*@
             <td align="right">
                 <a onclick="showInPopup('@Url.Action("Details","Dashboard",new { id = item.Id},Context.Request.Scheme)','Details')"
                    class="btn btn-primary btn-sm">Details</a>

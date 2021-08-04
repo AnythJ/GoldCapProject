@@ -1,4 +1,6 @@
-﻿/* Change input control border color */
+﻿
+
+/* Change input control border color */
 .form-control, .input-group-text {
     border: 1px solid #0080ff;
 }

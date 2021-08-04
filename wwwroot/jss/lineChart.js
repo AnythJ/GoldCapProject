@@ -23,16 +23,6 @@ $(document).ready(function () {
                 tooltipStrings.push(
                     element.categoryListTooltip,
                 );
-                //if (element.amount != 0) {
-                //    tooltipDecimals.push(
-                //        parseFloat(element.amount),
-                //    );
-                //}
-                //else {
-                //    tooltipDecimals.push(
-                //        parseFloat(0),
-                //    );
-                //}
 
             }),
             $.each(result.tooltipList, function (index, element) {
@@ -57,8 +47,6 @@ $(document).ready(function () {
             }), // initiate/load data for tooltips
 
             console.log(result),
-            console.log(tooltipStrings),
-            console.log(tooltipDecimals),
             
             Highcharts.chart('container', {
                 title: {
@@ -89,7 +77,14 @@ $(document).ready(function () {
                         label: {
                             connectorAllowed: false
                         },
-                        /*pointStart: result.day30*/
+                        cursor: 'pointer',
+                        events: {
+                            click: function (event) {
+                                $("#form-modal .modal-body").html(result.expensesList[27].category);
+                                $("#form-modal").modal('show');
+                                $('.modal-backdrop').remove();
+                            }
+                        }
                     }
                 },
 
@@ -100,10 +95,6 @@ $(document).ready(function () {
 
                 tooltip: {
                     useHTML: true,
-                    /*headerFormat: '<small>{point.key}</small>',*/
-                    //pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' +
-                    //    '<td style="text-align: right"><b>{point.y} EUR</b></td></tr>',
-                    //footerFormat: '</table>',
                     formatter: function () {
 
                         function cateList(array1, array2) {
@@ -124,11 +115,6 @@ $(document).ready(function () {
                             return '<small>' + this.point.x + '</small><br/>' + '<p style="font-weight: bold">No expenses</p>';
                         }
 
-                        
-
-
-                        //return 'The value for <b>' + this.x +
-                        //    '</b> is <b>' + this.y + '</b>';
                     },
                     
                 },

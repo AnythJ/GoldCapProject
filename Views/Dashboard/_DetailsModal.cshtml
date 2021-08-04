@@ -5,38 +5,76 @@
     Layout = null;
 }
 
+<style>
+    .modal-title {
+        font-weight: bold;
+    }
 
+    .modal-body, .modal-header, .modal-footer {
+        background-color: #212529;
+        color: white;
+    }
+
+    input[type=text], select, textarea {
+        background-color: #6C757D;
+        border: 1px solid #6C757D;
+        border-radius: 4px;
+        color: white;
+    }
+
+    textarea {
+        color: white;
+    }
+
+    .modal-title {
+        padding-left: 20px;
+    }
+
+
+    #date-input {
+        width: 221px;
+        margin-right: 0;
+        height: 28px;
+        background-color: #6C757D;
+        border: 1px solid #6C757D;
+        border-radius: 4px;
+        color: white;
+    }
+
+    .btn-close {
+        -webkit-filter: invert(100%);
+        filter: invert(100%);
+    }
+
+    
+    
+</style>
 
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Details" asp-route-id="@Model.Id"autocomplete="off">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-action="Details" asp-route-id="@Model.Id" autocomplete="off">
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Amount" class="control-label"></label>
-                <input id="amountinput" asp-for="Amount" class="form-control" />
-                <span asp-validation-for="Amount"></span>
+                <input disabled asp-for="Amount" class="form-control" style="background-color: #6C757D; color: white;"/>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Category" class="control-label"></label>
-                        <input asp-for="Category" class="form-control"/>
-                        <span asp-validation-for="Category"></span>
+                        <input readonly asp-for="Category" class="form-control" style="background-color: #6C757D; color: white;"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Date" class="control-label"></label>
-                        <input id="dateinput" asp-for="Date" style="height:38px;" class="form-control" />
-                        <span asp-validation-for="Date"></span>
+                        <input readonly id="date-input" asp-for="Date" style="height:38px;" class="form-control" />
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea style="resize:none;height:90px;" id="description-input" asp-for="Description" class="form-control"></textarea>
-                <span asp-validation-for="Description"></span>
+                <textarea readonly style="resize: none; height: 90px; background-color: #6C757D; color: white;" id="description-input" asp-for="Description" class="form-control"></textarea>
             </div>
 
             <div style="margin-top:15px;text-align:right;">

@@ -46,14 +46,50 @@
         }
 
 
-    /*#region statTable */
+    /*#region statShapes */
 
+    .circleDiv {
+        background: #212529;
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        margin-top: 20px;
+        margin-left: 20px;
+        float: left;
+    }
 
+        /*#endregion */
 
+        .circleDiv p {
+            font-weight:500;
+            font-size: 13px;
+            color: black;
+            margin-top: 0;
+            margin-bottom: 0;
+            text-align: center;
+        }
 
-    /*#endregion */
+    .circleDivSmaller {
+        background: white;
+        border-radius: 50%;
+        width: 130px;
+        height: 130px;
+        float: left;
+    }
 
+    .circleDiv2 {
+        background: white;
+        border-radius: 50%;
+        width: 130px;
+        height: 130px;
+        float: left;
+    }
 
+    br {
+        display: block;
+        content: "";
+        margin-top: 10px;
+    }
 </style>
 @section Styles{
     <link href="~/css/lineChart.css" rel="stylesheet" />
@@ -123,8 +159,20 @@
                 @await Html.PartialAsync("_ViewAll", Model)
             </div>
         </div>
+
+        <div style="margin:10px">
+            <div class="circleDiv" style="padding: 10px 0 0 10px;">
+                <div class="circleDivSmaller" style="padding: 15px 0 0 0;">
+                    <p style="font-size: 20px;font-weight:bold;">4560$</p>
+                    <p>of 7000$</p>
+                    <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
+                    <p>1470$ <small>under</small></p>
+                    <p>last month</p>
+                </div>
+            </div>
+        </div>
     </div>
 
-    
+
 </body>
 </html>

@@ -10,5 +10,6 @@ namespace GoldCap.Models
         public decimal Amount { get; set; }
         public string TimeStamp { get; set; }
         public int OneId { get; set; }
+        public string MonthName { get; set; }
     }
 }

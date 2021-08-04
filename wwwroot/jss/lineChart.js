@@ -6,6 +6,7 @@ $(document).ready(function () {
         var lineAmounts = [];
         var tooltipStrings = [];
         var tooltipDecimals = [];
+        var monthNames = [];
         var rd = [];
         for (var i = 0; i < 31; i++) {
             rd.push(String(i));
@@ -14,6 +15,9 @@ $(document).ready(function () {
         $.each(result.listLast30, function (index, element) {
             lineTimeStamps.push(
                 String(element.timeStamp),
+            );
+            monthNames.push(
+                String(element.monthName),
             );
             lineAmounts.push({
                 y: parseFloat(element.amount),
@@ -40,7 +44,7 @@ $(document).ready(function () {
                             );
                         }
                     })
-                    
+
                 })
                 tooltipDecimals.push(tempArray);
 
@@ -95,6 +99,7 @@ $(document).ready(function () {
 
                 tooltip: {
                     useHTML: true,
+                    outside: true,
                     formatter: function () {
 
                         function cateList(array1, array2) {
@@ -108,11 +113,11 @@ $(document).ready(function () {
                         
 
                         if (cateList(tooltipStrings[this.point.x], tooltipDecimals[this.point.x]) != '') {
-                            return '<small>' + this.point.x + '</small><br/>' + '<table class="table"><tr><th>Category</th><th style="text-align: right">Amount</th></tr>' +
+                            return '<small>' + this.x + '&nbsp;&nbsp;' + monthNames[this.point.x] + '</small><br/>' + '<table class="table"><tr><th>Category</th><th style="text-align: right">Amount</th></tr>' +
                                 cateList(tooltipStrings[this.point.x], tooltipDecimals[this.point.x]) + '</table>';
                         }
                         else {
-                            return '<small>' + this.point.x + '</small><br/>' + '<p style="font-weight: bold">No expenses</p>';
+                            return '<small>' + this.x + '&nbsp;&nbsp;' + monthNames[this.point.x] + '</small><br/>' + '<p style="font-weight: bold">No expenses</p>';
                         }
 
                     },

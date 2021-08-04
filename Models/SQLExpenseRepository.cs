@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -108,9 +109,8 @@ namespace GoldCap.Models
                 {
                     Amount = 0,
                     TimeStamp = DateTime.Now.AddDays(-30 + i).Day.ToString(),
-                    OneId = -1
-                    //Categories = context.Expenses.Where(e => e.Date == DateTime.Now.AddDays(-30 + i))
-                    //.Select(e => e.Category).ToList<string>().Distinct().ToList<string>()
+                    OneId = -1,
+                    MonthName = DateTime.Now.AddDays(-30 + i).ToString("MMMM", CultureInfo.InvariantCulture)
                 };
 
                 if (exp != null)

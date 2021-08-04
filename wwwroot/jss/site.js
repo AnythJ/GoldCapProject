@@ -76,3 +76,14 @@ JqueryAjaxSort = (url, title) => {
         }
     })
 };
+
+sendToList = (id) => {
+    $.ajax({
+        type: "GET",
+        data: { 'id': id },
+        url: '/Dashboard/TooltipSort',
+        success: function (res) {
+            $('#view-all').html(res.html);
+        }
+    })
+};

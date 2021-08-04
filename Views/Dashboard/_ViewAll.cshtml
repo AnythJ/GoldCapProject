@@ -9,6 +9,10 @@
         font-family: "Font Awesome 5 Free";
         font-weight: 900;
     }
+    a.refreshIcon {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+    }
 
     i.fa-plus-square:hover {
         background-color: gray;
@@ -16,6 +20,7 @@
     .modal-backdrop {
         z-index: -1;
     }
+    
 </style>
 <table class="table table-hover">
     <thead class="sticky-top">
@@ -32,7 +37,11 @@
             <th style="padding-left:20px;">
                 <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort","Dashboard",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
             </th>
-            <th></th>
+            <th style="text-align:center;">
+                <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort", "Dashboard", new { sortOrder = "date_desc" }, Context.Request.Scheme)','Sort')">
+                    <i class="fas fa-sync-alt"></i>
+                </a>
+            </th>
         </tr>
     </thead>
     <tbody>

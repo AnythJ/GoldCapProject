@@ -80,9 +80,9 @@ $(document).ready(function () {
                         cursor: 'pointer',
                         events: {
                             click: function (event) {
-                                $("#form-modal .modal-body").html(result.expensesList[27].category);
-                                $("#form-modal").modal('show');
-                                $('.modal-backdrop').remove();
+                                sendToList(result.listLast30[event.point.x].oneId);
+                                /*alert(result.listLast30[event.point.x].oneId);*/
+                                
                             }
                         }
                     }

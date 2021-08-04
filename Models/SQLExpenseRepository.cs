@@ -108,6 +108,7 @@ namespace GoldCap.Models
                 {
                     Amount = 0,
                     TimeStamp = DateTime.Now.AddDays(-30 + i).Day.ToString(),
+                    OneId = -1
                     //Categories = context.Expenses.Where(e => e.Date == DateTime.Now.AddDays(-30 + i))
                     //.Select(e => e.Category).ToList<string>().Distinct().ToList<string>()
                 };
@@ -117,6 +118,7 @@ namespace GoldCap.Models
                     foreach (var item in exp)
                     {
                         model.Amount += (decimal)item.Amount;
+                        model.OneId = item.Id;
                     }
                 }
 
@@ -198,5 +200,7 @@ namespace GoldCap.Models
 
             return finalList;
         }
+
+       
     }
 }

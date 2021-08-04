@@ -21,7 +21,7 @@ namespace GoldCap.Controllers
             ViewBag.Expenses = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
             var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
 
-            
+
             var x = _expenseRepository.GetCategoryRatios()
                 .Where(c => c.CategoryPercentage >= _expenseRepository.GetCategoryRatios()[6].CategoryPercentage);
             if (x != null)
@@ -41,7 +41,7 @@ namespace GoldCap.Controllers
             ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 
-            
+
             switch (sortOrder)
             {
                 case "Date":
@@ -82,6 +82,20 @@ namespace GoldCap.Controllers
 
         }
 
+        public IActionResult TooltipSort(int id)
+        {
+            if (id >= 0)
+            {
+                var expense = _expenseRepository.GetExpense(id);
+                var model = _expenseRepository.GetAllExpenses().Where(e => (e.Date.Value.Day == expense.Date.Value.Day
+                           && e.Date.Value.Month == expense.Date.Value.Month));
+
+                return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", model) });
+            }
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date)) });
+
+
+        }
         public JsonResult GetData()
         {
             List<string> newList = new List<string>();

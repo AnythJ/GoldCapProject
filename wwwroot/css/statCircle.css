@@ -1,0 +1,81 @@
+﻿.statCircle {
+    height: 150px;
+    width: 150px;
+    position: relative;
+}
+
+    .statCircle .circle {
+        position: absolute;
+        z-index: 6;
+        height: 100%;
+        width: 100%;
+        border-radius: 100%;
+        background-color: transparent;
+    }
+
+    .statCircle .bar {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        -webkit-border-radius: 100%;
+        background-color: transparent;
+        clip: rect(0px, 150px, 150px, 75px);
+    }
+
+    .statCircle .smallerCircle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 130px;
+        height: 130px;
+        margin: -65px 0 0 -65px;
+        background-color: white;
+        z-index: 10;
+        -webkit-border-radius: 100%;
+        animation: circleShow 0.6 linear;
+    }
+
+.circle .bar .progress {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    -webkit-border-radius: 100%;
+    clip: rect(0px, 75px, 200px, 0px);
+    background-color: orange;
+    z-index: 3;
+}
+
+
+
+.circle .left .progress {
+    z-index: 4;
+    animation: left 0.3s linear both;
+}
+
+
+.circle .right .progress {
+    animation: right 0.3s linear both;
+    animation-delay: 0.3s;
+}
+
+
+
+.smallerCircle p {
+    font-weight: 500;
+    font-size: 13px;
+    color: black;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+hr {
+    border-top: 3px solid #5a6672;
+    background-color: transparent;
+    z-index: inherit;
+    opacity: 1;
+}
+
+.smallerCircle p, hr {
+    animation: circleShow 0.5s linear;
+}

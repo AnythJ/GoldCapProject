@@ -19,7 +19,51 @@ namespace GoldCap.Controllers
         public IActionResult Index()
         {
             ViewBag.Expenses = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
-            var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
+            var thisMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
+            var lastMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-60) && m.Date <= DateTime.Now.AddDays(-30));
+
+
+            #region StatCircles
+            int sumExpenses = 0;
+            foreach (var item in thisMonth)
+            {
+                sumExpenses += (int)item.Amount.Value;
+            }
+            int sumExpensesLastMonth = 0;
+            foreach (var item in lastMonth)
+            {
+                sumExpensesLastMonth += (int)item.Amount.Value;
+            }
+
+            var percentage = (Convert.ToDecimal(sumExpenses) / sumExpensesLastMonth) *100;
+            int avg = (int)(3.6 * (int)percentage);
+
+            var rightStart = 0;
+            var avgRight = 0;
+            var avgLeft = 0;
+
+            if (avg >= 0 && avg <= 180)
+            {
+                rightStart = 0;
+                avgRight = 0;
+                avgLeft = avg;
+            }
+            else
+            {
+                rightStart = 180;
+                avgRight = (avg - 180);
+                avgLeft = 180;
+            }
+
+
+
+            ViewBag.PercentageStringLeft = avgLeft + "deg";
+            ViewBag.PercentageStringStartRight = rightStart + "deg";
+            ViewBag.PercentageStringRight = avgRight + "deg";
+
+            ViewBag.SumLast30 = sumExpenses;
+            ViewBag.SumBeforeLast30 = sumExpensesLastMonth;
+            #endregion
 
 
             var x = _expenseRepository.GetCategoryRatios()
@@ -29,7 +73,7 @@ namespace GoldCap.Controllers
                 ViewBag.Categories = x;
             }
 
-            return View(model);
+            return View(thisMonth);
         }
 
 

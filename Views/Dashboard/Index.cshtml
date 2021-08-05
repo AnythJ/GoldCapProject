@@ -46,54 +46,43 @@
         }
 
 
-    /*#region statShapes */
 
-    .circleDiv {
-        background: #212529;
-        border-radius: 50%;
-        width: 150px;
-        height: 150px;
-        margin-top: 20px;
-        margin-left: 20px;
-        float: left;
+
+
+    /*#region StatCircles */
+
+    .circle .right {
+        z-index: 3;
+        transform: rotate(@ViewBag.PercentageStringStartRight);
+
     }
-
-        /*#endregion */
-
-        .circleDiv p {
-            font-weight:500;
-            font-size: 13px;
-            color: black;
-            margin-top: 0;
-            margin-bottom: 0;
-            text-align: center;
+    @@keyframes left {
+        100% {
+            transform: rotate(@ViewBag.PercentageStringLeft);
+        }
+    }
+    @@keyframes right {
+        100% {
+            transform: rotate(@ViewBag.PercentageStringRight);
+        }
+    }
+    @@keyframes circleShow {
+        0% {
+            opacity: 0;
         }
 
-    .circleDivSmaller {
-        background: white;
-        border-radius: 50%;
-        width: 130px;
-        height: 130px;
-        float: left;
+        00% {
+            opacity: 1;
+        }
     }
 
-    .circleDiv2 {
-        background: white;
-        border-radius: 50%;
-        width: 130px;
-        height: 130px;
-        float: left;
-    }
-
-    br {
-        display: block;
-        content: "";
-        margin-top: 10px;
-    }
+/*#endregion */
 </style>
+
 @section Styles{
     <link href="~/css/lineChart.css" rel="stylesheet" />
     <link href="~/css/pieChart.css" rel="stylesheet" />
+    <link href="~/css/statCircle.css" rel="stylesheet" />
 }
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -160,14 +149,22 @@
             </div>
         </div>
 
-        <div style="margin:10px">
-            <div class="circleDiv" style="padding: 10px 0 0 10px;">
-                <div class="circleDivSmaller" style="padding: 15px 0 0 0;">
-                    <p style="font-size: 20px;font-weight:bold;">4560$</p>
-                    <p>of 7000$</p>
+        <div style="float:left;margin-top:20px;margin-left:20px;position:static;">
+            <div class="statCircle">
+                <div class="smallerCircle" style="padding-top:10px;">
+                    <p style="font-size: 20px;font-weight:bold;">@ViewBag.SumLast30$</p>
+                    <p>@ViewBag.SumBeforeLast30$</p>
                     <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
                     <p>1470$ <small>under</small></p>
                     <p>last month</p>
+                </div>
+                <div class="circle">
+                    <div class="bar left">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="bar right">
+                        <div class="progress"></div>
+                    </div>
                 </div>
             </div>
         </div>

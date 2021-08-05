@@ -71,9 +71,13 @@
             opacity: 0;
         }
 
-        00% {
+        100% {
             opacity: 1;
         }
+    }
+
+    div .statCircle {
+        animation: circleShow 0.6s linear;
     }
 
 /*#endregion */
@@ -155,7 +159,7 @@
                     <p style="font-size: 20px;font-weight:bold;">@ViewBag.SumLast30$</p>
                     <p>@ViewBag.SumBeforeLast30$</p>
                     <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                    <p>1470$ <small>under</small></p>
+                    <p>@ViewBag.UnderMonth$ <small>under</small></p>
                     <p>last month</p>
                 </div>
                 <div class="circle">
@@ -169,7 +173,7 @@
             </div>
         </div>
     </div>
-
+    <div>@ViewBag.SortListId</div>
 
 </body>
 </html>

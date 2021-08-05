@@ -34,7 +34,7 @@ namespace GoldCap.Controllers
             {
                 sumExpensesLastMonth += (int)item.Amount.Value;
             }
-
+            var underMonth = sumExpensesLastMonth - sumExpenses;
             var percentage = (Convert.ToDecimal(sumExpenses) / sumExpensesLastMonth) *100;
             int avg = (int)(3.6 * (int)percentage);
 
@@ -63,6 +63,7 @@ namespace GoldCap.Controllers
 
             ViewBag.SumLast30 = sumExpenses;
             ViewBag.SumBeforeLast30 = sumExpensesLastMonth;
+            ViewBag.UnderMonth = underMonth;
             #endregion
 
 
@@ -77,7 +78,7 @@ namespace GoldCap.Controllers
         }
 
 
-        public IActionResult Sort(string sortOrder)
+        public IActionResult Sort(string sortOrder, int id)
         {
             var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30));
 
@@ -134,6 +135,7 @@ namespace GoldCap.Controllers
                 var model = _expenseRepository.GetAllExpenses().Where(e => (e.Date.Value.Day == expense.Date.Value.Day
                            && e.Date.Value.Month == expense.Date.Value.Month));
 
+                
                 return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", model) });
             }
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date)) });

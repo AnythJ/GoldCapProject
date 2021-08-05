@@ -32,7 +32,7 @@
         background-color: white;
         z-index: 10;
         -webkit-border-radius: 100%;
-        animation: circleShow 0.6 linear;
+        /*animation: circleShow 4s linear;*/
     }
 
 .circle .bar .progress {
@@ -76,6 +76,4 @@ hr {
     opacity: 1;
 }
 
-.smallerCircle p, hr {
-    animation: circleShow 0.5s linear;
-}
+

@@ -84,6 +84,7 @@ sendToList = (id) => {
         url: '/Dashboard/TooltipSort',
         success: function (res) {
             $('#view-all').html(res.html);
+            $('#idForSort').val(id);
         }
     })
 };

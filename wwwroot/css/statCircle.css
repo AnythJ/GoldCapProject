@@ -32,7 +32,7 @@
         background-color: white;
         z-index: 10;
         -webkit-border-radius: 100%;
-        border: 1px solid orange;
+        border: 1px solid #68a4fd;
     }
 
 .circle .bar .progress {
@@ -41,7 +41,7 @@
     width: 100%;
     -webkit-border-radius: 100%;
     clip: rect(0px, 75px, 200px, 0px);
-    background-color: orange;
+    background-color: #4e94fd;
     z-index: 3;
 }
 
@@ -61,7 +61,7 @@
 
 
 .smallerCircle p {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 13px;
     color: black;
     margin-top: 0;

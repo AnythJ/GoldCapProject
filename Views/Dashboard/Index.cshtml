@@ -80,7 +80,15 @@
         animation: circleShow 0.6s linear;
     }
 
-
+    #adviceDiv p{
+        border-top: 2px solid black;
+        margin: 10px 8px 0 8px;
+        padding-top: 10px;
+        font-weight: 600;
+    }
+    #adviceDiv p a {
+        text-decoration: none;
+    }
     /*::-webkit-scrollbar {
         width: 10px;
     }*/
@@ -115,8 +123,12 @@
             </figure>
         </div>
 
-        <div class="column thirdColumn">
-
+        <div id="adviceDiv" style="width: 15%;height:300px;float:left;margin-top:20px;" class="shadowDiv">
+            <h1 style="margin:8px 0 15px 8px;font-size:20px;font-weight:bolder;">Advice</h1>
+            <p><a href="#">Add monthly payments to make your life easier</a></p>
+            <p><a href="#">Add monthly payments to make your life easier</a></p>
+            <p><a href="#">Add monthly payments to make your life easier</a></p>
+            <p style="padding-top:5px;text-align:right;"><a class="btn btn-primary btn-sm">Your monthly payments</a>
         </div>
 
         <div style="margin-left:20px;float:left;">
@@ -157,11 +169,13 @@
             </div>
         </div>
 
-        <div style="float:left;margin-top:20px;margin-left:20px;position:static;border-radius:100%;border:1px solid orange;">
+        <!-- #region Stat Progress Circles -->
+
+        <div style="float: left; margin-top: 20px; margin-left: 20px; position: static; border-radius: 100%; border: 1px solid #68a4fd;">
             <div class="statCircle">
                 <div class="smallerCircle" style="padding-top:10px;">
                     <p style="font-size: 20px;font-weight:bold;">@ViewBag.SumLast30$</p>
-                    <p>@ViewBag.SumBeforeLast30$</p>
+                    <p>of @ViewBag.SumBeforeLast30$</p>
                     <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
                     <p>@ViewBag.UnderMonth$ <small>under</small></p>
                     <p>last month</p>
@@ -176,8 +190,50 @@
                 </div>
             </div>
         </div>
-    </div>
-    
+        <div style="float: left; margin-top: 20px; margin-left: 20px; position: static; border-radius: 100%; border: 1px solid #68a4fd;">
+            <div class="statCircle">
+                <div class="smallerCircle" style="padding-top:10px;">
+                    <p style="font-size: 20px;font-weight:bold;">@ViewBag.SumLast30$</p>
+                    <p>of @ViewBag.SumBeforeLast30$</p>
+                    <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
+                    <p>@ViewBag.UnderMonth$ <small>under</small></p>
+                    <p>last month</p>
+                </div>
+                <div class="circle">
+                    <div class="bar left">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="bar right">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="float: left; margin-top: 20px; margin-left: 20px; position: static; border-radius: 100%; border: 1px solid #68a4fd;">
+            <div class="statCircle">
+                <div class="smallerCircle" style="padding-top:10px;">
+                    <p style="font-size: 20px;font-weight:bold;">@ViewBag.SumLast30$</p>
+                    <p>of @ViewBag.SumBeforeLast30$</p>
+                    <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
+                    <p>@ViewBag.UnderMonth$ <small>under</small></p>
+                    <p>last month</p>
+                </div>
+                <div class="circle">
+                    <div class="bar left">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="bar right">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- #endregion -->
+    </div>
+
+
+
+    
 </body>
 </html>

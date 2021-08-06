@@ -68,14 +68,18 @@ jQueryAjaxDelete = form => {
 }
 
 JqueryAjaxSort = (url, title) => {
+    var x = $('#idForSort').val();
     $.ajax({
         type: "GET",
+        data: {'id': $('#idForSort').val()},
         url: url,
         success: function (res) {
             $('#view-all').html(res.html);
+            $('#idForSort').val(x);
         }
     })
 };
+
 
 sendToList = (id) => {
     $.ajax({
@@ -88,3 +92,5 @@ sendToList = (id) => {
         }
     })
 };
+
+

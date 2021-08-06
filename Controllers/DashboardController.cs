@@ -79,8 +79,16 @@ namespace GoldCap.Controllers
 
 
         public IActionResult Sort(string sortOrder, int id)
-        {
+        { 
             var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30));
+
+            if(id > 0 && sortOrder != "default")
+            {
+                var expense = _expenseRepository.GetExpense(id);
+                model = _expenseRepository.GetAllExpenses().Where(e => e.Date.Value.DayOfYear == expense.Date.Value.DayOfYear && e.Date.Value.Year == expense.Date.Value.Year);
+            }
+            
+
 
             ViewBag.AmountSortParm = sortOrder == "Amount" ? "amount_desc" : "Amount";
             ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
@@ -108,7 +116,7 @@ namespace GoldCap.Controllers
                     model = model.OrderByDescending(d => d.Amount);
                     break;
                 default:
-                    model = model.OrderBy(d => d.Amount);
+                    model = model.OrderByDescending(d => d.Date);
                     break;
             }
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", model) });
@@ -135,13 +143,12 @@ namespace GoldCap.Controllers
                 var model = _expenseRepository.GetAllExpenses().Where(e => (e.Date.Value.Day == expense.Date.Value.Day
                            && e.Date.Value.Month == expense.Date.Value.Month));
 
-                
+
                 return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", model) });
             }
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date)) });
-
-
         }
+
         public JsonResult GetData()
         {
             List<string> newList = new List<string>();
@@ -158,7 +165,7 @@ namespace GoldCap.Controllers
                 CategoryRatios = _expenseRepository.GetCategoryRatios(),
                 CategoryCount = _expenseRepository.GetAllCategories().Count(),
                 TooltipList = _expenseRepository.GetTooltipList(),
-                ExpensesList = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderBy(e => e.Date).ToList()
+                ExpensesList = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderBy(e => e.Date).AsEnumerable()
             };
 
             return Json(data);

@@ -71,9 +71,7 @@ $(document).ready(function () {
                 },
 
                 legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle'
+                    enabled: false,
                 },
 
                 plotOptions: {
@@ -85,8 +83,12 @@ $(document).ready(function () {
                         events: {
                             click: function (event) {
                                 sendToList(result.listLast30[event.point.x].oneId);
-                                /*alert(result.listLast30[event.point.x].oneId);*/
-                                
+                                if (tooltipStrings[event.point.x] == '') {
+                                    $.notify(
+                                        "No expenses to show",
+                                        { globalPosition: "top right", clickToHide: true, autoHide: true, autoHideDelay: 1500, className: 'info'}
+                                    );
+                                }
                             }
                         }
                     }

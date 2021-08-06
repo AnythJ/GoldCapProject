@@ -11,7 +11,7 @@
         margin: 0;
         height: 350px;
         max-width: calc(80%-609px);
-        min-width: 622.42px;
+        min-width: 645px;
     }
 
 
@@ -80,6 +80,10 @@
         animation: circleShow 0.6s linear;
     }
 
+
+    /*::-webkit-scrollbar {
+        width: 10px;
+    }*/
 /*#endregion */
 </style>
 
@@ -147,13 +151,13 @@
             </table>
         </div>
 
-        <div class="shadowDiv" style="float:left;min-width:605px;width:auto;margin-left:20px;margin-top:16px;max-height:350px;overflow-y:auto;background-color:white;">
+        <div class="shadowDiv" style="float:left;min-width:605px;width:auto;margin-left:20px;margin-top:16px;max-height:350px;background-color:white;">
             <div id="view-all" class="table-responsive tableContainer">
                 @await Html.PartialAsync("_ViewAll", Model)
             </div>
         </div>
 
-        <div style="float:left;margin-top:20px;margin-left:20px;position:static;">
+        <div style="float:left;margin-top:20px;margin-left:20px;position:static;border-radius:100%;border:1px solid orange;">
             <div class="statCircle">
                 <div class="smallerCircle" style="padding-top:10px;">
                     <p style="font-size: 20px;font-weight:bold;">@ViewBag.SumLast30$</p>
@@ -173,7 +177,7 @@
             </div>
         </div>
     </div>
-    <div>@ViewBag.SortListId</div>
+    
 
 </body>
 </html>

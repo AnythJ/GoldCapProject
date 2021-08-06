@@ -3,12 +3,14 @@
 
 @section Styles {
     <link href="~/css/List.css" rel="stylesheet" />
+   
 }
 <style>
     input[type="submit"] {
         font-family: "Font Awesome 5 Free";
         font-weight: 900;
     }
+
     a.refreshIcon {
         font-family: "Font Awesome 5 Free";
         font-weight: 900;
@@ -17,12 +19,18 @@
     i.fa-plus-square:hover {
         background-color: gray;
     }
+
     .modal-backdrop {
         z-index: -1;
     }
-    
+    .table td.description {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 15ch;
+    }
 </style>
-<input hidden id="idForSort" value=""/>
+<input hidden id="idForSort" value="" />
 <table class="table table-hover">
     <thead class="sticky-top">
         <tr class="align-text-top">
@@ -39,7 +47,7 @@
                 <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort","Dashboard",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
             </th>
             <th style="text-align:center;">
-                <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort", "Dashboard", new { sortOrder = "date_desc" }, Context.Request.Scheme)','Sort')">
+                <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort", "Dashboard", new { sortOrder = "default" }, Context.Request.Scheme)','Sort')">
                     <i class="fas fa-sync-alt"></i>
                 </a>
             </th>
@@ -61,10 +69,10 @@
                 <td style="width:220px;padding-left:20px;">
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
-            <td align="right">
-                <a onclick="showInPopup('@Url.Action("Details","Dashboard",new { id = item.Id},Context.Request.Scheme)','Details')"
-                   class="btn btn-primary btn-sm">Details</a>
-            </td>
+                <td align="right">
+                    <a onclick="showInPopup('@Url.Action("Details","Dashboard",new { id = item.Id},Context.Request.Scheme)','Details')"
+                       class="btn btn-primary btn-sm">Details</a>
+                </td>
             </tr>
         }
     </tbody>

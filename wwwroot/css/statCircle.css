@@ -32,7 +32,7 @@
         background-color: white;
         z-index: 10;
         -webkit-border-radius: 100%;
-        /*animation: circleShow 4s linear;*/
+        border: 1px solid orange;
     }
 
 .circle .bar .progress {

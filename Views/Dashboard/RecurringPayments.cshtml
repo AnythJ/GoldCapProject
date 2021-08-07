@@ -1,0 +1,68 @@
+﻿@model IEnumerable<GoldCap.Models.Expense>
+@{
+    ViewData["Title"] = "List of recurring payments";
+    Layout = null;
+}
+
+@section Styles {
+    <link href="~/css/List.css" rel="stylesheet" />
+}
+<style>
+    
+</style>
+<script type="text/javascript">
+    if (document.getElementById("tableInModal")) {
+        document.getElementById("modalDialog").classList.add("modal-lg");
+    }
+</script>
+<div class="table-responsive tableContainer" id="tableInModal">
+    <table class="table table-hover">
+        <thead class="sticky-top">
+            <tr class="align-text-top">
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th style="padding-left:20px;">
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th style="text-align:right; padding-right:30px;">
+                    <a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-success btn-sm">New expense</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td class="description">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td style="width:220px;padding-left:20px;">
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td align="right" style="padding-right:30px;width:220px;">
+                        <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')" class="btn btn-primary btn-sm">Edit</a>
+                        <form asp-controller="dashboard" asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDeleteDashboard(this)" class="d-inline">
+                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@*<script>$.ajaxPrefilter(function (options, originalOptions, jqXHR) { options.async = true; });</script>*@

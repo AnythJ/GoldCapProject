@@ -30,5 +30,8 @@ namespace GoldCap.Models
         [Column(TypeName = "smalldatetime")]
         [Range(typeof(DateTime), "1/1/2000", "1/1/2040", ErrorMessage = "Invalid date")]
         public DateTime? Date { get; set; }
+
+        [DisplayName("Status")]
+        public string Status { get; set; }
     }
 }

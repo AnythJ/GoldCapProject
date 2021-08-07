@@ -50,7 +50,6 @@ $(document).ready(function () {
 
             }), // initiate/load data for tooltips
 
-            console.log(result),
             
             Highcharts.chart('container', {
                 title: {

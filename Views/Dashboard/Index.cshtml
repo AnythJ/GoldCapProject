@@ -128,7 +128,7 @@
             <p><a href="#">Add monthly payments to make your life easier</a></p>
             <p><a href="#">Add monthly payments to make your life easier</a></p>
             <p><a href="#">Add monthly payments to make your life easier</a></p>
-            <p style="padding-top:5px;text-align:right;"><a class="btn btn-primary btn-sm">Your monthly payments</a>
+            <p style="padding-top:5px;text-align:right;"><a onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)','Recurring payments')" class="btn btn-success btn-sm">Recurring payments</a>
         </div>
 
         <div style="margin-left:20px;float:left;">
@@ -235,5 +235,6 @@
 
 
     
+
 </body>
 </html>

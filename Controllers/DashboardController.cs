@@ -135,6 +135,70 @@ namespace GoldCap.Controllers
 
         }
 
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            _expenseRepository.Delete(id);
+
+            return Json(new { html = Helper.RenderRazorViewToString(this, "RecurringPayments", _expenseRepository.GetAllExpenses()) });
+        }
+
+        [HttpGet]
+        [NoDirectAccess]
+        public IActionResult RecurringPayments()
+        {
+            var expenseModel = _expenseRepository.GetAllExpenses().Where(d => d.Date.Value.Day >= 23);
+            if (expenseModel == null)
+            {
+                return NotFound();
+            }
+            return View("RecurringPayments", expenseModel);
+
+        }
+
+
+        [HttpGet]
+        [NoDirectAccess]
+        public IActionResult CreateOrEdit(int id = 0)
+        {
+            ViewBag.CategoryList = _expenseRepository.GetCategoryList();
+
+            if (id == 0)
+                return View(new Expense());
+            else
+            {
+                var expenseModel = _expenseRepository.GetExpense(id);
+                if (expenseModel == null)
+                {
+                    return NotFound();
+                }
+                return View(expenseModel);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date")] Expense expense)
+        {
+            ViewBag.CategoryList = _expenseRepository.GetCategoryList();
+            if (ModelState.IsValid)
+            {
+                if (id == 0)
+                {
+                    _expenseRepository.Add(expense);
+                }
+                else
+                {
+                    _expenseRepository.Update(expense);
+                }
+
+
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "RecurringPayments", _expenseRepository.GetAllExpenses()) });
+            }
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) });
+        }
+
         public IActionResult TooltipSort(int id)
         {
             if (id >= 0)

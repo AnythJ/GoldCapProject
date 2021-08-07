@@ -66,6 +66,60 @@ jQueryAjaxDelete = form => {
     //prevent default form submit event
     return false;
 }
+// HERE TO CHANGE, IT CAN BE IN ONE FUNCTION
+jQueryAjaxDeleteDashboard = form => {
+    if (confirm('Are you sure to delete this record ?')) {
+        try {
+            $.ajax({
+                type: 'POST',
+                url: form.action,
+                data: new FormData(form),
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    $('#tableInModal').html(res.html);
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            })
+        } catch (ex) {
+            console.log(ex)
+        }
+    }
+
+    //prevent default form submit event
+    return false;
+}
+
+jQueryAjaxPostDashboard = form => {
+    try {
+        $.ajax({
+            type: 'POST',
+            url: form.action,
+            data: new FormData(form),
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                if (res.isValid) {
+                    $('#tableInModal').html(res.html)
+                    $('#form-modal .modal-body').html('');
+                    $('#form-modal .modal-title').html('');
+                    $('#form-modal').modal('hide');
+                }
+                else
+                    $('#form-modal .modal-body').html(res.html);
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+        //to prevent default form submit event
+        return false;
+    } catch (ex) {
+        console.log(ex)
+    }
+}
 
 JqueryAjaxSort = (url, title) => {
     var x = $('#idForSort').val();
@@ -92,5 +146,7 @@ sendToList = (id) => {
         }
     })
 };
+
+
 
 

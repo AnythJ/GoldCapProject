@@ -201,6 +201,37 @@ namespace GoldCap.Models
             return finalList;
         }
 
-       
+        public IEnumerable<ExpenseRecurring> GetAllRecurring()
+        {
+            return context.RecurringExpenses;
+        }
+
+        public ExpenseRecurring DeleteRecurring(int id)
+        {
+            ExpenseRecurring expense = context.RecurringExpenses.Find(id);
+            if (expense != null)
+            {
+                context.RecurringExpenses.Remove(expense);
+                context.SaveChanges();
+            }
+            return expense;
+        }
+
+        public ExpenseRecurring AddRecurring(ExpenseRecurring expense)
+        {
+            context.RecurringExpenses.Add(expense);
+            context.SaveChanges();
+
+            return expense;
+        }
+
+        public ExpenseRecurring UpdateRecurring(ExpenseRecurring expenseChanges)
+        {
+            var expense = context.RecurringExpenses.Attach(expenseChanges);
+            expense.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            context.SaveChanges();
+
+            return expenseChanges;
+        }
     }
 }

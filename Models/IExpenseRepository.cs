@@ -28,6 +28,13 @@ namespace GoldCap.Models
         List<Category> GetCategoryList();
         List<CategoryChart> GetCategoryRatios();
 
+        // Recurring expense
+
+        IEnumerable<ExpenseRecurring> GetAllRecurring();
+        ExpenseRecurring DeleteRecurring(int id);
+        ExpenseRecurring AddRecurring(ExpenseRecurring expense);
+        ExpenseRecurring UpdateRecurring(ExpenseRecurring expenseChanges);
+
 
 
 

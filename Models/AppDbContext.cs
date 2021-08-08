@@ -16,6 +16,7 @@ namespace GoldCap.Models
         public DbSet<Expense> Expenses{ get; set; }
 
         public DbSet<Category> Categories { get; set; }
+        public DbSet<ExpenseRecurring> RecurringExpenses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

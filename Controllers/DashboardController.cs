@@ -1,5 +1,6 @@
 ﻿using GoldCap.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,13 @@ namespace GoldCap.Controllers
         {
             _expenseRepository = expenseRepository;
         }
+
         public IActionResult Index()
         {
             ViewBag.Expenses = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
             var thisMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
             var lastMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-60) && m.Date <= DateTime.Now.AddDays(-30));
-
+            
             #region MonthlyAddition
             Expense expense30DaysAgo = null;
             if (DateTime.Today.Day != DateTime.Today.AddDays(-30).Day)
@@ -33,8 +35,8 @@ namespace GoldCap.Controllers
                 expense30DaysAgo = _expenseRepository.GetAllExpenses().First(e => e.Date.Value.Day == DateTime.Today.AddDays(-30).Day && e.Date.Value.Month == DateTime.Today.AddDays(-30).Month && e.Date.Value.Year == DateTime.Today.AddDays(-30).Year);
             }
 
-
-            foreach (var item in _expenseRepository.GetAllRecurring())
+            var allRecurring = _expenseRepository.GetAllRecurring().ToList();
+            foreach (var item in allRecurring)
             {
                 if (item.Date.Value >= expense30DaysAgo.Date.Value && item.Date.Value <= DateTime.Today)
                 {
@@ -46,7 +48,7 @@ namespace GoldCap.Controllers
                         Status = ((StatusName)item.Status).ToString(),
                         Date = item.Date.Value
                     };
-                    item.Date.Value.AddMonths(1);
+                    item.Date = item.Date.Value.AddMonths(1);
                     _expenseRepository.Add(recExp);
 
                     _expenseRepository.UpdateRecurring(item);

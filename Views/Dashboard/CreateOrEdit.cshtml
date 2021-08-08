@@ -1,4 +1,4 @@
-﻿@model Expense
+﻿@model ExpenseRecurring
 
 @{
     ViewData["Title"] = "Edit";
@@ -15,6 +15,9 @@
         color: white;
         background-color: #6C757D;
         border-color: #6C757D;
+    }
+    span {
+        color: black;
     }
 </style>
 
@@ -76,5 +79,6 @@
 
 
 @section Scripts {
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

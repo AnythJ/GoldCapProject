@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GoldCap.Models.Expense>
+﻿@model IEnumerable<GoldCap.Models.ExpenseRecurring>
 @{
     ViewData["Title"] = "List of recurring payments";
     Layout = null;
@@ -8,7 +8,9 @@
     <link href="~/css/List.css" rel="stylesheet" />
 }
 <style>
-    
+    .modal-backdrop {
+        display: none;
+    }
 </style>
 <script type="text/javascript">
     if (document.getElementById("tableInModal")) {
@@ -53,7 +55,6 @@
                         @Html.DisplayFor(modelItem => item.Date)
                     </td>
                     <td align="right" style="padding-right:30px;width:220px;">
-                        <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')" class="btn btn-primary btn-sm">Edit</a>
                         <form asp-controller="dashboard" asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDeleteDashboard(this)" class="d-inline">
                             <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
                         </form>

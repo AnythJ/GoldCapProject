@@ -22,6 +22,38 @@ namespace GoldCap.Controllers
             var thisMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
             var lastMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-60) && m.Date <= DateTime.Now.AddDays(-30));
 
+            #region MonthlyAddition
+            Expense expense30DaysAgo = null;
+            if (DateTime.Today.Day != DateTime.Today.AddDays(-30).Day)
+            {
+                expense30DaysAgo = _expenseRepository.GetAllExpenses().First(e => e.Date.Value.Day == DateTime.Today.AddDays(-29).Day && e.Date.Value.Month == DateTime.Today.AddDays(-29).Month && e.Date.Value.Year == DateTime.Today.AddDays(-29).Year);
+            }
+            else
+            {
+                expense30DaysAgo = _expenseRepository.GetAllExpenses().First(e => e.Date.Value.Day == DateTime.Today.AddDays(-30).Day && e.Date.Value.Month == DateTime.Today.AddDays(-30).Month && e.Date.Value.Year == DateTime.Today.AddDays(-30).Year);
+            }
+
+
+            foreach (var item in _expenseRepository.GetAllRecurring())
+            {
+                if (item.Date.Value >= expense30DaysAgo.Date.Value && item.Date.Value <= DateTime.Today)
+                {
+                    Expense recExp = new Expense()
+                    {
+                        Amount = item.Amount,
+                        Category = item.Category,
+                        Description = item.Description,
+                        Status = ((StatusName)item.Status).ToString(),
+                        Date = item.Date.Value
+                    };
+                    item.Date.Value.AddMonths(1);
+                    _expenseRepository.Add(recExp);
+
+                    _expenseRepository.UpdateRecurring(item);
+                }
+            }
+            #endregion
+
 
             #region StatCircles
             int sumExpenses = 0;
@@ -35,7 +67,7 @@ namespace GoldCap.Controllers
                 sumExpensesLastMonth += (int)item.Amount.Value;
             }
             var underMonth = sumExpensesLastMonth - sumExpenses;
-            var percentage = (Convert.ToDecimal(sumExpenses) / sumExpensesLastMonth) *100;
+            var percentage = (Convert.ToDecimal(sumExpenses) / sumExpensesLastMonth) * 100;
             int avg = (int)(3.6 * (int)percentage);
 
             var rightStart = 0;
@@ -77,17 +109,17 @@ namespace GoldCap.Controllers
             return View(thisMonth);
         }
 
-
+        
         public IActionResult Sort(string sortOrder, int id)
-        { 
+        {
             var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30));
 
-            if(id > 0 && sortOrder != "default")
+            if (id > 0 && sortOrder != "default")
             {
                 var expense = _expenseRepository.GetExpense(id);
                 model = _expenseRepository.GetAllExpenses().Where(e => e.Date.Value.DayOfYear == expense.Date.Value.DayOfYear && e.Date.Value.Year == expense.Date.Value.Year);
             }
-            
+
 
 
             ViewBag.AmountSortParm = sortOrder == "Amount" ? "amount_desc" : "Amount";
@@ -139,16 +171,16 @@ namespace GoldCap.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            _expenseRepository.Delete(id);
+            _expenseRepository.DeleteRecurring(id);
 
-            return Json(new { html = Helper.RenderRazorViewToString(this, "RecurringPayments", _expenseRepository.GetAllExpenses()) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "RecurringPayments", _expenseRepository.GetAllRecurring()) });
         }
 
         [HttpGet]
         [NoDirectAccess]
         public IActionResult RecurringPayments()
         {
-            var expenseModel = _expenseRepository.GetAllExpenses().Where(d => d.Date.Value.Day >= 23);
+            var expenseModel = _expenseRepository.GetAllRecurring();
             if (expenseModel == null)
             {
                 return NotFound();
@@ -164,37 +196,21 @@ namespace GoldCap.Controllers
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList();
 
-            if (id == 0)
-                return View(new Expense());
-            else
-            {
-                var expenseModel = _expenseRepository.GetExpense(id);
-                if (expenseModel == null)
-                {
-                    return NotFound();
-                }
-                return View(expenseModel);
-            }
+            return View(new ExpenseRecurring());
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date")] Expense expense)
+        public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date,Status")] ExpenseRecurring expense)
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList();
             if (ModelState.IsValid)
             {
-                if (id == 0)
-                {
-                    _expenseRepository.Add(expense);
-                }
-                else
-                {
-                    _expenseRepository.Update(expense);
-                }
+                _expenseRepository.AddRecurring(expense);
 
 
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "RecurringPayments", _expenseRepository.GetAllExpenses()) });
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "RecurringPayments", _expenseRepository.GetAllRecurring()) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) });
         }

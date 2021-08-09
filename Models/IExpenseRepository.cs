@@ -16,6 +16,7 @@ namespace GoldCap.Models
         Expense Delete(int id);
         List<_30daysModel> GetSumDayExpense30();
         List<TooltipModel> GetTooltipList();
+        
 
         // Category
 
@@ -34,7 +35,8 @@ namespace GoldCap.Models
         ExpenseRecurring DeleteRecurring(int id);
         ExpenseRecurring AddRecurring(ExpenseRecurring expense);
         ExpenseRecurring UpdateRecurring(ExpenseRecurring expenseChanges);
-
+        ExpenseRecurring DeleteExpenses(ExpenseRecurring modelExpense);
+        ExpenseRecurring GetRecurring(int id);
 
 
 

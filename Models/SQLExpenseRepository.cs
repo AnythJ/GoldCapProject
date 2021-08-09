@@ -233,5 +233,25 @@ namespace GoldCap.Models
 
             return expenseChanges;
         }
+
+        public ExpenseRecurring DeleteExpenses(ExpenseRecurring modelExpense)
+        {
+            var list = context.Expenses.Where(e => e.Amount == modelExpense.Amount && e.Category == modelExpense.Category
+            && e.Description == modelExpense.Description && e.Status == ((StatusName)modelExpense.Status).ToString() 
+            && e.Date.Value.Day == modelExpense.Date.Value.Day && e.Date.Value.Hour == modelExpense.Date.Value.Hour 
+            && e.Date.Value.Minute == modelExpense.Date.Value.Minute && e.Date.Value.Second == modelExpense.Date.Value.Second);
+
+            if(list != null)
+            {
+                context.Expenses.RemoveRange(list);
+                context.SaveChanges();
+            }
+            return modelExpense;
+        }
+
+        public ExpenseRecurring GetRecurring(int Id)
+        {
+            return context.RecurringExpenses.Find(Id);
+        }
     }
 }

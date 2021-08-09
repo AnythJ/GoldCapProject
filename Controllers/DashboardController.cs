@@ -171,8 +171,14 @@ namespace GoldCap.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, bool oneOrAll)
         {
+            var exp = _expenseRepository.GetRecurring(id);
+            if(oneOrAll)
+            {
+                _expenseRepository.DeleteExpenses(exp);
+                _expenseRepository.DeleteRecurring(id);
+            }
             _expenseRepository.DeleteRecurring(id);
 
             return Json(new { html = Helper.RenderRazorViewToString(this, "RecurringPayments", _expenseRepository.GetAllRecurring()) });

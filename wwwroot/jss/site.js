@@ -105,10 +105,12 @@ jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
                     text: 'Delete old too',
                     btnClass: 'btn-red',
                     action: function () {
+                        var formData = new FormData(form);
+                        formData.append('oneOrAll', true);
                         $.ajax({
                             type: 'POST',
                             url: form.action,
-                            data: new FormData(form),
+                            data: formData,
                             contentType: false,
                             processData: false,
                             success: function (res) {
@@ -134,30 +136,6 @@ jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
     
 }
 
-//jQueryAjaxDeleteDashboard = form => {
-//    if (confirm('Are you sure to delete this record ?')) {
-//        try {
-//            $.ajax({
-//                type: 'POST',
-//                url: form.action,
-//                data: new FormData(form),
-//                contentType: false,
-//                processData: false,
-//                success: function (res) {
-//                    $('#tableInModal').html(res.html);
-//                },
-//                error: function (err) {
-//                    console.log(err)
-//                }
-//            })
-//        } catch (ex) {
-//            console.log(ex)
-//        }
-//    }
-
-//    //prevent default form submit event
-//    return false;
-//}
 
 
 
@@ -216,6 +194,8 @@ sendToList = (id) => {
         }
     })
 };
+
+
 
 
 

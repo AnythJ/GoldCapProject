@@ -66,31 +66,100 @@ jQueryAjaxDelete = form => {
     //prevent default form submit event
     return false;
 }
+
 // HERE TO CHANGE, IT CAN BE IN ONE FUNCTION
-jQueryAjaxDeleteDashboard = form => {
-    if (confirm('Are you sure to delete this record ?')) {
-        try {
-            $.ajax({
-                type: 'POST',
-                url: form.action,
-                data: new FormData(form),
-                contentType: false,
-                processData: false,
-                success: function (res) {
-                    $('#tableInModal').html(res.html);
+
+    
+
+jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
+    try {
+        $.confirm({
+            title: 'Delete Expense',
+            content: 'Are you sure you want to delete this expense?',
+            type: 'red',
+            icon: 'fa fa-warning',
+            animateFromElement: false,
+            offsetBottom: 600,
+            typeAnimated: true,
+            buttons: {
+                confirm: {
+                    text: 'Confirm',
+                    btnClass: 'btn-red',
+                    action: function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: form.action,
+                            data: new FormData(form),
+                            contentType: false,
+                            processData: false,
+                            success: function (res) {
+                                $('#tableInModal').html(res.html);
+                            },
+                            error: function (err) {
+                                console.log(err)
+                            }
+                        })
+                    }
                 },
-                error: function (err) {
-                    console.log(err)
+                confirmAll: {
+                    text: 'Delete old too',
+                    btnClass: 'btn-red',
+                    action: function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: form.action,
+                            data: new FormData(form),
+                            contentType: false,
+                            processData: false,
+                            success: function (res) {
+                                $('#tableInModal').html(res.html);
+                            },
+                            error: function (err) {
+                                console.log(err)
+                            }
+                        })
+                    }
+                },
+                close: function () {
                 }
-            })
-        } catch (ex) {
-            console.log(ex)
-        }
+            }
+        });
+        
+    } catch (ex) {
+        console.log(ex)
     }
 
     //prevent default form submit event
     return false;
+    
 }
+
+//jQueryAjaxDeleteDashboard = form => {
+//    if (confirm('Are you sure to delete this record ?')) {
+//        try {
+//            $.ajax({
+//                type: 'POST',
+//                url: form.action,
+//                data: new FormData(form),
+//                contentType: false,
+//                processData: false,
+//                success: function (res) {
+//                    $('#tableInModal').html(res.html);
+//                },
+//                error: function (err) {
+//                    console.log(err)
+//                }
+//            })
+//        } catch (ex) {
+//            console.log(ex)
+//        }
+//    }
+
+//    //prevent default form submit event
+//    return false;
+//}
+
+
 
 jQueryAjaxPostDashboard = form => {
     try {

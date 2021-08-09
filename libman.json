@@ -10,6 +10,14 @@
       "provider": "jsdelivr",
       "library": "jquery@3.6.0",
       "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "jquery-confirm@3.3.4",
+      "destination": "wwwroot/lib/jquery-confirm/"
+    },
+    {
+      "library": "font-awesome@5.15.4",
+      "destination": "wwwroot/lib/font-awesome/"
     }
   ]
 }

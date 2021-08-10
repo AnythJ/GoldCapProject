@@ -93,6 +93,7 @@ jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
                             contentType: false,
                             processData: false,
                             success: function (res) {
+                                showLineChart();
                                 $('#tableInModal').html(res.html);
                             },
                             error: function (err) {
@@ -114,6 +115,7 @@ jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
                             contentType: false,
                             processData: false,
                             success: function (res) {
+                                showLineChart();
                                 $('#tableInModal').html(res.html);
                             },
                             error: function (err) {
@@ -153,6 +155,7 @@ jQueryAjaxPostDashboard = form => {
                     $('#form-modal .modal-body').html('');
                     $('#form-modal .modal-title').html('');
                     $('#form-modal').modal('hide');
+                    showLineChart();
                     showInPopup("/Dashboard/RecurringPayments", "Recurring payments");
                 }
                 else

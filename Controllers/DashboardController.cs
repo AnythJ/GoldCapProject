@@ -56,7 +56,7 @@ namespace GoldCap.Controllers
             }
             #endregion
 
-
+            
             #region StatCircles
             int sumExpenses = 0;
             foreach (var item in thisMonth)
@@ -215,7 +215,21 @@ namespace GoldCap.Controllers
             ViewBag.CategoryList = _expenseRepository.GetCategoryList();
             if (ModelState.IsValid)
             {
-                _expenseRepository.AddRecurring(expense);
+                var first = _expenseRepository.GetAllExpenses().First(e => e.Date.Value.Day == DateTime.Today.AddDays(-29).Day && e.Date.Value.Month == DateTime.Today.AddDays(-29).Month && e.Date.Value.Year == DateTime.Today.AddDays(-29).Year);
+                if (expense.Date.Value >= first.Date.Value && expense.Date.Value <= DateTime.Today)
+                {
+                    Expense rec = new Expense()
+                    {
+                        Amount = expense.Amount,
+                        Category = expense.Category,
+                        Date = expense.Date,
+                        Status = ((StatusName)expense.Status).ToString(),
+                        Description = expense.Description
+                    };
+                    _expenseRepository.Add(rec);
+                    expense.Date = expense.Date.Value.AddMonths(1);
+                    _expenseRepository.AddRecurring(expense);
+                }
 
 
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "RecurringPayments", _expenseRepository.GetAllRecurring()) });

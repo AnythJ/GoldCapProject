@@ -124,7 +124,7 @@
 
         <div id="adviceDiv" style="width: 15%;height:300px;float:left;margin-top:20px;" class="shadowDiv">
             <h1 style="margin:8px 0 15px 8px;font-size:20px;font-weight:bolder;">Advice</h1>
-            <p><a href="#">Add monthly payments to make your life easier</a></p>
+            <p><a onclick="showLineChart()">Add monthly payments to make your life easier</a></p>
             <p><a href="#">Add monthly payments to make your life easier</a></p>
             <p><a href="#">Add monthly payments to make your life easier</a></p>
             <p style="padding-top:5px;text-align:right;"><a onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)','Recurring payments')" class="btn btn-success btn-sm">Recurring payments</a>
@@ -237,7 +237,9 @@
 </body>
 </html>
 
-
+<script>
+    $(showLineChart);
+</script>
 
 @section Scripts{
     <script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>

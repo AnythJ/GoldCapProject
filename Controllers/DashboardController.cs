@@ -37,7 +37,7 @@ namespace GoldCap.Controllers
                     switch (item.Status)
                     {
                         case 0:
-                            DateTime finalDate1 = new DateTime();
+                            DateTime finalDate1 = item.Date.Value;
                             for (var i = item.Date.Value.AddDays(1); i <= DateTime.Today.AddDays(1); i = i.AddDays(1))
                             {
                                 Expense exp = new Expense()
@@ -57,7 +57,7 @@ namespace GoldCap.Controllers
                             _expenseRepository.UpdateRecurring(item);
                             break;
                         case 1:
-                            DateTime finalDate2 = new DateTime();
+                            DateTime finalDate2 = item.Date.Value;
                             for (var i = item.Date.Value.AddDays(7); i <= DateTime.Today.AddDays(1); i = i.AddDays(7))
                             {
                                 Expense exp = new Expense()
@@ -74,10 +74,10 @@ namespace GoldCap.Controllers
                                 expDate = expDate.Value.AddDays(7);
                             }
                             item.Date = finalDate2;
-                            _expenseRepository.UpdateRecurring(item);
+                            //_expenseRepository.UpdateRecurring(item);
                             break;
                         case 2:
-                            DateTime finalDate3 = new DateTime();
+                            DateTime finalDate3 = item.Date.Value;
                             for (var i = item.Date.Value.AddMonths(1); i <= DateTime.Today.AddDays(1); i = i.AddMonths(1))
                             {
                                 Expense exp = new Expense()
@@ -97,7 +97,7 @@ namespace GoldCap.Controllers
                             _expenseRepository.UpdateRecurring(item);
                             break;
                         case 3:
-                            DateTime finalDate4 = new DateTime();
+                            DateTime finalDate4 = item.Date.Value;
                             for (var i = item.Date.Value.AddYears(1); i <= DateTime.Today.AddDays(1); i = i.AddYears(1))
                             {
                                 Expense exp = new Expense()
@@ -296,9 +296,10 @@ namespace GoldCap.Controllers
                     switch (expense.Status)
                     {
                         case 0:
-                            
-                            for(var i = expense.Date; i <= DateTime.Today.AddDays(1); i = i.Value.AddDays(1)) 
+                            DateTime finalDate1 = DateTime.Today;
+                            for (var i = expense.Date; i <= DateTime.Today.AddDays(1); i = i.Value.AddDays(1)) 
                             {
+                                
                                 Expense exp = new Expense()
                                 {
                                     Amount = expense.Amount,
@@ -309,13 +310,14 @@ namespace GoldCap.Controllers
                                     StatusId = x
                                 };
                                 list.Add(exp);
-                                
+                                finalDate1 = exp.Date.Value;
                                 expDate = expDate.Value.AddDays(1);
                             }
-                            
+                            expense.Date = finalDate1;
+                            _expenseRepository.UpdateRecurring(expense);
                             break;
                         case 1:
-                            DateTime finalDate = DateTime.Today;
+                            DateTime finalDate2 = DateTime.Today;
                             for (var i = expense.Date; i <= DateTime.Today.AddDays(1); i = i.Value.AddDays(7))
                             {
                                 Expense exp = new Expense()
@@ -328,13 +330,14 @@ namespace GoldCap.Controllers
                                     StatusId = x
                                 };
                                 list.Add(exp);
-                                finalDate = exp.Date.Value;
+                                finalDate2 = exp.Date.Value;
                                 expDate = expDate.Value.AddDays(7);
                             }
-                            expense.Date = finalDate;
+                            expense.Date = finalDate2;
                             _expenseRepository.UpdateRecurring(expense);
                             break;
                         case 2:
+                            DateTime finalDate3 = DateTime.Today;
                             for (var i = expense.Date; i <= DateTime.Today.AddMonths(1); i = i.Value.AddMonths(1))
                             {
                                 Expense exp = new Expense()
@@ -347,10 +350,14 @@ namespace GoldCap.Controllers
                                     StatusId = x
                                 };
                                 list.Add(exp);
+                                finalDate3 = exp.Date.Value;
                                 expDate = expDate.Value.AddMonths(1);
                             }
+                            expense.Date = finalDate3;
+                            _expenseRepository.UpdateRecurring(expense);
                             break;
                         case 3:
+                            DateTime finalDate4 = DateTime.Today;
                             for (var i = expense.Date; i <= DateTime.Today.AddYears(1); i = i.Value.AddYears(1))
                             {
                                 Expense exp = new Expense()
@@ -363,8 +370,11 @@ namespace GoldCap.Controllers
                                     StatusId = x
                                 };
                                 list.Add(exp);
+                                finalDate4 = exp.Date.Value;
                                 expDate = expDate.Value.AddYears(1);
                             }
+                            expense.Date = finalDate4;
+                            _expenseRepository.UpdateRecurring(expense);
                             break;
                         case 4:
 

@@ -236,10 +236,12 @@ namespace GoldCap.Models
 
         public ExpenseRecurring DeleteExpenses(ExpenseRecurring modelExpense)
         {
-            var list = context.Expenses.Where(e => e.Amount == modelExpense.Amount && e.Category == modelExpense.Category
-            && e.Description == modelExpense.Description && e.Status == ((StatusName)modelExpense.Status).ToString() 
-            && e.Date.Value.Day == modelExpense.Date.Value.Day && e.Date.Value.Hour == modelExpense.Date.Value.Hour 
-            && e.Date.Value.Minute == modelExpense.Date.Value.Minute && e.Date.Value.Second == modelExpense.Date.Value.Second);
+            //var list = context.Expenses.Where(e => e.Amount == modelExpense.Amount && e.Category == modelExpense.Category
+            //&& e.Description == modelExpense.Description && e.Status == ((StatusName)modelExpense.Status).ToString() 
+            //&& e.Date.Value.Day == modelExpense.Date.Value.Day && e.Date.Value.Hour == modelExpense.Date.Value.Hour 
+            //&& e.Date.Value.Minute == modelExpense.Date.Value.Minute && e.Date.Value.Second == modelExpense.Date.Value.Second);
+
+            var list = context.Expenses.Where(e => e.StatusId == modelExpense.Id);
 
             if(list != null)
             {
@@ -252,6 +254,16 @@ namespace GoldCap.Models
         public ExpenseRecurring GetRecurring(int Id)
         {
             return context.RecurringExpenses.Find(Id);
+        }
+
+        public IEnumerable<Expense> AddExpenses(IEnumerable<Expense> expenses)
+        {
+            if(expenses != null)
+            {
+                context.Expenses.AddRange(expenses);
+                context.SaveChanges();
+            }
+            return expenses;
         }
     }
 }

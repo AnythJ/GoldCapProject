@@ -33,5 +33,6 @@ namespace GoldCap.Models
 
         [DisplayName("Status")]
         public string Status { get; set; }
+        public int StatusId { get; set; }
     }
 }

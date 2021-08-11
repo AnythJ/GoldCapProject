@@ -129,7 +129,7 @@ namespace GoldCap.Models
             return finalList;
         }
 
-        public List<CategoryChart> GetCategoryRatios()
+        public List<CategoryChart> GetMostUsedCategoryRatios()
         {
             var categoryNames = context.Categories.Select(n => n.Name).ToList();
 
@@ -144,6 +144,35 @@ namespace GoldCap.Models
                 newCat.CategoryName = item;
                 decimal first = (decimal)expenses.Where(c => c.Category == item).Count();
                 decimal second = (decimal)expenses.Count();
+                if (second != 0)
+                {
+                    newCat.CategoryPercentage = System.Math.Round((first / second) * 100, 2);
+                }
+                else
+                    newCat.CategoryPercentage = 0;
+
+
+                newList.Add(newCat);
+            }
+
+            return newList.OrderByDescending(d => d.CategoryPercentage).ToList<CategoryChart>();
+        }
+
+        public List<CategoryChart> GetCategoryRatios()
+        {
+            var categoryNames = context.Categories.Select(n => n.Name).ToList();
+
+            var expenses = context.Expenses.Where(e => (e.Date.Value >= DateTime.Now.AddDays(-30))).AsEnumerable();
+
+            List<CategoryChart> newList = new List<CategoryChart>();
+
+
+            foreach (var item in categoryNames)
+            {
+                CategoryChart newCat = new CategoryChart();
+                newCat.CategoryName = item;
+                decimal first = (decimal)expenses.Where(c => c.Category == item).Sum(e => e.Amount);
+                decimal second = (decimal)expenses.Sum(e => e.Amount);
                 if (second != 0)
                 {
                     newCat.CategoryPercentage = System.Math.Round((first / second) * 100, 2);

@@ -18,14 +18,18 @@ namespace GoldCap.Controllers
             _expenseRepository = expenseRepository;
         }
 
+        
         public IActionResult Index()
         {
             ViewBag.Expenses = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
             var thisMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
             var lastMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-60) && m.Date <= DateTime.Now.AddDays(-30));
-            
+            var topCategories = _expenseRepository.GetCategoryRatios()
+                .Where(c => c.CategoryPercentage >= _expenseRepository.GetCategoryRatios()[6].CategoryPercentage);
+            var topCategory = _expenseRepository.GetCategoryRatios().First();
+
             #region MonthlyAddition
-            
+
             var allRecurring = _expenseRepository.GetAllRecurring().ToList();
             foreach (var item in allRecurring)
             {
@@ -74,7 +78,7 @@ namespace GoldCap.Controllers
                                 expDate = expDate.Value.AddDays(7);
                             }
                             item.Date = finalDate2;
-                            //_expenseRepository.UpdateRecurring(item);
+                            _expenseRepository.UpdateRecurring(item);
                             break;
                         case 2:
                             DateTime finalDate3 = item.Date.Value;
@@ -117,7 +121,7 @@ namespace GoldCap.Controllers
                             _expenseRepository.UpdateRecurring(item);
                             break;
                         case 4:
-
+                            // There will be something, someday
                             break;
                         default:
                             break;
@@ -128,7 +132,7 @@ namespace GoldCap.Controllers
             }
             #endregion
 
-            
+
             #region StatCircles
             int sumExpenses = 0;
             foreach (var item in thisMonth)
@@ -163,21 +167,52 @@ namespace GoldCap.Controllers
 
 
 
-            ViewBag.PercentageStringLeft = avgLeft + "deg";
-            ViewBag.PercentageStringStartRight = rightStart + "deg";
-            ViewBag.PercentageStringRight = avgRight + "deg";
+            ViewBag.PercentageStringLeftU = avgLeft + "deg";
+            ViewBag.PercentageStringStartRightU = rightStart + "deg";
+            ViewBag.PercentageStringRightU = avgRight + "deg";
 
             ViewBag.SumLast30 = sumExpenses;
             ViewBag.SumBeforeLast30 = sumExpensesLastMonth;
             ViewBag.UnderMonth = underMonth;
+            ViewBag.TooltipPercentage = Decimal.Round(percentage);
+
+
+            //Category Circle
+            var topCate = thisMonth.Where(e => e.Category == topCategory.CategoryName).Sum(e => e.Amount);
+            decimal percentageCategory = Decimal.Round((Convert.ToDecimal(topCate) / sumExpenses) * 100);
+            ViewBag.TopCategory = percentageCategory;
+            ViewBag.TopCategoryName = topCategory.CategoryName;
+            ViewBag.TopCategoryAmount = topCate;
+
+            int avgC = (int)(3.6 * (int)percentageCategory);
+
+            var rightStartC = 0;
+            var avgRightC = 0;
+            var avgLeftC = 0;
+
+            if (avgC >= 0 && avgC <= 180)
+            {
+                rightStartC = 0;
+                avgRightC = 0;
+                avgLeftC = avgC;
+            }
+            else
+            {
+                rightStartC = 180;
+                avgRightC = (avgC - 180);
+                avgLeftC = 180;
+            }
+
+            ViewBag.PercentageStringLeftC = avgLeftC + "deg";
+            ViewBag.PercentageStringStartRightC = rightStartC + "deg";
+            ViewBag.PercentageStringRightC = avgRightC + "deg";
             #endregion
 
 
-            var x = _expenseRepository.GetCategoryRatios()
-                .Where(c => c.CategoryPercentage >= _expenseRepository.GetCategoryRatios()[6].CategoryPercentage);
-            if (x != null)
+
+            if (topCategories != null)
             {
-                ViewBag.Categories = x;
+                ViewBag.Categories = topCategories;
             }
 
             return View(thisMonth);

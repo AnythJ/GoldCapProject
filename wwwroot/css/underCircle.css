@@ -49,16 +49,18 @@
 
 .circle .left .progress {
     z-index: 4;
-    animation: left 0.3s linear both;
+    animation: u-left 0.3s linear both;
 }
 
 
 .circle .right .progress {
-    animation: right 0.3s linear both;
+    animation: u-right 0.3s linear both;
     animation-delay: 0.3s;
 }
 
-
+.circle .right u-circle {
+    z-index: 3;
+}
 
 .smallerCircle p {
     font-weight: 600;

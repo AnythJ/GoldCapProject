@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+function showPieChart() {
     $.getJSON("Dashboard/GetData", function (result) {
         var cateData = [];
         $.each(result.categoryRatios, function (index, element) {
@@ -50,7 +51,8 @@
                     "#F812B3", "#B17FC9", "#8D6C2F", "#D3277A", "#2CA1AE", "#9685EB", "#8A96C6",
                     "#DBA2E6", "#76FC1B", "#608FA4", "#20F6BA", "#07D7F6", "#DCE77A", "#77ECCA"]
             });
-            Highcharts.chart('container-pie', {
+        $(function () {
+            var pieChart = Highcharts.chart('container-pie', {
                 chart: {
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
@@ -82,7 +84,7 @@
                         point: {
                             events: { /*Function to trigger selection on Most used categories list at the same time as pie chart selection*/
                                 click: function () {
-                                    
+
                                     var tBody = document.getElementById('tableBody');
                                     var trRows = tBody.getElementsByClassName('trClass');
                                     for (var i = 0; i < trRows.length; i++) {
@@ -90,34 +92,34 @@
                                         trRows[i].style.color = "black";
                                     }
                                     var found;
-                                    
+
                                     for (var i = 0, row; row = tBody.rows[i]; i++) {
                                         var idElement = document.getElementById('active');
 
-                                            for (var j = 0, col; col = row.cells[j]; j++) {
-                                                if (col.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim() == this.name) {
-                                                    if (idElement == null || idElement != row) {
-                                                        //active
-                                                        row.style.backgroundColor = "#5f666d";
-                                                        row.style.color = "white";
-                                                        row.setAttribute("id", "active");
-                                                        if (idElement != null) {
-                                                            idElement.setAttribute("id", "");
-                                                        }
-                                                        break;
-                                                        
+                                        for (var j = 0, col; col = row.cells[j]; j++) {
+                                            if (col.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim() == this.name) {
+                                                if (idElement == null || idElement != row) {
+                                                    //active
+                                                    row.style.backgroundColor = "#5f666d";
+                                                    row.style.color = "white";
+                                                    row.setAttribute("id", "active");
+                                                    if (idElement != null) {
+                                                        idElement.setAttribute("id", "");
                                                     }
-                                                    else {
-                                                        //unactive
-                                                        row.style.backgroundColor = "white";
-                                                        row.style.color = "black";
-                                                        row.setAttribute("id", "");
-                                                    }
+                                                    break;
 
                                                 }
+                                                else {
+                                                    //unactive
+                                                    row.style.backgroundColor = "white";
+                                                    row.style.color = "black";
+                                                    row.setAttribute("id", "");
+                                                }
+
                                             }
                                         }
-                                    
+                                    }
+
                                 }
                             }
                         }
@@ -130,5 +132,7 @@
                     data: cateData
                 }]
             });
+        });
+            
     });
-});
+};

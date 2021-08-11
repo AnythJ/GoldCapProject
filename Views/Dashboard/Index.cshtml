@@ -51,21 +51,10 @@
 
     /*#region StatCircles */
 
-    .circle .right {
-        z-index: 3;
-        transform: rotate(@ViewBag.PercentageStringStartRight);
+    div .statCircle, div .c-statCircle {
+        animation: circleShow 0.6s linear;
+    }
 
-    }
-    @@keyframes left {
-        100% {
-            transform: rotate(@ViewBag.PercentageStringLeft);
-        }
-    }
-    @@keyframes right {
-        100% {
-            transform: rotate(@ViewBag.PercentageStringRight);
-        }
-    }
     @@keyframes circleShow {
         0% {
             opacity: 0;
@@ -76,19 +65,49 @@
         }
     }
 
-    div .statCircle {
-        animation: circleShow 0.6s linear;
-    }
-
-    #adviceDiv p{
+    #adviceDiv p {
         border-top: 2px solid black;
         margin: 10px 8px 0 8px;
         padding-top: 10px;
         font-weight: 600;
     }
-    #adviceDiv p a {
-        text-decoration: none;
+
+        #adviceDiv p a {
+            text-decoration: none;
+        }
+
+    .circle .right .u-circle{
+        z-index: 3;
+        transform: rotate(@ViewBag.PercentageStringStartRighUt);
+
     }
+    @@keyframes u-left {
+        100% {
+            transform: rotate(@ViewBag.PercentageStringLeftU);
+        }
+    }
+    @@keyframes u-right {
+        100% {
+            transform: rotate(@ViewBag.PercentageStringRightU);
+        }
+    }
+
+    .circle .c-right .c-circle{
+        z-index: 3;
+        transform: rotate(@ViewBag.PercentageStringStartRightC);
+
+    }
+    @@keyframes c-left {
+        100% {
+            transform: rotate(@ViewBag.PercentageStringLeftC);
+        }
+    }
+    @@keyframes c-right {
+        100% {
+            transform: rotate(@ViewBag.PercentageStringRightC);
+        }
+    }
+
 
 /*#endregion */
 </style>
@@ -96,7 +115,8 @@
 @section Styles{
     <link href="~/css/lineChart.css" rel="stylesheet" />
     <link href="~/css/pieChart.css" rel="stylesheet" />
-    <link href="~/css/statCircle.css" rel="stylesheet" />
+    <link href="~/css/underCircle.css" rel="stylesheet" />
+    <link href="~/css/cateCircle.css" rel="stylesheet" />
     <link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
 }
 
@@ -124,7 +144,7 @@
 
         <div id="adviceDiv" style="width: 15%;height:300px;float:left;margin-top:20px;" class="shadowDiv">
             <h1 style="margin:8px 0 15px 8px;font-size:20px;font-weight:bolder;">Advice</h1>
-            <p><a onclick="showLineChart()">Add monthly payments to make your life easier</a></p>
+            <p><a id="firstA" onclick="triggerTooltip()" data-toggle="tooltip" data-placement="bottom" title="tooltipXD">Add monthly payments to make your life easier</a></p>
             <p><a href="#">Add monthly payments to make your life easier</a></p>
             <p><a href="#">Add monthly payments to make your life easier</a></p>
             <p style="padding-top:5px;text-align:right;"><a onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)','Recurring payments')" class="btn btn-success btn-sm">Recurring payments</a>
@@ -173,7 +193,7 @@
         <div style="float: left; margin-top: 20px; margin-left: 20px; position: static; border-radius: 100%; border: 1px solid #68a4fd;">
             <div class="statCircle">
                 <div class="smallerCircle" style="padding-top:10px;">
-                    <p style="font-size: 20px;font-weight:bold;">@ViewBag.SumLast30$</p>
+                    <p id="amountP" onmouseover="showPercentage()" data-toggle="tooltip" data-placement="top" title="@ViewBag.TooltipPercentage%" style="font-size: 20px;font-weight:bold;">@ViewBag.SumLast30$</p>
                     <p>of @ViewBag.SumBeforeLast30$</p>
                     <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
                     <p>@ViewBag.UnderMonth$ <small>under</small></p>
@@ -183,26 +203,26 @@
                     <div class="bar left">
                         <div class="progress"></div>
                     </div>
-                    <div class="bar right">
+                    <div class="bar right u-circle">
                         <div class="progress"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div style="float: left; margin-top: 20px; margin-left: 20px; position: static; border-radius: 100%; border: 1px solid #68a4fd;">
-            <div class="statCircle">
+        <div style="float: left; margin-top: 20px; margin-left: 20px; position: static; border-radius: 100%; border: 1px solid orange;">
+            <div class="c-statCircle">
                 <div class="smallerCircle" style="padding-top:10px;">
-                    <p style="font-size: 20px;font-weight:bold;">@ViewBag.SumLast30$</p>
-                    <p>of @ViewBag.SumBeforeLast30$</p>
+                    <p style="font-size: 20px;font-weight:bold;">@ViewBag.TopCategory%</p>
+                    <p style="font-size:16px;">@ViewBag.TopCategoryName</p>
                     <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                    <p>@ViewBag.UnderMonth$ <small>under</small></p>
-                    <p>last month</p>
+                    <p>@ViewBag.TopCategoryAmount$ <small>of</small></p>
+                    <p>@ViewBag.SumLast30$</p>
                 </div>
                 <div class="circle">
-                    <div class="bar left">
+                    <div class="bar c-left">
                         <div class="progress"></div>
                     </div>
-                    <div class="bar right">
+                    <div class="bar c-right c-circle">
                         <div class="progress"></div>
                     </div>
                 </div>
@@ -228,10 +248,9 @@
             </div>
         </div>
 
+        
         <!-- #endregion -->
     </div>
-
-
 
 
 </body>
@@ -239,6 +258,10 @@
 
 <script>
     $(showLineChart);
+    $(showPieChart);
+    function showPercentage() {
+        $('#amountP').tooltip('show');
+    }
 </script>
 
 @section Scripts{

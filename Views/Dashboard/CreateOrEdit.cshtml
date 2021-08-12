@@ -1,4 +1,4 @@
-﻿@model ExpenseRecurring
+﻿@model ExpenseRecurringViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,18 +6,20 @@
 }
 
 <style>
-    span {
-        color: white;
-        font-size: 15px;
+    .weekdayCheckbox span {
+        display: inline-block;
+        border-radius: 5px;
+        background-color: lightgray;
+        width: 2em;
+        height: 2em;
+        text-align: center;
+        cursor: pointer;
+        padding-top: 5px;
     }
 
-    #description-input {
+    .weekdayCheckbox  :checked + span {
+        background-color: Highlight;
         color: white;
-        background-color: #6C757D;
-        border-color: #6C757D;
-    }
-    span {
-        color: black;
     }
 </style>
 
@@ -41,7 +43,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="Date" class="control-label"></label>
+                        <label asp-for="Date" class="control-label" id="startDate" onmouseover="showStartDateTooltip()" data-toggle="tooltip" data-placement="top" title="If you choose custom every > 1 week, better set Start Date on the first day you want to add this expense, otherwise first addition will be in chosen day after chosen number of weeks.">Start Date</label>
                         <input id="dateinput" asp-for="Date" style="height:38px;" class="form-control" />
                         <span asp-validation-for="Date"></span>
                     </div>
@@ -52,20 +54,33 @@
                 <textarea style="resize:none;height:90px;" id="description-input" asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description"></span>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-10">
                 <div class="form-group">
                     <label asp-for="Status" class="control-label"></label>
                     <select id="recurringSelect" onchange="customField()" asp-for="Status" style="height:38px;" asp-items="Html.GetEnumSelectList<StatusName>()"></select>
                     <span asp-validation-for="Status"></span>
-                    <input id="customStatus" hidden asp-route-custom="" type="date" />
-                </div>
-    </div>
 
-    <div class="form-group" style="margin-top:15px;text-align:right;">
-        <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+                    <div id="customStatus" style="margin-top:15px;visibility:hidden;">
+                        <label style="margin-right:5px;">Every</label>
+                        <input id="focusableInput" type="number" min="1" max="999" style="width:2em;" asp-for="HowOften">
+                        <label style="margin: 0 5px 0 5px;">Weeks</label>
+                        @for (int i = 0; i < 7; i++)
+                        {
+                            <label class="weekdayCheckbox">
+                                @Html.CheckBoxFor(item => item.Weekdays[i], new { @style = "display:none;" })
+                                <span>@ViewBag.Weekdays[i]</span>
+                            </label>
+                        }
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:15px;text-align:right;">
+                <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+            </div>
+        </form>
     </div>
-    </form>
-</div>
 </div>
 
 @if (Model.Id == 0)
@@ -75,12 +90,19 @@
         $("#amountinput").val("");
         function customField() {
             var x = document.getElementById('customStatus');
+            var y = document.getElementById('focusableInput');
             if (document.getElementById('recurringSelect').value == 4) {
-                x.hidden = false;
+                x.style.visibility = "visible";
+                y.required = true;
             }
             else {
-                x.hidden = true;
+                x.style.visibility = "hidden";
+                y.required = false;
             }
+        }
+        
+        function showStartDateTooltip() {
+            $('#startDate').tooltip('show');
         }
     </script>
 }

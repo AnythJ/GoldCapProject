@@ -34,5 +34,7 @@ namespace GoldCap.Models
         [DisplayName("Status")]
         [Required(ErrorMessage = "Status is required")]
         public int Status { get; set; }
+        public int? HowOften { get; set; }
+        public string WeekdaysInString { get; set; }
     }
 }

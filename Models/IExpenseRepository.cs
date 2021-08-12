@@ -40,8 +40,7 @@ namespace GoldCap.Models
         ExpenseRecurring GetRecurring(int id);
 
 
-
-
+       
 
     }
 }

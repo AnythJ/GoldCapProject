@@ -48,7 +48,7 @@ namespace GoldCap.Models
                 },
                 new Category
                 {
-                    Id = 8 ,
+                    Id = 8,
                     Name = "Cloths"
                 });
             //modelBuilder.Entity<Expense>().HasData(

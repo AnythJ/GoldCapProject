@@ -18,7 +18,6 @@ namespace GoldCap.Controllers
             _expenseRepository = expenseRepository;
         }
 
-        
         public IActionResult Index()
         {
             ViewBag.Expenses = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
@@ -27,6 +26,7 @@ namespace GoldCap.Controllers
             var topCategories = _expenseRepository.GetCategoryRatios()
                 .Where(c => c.CategoryPercentage >= _expenseRepository.GetCategoryRatios()[6].CategoryPercentage);
             var topCategory = _expenseRepository.GetCategoryRatios().First();
+
 
             #region MonthlyAddition
 
@@ -121,7 +121,45 @@ namespace GoldCap.Controllers
                             _expenseRepository.UpdateRecurring(item);
                             break;
                         case 4:
-                            // There will be something, someday
+                            DateTime finalDate5 = DateTime.Today;
+                            List<string> wkdays = new List<string>();
+                            wkdays = item.WeekdaysInString.Split(',').ToList();
+                            var finalDate6 = DateTime.Now;
+                            for (DateTime i = item.Date.Value; i <= DateTime.Now; i = i.AddDays(7 * (int)item.HowOften))
+                            {
+                                for (int j = 0; j < 7; j++)
+                                {
+                                    if (wkdays[j] == "True")
+                                    {
+                                        if (i != item.Date.Value || (int)item.Date.Value.DayOfWeek != j && item.Date.Value.AddDays(j - (int)i.DayOfWeek) <= DateTime.Now)
+                                        {
+                                            Expense exp = new Expense()
+                                            {
+                                                Amount = item.Amount,
+                                                Category = item.Category,
+                                                Description = item.Description,
+                                                Status = ((StatusName)item.Status).ToString(),
+                                                Date = item.Date.Value.AddDays(j+1),
+                                                StatusId = z
+                                            };
+                                            if ((j - (int)i.DayOfWeek) >= 0)
+                                            {
+                                                exp.Date = item.Date.Value.AddDays(j - (int)i.DayOfWeek);
+                                            }
+
+                                            if(exp.Date <= DateTime.Now)
+                                            {
+                                                list.Add(exp);
+                                                finalDate6 = exp.Date.Value;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (list.Any())
+                                    item.Date = finalDate6;
+
+                            }
+                            _expenseRepository.UpdateRecurring(item);
                             break;
                         default:
                             break;
@@ -218,7 +256,7 @@ namespace GoldCap.Controllers
             return View(thisMonth);
         }
 
-        
+
         public IActionResult Sort(string sortOrder, int id)
         {
             var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30));
@@ -281,7 +319,7 @@ namespace GoldCap.Controllers
         public IActionResult Delete(int id, bool oneOrAll)
         {
             var exp = _expenseRepository.GetRecurring(id);
-            if(oneOrAll)
+            if (oneOrAll)
             {
                 _expenseRepository.DeleteExpenses(exp);
                 _expenseRepository.DeleteRecurring(id);
@@ -310,15 +348,35 @@ namespace GoldCap.Controllers
         public IActionResult CreateOrEdit(int id = 0)
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList();
+            string[] weekdays = new string[7] { "Sn", "M", "T", "W", "Th", "F", "S" };
+            ViewBag.Weekdays = weekdays;
 
-            return View(new ExpenseRecurring());
+            return View(new ExpenseRecurringViewModel());
 
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date,Status")] ExpenseRecurring expense)
+        public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date,Status,HowOften,Weekdays")] ExpenseRecurringViewModel expenseVM)
         {
+            string weekdaysToModel = "";
+            foreach (var item in expenseVM.Weekdays)
+            {
+                weekdaysToModel += item.ToString() + ',';
+            }
+            string[] weekdays = new string[7] { "Sn", "M", "T", "W", "Th", "F", "S" };
+            ViewBag.Weekdays = weekdays;
+            ExpenseRecurring expense = new ExpenseRecurring()
+            {
+                Amount = expenseVM.Amount,
+                Category = expenseVM.Category,
+                Date = expenseVM.Date,
+                Description = expenseVM.Description,
+                Status = expenseVM.Status,
+                Id = expenseVM.Id,
+                HowOften = expenseVM.HowOften,
+                WeekdaysInString = weekdaysToModel
+            };
             ViewBag.CategoryList = _expenseRepository.GetCategoryList();
             if (ModelState.IsValid)
             {
@@ -332,9 +390,9 @@ namespace GoldCap.Controllers
                     {
                         case 0:
                             DateTime finalDate1 = DateTime.Today;
-                            for (var i = expense.Date; i <= DateTime.Today.AddDays(1); i = i.Value.AddDays(1)) 
+                            for (var i = expense.Date; i <= DateTime.Today.AddDays(1); i = i.Value.AddDays(1))
                             {
-                                
+
                                 Expense exp = new Expense()
                                 {
                                     Amount = expense.Amount,
@@ -412,7 +470,32 @@ namespace GoldCap.Controllers
                             _expenseRepository.UpdateRecurring(expense);
                             break;
                         case 4:
-
+                            DateTime finalDate5 = DateTime.Today;
+                            for (var i = expense.Date; i <= DateTime.Now; i = i.Value.AddDays(7 * (int)expenseVM.HowOften))
+                            {
+                                for (int j = 0; j < 7; j++)
+                                {
+                                    Expense exp = new Expense()
+                                    {
+                                        Amount = expense.Amount,
+                                        Category = expense.Category,
+                                        Description = expense.Description,
+                                        Status = ((StatusName)expense.Status).ToString(),
+                                        Date = expDate,
+                                        StatusId = x
+                                    };
+                                    var d = ((int)i.Value.DayOfWeek) - j;
+                                    if (expenseVM.Weekdays[j] == true && i.Value.AddDays(-d) >= expenseVM.Date && i.Value.AddDays(-d) <= DateTime.Today)
+                                    {
+                                        exp.Date = exp.Date.Value.AddDays(-d);
+                                        list.Add(exp);
+                                        finalDate5 = exp.Date.Value;
+                                    }
+                                }
+                                expDate = expDate.Value.AddDays(7 * (int)expenseVM.HowOften);
+                            }
+                            expense.Date = finalDate5;
+                            _expenseRepository.UpdateRecurring(expense);
                             break;
                         default:
                             break;
@@ -421,10 +504,10 @@ namespace GoldCap.Controllers
                     _expenseRepository.AddExpenses(list.AsEnumerable());
                 }
 
-                
+
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "RecurringPayments", _expenseRepository.GetAllRecurring()) });
             }
-            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) });
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expenseVM) });
         }
 
         public IActionResult TooltipSort(int id)

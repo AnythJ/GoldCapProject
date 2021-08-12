@@ -134,5 +134,22 @@ namespace GoldCap.Models
         {
             throw new NotImplementedException();
         }
+
+        public ExpenseRecurring DeleteExpenses(ExpenseRecurring modelExpense)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ExpenseRecurring GetRecurring(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Expense> AddExpenses(IEnumerable<Expense> expenses)
+        {
+            throw new NotImplementedException();
+        }
+
+        
     }
 }

@@ -33,7 +33,7 @@ namespace GoldCap.Controllers
             var allRecurring = _expenseRepository.GetAllRecurring().ToList();
             foreach (var item in allRecurring)
             {
-                if (item.Date.Value >= DateTime.Today.AddDays(-30) && item.Date.Value <= DateTime.Today)
+                if (item.Date.Value >= DateTime.Today.AddDays(-365) && item.Date.Value <= DateTime.Now)
                 {
                     List<Expense> list = new List<Expense>();
                     var expDate = item.Date;
@@ -42,7 +42,7 @@ namespace GoldCap.Controllers
                     {
                         case 0:
                             DateTime finalDate1 = item.Date.Value;
-                            for (var i = item.Date.Value.AddDays(1); i <= DateTime.Today.AddDays(1); i = i.AddDays(1))
+                            for (var i = item.Date.Value; i <= DateTime.Today.AddDays(1); i = i.AddDays(1))
                             {
                                 Expense exp = new Expense()
                                 {
@@ -50,19 +50,18 @@ namespace GoldCap.Controllers
                                     Category = item.Category,
                                     Description = item.Description,
                                     Status = ((StatusName)item.Status).ToString(),
-                                    Date = expDate.Value.AddDays(1),
+                                    Date = i,
                                     StatusId = z
                                 };
                                 list.Add(exp);
-                                finalDate1 = exp.Date.Value;
-                                expDate = expDate.Value.AddDays(1);
+                                finalDate1 = i.AddDays(1);
                             }
                             item.Date = finalDate1;
                             _expenseRepository.UpdateRecurring(item);
                             break;
                         case 1:
                             DateTime finalDate2 = item.Date.Value;
-                            for (var i = item.Date.Value.AddDays(7); i <= DateTime.Today.AddDays(1); i = i.AddDays(7))
+                            for (var i = item.Date.Value; i <= DateTime.Today.AddDays(1); i = i.AddDays(7))
                             {
                                 Expense exp = new Expense()
                                 {
@@ -70,19 +69,18 @@ namespace GoldCap.Controllers
                                     Category = item.Category,
                                     Description = item.Description,
                                     Status = ((StatusName)item.Status).ToString(),
-                                    Date = expDate.Value.AddDays(7),
+                                    Date = i,
                                     StatusId = z
                                 };
                                 list.Add(exp);
-                                finalDate2 = exp.Date.Value;
-                                expDate = expDate.Value.AddDays(7);
+                                finalDate2 = i.AddDays(7);
                             }
                             item.Date = finalDate2;
                             _expenseRepository.UpdateRecurring(item);
                             break;
                         case 2:
                             DateTime finalDate3 = item.Date.Value;
-                            for (var i = item.Date.Value.AddMonths(1); i <= DateTime.Today.AddDays(1); i = i.AddMonths(1))
+                            for (var i = item.Date.Value; i <= DateTime.Today.AddDays(1); i = i.AddMonths(1))
                             {
                                 Expense exp = new Expense()
                                 {
@@ -90,19 +88,18 @@ namespace GoldCap.Controllers
                                     Category = item.Category,
                                     Description = item.Description,
                                     Status = ((StatusName)item.Status).ToString(),
-                                    Date = expDate.Value.AddMonths(1),
+                                    Date = i,
                                     StatusId = z
                                 };
                                 list.Add(exp);
-                                finalDate3 = exp.Date.Value;
-                                expDate = expDate.Value.AddMonths(1);
+                                finalDate3 = i.AddMonths(1);
                             }
                             item.Date = finalDate3;
                             _expenseRepository.UpdateRecurring(item);
                             break;
                         case 3:
                             DateTime finalDate4 = item.Date.Value;
-                            for (var i = item.Date.Value.AddYears(1); i <= DateTime.Today.AddDays(1); i = i.AddYears(1))
+                            for (var i = item.Date.Value; i <= DateTime.Today.AddDays(1); i = i.AddYears(1))
                             {
                                 Expense exp = new Expense()
                                 {
@@ -110,55 +107,65 @@ namespace GoldCap.Controllers
                                     Category = item.Category,
                                     Description = item.Description,
                                     Status = ((StatusName)item.Status).ToString(),
-                                    Date = expDate.Value.AddYears(1),
+                                    Date = i,
                                     StatusId = z
                                 };
                                 list.Add(exp);
-                                finalDate4 = exp.Date.Value;
-                                expDate = expDate.Value.AddYears(1);
+                                finalDate4 = i.AddYears(1);
                             }
                             item.Date = finalDate4;
                             _expenseRepository.UpdateRecurring(item);
                             break;
                         case 4:
-                            DateTime finalDate5 = DateTime.Today;
+                            DateTime finalDate5 = item.Date.Value;
                             List<string> wkdays = new List<string>();
                             wkdays = item.WeekdaysInString.Split(',').ToList();
-                            var finalDate6 = DateTime.Now;
+                            DateTime finalDate6 = DateTime.Now;
+                            int zfinal = 0;
                             for (DateTime i = item.Date.Value; i <= DateTime.Now; i = i.AddDays(7 * (int)item.HowOften))
                             {
+                                int k = 0;
                                 for (int j = 0; j < 7; j++)
                                 {
-                                    if (wkdays[j] == "True")
+                                    if (wkdays[j] == "True" && k == 0)
                                     {
-                                        if (i != item.Date.Value || (int)item.Date.Value.DayOfWeek != j && item.Date.Value.AddDays(j - (int)i.DayOfWeek) <= DateTime.Now)
+                                        Expense exp = new Expense()
                                         {
-                                            Expense exp = new Expense()
+                                            Amount = item.Amount,
+                                            Category = item.Category,
+                                            Description = item.Description,
+                                            Status = ((StatusName)item.Status).ToString(),
+                                            Date = i,
+                                            StatusId = z
+                                        };
+                                        k = 1;
+                                        var ho = item.HowOften;
+                                        if (zfinal == 0)
+                                        {
+                                            for (DateTime time = item.Date.Value; time <= DateTime.Now; time = time.AddDays(7 * (int)item.HowOften))
                                             {
-                                                Amount = item.Amount,
-                                                Category = item.Category,
-                                                Description = item.Description,
-                                                Status = ((StatusName)item.Status).ToString(),
-                                                Date = item.Date.Value.AddDays(j+1),
-                                                StatusId = z
-                                            };
-                                            if ((j - (int)i.DayOfWeek) >= 0)
-                                            {
-                                                exp.Date = item.Date.Value.AddDays(j - (int)i.DayOfWeek);
+                                                finalDate5 = finalDate5.AddDays(7 * (int)item.HowOften);
                                             }
-
-                                            if(exp.Date <= DateTime.Now)
-                                            {
-                                                list.Add(exp);
-                                                finalDate6 = exp.Date.Value;
-                                            }
+                                            zfinal = 1;
                                         }
+                                        list.Add(exp);
+                                    }
+                                    else if (wkdays[j] == "True")
+                                    {
+                                        Expense exp = new Expense()
+                                        {
+                                            Amount = item.Amount,
+                                            Category = item.Category,
+                                            Description = item.Description,
+                                            Status = ((StatusName)item.Status).ToString(),
+                                            Date = i.AddDays(j),
+                                            StatusId = z
+                                        };
+                                        list.Add(exp);
                                     }
                                 }
-                                if (list.Any())
-                                    item.Date = finalDate6;
-
                             }
+                            item.Date = finalDate5;
                             _expenseRepository.UpdateRecurring(item);
                             break;
                         default:
@@ -183,9 +190,11 @@ namespace GoldCap.Controllers
                 sumExpensesLastMonth += (int)item.Amount.Value;
             }
             var underMonth = sumExpensesLastMonth - sumExpenses;
-            var percentage = (Convert.ToDecimal(sumExpenses) / sumExpensesLastMonth) * 100;
-            int avg = (int)(3.6 * (int)percentage);
+            decimal percentage = 0;
+            if (sumExpensesLastMonth != 0)
+                percentage = (Convert.ToDecimal(sumExpenses) / sumExpensesLastMonth) * 100;
 
+            int avg = (int)(3.6 * (int)percentage);
             var rightStart = 0;
             var avgRight = 0;
             var avgLeft = 0;
@@ -217,7 +226,10 @@ namespace GoldCap.Controllers
 
             //Category Circle
             var topCate = thisMonth.Where(e => e.Category == topCategory.CategoryName).Sum(e => e.Amount);
-            decimal percentageCategory = Decimal.Round((Convert.ToDecimal(topCate) / sumExpenses) * 100);
+            decimal percentageCategory = 0;
+            if (sumExpenses != 0)
+                percentageCategory = Decimal.Round((Convert.ToDecimal(topCate) / sumExpenses) * 100);
+
             ViewBag.TopCategory = percentageCategory;
             ViewBag.TopCategoryName = topCategory.CategoryName;
             ViewBag.TopCategoryAmount = topCate;
@@ -406,7 +418,7 @@ namespace GoldCap.Controllers
                                 finalDate1 = exp.Date.Value;
                                 expDate = expDate.Value.AddDays(1);
                             }
-                            expense.Date = finalDate1;
+                            expense.Date = finalDate1.AddDays(1);
                             _expenseRepository.UpdateRecurring(expense);
                             break;
                         case 1:
@@ -426,7 +438,7 @@ namespace GoldCap.Controllers
                                 finalDate2 = exp.Date.Value;
                                 expDate = expDate.Value.AddDays(7);
                             }
-                            expense.Date = finalDate2;
+                            expense.Date = finalDate2.AddDays(7);
                             _expenseRepository.UpdateRecurring(expense);
                             break;
                         case 2:
@@ -446,7 +458,7 @@ namespace GoldCap.Controllers
                                 finalDate3 = exp.Date.Value;
                                 expDate = expDate.Value.AddMonths(1);
                             }
-                            expense.Date = finalDate3;
+                            expense.Date = finalDate3.AddMonths(1);
                             _expenseRepository.UpdateRecurring(expense);
                             break;
                         case 3:
@@ -466,7 +478,7 @@ namespace GoldCap.Controllers
                                 finalDate4 = exp.Date.Value;
                                 expDate = expDate.Value.AddYears(1);
                             }
-                            expense.Date = finalDate4;
+                            expense.Date = finalDate4.AddYears(1);
                             _expenseRepository.UpdateRecurring(expense);
                             break;
                         case 4:
@@ -493,6 +505,27 @@ namespace GoldCap.Controllers
                                     }
                                 }
                                 expDate = expDate.Value.AddDays(7 * (int)expenseVM.HowOften);
+                            }
+                            int day = (int)finalDate5.DayOfWeek;
+                            for (int k = day + 1; k < 7; k++)
+                            {
+                                if (expenseVM.Weekdays[k] == true)
+                                {
+                                    finalDate5 = finalDate5.AddDays(k - day);
+                                    break;
+                                }
+                                else if (k == 6 && expenseVM.Weekdays[k] == false)
+                                {
+                                    for (int r = 0; r < 7; r++)
+                                    {
+                                        if (expenseVM.Weekdays[r] == true)
+                                        {
+                                            finalDate5 = finalDate5.AddDays(r - day + 7);
+                                            break;
+                                        }
+                                    }
+
+                                }
                             }
                             expense.Date = finalDate5;
                             _expenseRepository.UpdateRecurring(expense);

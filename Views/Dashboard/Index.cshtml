@@ -51,7 +51,7 @@
 
     /*#region StatCircles */
 
-    div .statCircle, div .c-statCircle {
+    div .u-statCircle, div .c-statCircle {
         animation: circleShow 0.6s linear;
     }
 
@@ -76,9 +76,9 @@
             text-decoration: none;
         }
 
-    .circle .right .u-circle{
+    .circle .u-right{
         z-index: 3;
-        transform: rotate(@ViewBag.PercentageStringStartRighUt);
+        transform: rotate(@ViewBag.PercentageStringStartRightU);
 
     }
     @@keyframes u-left {
@@ -92,10 +92,9 @@
         }
     }
 
-    .circle .c-right .c-circle{
+    .circle .c-right {
         z-index: 3;
         transform: rotate(@ViewBag.PercentageStringStartRightC);
-
     }
     @@keyframes c-left {
         100% {
@@ -108,7 +107,17 @@
         }
     }
 
+   /*TEST*/
+    .circle .c-left .progress {
+        z-index: 4;
+        animation: c-left @ViewBag.LeftSpeed linear both;
+    }
 
+
+    .circle .c-right .progress {
+        animation: c-right @ViewBag.RightSpeed linear both;
+        animation-delay: @ViewBag.LeftSpeed;
+    }
 /*#endregion */
 </style>
 
@@ -191,7 +200,7 @@
         <!-- #region Stat Progress Circles -->
 
         <div style="float: left; margin-top: 20px; margin-left: 20px; position: static; border-radius: 100%; border: 1px solid #68a4fd;">
-            <div class="statCircle">
+            <div class="u-statCircle">
                 <div class="smallerCircle" style="padding-top:10px;">
                     <p id="amountP" onmouseover="showPercentage()" data-toggle="tooltip" data-placement="top" title="@ViewBag.TooltipPercentage%" style="font-size: 20px;font-weight:bold;">@ViewBag.SumLast30$</p>
                     <p>of @ViewBag.SumBeforeLast30$</p>
@@ -200,10 +209,10 @@
                     <p>last month</p>
                 </div>
                 <div class="circle">
-                    <div class="bar left">
+                    <div class="bar u-left">
                         <div class="progress"></div>
                     </div>
-                    <div class="bar right u-circle">
+                    <div class="bar u-right">
                         <div class="progress"></div>
                     </div>
                 </div>
@@ -222,14 +231,14 @@
                     <div class="bar c-left">
                         <div class="progress"></div>
                     </div>
-                    <div class="bar c-right c-circle">
+                    <div class="bar c-right">
                         <div class="progress"></div>
                     </div>
                 </div>
             </div>
         </div>
         <div style="float: left; margin-top: 20px; margin-left: 20px; position: static; border-radius: 100%; border: 1px solid #68a4fd;">
-            <div class="statCircle">
+            <div class="u-statCircle">
                 <div class="smallerCircle" style="padding-top:10px;">
                     <p style="font-size: 20px;font-weight:bold;">@ViewBag.SumLast30$</p>
                     <p>of @ViewBag.SumBeforeLast30$</p>
@@ -238,10 +247,10 @@
                     <p>last month</p>
                 </div>
                 <div class="circle">
-                    <div class="bar left">
+                    <div class="bar u-left">
                         <div class="progress"></div>
                     </div>
-                    <div class="bar right">
+                    <div class="bar u-right">
                         <div class="progress"></div>
                     </div>
                 </div>

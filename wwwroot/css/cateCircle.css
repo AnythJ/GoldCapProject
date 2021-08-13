@@ -58,7 +58,7 @@
     animation-delay: 0.3s;
 }
 
-.circle .c-right c-circle {
+.circle .c-right{
     z-index: 3;
 }
 

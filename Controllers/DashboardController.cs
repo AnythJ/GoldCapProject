@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using static GoldCap.Helper;
@@ -179,6 +180,8 @@ namespace GoldCap.Controllers
 
 
             #region StatCircles
+
+            #region OfLastMonthCircle
             int sumExpenses = 0;
             foreach (var item in thisMonth)
             {
@@ -208,7 +211,7 @@ namespace GoldCap.Controllers
             else
             {
                 rightStart = 180;
-                avgRight = (avg - 180);
+                avgRight = (avg - 180) > 180 ? 180 : avg - 180;
                 avgLeft = 180;
             }
 
@@ -222,9 +225,9 @@ namespace GoldCap.Controllers
             ViewBag.SumBeforeLast30 = sumExpensesLastMonth;
             ViewBag.UnderMonth = underMonth;
             ViewBag.TooltipPercentage = Decimal.Round(percentage);
+            #endregion
 
-
-            //Category Circle
+            #region CategoryCircle
             var topCate = thisMonth.Where(e => e.Category == topCategory.CategoryName).Sum(e => e.Amount);
             decimal percentageCategory = 0;
             if (sumExpenses != 0)
@@ -253,9 +256,20 @@ namespace GoldCap.Controllers
                 avgLeftC = 180;
             }
 
+            #region AnimationSpeed
+            NumberFormatInfo dotFormat = new NumberFormatInfo();
+            dotFormat.NumberDecimalSeparator = ".";
+
+            double dg = avgLeftC + avgRightC;
+            double animationProportion = avgLeftC / dg;
+            ViewBag.LeftSpeed = (animationProportion * 0.5).ToString(dotFormat) + "s";
+            ViewBag.RightSpeed = (0.5 - (animationProportion * 0.5)).ToString(dotFormat) + "s";
+            #endregion
+
             ViewBag.PercentageStringLeftC = avgLeftC + "deg";
             ViewBag.PercentageStringStartRightC = rightStartC + "deg";
             ViewBag.PercentageStringRightC = avgRightC + "deg";
+            #endregion
             #endregion
 
 

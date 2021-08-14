@@ -180,7 +180,7 @@ namespace GoldCap.Controllers
 
 
             #region StatCircles
-
+            
             #region OfLastMonthCircle
             int sumExpenses = 0;
             foreach (var item in thisMonth)
@@ -252,7 +252,7 @@ namespace GoldCap.Controllers
             else
             {
                 rightStartC = 180;
-                avgRightC = (avgC - 180);
+                avgRightC = (avgC - 180) > 180 ? 180 : avgC - 180;
                 avgLeftC = 180;
             }
 
@@ -261,9 +261,14 @@ namespace GoldCap.Controllers
             dotFormat.NumberDecimalSeparator = ".";
 
             double dg = avgLeftC + avgRightC;
-            double animationProportion = avgLeftC / dg;
-            ViewBag.LeftSpeed = (animationProportion * 0.5).ToString(dotFormat) + "s";
-            ViewBag.RightSpeed = (0.5 - (animationProportion * 0.5)).ToString(dotFormat) + "s";
+            double animationProportionCategory = avgLeftC / dg;
+            ViewBag.LeftSpeedC = (animationProportionCategory * 0.5).ToString(dotFormat) + "s";
+            ViewBag.RightSpeedC = (0.5 - (animationProportionCategory * 0.5)).ToString(dotFormat) + "s";
+
+            double gd = avgLeft + avgRight;
+            double animationProportionUnder = avgLeft / gd;
+            ViewBag.LeftSpeedU = (animationProportionUnder * 0.5).ToString(dotFormat) + "s";
+            ViewBag.RightSpeedU = (0.5 - (animationProportionUnder * 0.5)).ToString(dotFormat) + "s";
             #endregion
 
             ViewBag.PercentageStringLeftC = avgLeftC + "deg";
@@ -371,13 +376,15 @@ namespace GoldCap.Controllers
 
         [HttpGet]
         [NoDirectAccess]
-        public IActionResult CreateOrEdit(int id = 0)
+        public IActionResult CreateOrEdit(int id = 0, int preStatus = 0)
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList();
             string[] weekdays = new string[7] { "Sn", "M", "T", "W", "Th", "F", "S" };
             ViewBag.Weekdays = weekdays;
+            ExpenseRecurringViewModel model = new ExpenseRecurringViewModel();
+            model.Status = preStatus;
 
-            return View(new ExpenseRecurringViewModel());
+            return View(model);
 
         }
 

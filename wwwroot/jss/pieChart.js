@@ -2,12 +2,15 @@
 function showPieChart() {
     $.getJSON("Dashboard/GetData", function (result) {
         var cateData = [];
+        var cateNames = [];
         $.each(result.categoryRatios, function (index, element) {
             cateData.push({
                 name: element.categoryName,
                 y: parseFloat(element.categoryPercentage),
             });
+            cateNames.push(element.categoryName);
         }),
+            console.log(cateNames),
             Highcharts.setOptions({
                 colors: [
                     "#63B598", "#CE7D78", "#EA9E70", "#A48A9E", "#C6E1E8", "#648177", "#0D5AC1",
@@ -65,9 +68,11 @@ function showPieChart() {
                 exporting: {
                     enabled: false
                 },
-                //tooltip: {
-                //    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                //},
+                tooltip: {
+                    useHTML: true,
+                    headerFormat: '',
+                    pointFormat: '<span style="margin-right:5px;height:10px;width:10px;background-color:{point.color};border-radius:50%;display:inline-block;"></span><b>{point.name}</b>: <b>{point.percentage:.1f}%</b>'
+                },
                 accessibility: {
                     point: {
                         valueSuffix: '%'
@@ -79,7 +84,6 @@ function showPieChart() {
                         cursor: 'pointer',
                         dataLabels: {
                             enabled: false,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
                         },
                         point: {
                             events: { /*Function to trigger selection on Most used categories list at the same time as pie chart selection*/

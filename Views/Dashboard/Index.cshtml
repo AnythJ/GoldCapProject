@@ -74,13 +74,17 @@
 
         #adviceDiv p a {
             text-decoration: none;
+            color: #0D6EFD;
+            cursor: pointer;
         }
+            #adviceDiv p a:hover {
+                color: #012965;
+            }
 
-    .circle .u-right{
-        z-index: 3;
-        transform: rotate(@ViewBag.PercentageStringStartRightU);
-
-    }
+            .circle .u-right {
+                z-index: 3;
+                transform: rotate( @ViewBag.PercentageStringStartRightU );
+            }
     @@keyframes u-left {
         100% {
             transform: rotate(@ViewBag.PercentageStringLeftU);
@@ -110,14 +114,27 @@
    /*TEST*/
     .circle .c-left .progress {
         z-index: 4;
-        animation: c-left @ViewBag.LeftSpeed linear both;
+        animation: c-left @ViewBag.LeftSpeedC linear both;
     }
 
 
     .circle .c-right .progress {
-        animation: c-right @ViewBag.RightSpeed linear both;
-        animation-delay: @ViewBag.LeftSpeed;
+        animation: c-right @ViewBag.RightSpeedC linear both;
+        animation-delay: @ViewBag.LeftSpeedC;
     }
+
+    .circle .u-left .progress {
+        z-index: 4;
+        animation: u-left @ViewBag.LeftSpeedU   linear both;
+    }
+
+
+    .circle .u-right .progress {
+        animation: u-right @ViewBag.RightSpeedU linear both;
+        animation-delay: @ViewBag.LeftSpeedU;
+    }
+
+    
 /*#endregion */
 </style>
 
@@ -153,10 +170,10 @@
 
         <div id="adviceDiv" style="width: 15%;height:300px;float:left;margin-top:20px;" class="shadowDiv">
             <h1 style="margin:8px 0 15px 8px;font-size:20px;font-weight:bolder;">Advice</h1>
-            <p><a id="firstA" onclick="triggerTooltip()" data-toggle="tooltip" data-placement="bottom" title="tooltipXD">Add monthly payments to make your life easier</a></p>
-            <p><a href="#">Add monthly payments to make your life easier</a></p>
-            <p><a href="#">Add monthly payments to make your life easier</a></p>
-            <p style="padding-top:5px;text-align:right;"><a onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)','Recurring payments')" class="btn btn-success btn-sm">Recurring payments</a>
+            <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 0},Context.Request.Scheme)','New expense')">Add daily payments to make your life easier</a></p>
+            <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 2},Context.Request.Scheme)','New expense')">Add monthly payments to make your life easier</a></p>
+            <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 4},Context.Request.Scheme)','New expense')">Add your custom recurring payment</a></p>
+            <p style="padding-top:5px;text-align:right;"><a style="color: white;" onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)','Recurring payments')" class="btn btn-success btn-sm">Recurring payments</a>
         </div>
 
         <div style="margin-left:20px;float:left;">

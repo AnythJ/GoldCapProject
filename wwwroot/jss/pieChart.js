@@ -10,7 +10,6 @@ function showPieChart() {
             });
             cateNames.push(element.categoryName);
         }),
-            console.log(cateNames),
             Highcharts.setOptions({
                 colors: [
                     "#63B598", "#CE7D78", "#EA9E70", "#A48A9E", "#C6E1E8", "#648177", "#0D5AC1",
@@ -87,7 +86,7 @@ function showPieChart() {
                         },
                         point: {
                             events: { /*Function to trigger selection on Most used categories list at the same time as pie chart selection*/
-                                click: function () {
+                                click: function (event) {
 
                                     var tBody = document.getElementById('tableBody');
                                     var trRows = tBody.getElementsByClassName('trClass');
@@ -96,6 +95,7 @@ function showPieChart() {
                                         trRows[i].style.color = "black";
                                     }
                                     var found;
+                                    var finalRow;
 
                                     for (var i = 0, row; row = tBody.rows[i]; i++) {
                                         var idElement = document.getElementById('active');
@@ -107,23 +107,27 @@ function showPieChart() {
                                                     row.style.backgroundColor = "#5f666d";
                                                     row.style.color = "white";
                                                     row.setAttribute("id", "active");
+                                                    finalRow = row;
+                                                    sendToList(-1, finalRow.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim());
                                                     if (idElement != null) {
+                                                        sendToList(-1, finalRow.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim());
                                                         idElement.setAttribute("id", "");
                                                     }
                                                     break;
-
+                                                    
                                                 }
                                                 else {
                                                     //unactive
                                                     row.style.backgroundColor = "white";
                                                     row.style.color = "black";
                                                     row.setAttribute("id", "");
+                                                    sendToList(-1, null);
                                                 }
-
                                             }
                                         }
                                     }
-
+                                    
+                                    
                                 }
                             }
                         }

@@ -190,10 +190,13 @@ JqueryAjaxSort = (url, title) => {
 };
 
 
-sendToList = (id) => {
+sendToList = (id, categoryName) => {
     $.ajax({
         type: "GET",
-        data: { 'id': id },
+        data: {
+            'id': id,
+            'categoryName': categoryName
+        },
         url: '/Dashboard/TooltipSort',
         success: function (res) {
             $('#view-all').html(res.html);

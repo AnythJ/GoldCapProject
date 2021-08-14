@@ -81,7 +81,7 @@ function showLineChart() {
                             cursor: 'pointer',
                             events: {
                                 click: function (event) {
-                                    sendToList(result.listLast30[event.point.x].oneId);
+                                    sendToList(result.listLast30[event.point.x].oneId, null);
                                     if (tooltipStrings[event.point.x] == '') {
                                         $.notify(
                                             "No expenses to show",

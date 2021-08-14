@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static GoldCap.Helper;
 
@@ -564,7 +565,7 @@ namespace GoldCap.Controllers
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expenseVM) });
         }
 
-        public IActionResult TooltipSort(int id)
+        public IActionResult TooltipSort(int id, string categoryName)
         {
             if (id >= 0)
             {
@@ -575,7 +576,15 @@ namespace GoldCap.Controllers
 
                 return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", model) });
             }
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date)) });
+            else if(categoryName == null)
+            {
+                return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date)) });
+            }
+            else
+            {
+                string str = categoryName.Split(" ")[0];
+                return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30) && m.Category == str).OrderByDescending(d => d.Date)) });
+            }
         }
 
         public JsonResult GetData()

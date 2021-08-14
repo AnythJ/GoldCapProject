@@ -49,7 +49,7 @@
                 <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort","Dashboard",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
             </th>
             <th style="text-align:center;">
-                <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort", "Dashboard", new { sortOrder = "default" }, Context.Request.Scheme)','Sort')">
+                <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort", "Dashboard", new { sortOrder = "default", id = -1}, Context.Request.Scheme)','Sort')">
                     <i class="fas fa-sync-alt"></i>
                 </a>
             </th>

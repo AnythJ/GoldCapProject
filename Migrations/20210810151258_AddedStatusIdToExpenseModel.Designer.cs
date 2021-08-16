@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoldCap.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210807140634_AddedStatusColumnToExpensesTable")]
-    partial class AddedStatusColumnToExpensesTable
+    [Migration("20210810151258_AddedStatusIdToExpenseModel")]
+    partial class AddedStatusIdToExpenseModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -106,9 +106,43 @@ namespace GoldCap.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("GoldCap.Models.ExpenseRecurring", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal?>("Amount")
+                        .IsRequired()
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Date")
+                        .IsRequired()
+                        .HasColumnType("smalldatetime");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(135)
+                        .HasColumnType("nvarchar(135)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RecurringExpenses");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,21 +2,22 @@
 
 namespace GoldCap.Migrations
 {
-    public partial class AddedStatusColumnToExpensesTable : Migration
+    public partial class AddedStatusIdToExpenseModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Status",
+            migrationBuilder.AddColumn<int>(
+                name: "StatusId",
                 table: "Expenses",
-                type: "nvarchar(max)",
-                nullable: true);
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Status",
+                name: "StatusId",
                 table: "Expenses");
         }
     }

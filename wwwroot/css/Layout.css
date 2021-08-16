@@ -81,3 +81,7 @@ li {
 a.nav-link:hover {
     color: #6C757D;
 }
+
+#registerLink {
+    margin: 33.5vw 0 0 0;
+}

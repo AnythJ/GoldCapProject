@@ -181,7 +181,7 @@ namespace GoldCap.Controllers
 
 
             #region StatCircles
-            
+
             #region OfLastMonthCircle
             int sumExpenses = 0;
             foreach (var item in thisMonth)
@@ -289,7 +289,7 @@ namespace GoldCap.Controllers
         }
 
 
-        public IActionResult Sort(string sortOrder, int id)
+        public IActionResult Sort(string sortOrder, int id, string categoryName = null)
         {
             var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30));
 
@@ -297,6 +297,10 @@ namespace GoldCap.Controllers
             {
                 var expense = _expenseRepository.GetExpense(id);
                 model = _expenseRepository.GetAllExpenses().Where(e => e.Date.Value.DayOfYear == expense.Date.Value.DayOfYear && e.Date.Value.Year == expense.Date.Value.Year);
+            }
+            else if (categoryName != null)
+            {
+                model = _expenseRepository.GetAllExpenses().Where(e => e.Category == categoryName.Split(" ")[0] && e.Date >= DateTime.Today.AddDays(-30));
             }
 
 
@@ -576,7 +580,7 @@ namespace GoldCap.Controllers
 
                 return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", model) });
             }
-            else if(categoryName == null)
+            else if (categoryName == null)
             {
                 return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date)) });
             }

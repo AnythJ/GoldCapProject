@@ -124,7 +124,9 @@ function showLineChart() {
                         },
 
                     },
-
+                    exporting: {
+                        enabled: false
+                    },
                     responsive: {
                         rules: [{
                             condition: {

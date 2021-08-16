@@ -111,6 +111,21 @@
         }
     }
 
+    .circle .p-right {
+        z-index: 3;
+        transform: rotate(@ViewBag.PercentageStringStartRightC);
+    }
+    @@keyframes p-left {
+        100% {
+            transform: rotate(@ViewBag.PercentageStringLeftC);
+        }
+    }
+    @@keyframes p-right {
+        100% {
+            transform: rotate(@ViewBag.PercentageStringRightC);
+        }
+    }
+
    /*TEST*/
     .circle .c-left .progress {
         z-index: 4;
@@ -134,7 +149,18 @@
         animation-delay: @ViewBag.LeftSpeedU;
     }
 
-    
+    .circle .p-left .progress {
+        z-index: 4;
+        animation: u-left @ViewBag.LeftSpeedU   linear both;
+    }
+
+
+    .circle .p-right .progress {
+        animation: u-right @ViewBag.RightSpeedU linear both;
+        animation-delay: @ViewBag.LeftSpeedU;
+    }
+
+
 /*#endregion */
 </style>
 
@@ -143,6 +169,7 @@
     <link href="~/css/pieChart.css" rel="stylesheet" />
     <link href="~/css/underCircle.css" rel="stylesheet" />
     <link href="~/css/cateCircle.css" rel="stylesheet" />
+    <link href="~/css/paycheckCircle.css" rel="stylesheet" />
     <link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
 }
 
@@ -254,27 +281,31 @@
                 </div>
             </div>
         </div>
-        <div style="float: left; margin-top: 20px; margin-left: 20px; position: static; border-radius: 100%; border: 1px solid #68a4fd;">
-            <div class="u-statCircle">
+        <div style="float: left; margin-top: 20px; margin-left: 20px; position: static; border-radius: 100%; border: 1px solid green;">
+            <div class="p-statCircle">
                 <div class="smallerCircle" style="padding-top:10px;">
                     <p style="font-size: 20px;font-weight:bold;">@ViewBag.SumLast30$</p>
-                    <p>of @ViewBag.SumBeforeLast30$</p>
+                    <p>
+                        of <a id="paycheckAmount">@ViewBag.SumBeforeLast30$</a> 
+                        <input id="paycheckInputField" type="text" hidden style="width:50px;height:18px;"/>
+                        <a onclick="EditPaycheck()"><i class="fas fa-pen"></i></a>
+                    </p>
                     <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
                     <p>@ViewBag.UnderMonth$ <small>under</small></p>
                     <p>last month</p>
                 </div>
                 <div class="circle">
-                    <div class="bar u-left">
+                    <div class="bar p-left">
                         <div class="progress"></div>
                     </div>
-                    <div class="bar u-right">
+                    <div class="bar p-right">
                         <div class="progress"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        
+
         <!-- #endregion -->
     </div>
 
@@ -287,6 +318,18 @@
     $(showPieChart);
     function showPercentage() {
         $('#amountP').tooltip('show');
+    }
+
+    function EditPaycheck() {
+        var amountField = document.getElementById('paycheckAmount');
+        if (amountField.hidden == false) {
+            amountField.hidden = true;
+            document.getElementById('paycheckInputField').hidden = false;
+        }
+        else {
+            amountField.hidden = false;
+            document.getElementById('paycheckInputField').hidden = true;
+        }
     }
 </script>
 

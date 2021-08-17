@@ -52,19 +52,48 @@ function showLineChart() {
 
             $(function () {
                 var chart = Highcharts.chart('container', {
+                    chart: {
+                        type: 'area',
+                        style: {
+                            fontFamily: 'Arial'
+                        },
+                        backgroundColor: '#2d3339',
+                    },
+                    credits: {
+                        enabled: false
+                    },
                     title: {
-                        text: 'Expenses in the last 30 days'
+                        text: 'Expenses in the last 30 days',
+                        style: {
+                            color: ' #9ba6b0'
+                        }
                     },
 
                     yAxis: {
                         title: {
+                            style: {
+                                color: ' #9ba6b0'
+                            },
                             text: 'Amount of expenses [$]'
+                        },
+                        labels: {
+                            style: {
+                                color: ' #9ba6b0'
+                            }
                         }
                     },
 
                     xAxis: {
                         title: {
+                            style: {
+                                color: ' #9ba6b0'
+                            },
                             text: 'Day of the month'
+                        },
+                        labels: {
+                            style: {
+                                color: ' #9ba6b0'
+                            }
                         },
                         categories: lineTimeStamps
                     },
@@ -78,6 +107,7 @@ function showLineChart() {
                             label: {
                                 connectorAllowed: false
                             },
+                            fillColor: '#2589BD',
                             cursor: 'pointer',
                             events: {
                                 click: function (event) {

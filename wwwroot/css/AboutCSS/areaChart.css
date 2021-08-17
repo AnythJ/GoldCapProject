@@ -1,7 +1,11 @@
-﻿#lineFigure .highcharts-figure, .highcharts-data-table table {
+﻿#areaFigure .highcharts-figure, .highcharts-data-table table {
     width: 100%;
     height: 100%;
     margin: 1em auto;
+}
+
+#container-area {
+    height: 450px;
 }
 
 .highcharts-data-table table {

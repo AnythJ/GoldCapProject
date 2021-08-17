@@ -29,43 +29,43 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    background-color: #212529;
+    background-color: #2d3339;
     position: fixed;
     height: 100%;
     overflow: auto;
     width: 220px;
 }
 
-li {
-    position: relative;
-    border-top-style: solid;
-    border-color: white;
-    border-width: thin;
-    width: 220px;
-    height: 45px;
-}
-
-    li a {
-        display: block;
-        color: white;
-        padding: 10px 10px 10px 40px;
-        text-decoration: none;
+    .navUl li {
+        position: relative;
+        border-top-style: solid;
+        border-color: white;
+        border-width: thin;
+        width: 220px;
+        height: 45px;
     }
 
-        li a:active,
-        li a:hover,
-        li a:focus {
-            background-color: #3d7adb;
+        .navUl li a {
+            display: block;
             color: white;
+            padding: 10px 10px 10px 40px;
             text-decoration: none;
-            outline: none;
         }
+
+            .navUl li a:active,
+            .navUl li a:hover,
+            .navUl li a:focus {
+                background-color: #3d7adb;
+                color: white;
+                text-decoration: none;
+                outline: none;
+            }
 
 .logo-container {
     width: 220px;
     margin: 0;
     padding: 0;
-    background-color: #212529;
+    background-color: #2d3339;
     height: 65px;
 }
 
@@ -78,7 +78,7 @@ li {
         margin-right: 45px;
     }
 
-a.nav-link:hover {
+#goldcap-logo a.nav-link:hover {
     color: #6C757D;
 }
 

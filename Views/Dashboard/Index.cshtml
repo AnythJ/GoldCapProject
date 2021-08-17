@@ -3,8 +3,8 @@
 <style>
     body {
         font-family: Arial;
-        background-color: white;
-        color: black;
+        background-color: #212529;
+        color: #9ba6b0;
     }
     /*#region old */
 
@@ -158,6 +158,8 @@
 
 /*#endregion */
 
+    /*#region Pills row */
+
     .statPill {
         background-color: #2d3339;
         color: #9ba6b0;
@@ -166,29 +168,56 @@
         margin-right: 20px;
         max-height: auto;
     }
+
         .statPill span {
             font-size: 50px;
             font-weight: bold;
             text-align: center;
         }
+
         .statPill .pill-left {
             text-align: center;
             align-content: center;
         }
-        .statPill .pill-right p{
+
+        .statPill .pill-right p {
             margin-top: 5px;
             margin-bottom: 5px;
             text-align: center;
         }
 
+    /*#endregion */
+
+
+    /*#region AreaChart row */
+
     .areaChartDiv {
         border: 3px solid #434d56;
         border-radius: 5px;
         padding: 0;
-        margin: 0;
+        max-height: 406px !important;
     }
 
-    
+    .pieChartDiv {
+        max-height: 406px !important;
+    }
+    /*#endregion */
+
+    /*#region Table row */
+
+    .tableColumn {
+        background-color: #2d3339;
+        color: #9ba6b0;
+        padding: 0;
+        border: 3px solid #434d56;
+        border-radius: 5px;
+    }
+    .table {
+        background-color: #2d3339;
+        color: #9ba6b0;
+    }
+
+    /*#endregion */
 </style>
 
 @section Styles{
@@ -214,7 +243,7 @@
     <title></title>
 </head>
 
-<body style="background-color: #212529;">
+<body>
     <nav class="navbar navbar-expand-lg navbar-dark py-2" style="background-color: #2d3339;">
         <div class="container-fluid">
             <button class="btn btn-lg btn-dark btn-outline-light"></button>
@@ -294,10 +323,23 @@
                         <div id="container"></div>
                     </figure>
                 </div>
-                <div class="col-4">
-
+                <div class="col-4 pieChartDiv">
+                    <figure id="pieFigure" class="highcharts-figure">
+                        <div id="container-pie"></div>
+                    </figure>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin:20px 0 20px 20px;">
+        <div class="col tableColumn">
+            <div id="view-all" class="table table-responsive">
+                @await Html.PartialAsync("_ViewAll", Model)
+            </div>
+        </div>
+        <div class="col">
+
         </div>
     </div>
 

@@ -1,7 +1,7 @@
 ﻿
 function showLineChart() {
     $.getJSON("Dashboard/GetData", function (result) {
-        
+
         var lineTimeStamps = [];
         var lineAmounts = [];
         var tooltipStrings = [];
@@ -65,20 +65,20 @@ function showLineChart() {
                     title: {
                         text: 'Expenses in the last 30 days',
                         style: {
-                            color: ' #9ba6b0'
+                            color: '#9ba6b0'
                         }
                     },
 
                     yAxis: {
                         title: {
                             style: {
-                                color: ' #9ba6b0'
+                                color: '#9ba6b0'
                             },
                             text: 'Amount of expenses [$]'
                         },
                         labels: {
                             style: {
-                                color: ' #9ba6b0'
+                                color: '#9ba6b0'
                             }
                         }
                     },
@@ -86,13 +86,13 @@ function showLineChart() {
                     xAxis: {
                         title: {
                             style: {
-                                color: ' #9ba6b0'
+                                color: '#9ba6b0'
                             },
                             text: 'Day of the month'
                         },
                         labels: {
                             style: {
-                                color: ' #9ba6b0'
+                                color: '#9ba6b0'
                             }
                         },
                         categories: lineTimeStamps
@@ -124,7 +124,8 @@ function showLineChart() {
                     },
 
                     series: [{
-                        name: 'Amount',
+                        color: '#9ba6b0',
+                        name: '$',
                         data: lineAmounts
                     }],
 
@@ -175,6 +176,6 @@ function showLineChart() {
                 });
 
             });
-            
+
     });
 }

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Expense>
+
+<style>
+    .tableColumn {
+        background-color: #2d3339;
+        color: #9ba6b0;
+        padding: 0;
+        border: 3px solid #434d56;
+        border-radius: 5px;
+    }
+
+    .table {
+        background-color: #2d3339;
+        color: #9ba6b0;
+    }
+</style>
+
+
+<div class="row" style="margin:20px 0 20px 20px;">
+    <div class="col tableColumn">
+        <div id="view-all" class="table table-responsive">
+            @await Html.PartialAsync("_ViewAll", Model)
+        </div>
+    </div>
+    <div class="col">
+
+    </div>
+</div>

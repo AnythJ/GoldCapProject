@@ -59,9 +59,20 @@ function showPieChart() {
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
                     plotShadow: false,
-                    type: 'pie'
+                    spacingTop: 0,
+                    spacingBottom: 0,
+                    spacingLeft: 0,
+                    spacingRight: 0,
+                    type: 'pie',
+                    style: {
+                        fontFamily: 'Arial'
+                    },
+                    backgroundColor: '#212529'
                 },
                 title: {
+                    style: {
+                        color: '#9ba6b0'
+                    },
                     text: 'Categories in %'
                 },
                 exporting: {
@@ -81,6 +92,7 @@ function showPieChart() {
                     pie: {
                         allowPointSelect: true,
                         cursor: 'pointer',
+                        borderColor: '#C9FBFF',
                         dataLabels: {
                             enabled: false,
                         },
@@ -138,7 +150,10 @@ function showPieChart() {
                     name: '',
                     colorByPoint: true,
                     data: cateData
-                }]
+                }],
+                credits: {
+                    enabled: false
+                }
             });
         });
             

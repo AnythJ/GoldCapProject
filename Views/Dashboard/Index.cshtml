@@ -2,9 +2,12 @@
 
 <style>
     body {
+        font-family: Arial;
         background-color: white;
         color: black;
     }
+    /*#region old */
+
     /*#region table */
     .tableContainer {
         padding: 0;
@@ -13,8 +16,6 @@
         max-width: calc(80%-609px);
         min-width: 645px;
     }
-
-
 
     thead.sticky-top {
         background-color: lightgray;
@@ -28,13 +29,8 @@
 
     /*#endregion */
 
-
     /*#region mainLayout */
-    .lineChartRow {
-        float: left;
-        height: 300px;
-        width: 80%;
-    }
+
     /*#endregion */
 
     .shadowDiv {
@@ -44,11 +40,6 @@
         .shadowDiv:hover {
             box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.22);
         }
-
-
-
-
-
     /*#region StatCircles */
 
     div .u-statCircle, div .c-statCircle {
@@ -77,14 +68,16 @@
             color: #0D6EFD;
             cursor: pointer;
         }
+
             #adviceDiv p a:hover {
                 color: #012965;
             }
 
-            .circle .u-right {
-                z-index: 3;
-                transform: rotate( @ViewBag.PercentageStringStartRightU );
-            }
+    .circle .u-right {
+        z-index: 3;
+        transform: rotate(
+@ViewBag.PercentageStringStartRightU );
+    }
     @@keyframes u-left {
         100% {
             transform: rotate(@ViewBag.PercentageStringLeftU);
@@ -162,14 +155,48 @@
 
 
 /*#endregion */
+
+/*#endregion */
+
+    .statPill {
+        background-color: #2d3339;
+        color: #9ba6b0;
+        border: 3px solid #434d56;
+        border-radius: 5px;
+        margin-right: 20px;
+        max-height: auto;
+    }
+        .statPill span {
+            font-size: 50px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .statPill .pill-left {
+            text-align: center;
+            align-content: center;
+        }
+        .statPill .pill-right p{
+            margin-top: 5px;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+    .areaChartDiv {
+        border: 3px solid #434d56;
+        border-radius: 5px;
+        padding: 0;
+        margin: 0;
+    }
+
+    
 </style>
 
 @section Styles{
-    <link href="~/css/lineChart.css" rel="stylesheet" />
-    <link href="~/css/pieChart.css" rel="stylesheet" />
-    <link href="~/css/underCircle.css" rel="stylesheet" />
-    <link href="~/css/cateCircle.css" rel="stylesheet" />
-    <link href="~/css/paycheckCircle.css" rel="stylesheet" />
+    <link href="~/css/DashboardCSS/lineChart.css" rel="stylesheet" />
+    <link href="~/css/DashboardCSS/pieChart.css" rel="stylesheet" />
+    <link href="~/css/DashboardCSS/underCircle.css" rel="stylesheet" />
+    <link href="~/css/DashboardCSS/cateCircle.css" rel="stylesheet" />
+    <link href="~/css/DashboardCSS/paycheckCircle.css" rel="stylesheet" />
     <link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
 }
 
@@ -187,128 +214,92 @@
     <title></title>
 </head>
 
-<body>
-    <div style="height:100%;overflow:auto;">
-        <div class="lineChartRow shadowDiv" style="margin:20px;">
-            <figure id="lineFigure" class="highcharts-figure" style="height:300px;">
-                <div id="container" style="height:300px;"></div>
-            </figure>
-        </div>
+<body style="background-color: #212529;">
+    <nav class="navbar navbar-expand-lg navbar-dark py-2" style="background-color: #2d3339;">
+        <div class="container-fluid">
+            <button class="btn btn-lg btn-dark btn-outline-light"></button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbarToggler" aria-controls="topNavbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="topNavbarToggler">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                </ul>
+                <button class="btn btn-outline-info m-1">Week</button>
+                <button class="btn btn-outline-info m-1">Month</button>
+                <button class="btn btn-outline-info m-1">Year</button>
+                <div class="bg-dark" style="border:3px solid white;border-radius:50%;margin-left:20px;width:45px;height:45px;">
 
-        <div id="adviceDiv" style="width: 15%;height:300px;float:left;margin-top:20px;" class="shadowDiv">
-            <h1 style="margin:8px 0 15px 8px;font-size:20px;font-weight:bolder;">Advice</h1>
-            <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 0},Context.Request.Scheme)','New expense')">Add daily payments to make your life easier</a></p>
-            <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 2},Context.Request.Scheme)','New expense')">Add monthly payments to make your life easier</a></p>
-            <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 4},Context.Request.Scheme)','New expense')">Add your custom recurring payment</a></p>
-            <p style="padding-top:5px;text-align:right;"><a style="color: white;" onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)','Recurring payments')" class="btn btn-success btn-sm">Recurring payments</a>
-        </div>
-
-        <div style="margin-left:20px;float:left;">
-            <figure id="pieFigure" class="highcharts-figure shadowDiv" style="float:left;height:350px;">
-                <div id="container-pie" style="height:350px;"></div>
-                <p class="highcharts-description">
-                </p>
-            </figure>
-        </div>
-
-        <div class="shadowDiv" style="float:left;width:auto;margin-left:20px;margin-top:16px;max-height:350px;overflow-y:auto;background-color:white;">
-            <table class="table table-hover" style="border-collapse: separate; border-spacing: 0;">
-                <thead class="sticky-top">
-                    <tr style="font-weight:bold;">
-                        <td id="tableRowId">Top categories by amount</td>
-                        <td style="text-align:right;">%</td>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    @foreach (var item in ViewBag.Categories)
-                    {
-                        <tr class="trClass">
-                            <td>
-                                @item.CategoryName
-                            </td>
-                            <td>
-                                @String.Format("{0:0.00}", item.CategoryPercentage)
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-
-        <div class="shadowDiv" style="float:left;min-width:605px;width:auto;margin-left:20px;margin-top:16px;max-height:350px;background-color:white;">
-            <div id="view-all" class="table-responsive tableContainer">
-                @await Html.PartialAsync("_ViewAll", Model)
-            </div>
-        </div>
-
-        <!-- #region Stat Progress Circles -->
-
-        <div style="float: left; margin-top: 20px; margin-left: 20px; position: static; border-radius: 100%; border: 1px solid #68a4fd;">
-            <div class="u-statCircle">
-                <div class="smallerCircle" style="padding-top:10px;">
-                    <p id="amountP" onmouseover="showPercentage()" data-toggle="tooltip" data-placement="top" title="@ViewBag.TooltipPercentage%" style="font-size: 20px;font-weight:bold;">@ViewBag.SumLast30$</p>
-                    <p>of @ViewBag.SumBeforeLast30$</p>
-                    <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                    <p>@ViewBag.UnderMonth$ <small>under</small></p>
-                    <p>last month</p>
-                </div>
-                <div class="circle">
-                    <div class="bar u-left">
-                        <div class="progress"></div>
-                    </div>
-                    <div class="bar u-right">
-                        <div class="progress"></div>
-                    </div>
                 </div>
             </div>
         </div>
-        <div style="float: left; margin-top: 20px; margin-left: 20px; position: static; border-radius: 100%; border: 1px solid orange;">
-            <div class="c-statCircle">
-                <div class="smallerCircle" style="padding-top:10px;">
-                    <p style="font-size: 20px;font-weight:bold;">@ViewBag.TopCategory%</p>
-                    <p style="font-size:16px;">@ViewBag.TopCategoryName</p>
-                    <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                    <p>@ViewBag.TopCategoryAmount$ <small>of</small></p>
-                    <p>@ViewBag.SumLast30$</p>
+    </nav>
+
+    <div class="row" style="margin:20px 0 20px 20px">
+        <div class="col statPill">
+            <div class="row">
+                <div class="col my-auto pill-left">
+                    <span>440$</span>
                 </div>
-                <div class="circle">
-                    <div class="bar c-left">
-                        <div class="progress"></div>
-                    </div>
-                    <div class="bar c-right">
-                        <div class="progress"></div>
-                    </div>
+                <div class="col pill-right">
+                    <p>Category</p>
+                    <p>Category</p>
+                    <p>Category</p>
                 </div>
             </div>
         </div>
-        <div style="float: left; margin-top: 20px; margin-left: 20px; position: static; border-radius: 100%; border: 1px solid green;">
-            <div class="p-statCircle">
-                <div class="smallerCircle" style="padding-top:10px;">
-                    <p style="font-size: 20px;font-weight:bold;">@ViewBag.SumLast30$</p>
-                    <p>
-                        of <a id="paycheckAmount">@ViewBag.SumBeforeLast30$</a> 
-                        <input id="paycheckInputField" type="text" hidden style="width:50px;height:18px;"/>
-                        <a onclick="EditPaycheck()"><i class="fas fa-pen"></i></a>
-                    </p>
-                    <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                    <p>@ViewBag.UnderMonth$ <small>under</small></p>
-                    <p>last month</p>
+        <div class="col statPill">
+            <div class="row">
+                <div class="col my-auto pill-left">
+                    <span>440$</span>
                 </div>
-                <div class="circle">
-                    <div class="bar p-left">
-                        <div class="progress"></div>
-                    </div>
-                    <div class="bar p-right">
-                        <div class="progress"></div>
-                    </div>
+                <div class="col pill-right">
+                    <p>Category</p>
+                    <p>Category</p>
+                    <p>Category</p>
+                </div>
+            </div>
+        </div>
+        <div class="col statPill">
+            <div class="row">
+                <div class="col my-auto pill-left">
+                    <span>440$</span>
+                </div>
+                <div class="col pill-right">
+                    <p>Category</p>
+                    <p>Category</p>
+                    <p>Category</p>
+                </div>
+            </div>
+        </div>
+        <div class="col statPill">
+            <div class="row">
+                <div class="col my-auto pill-left">
+                    <span>440$</span>
+                </div>
+                <div class="col pill-right">
+                    <p>Category</p>
+                    <p>Category</p>
+                    <p>Category</p>
                 </div>
             </div>
         </div>
 
-
-        <!-- #endregion -->
     </div>
 
+    <div class="row" style="margin:20px 0 20px 20px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-8 areaChartDiv">
+                    <figure id="linefigure" class="highcharts-figure">
+                        <div id="container"></div>
+                    </figure>
+                </div>
+                <div class="col-4">
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
@@ -316,21 +307,21 @@
 <script>
     $(showLineChart);
     $(showPieChart);
-    function showPercentage() {
-        $('#amountP').tooltip('show');
-    }
+    //function showPercentage() {
+    //    $('#amountP').tooltip('show');
+    //}
 
-    function EditPaycheck() {
-        var amountField = document.getElementById('paycheckAmount');
-        if (amountField.hidden == false) {
-            amountField.hidden = true;
-            document.getElementById('paycheckInputField').hidden = false;
-        }
-        else {
-            amountField.hidden = false;
-            document.getElementById('paycheckInputField').hidden = true;
-        }
-    }
+    //function EditPaycheck() {
+    //    var amountField = document.getElementById('paycheckAmount');
+    //    if (amountField.hidden == false) {
+    //        amountField.hidden = true;
+    //        document.getElementById('paycheckInputField').hidden = false;
+    //    }
+    //    else {
+    //        amountField.hidden = false;
+    //        document.getElementById('paycheckInputField').hidden = true;
+    //    }
+    //}
 </script>
 
 @section Scripts{

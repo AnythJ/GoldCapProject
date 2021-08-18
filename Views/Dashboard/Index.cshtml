@@ -8,38 +8,6 @@
     }
     /*#region old */
 
-    /*#region table */
-    .tableContainer {
-        padding: 0;
-        margin: 0;
-        height: 350px;
-        max-width: calc(80%-609px);
-        min-width: 645px;
-    }
-
-    thead.sticky-top {
-        background-color: lightgray;
-    }
-
-    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-        /*background-color: #5f666d;*/
-        background-color: lightgray;
-        color: white;
-    }
-
-    /*#endregion */
-
-    /*#region mainLayout */
-
-    /*#endregion */
-
-    .shadowDiv {
-        box-shadow: 0 19px 38px rgba(0,0,0,0.20), 0 15px 12px rgba(0,0,0,0.22);
-    }
-
-        .shadowDiv:hover {
-            box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.22);
-        }
     /*#region StatCircles */
 
     div .u-statCircle, div .c-statCircle {
@@ -191,16 +159,7 @@
 
     /*#region AreaChart row */
 
-    .areaChartDiv {
-        border: 3px solid #434d56;
-        border-radius: 5px;
-        padding: 0;
-        max-height: 406px !important;
-    }
-
-    .pieChartDiv {
-        max-height: 406px !important;
-    }
+    
     /*#endregion */
 
     /*#region Table row */
@@ -211,10 +170,6 @@
         padding: 0;
         border: 3px solid #434d56;
         border-radius: 5px;
-    }
-    .table {
-        background-color: #2d3339;
-        color: #9ba6b0;
     }
 
     /*#endregion */
@@ -263,84 +218,82 @@
         </div>
     </nav>
 
-    <div class="row" style="margin:20px 0 20px 20px">
-        <div class="col statPill">
-            <div class="row">
-                <div class="col my-auto pill-left">
-                    <span>440$</span>
-                </div>
-                <div class="col pill-right">
-                    <p>Category</p>
-                    <p>Category</p>
-                    <p>Category</p>
-                </div>
-            </div>
-        </div>
-        <div class="col statPill">
-            <div class="row">
-                <div class="col my-auto pill-left">
-                    <span>440$</span>
-                </div>
-                <div class="col pill-right">
-                    <p>Category</p>
-                    <p>Category</p>
-                    <p>Category</p>
+    <div style="height:100%;overflow-y:auto;">
+        <div class="row" style="margin:20px 0 20px 20px">
+            <div class="col statPill">
+                <div class="row">
+                    <div class="col my-auto pill-left">
+                        <span>440$</span>
+                    </div>
+                    <div class="col pill-right">
+                        <p>Category</p>
+                        <p>Category</p>
+                        <p>Category</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col statPill">
-            <div class="row">
-                <div class="col my-auto pill-left">
-                    <span>440$</span>
-                </div>
-                <div class="col pill-right">
-                    <p>Category</p>
-                    <p>Category</p>
-                    <p>Category</p>
-                </div>
-            </div>
-        </div>
-        <div class="col statPill">
-            <div class="row">
-                <div class="col my-auto pill-left">
-                    <span>440$</span>
-                </div>
-                <div class="col pill-right">
-                    <p>Category</p>
-                    <p>Category</p>
-                    <p>Category</p>
+            <div class="col statPill">
+                <div class="row">
+                    <div class="col my-auto pill-left">
+                        <span>440$</span>
+                    </div>
+                    <div class="col pill-right">
+                        <p>Category</p>
+                        <p>Category</p>
+                        <p>Category</p>
+                    </div>
                 </div>
             </div>
+            <div class="col statPill">
+                <div class="row">
+                    <div class="col my-auto pill-left">
+                        <span>440$</span>
+                    </div>
+                    <div class="col pill-right">
+                        <p>Category</p>
+                        <p>Category</p>
+                        <p>Category</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col statPill">
+                <div class="row">
+                    <div class="col my-auto pill-left">
+                        <span>440$</span>
+                    </div>
+                    <div class="col pill-right">
+                        <p>Category</p>
+                        <p>Category</p>
+                        <p>Category</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-    </div>
-
-    <div class="row" style="margin:20px 0 20px 20px;">
-        <div class="container">
+        <div class="row" style="margin:20px 0 20px 20px;">
             <div class="row">
                 <div class="col-8 areaChartDiv">
                     <figure id="linefigure" class="highcharts-figure">
                         <div id="container"></div>
                     </figure>
                 </div>
-                <div class="col-4 pieChartDiv">
+                <div class="col-4 mh-100 pieChartDiv">
                     <figure id="pieFigure" class="highcharts-figure">
                         <div id="container-pie"></div>
                     </figure>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row" style="margin:20px 0 20px 20px;">
-        <div class="col tableColumn">
-            <div id="view-all" class="table table-responsive">
-                @await Html.PartialAsync("_ViewAll", Model)
-            </div>
-        </div>
-        <div class="col">
+        @*<div class="row" style="margin:20px 0 20px 20px;">
+                <div class="col-6" id="view-all">
+                        @await Html.PartialAsync("_ViewAll", Model)
+                </div>
+                <div class="col">
 
-        </div>
+                </div>
+            </div>*@
     </div>
 
 </body>

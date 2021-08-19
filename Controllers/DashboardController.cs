@@ -25,8 +25,7 @@ namespace GoldCap.Controllers
             ViewBag.Expenses = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
             var thisMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
             var lastMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-60) && m.Date <= DateTime.Now.AddDays(-30));
-            var topCategories = _expenseRepository.GetCategoryRatios()
-                .Where(c => c.CategoryPercentage >= _expenseRepository.GetCategoryRatios()[6].CategoryPercentage);
+            var topCategories = _expenseRepository.GetCategoryRatios().Where(c => c.CategoryPercentage > 0);
             var topCategory = _expenseRepository.GetCategoryRatios().First();
 
 
@@ -586,7 +585,9 @@ namespace GoldCap.Controllers
             }
             else
             {
-                string str = categoryName.Split(" ")[0];
+                var withPercentage = categoryName.Split(' ');
+                withPercentage = withPercentage.Take(withPercentage.Count() - 1).ToArray();
+                string str = String.Join(' ', withPercentage).Trim();
                 return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30) && m.Category == str).OrderByDescending(d => d.Date)) });
             }
         }

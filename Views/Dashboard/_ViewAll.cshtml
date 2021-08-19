@@ -28,7 +28,10 @@
     }
 
     /*#endregion */
-
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
     .descriptionTd {
         white-space: nowrap;
         overflow: hidden;
@@ -36,56 +39,36 @@
         max-width: 160px;
     }
 
-    table {
-        width: 100%;
-        max-height: 350px;
-    }
-
-    .fixed_table {
-        width: 100%;
-        table-layout: fixed;
-        border-collapse: collapse;
-    }
-
-        .fixed_table tbody {
-            background-color: #2d3339;
-            display: block;
-            width: 100%;
-            overflow-y: auto;
-            overflow-x: hidden;
-            max-height: 350px;
-        }
-
-        .fixed_table thead tr {
-            display: block;
-        }
-
-        .fixed_table thead {
-            background-color: #212529;
-            color: white;
-        }
-
-        .fixed_table th, .fixed_table td {
-            padding: 5px;
-            text-align: left;
-            width: 160px;
-        }
-
-            .fixed_table th.button_column, .fixed_table td.button_column {
-                text-align: right;
-                padding-right: 20px;
-            }
-
     .table {
-        background-color: #2d3339;
+        background-color: #2D3339;
         color: #9ba6b0;
+    }
+
+        .table thead {
+            background-color: #2d3339;
+            color: #9ba6b0;
+        }
+
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        color: white;
+    }
+    .table tr th, .table tr td {
+        vertical-align: middle;
+    }
+
+    .table .button_column {
+        text-align: right;
+    }
+    .table .refresh_button {
+        text-align: right;
+        padding-right: 30px;
     }
 </style>
 <input hidden id="idForSort" value="" />
-<table class="fixed_table table table-hover">
-    <thead>
+<table class="table table-hover">
+    <thead class="sticky-top">
         <tr>
-            <th id="th1">
+            <th>
                 <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort", "Dashboard", new { sortOrder = (ViewBag.AmountSortParm == null ? "Amount" : ViewBag.AmountSortParm)}, Context.Request.Scheme)','Sort')">Amount</a>
             </th>
             <th>
@@ -97,7 +80,7 @@
             <th>
                 <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort","Dashboard",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
             </th>
-            <th class="button_column">
+            <th class="refresh_button">
                 <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort", "Dashboard", new { sortOrder = "default", id = -1}, Context.Request.Scheme)','Sort', true)">
                     <i class="fas fa-sync-alt"></i>
                 </a>
@@ -107,7 +90,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr class="expensesTr">
+            <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Amount)
                 </td>
@@ -122,25 +105,11 @@
                 </td>
                 <td class="button_column">
                     <a onclick="showInPopup('@Url.Action("Details","Dashboard",new { id = item.Id},Context.Request.Scheme)','Details')"
-                       class="btn btn-primary btn-sm">Details</a>
+                       class="btn btn-outline-info btn-sm">Details</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<button onclick="myFunct()">TEST</button>
-<script type="text/javascript">
-    function myFunct() {
-        var bodyTr = document.getElementsByClassName('expensesTr');
-        var wid1 = bodyTr[0].cells[0];
-        var wid2 = bodyTr[1].cells[1];
-        console.log(wid1.style.width);
-        console.log(wid1.clientWidth);
 
-        var th1 = document.getElementById('th1');
-        console.log(th1.offsetWidth);
-        console.log(th1.clientWidth);
-        th1.style.width = wid1.clientWidth + 'px';
-    }
-</script>

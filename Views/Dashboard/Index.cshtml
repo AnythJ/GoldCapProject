@@ -133,7 +133,7 @@
         color: #9ba6b0;
         border: 3px solid #434d56;
         border-radius: 5px;
-        margin-right: 20px;
+        margin-right: 15px;
         max-height: auto;
     }
 
@@ -156,31 +156,38 @@
 
     /*#endregion */
 
-
     /*#region AreaChart row */
-
-    
+    .areaChartDiv {
+        width: 100%;
+        border: 3px solid #434d56;
+        border-radius: 5px;
+        padding: 0;
+    }
+    .areaChartCol {
+        padding: 0;
+    }
+    .pieChartDiv {
+        width: 100%;
+    }
     /*#endregion */
 
     /*#region Table row */
-
-    .tableColumn {
-        background-color: #2d3339;
-        color: #9ba6b0;
-        padding: 0;
-        border: 3px solid #434d56;
-        border-radius: 5px;
+    .percentageCol {
+        text-align: right;
+        font-weight: bold;
     }
 
     /*#endregion */
 </style>
 
 @section Styles{
-    <link href="~/css/DashboardCSS/lineChart.css" rel="stylesheet" />
+    <link href="~/css/DashboardCSS/areaChart.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/pieChart.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/underCircle.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/cateCircle.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/paycheckCircle.css" rel="stylesheet" />
+    <link href="~/css/DashboardCSS/listColumn.css" rel="stylesheet" />
+    <link href="~/css/DashboardCSS/topCategoryColumn.css" rel="stylesheet" />
     <link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
 }
 
@@ -219,7 +226,7 @@
     </nav>
 
     <div style="height:100%;overflow-y:auto;">
-        <div class="row" style="margin:20px 0 20px 20px">
+        <div class="row" style="margin:15px 0 15px 15px">
             <div class="col statPill">
                 <div class="row">
                     <div class="col my-auto pill-left">
@@ -271,29 +278,51 @@
 
         </div>
 
+        <div class="row" style="margin: 15px 0 15px 15px; ">
+            <div class="col-8 areaChartCol">
+                <figure id="areafigure" class="highcharts-figure">
+                    <div id="container" class="areaChartDiv"></div>
+                </figure>
+            </div>
+            <div class="col-4">
+                <figure id="pieFigure" class="highcharts-figure">
+                    <div id="container-pie" class="pieChartDiv"></div>
+                </figure>
+            </div>
+        </div>
+
+        <div class="row" style="margin: 15px 0 15px 15px; ">
+            <div class="col-6 tableColumn table-responsive" id="view-all">
+                @await Html.PartialAsync("_ViewAll", Model)
+            </div>
+            <div class="col-2 topCategoryColumn table-responsive">
+                    <table class="table table-hover">
+                        <thead class="sticky-top">
+                            <tr>
+                                <td id="tableRowId">Categories by amount</td>
+                                <td class="percentageCol">%</td>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            @foreach (var item in ViewBag.Categories)
+                            {
+                                <tr class="trClass">
+                                    <td>
+                                        @item.CategoryName
+                                    </td>
+                                    <td class="percentageCol">
+                                        @String.Format("{0:0.00}", item.CategoryPercentage)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+        
         <div class="row" style="margin:20px 0 20px 20px;">
-            <div class="row">
-                <div class="col-8 areaChartDiv">
-                    <figure id="linefigure" class="highcharts-figure">
-                        <div id="container"></div>
-                    </figure>
-                </div>
-                <div class="col-4 mh-100 pieChartDiv">
-                    <figure id="pieFigure" class="highcharts-figure">
-                        <div id="container-pie"></div>
-                    </figure>
-                </div>
-            </div>
+
         </div>
-
-        @*<div class="row" style="margin:20px 0 20px 20px;">
-                <div class="col-6" id="view-all">
-                        @await Html.PartialAsync("_ViewAll", Model)
-                </div>
-                <div class="col">
-
-                </div>
-            </div>*@
     </div>
 
 </body>

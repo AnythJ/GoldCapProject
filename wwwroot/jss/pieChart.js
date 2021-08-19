@@ -103,8 +103,9 @@ function showPieChart() {
                                     var tBody = document.getElementById('tableBody');
                                     var trRows = tBody.getElementsByClassName('trClass');
                                     for (var i = 0; i < trRows.length; i++) {
-                                        trRows[i].style.backgroundColor = "white";
-                                        trRows[i].style.color = "black";
+                                        trRows[i].style.backgroundColor = "#2D3339";
+                                        trRows[i].style.color = "#9ba6b0";
+                                        trRows[i].style.fontWeight = "normal";
                                     }
                                     var found;
                                     var finalRow;
@@ -116,13 +117,15 @@ function showPieChart() {
                                             if (col.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim() == this.name) {
                                                 if (idElement == null || idElement != row) {
                                                     //active
-                                                    row.style.backgroundColor = "#5f666d";
-                                                    row.style.color = "white";
+                                                    row.style.backgroundColor = "#0DCAF0";
+                                                    row.style.color = "#212529";
+                                                    row.style.fontWeight = "bold";
                                                     row.setAttribute("id", "active");
                                                     finalRow = row;
                                                     sendToList(-1, finalRow.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim());
                                                     if (idElement != null) {
                                                         sendToList(-1, finalRow.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim());
+                                                        idElement.style.fontWeight = "normal";
                                                         idElement.setAttribute("id", "");
                                                     }
                                                     break;
@@ -130,8 +133,9 @@ function showPieChart() {
                                                 }
                                                 else {
                                                     //unactive
-                                                    row.style.backgroundColor = "white";
-                                                    row.style.color = "black";
+                                                    row.style.backgroundColor = "#2D3339";
+                                                    row.style.color = "#9ba6b0";
+                                                    row.style.fontWeight = "normal";
                                                     row.setAttribute("id", "");
                                                     sendToList(-1, null);
                                                 }

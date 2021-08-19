@@ -1,0 +1,29 @@
+﻿.topCategoryColumn {
+    background-color: #2D3339;
+    color: #9ba6b0;
+    padding: 0;
+    border: 3px solid #434d56;
+    border-radius: 5px;
+    border-right: none;
+    overflow-x: auto;
+    height: 360px;
+    overflow-y: scroll;
+    margin-left: 0;
+}
+.topCategoryColumn tbody td {
+    height: 48px;
+}
+    .topCategoryColumn::-webkit-scrollbar {
+        display: block;
+        width: 3px;
+        background-color: #434d56;
+    }
+
+    .topCategoryColumn::-webkit-scrollbar-track-piece:start {
+        margin-top: 40px;
+        scrollbar-track-color: red;
+    }
+
+    .topCategoryColumn::-webkit-scrollbar-thumb {
+        background-color: #0790ab;
+    }

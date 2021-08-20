@@ -1,4 +1,5 @@
 ﻿using GoldCap.Models;
+using GoldCap.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,12 +23,12 @@ namespace GoldCap.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Expenses = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
             var thisMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
             var lastMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-60) && m.Date <= DateTime.Now.AddDays(-30));
             var topCategories = _expenseRepository.GetCategoryRatios().Where(c => c.CategoryPercentage > 0);
             var topCategory = _expenseRepository.GetCategoryRatios().First();
 
+            DashboardViewModel dashboardViewModel = new DashboardViewModel();
 
             #region MonthlyAddition
 
@@ -215,28 +216,29 @@ namespace GoldCap.Controllers
                 avgLeft = 180;
             }
 
+            StatCircle underCircle = new StatCircle();
+            underCircle.PercentageLeft = avgLeft + "deg";
+            underCircle.PercentageStartRight = rightStart + "deg";
+            underCircle.PercentageRight = avgRight + "deg";
 
-
-            ViewBag.PercentageStringLeftU = avgLeft + "deg";
-            ViewBag.PercentageStringStartRightU = rightStart + "deg";
-            ViewBag.PercentageStringRightU = avgRight + "deg";
-
-            ViewBag.SumLast30 = sumExpenses;
-            ViewBag.SumBeforeLast30 = sumExpensesLastMonth;
-            ViewBag.UnderMonth = underMonth;
-            ViewBag.TooltipPercentage = Decimal.Round(percentage);
+            underCircle.SumLast30Days = sumExpenses;
+            underCircle.SumBeforeLast30Days = sumExpensesLastMonth;
+            underCircle.UnderMonthAmount = underMonth;
+            underCircle.TooltipPercentage = Decimal.Round(percentage);
             #endregion
 
             #region CategoryCircle
             var topCate = thisMonth.Where(e => e.Category == topCategory.CategoryName).Sum(e => e.Amount);
             decimal percentageCategory = 0;
+            StatCircle cateCircle = new StatCircle();
             if (sumExpenses != 0)
                 percentageCategory = Decimal.Round((Convert.ToDecimal(topCate) / sumExpenses) * 100);
 
-            ViewBag.TopCategory = percentageCategory;
-            ViewBag.TopCategoryName = topCategory.CategoryName;
-            ViewBag.TopCategoryAmount = topCate;
+            cateCircle.TopCategoryPercentage = percentageCategory;
+            cateCircle.TopCategoryName = topCategory.CategoryName;
+            cateCircle.TopCategoryAmount = (int)topCate;
 
+            cateCircle.SumLast30Days = sumExpenses;
             int avgC = (int)(3.6 * (int)percentageCategory);
 
             var rightStartC = 0;
@@ -262,29 +264,61 @@ namespace GoldCap.Controllers
 
             double dg = avgLeftC + avgRightC;
             double animationProportionCategory = avgLeftC / dg;
-            ViewBag.LeftSpeedC = (animationProportionCategory * 0.5).ToString(dotFormat) + "s";
-            ViewBag.RightSpeedC = (0.5 - (animationProportionCategory * 0.5)).ToString(dotFormat) + "s";
+            cateCircle.LeftSpeed = (animationProportionCategory * 0.5).ToString(dotFormat) + "s";
+            cateCircle.RightSpeed = (0.5 - (animationProportionCategory * 0.5)).ToString(dotFormat) + "s";
 
             double gd = avgLeft + avgRight;
             double animationProportionUnder = avgLeft / gd;
-            ViewBag.LeftSpeedU = (animationProportionUnder * 0.5).ToString(dotFormat) + "s";
-            ViewBag.RightSpeedU = (0.5 - (animationProportionUnder * 0.5)).ToString(dotFormat) + "s";
+            underCircle.LeftSpeed = (animationProportionUnder * 0.5).ToString(dotFormat) + "s";
+            underCircle.RightSpeed = (0.5 - (animationProportionUnder * 0.5)).ToString(dotFormat) + "s";
             #endregion
 
-            ViewBag.PercentageStringLeftC = avgLeftC + "deg";
-            ViewBag.PercentageStringStartRightC = rightStartC + "deg";
-            ViewBag.PercentageStringRightC = avgRightC + "deg";
-            #endregion
+            cateCircle.PercentageLeft = avgLeftC + "deg";
+            cateCircle.PercentageStartRight = rightStartC + "deg";
+            cateCircle.PercentageRight = avgRightC + "deg";
             #endregion
 
+            List<StatCircle> circleStats = new List<StatCircle>();
+            circleStats.Add(underCircle);
+            circleStats.Add(cateCircle);
+            #endregion
 
+            #region StatPills
+            List<StatPill> pillsStats = new List<StatPill>();
+            var topExpense = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Amount).FirstOrDefault();
+            var lastExpense = thisMonth.FirstOrDefault();
+            StatPill firstPill = new StatPill()
+            {
+                AmountInt = (int)topExpense.Amount,
+                Category = topExpense.Category,
+                Date = topExpense.Date,
+                Percentage = (sumExpensesLastMonth != 0) ? Decimal.Round((Convert.ToDecimal(topExpense.Amount) / sumExpensesLastMonth) * 100, 1) : 0,
+                DatetimeString = topExpense.Date.Value.ToString("dd/M/yyyy hh:mm")
+            };
+            decimal averageAmount = sumExpenses / thisMonth.Count();
+            decimal aboveOrBelow = (decimal)lastExpense.Amount / averageAmount;
+            StatPill secondPill = new StatPill()
+            {
+                AmountInt = (int)lastExpense.Amount,
+                Category = lastExpense.Category,
+                DatetimeString = lastExpense.Date.Value.DayOfWeek + ", " + lastExpense.Date.Value.Day + " " + lastExpense.Date.Value.ToString("MMMM", CultureInfo.InvariantCulture),
+                //Percentage = (sumExpensesLastMonth != 0) ? Decimal.Round((Convert.ToDecimal(lastExpense.Amount) / sumExpensesLastMonth) * 100, 1) : 0
+                Percentage = Decimal.Round((aboveOrBelow-1) * 100, 1)
+        };
+            pillsStats.Add(firstPill);
+            pillsStats.Add(secondPill);
+            #endregion
+
+            dashboardViewModel.PillsStats = pillsStats;
+            dashboardViewModel.Expenses = thisMonth;
+            dashboardViewModel.CirclesStats = circleStats;
 
             if (topCategories != null)
             {
-                ViewBag.Categories = topCategories;
+                dashboardViewModel.Categories = topCategories;
             }
 
-            return View(thisMonth);
+            return View(dashboardViewModel);
         }
 
 

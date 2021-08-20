@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Expense>
+﻿@model DashboardViewModel
 
 <style>
     body {
@@ -43,36 +43,35 @@
 
     .circle .u-right {
         z-index: 3;
-        transform: rotate(
-@ViewBag.PercentageStringStartRightU );
+        transform: rotate( @Model.CirclesStats[0].PercentageStartRight);
     }
     @@keyframes u-left {
         100% {
-            transform: rotate(@ViewBag.PercentageStringLeftU);
+            transform: rotate(@Model.CirclesStats[0].PercentageLeft);
         }
     }
     @@keyframes u-right {
         100% {
-            transform: rotate(@ViewBag.PercentageStringRightU);
+            transform: rotate(@Model.CirclesStats[0].PercentageRight);
         }
     }
 
     .circle .c-right {
         z-index: 3;
-        transform: rotate(@ViewBag.PercentageStringStartRightC);
+        transform: rotate(@Model.CirclesStats[1].PercentageStartRight);
     }
     @@keyframes c-left {
         100% {
-            transform: rotate(@ViewBag.PercentageStringLeftC);
+            transform: rotate(@Model.CirclesStats[1].PercentageLeft);
         }
     }
     @@keyframes c-right {
         100% {
-            transform: rotate(@ViewBag.PercentageStringRightC);
+            transform: rotate(@Model.CirclesStats[1].PercentageRight);
         }
     }
 
-    .circle .p-right {
+    @*.circle .p-right {
         z-index: 3;
         transform: rotate(@ViewBag.PercentageStringStartRightC);
     }
@@ -85,32 +84,32 @@
         100% {
             transform: rotate(@ViewBag.PercentageStringRightC);
         }
-    }
+    }*@
 
    /*TEST*/
     .circle .c-left .progress {
         z-index: 4;
-        animation: c-left @ViewBag.LeftSpeedC linear both;
+        animation: c-left @Model.CirclesStats[1].LeftSpeed linear both;
     }
 
 
     .circle .c-right .progress {
-        animation: c-right @ViewBag.RightSpeedC linear both;
-        animation-delay: @ViewBag.LeftSpeedC;
+        animation: c-right @Model.CirclesStats[1].RightSpeed linear both;
+        animation-delay: @Model.CirclesStats[1].LeftSpeed;
     }
 
     .circle .u-left .progress {
         z-index: 4;
-        animation: u-left @ViewBag.LeftSpeedU   linear both;
+        animation: u-left @Model.CirclesStats[0].LeftSpeed   linear both;
     }
 
 
     .circle .u-right .progress {
-        animation: u-right @ViewBag.RightSpeedU linear both;
-        animation-delay: @ViewBag.LeftSpeedU;
+        animation: u-right @Model.CirclesStats[0].RightSpeed linear both;
+        animation-delay: @Model.CirclesStats[0].LeftSpeed;
     }
 
-    .circle .p-left .progress {
+    @*.circle .p-left .progress {
         z-index: 4;
         animation: u-left @ViewBag.LeftSpeedU   linear both;
     }
@@ -119,7 +118,7 @@
     .circle .p-right .progress {
         animation: u-right @ViewBag.RightSpeedU linear both;
         animation-delay: @ViewBag.LeftSpeedU;
-    }
+    }*@
 
 
 /*#endregion */
@@ -137,8 +136,8 @@
         max-height: auto;
     }
 
-        .statPill span {
-            font-size: 50px;
+        .statPill span.pillAmount{
+            font-size: 35px;
             font-weight: bold;
             text-align: center;
         }
@@ -153,6 +152,12 @@
             margin-bottom: 5px;
             text-align: center;
         }
+        .fa-arrow-up {
+            color: red;
+        }
+    .fa-arrow-down {
+        color: lawngreen;
+    }
 
     /*#endregion */
 
@@ -182,7 +187,7 @@
     }
     /*#endregion */
 
-    
+
 </style>
 
 @section Styles{
@@ -234,25 +239,28 @@
         <div class="row" style="margin:15px 0 15px 15px">
             <div class="col statPill">
                 <div class="row">
-                    <div class="col my-auto pill-left">
-                        <span>440$</span>
+                    <div class="col my-auto ms-4 pill-left">
+                        <span>Highest expense</span>
+                        <span class="pillAmount">@Model.PillsStats[0].AmountInt$</span>
                     </div>
                     <div class="col pill-right">
-                        <p>Category</p>
-                        <p>Category</p>
-                        <p>Category</p>
+                        <p>@Model.PillsStats[0].Category</p>
+                        <p>@Model.PillsStats[0].DatetimeString</p>
+                        <p>@Model.PillsStats[0].Percentage% of @Model.CirclesStats[0].SumLast30Days$</p>
                     </div>
                 </div>
             </div>
             <div class="col statPill">
                 <div class="row">
                     <div class="col my-auto pill-left">
-                        <span>440$</span>
+                        <span>Last expense</span>
+                        <span class="pillAmount">@Model.PillsStats[1].AmountInt$</span>
                     </div>
                     <div class="col pill-right">
-                        <p>Category</p>
-                        <p>Category</p>
-                        <p>Category</p>
+                        <p>@Model.PillsStats[1].Category</p>
+                        <p>@Model.PillsStats[1].DatetimeString</p>
+                        <input id="percentageArrowValue" type="hidden" value="@Model.PillsStats[1].Percentage" />
+                        <p><i id="arrowUp" hidden class="fas fa-arrow-up"></i><i id="arrowDown" hidden class="fas fa-arrow-down"></i><span id="arrowPercentage"> @Model.PillsStats[1].Percentage% </span><span> average</span></p>
                     </div>
                 </div>
             </div>
@@ -298,15 +306,15 @@
 
         <div class="row" style="margin: 15px 0 15px 15px; ">
             <div class="col-6 tableColumn table-responsive" id="view-all">
-                @await Html.PartialAsync("_ViewAll", Model)
+                @await Html.PartialAsync("_ViewAll", Model.Expenses)
             </div>
             <div class="col-2 stackedCircles">
                 <div class="u-statCircle">
                     <div class="smallerCircle">
-                        <p id="amountP" class="boldHeader" onmouseover="showPercentage()" data-toggle="tooltip" data-placement="top" title="@ViewBag.TooltipPercentage%">@ViewBag.SumLast30$</p>
-                        <p>of @ViewBag.SumBeforeLast30$</p>
+                        <p id="amountP" class="boldHeader" onmouseover="showPercentage()" data-toggle="tooltip" data-placement="top" title="@Model.CirclesStats[0].TooltipPercentage%">@Model.CirclesStats[0].SumLast30Days$</p>
+                        <p>of @Model.CirclesStats[0].SumBeforeLast30Days$</p>
                         <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                        <p><small>@ViewBag.UnderMonth$ under</small></p>
+                        <p><small>@Model.CirclesStats[0].UnderMonthAmount$ under</small></p>
                         <p><small>last month</small></p>
                     </div>
                     <div class="circle">
@@ -321,11 +329,11 @@
 
                 <div class="c-statCircle">
                     <div class="smallerCircle">
-                        <p class="boldHeader">@ViewBag.TopCategory%</p>
-                        <p>@ViewBag.TopCategoryName</p>
+                        <p class="boldHeader">@Model.CirclesStats[1].TopCategoryPercentage%</p>
+                        <p>@Model.CirclesStats[1].TopCategoryName</p>
                         <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                        <p><small>@ViewBag.TopCategoryAmount$ of</small></p>
-                        <p><small>@ViewBag.SumLast30$</small></p>
+                        <p><small>@Model.CirclesStats[1].TopCategoryAmount$ of</small></p>
+                        <p><small>@Model.CirclesStats[1].SumLast30Days$</small></p>
                     </div>
                     <div class="circle">
                         <div class="bar c-left">
@@ -346,7 +354,7 @@
                             </tr>
                         </thead>
                         <tbody id="tableBody">
-                            @foreach (var item in ViewBag.Categories)
+                            @foreach (var item in Model.Categories)
                             {
                                 <tr class="trClass">
                                     <td>
@@ -377,6 +385,19 @@
         $('#amountP').tooltip('show');
     }
 
+    $(document).ready(function () {
+        var arrowPercentage = $('#percentageArrowValue').val();
+        if (arrowPercentage > 0) {
+            document.getElementById('arrowUp').setAttribute("hidden", "");
+            document.getElementById('arrowDown').removeAttribute("hidden");
+            document.getElementById('arrowPercentage').style.color = 'lawngreen';
+        }
+        else {
+            document.getElementById('arrowDown').setAttribute("hidden", "");
+            document.getElementById('arrowUp').removeAttribute("hidden");
+            document.getElementById('arrowPercentage').style.color = 'red';
+        }
+    });
     //function EditPaycheck() {
     //    var amountField = document.getElementById('paycheckAmount');
     //    if (amountField.hidden == false) {

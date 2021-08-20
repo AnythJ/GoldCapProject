@@ -2,6 +2,10 @@
     height: 150px;
     width: 150px;
     position: relative;
+    border: 1px solid #FFC759;
+    border-radius: 100%;
+    margin: 0 auto;
+    margin-top: 20px;
 }
 
     .c-statCircle .circle {
@@ -29,21 +33,22 @@
         width: 130px;
         height: 130px;
         margin: -65px 0 0 -65px;
-        background-color: white;
+        background-color: #2d3339;
         z-index: 10;
         -webkit-border-radius: 100%;
-        border: 1px solid orange;
+        border: 1px solid #FFC759;
+        padding-top: 10px;
     }
 
-.c-statCircle .circle .bar .progress{
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    -webkit-border-radius: 100%;
-    clip: rect(0px, 75px, 200px, 0px);
-    background-color: orange;
-    z-index: 3;
-}
+    .c-statCircle .circle .bar .progress {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        -webkit-border-radius: 100%;
+        clip: rect(0px, 75px, 200px, 0px);
+        background-color: #FFC759;
+        z-index: 3;
+    }
 
 
 
@@ -62,20 +67,23 @@
     z-index: 3;
 }
 
-.smallerCircle p {
-    font-weight: 600;
-    font-size: 13px;
-    color: black;
+.c-statCircle .smallerCircle p {
+    color: #9ba6b0;
     margin-top: 0;
     margin-bottom: 0;
     text-align: center;
 }
 
-hr {
-    border-top: 3px solid #5a6672;
-    background-color: transparent;
-    z-index: inherit;
-    opacity: 1;
-}
+    .c-statCircle .smallerCircle p.boldHeader {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    hr {
+        border-top: 3px solid #5a6672;
+        background-color: transparent;
+        z-index: inherit;
+        opacity: 1;
+    }
 
 

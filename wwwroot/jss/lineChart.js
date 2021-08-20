@@ -132,6 +132,10 @@ function showLineChart() {
                     tooltip: {
                         useHTML: true,
                         outside: true,
+                        backgroundColor: '#2D3339',
+                        style: {
+                            color: '#9ba6b0'
+                        },
                         formatter: function () {
 
                             function cateList(array1, array2) {

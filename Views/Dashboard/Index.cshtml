@@ -177,7 +177,12 @@
         font-weight: bold;
     }
 
+    .stackedCircles {
+        margin: auto 0;
+    }
     /*#endregion */
+
+    
 </style>
 
 @section Styles{
@@ -295,6 +300,43 @@
             <div class="col-6 tableColumn table-responsive" id="view-all">
                 @await Html.PartialAsync("_ViewAll", Model)
             </div>
+            <div class="col-2 stackedCircles">
+                <div class="u-statCircle">
+                    <div class="smallerCircle">
+                        <p id="amountP" class="boldHeader" onmouseover="showPercentage()" data-toggle="tooltip" data-placement="top" title="@ViewBag.TooltipPercentage%">@ViewBag.SumLast30$</p>
+                        <p>of @ViewBag.SumBeforeLast30$</p>
+                        <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
+                        <p><small>@ViewBag.UnderMonth$ under</small></p>
+                        <p><small>last month</small></p>
+                    </div>
+                    <div class="circle">
+                        <div class="bar u-left">
+                            <div class="progress"></div>
+                        </div>
+                        <div class="bar u-right">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="c-statCircle">
+                    <div class="smallerCircle">
+                        <p class="boldHeader">@ViewBag.TopCategory%</p>
+                        <p>@ViewBag.TopCategoryName</p>
+                        <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
+                        <p><small>@ViewBag.TopCategoryAmount$ of</small></p>
+                        <p><small>@ViewBag.SumLast30$</small></p>
+                    </div>
+                    <div class="circle">
+                        <div class="bar c-left">
+                            <div class="progress"></div>
+                        </div>
+                        <div class="bar c-right">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-2 topCategoryColumn table-responsive">
                     <table class="table table-hover">
                         <thead class="sticky-top">
@@ -331,9 +373,9 @@
 <script>
     $(showLineChart);
     $(showPieChart);
-    //function showPercentage() {
-    //    $('#amountP').tooltip('show');
-    //}
+    function showPercentage() {
+        $('#amountP').tooltip('show');
+    }
 
     //function EditPaycheck() {
     //    var amountField = document.getElementById('paycheckAmount');

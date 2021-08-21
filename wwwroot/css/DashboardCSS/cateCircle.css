@@ -49,7 +49,10 @@
         background-color: #FFC759;
         z-index: 3;
     }
-
+.c-statCircle .smallerCircle p, .c-statCircle .smallerCircle p small {
+    font-size: 14px;
+    margin: 0 auto;
+}
 
 
 .circle .c-left .progress {

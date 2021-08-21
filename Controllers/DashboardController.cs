@@ -229,10 +229,8 @@ namespace GoldCap.Controllers
 
             #region CategoryCircle
             var topCate = thisMonth.Where(e => e.Category == topCategory.CategoryName).Sum(e => e.Amount);
-            decimal percentageCategory = 0;
             StatCircle cateCircle = new StatCircle();
-            if (sumExpenses != 0)
-                percentageCategory = Decimal.Round((Convert.ToDecimal(topCate) / sumExpenses) * 100);
+            decimal percentageCategory = sumExpenses != 0 ? Decimal.Round((Convert.ToDecimal(topCate) / sumExpenses) * 100) : 0;
 
             cateCircle.TopCategoryPercentage = percentageCategory;
             cateCircle.TopCategoryName = topCategory.CategoryName;

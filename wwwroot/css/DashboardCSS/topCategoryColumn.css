@@ -8,7 +8,7 @@
     overflow-x: auto;
     height: 360px;
     overflow-y: scroll;
-    margin-left: 15px;
+    /*margin-left: 15px;*/
 }
 .topCategoryColumn tbody td {
     height: 48px;

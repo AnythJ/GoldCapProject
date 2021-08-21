@@ -1,7 +1,10 @@
 ﻿.p-statCircle {
-    height: 150px;
-    width: 150px;
+    height: 200px;
+    width: 200px;
     position: relative;
+    border: 1px solid #DFF8EB;
+    border-radius: 100%;
+    margin: 0 auto;
 }
 
     .p-statCircle .circle {
@@ -19,57 +22,65 @@
         width: 100%;
         -webkit-border-radius: 100%;
         background-color: transparent;
-        clip: rect(0px, 150px, 150px, 75px);
+        clip: rect(0px, 200px, 200px, 100px);
     }
 
     .p-statCircle .smallerCircle {
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 130px;
-        height: 130px;
-        margin: -65px 0 0 -65px;
-        background-color: white;
+        width: 173px;
+        height: 173px;
+        margin: -86.7px 0 0 -86.7px;
+        background-color: #2d3339;
         z-index: 10;
         -webkit-border-radius: 100%;
-        border: 1px solid green;
+        border: 1px solid #DFF8EB;
+        padding-top: 10px;
     }
 
-.p-statCircle .circle .bar .progress{
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    -webkit-border-radius: 100%;
-    clip: rect(0px, 75px, 200px, 0px);
-    background-color: green;
-    z-index: 3;
-}
+    .p-statCircle .circle .bar .progress {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        -webkit-border-radius: 100%;
+        clip: rect(0px, 100px, 266.7px, 0px);
+        background-color: #DFF8EB;
+        z-index: 3;
+    }
+    .p-statCircle .smallerCircle p, .p-statCircle .smallerCircle p small {
+        font-size: 18.7px;
+        margin: 0 auto;
+    }
 
 
 
 .circle .p-left .progress {
     z-index: 4;
-    animation: c-left 0.3s linear both;
+    animation: u-left 0.3s linear both;
 }
 
 
 .circle .p-right .progress {
-    animation: c-right 0.3s linear both;
+    animation: u-right 0.3s linear both;
     animation-delay: 0.3s;
 }
 
-.circle .p-right{
+.circle .p-right {
     z-index: 3;
 }
 
-.smallerCircle p {
-    font-weight: 600;
-    font-size: 13px;
-    color: black;
+.p-statCircle .smallerCircle p {
+    color: #9ba6b0;
     margin-top: 0;
     margin-bottom: 0;
     text-align: center;
 }
+
+    .p-statCircle .smallerCircle p.boldHeader {
+        font-size: 26.7px;
+        font-weight: bold;
+    }
 
 hr {
     border-top: 3px solid #5a6672;
@@ -77,5 +88,3 @@ hr {
     z-index: inherit;
     opacity: 1;
 }
-
-

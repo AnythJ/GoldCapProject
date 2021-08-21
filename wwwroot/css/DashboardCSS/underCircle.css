@@ -48,7 +48,10 @@
         background-color: #0DCAF0;
         z-index: 3;
     }
-
+.u-statCircle .smallerCircle p, u-statCircle .smallerCircle p small {
+    font-size: 14px;
+    margin: 0 auto;
+}
 
 
 .circle .u-left .progress {

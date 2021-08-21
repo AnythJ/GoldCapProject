@@ -24,22 +24,7 @@
         }
     }
 
-    #adviceDiv p {
-        border-top: 2px solid black;
-        margin: 10px 8px 0 8px;
-        padding-top: 10px;
-        font-weight: 600;
-    }
-
-        #adviceDiv p a {
-            text-decoration: none;
-            color: #0D6EFD;
-            cursor: pointer;
-        }
-
-            #adviceDiv p a:hover {
-                color: #012965;
-            }
+    
 
     .circle .u-right {
         z-index: 3;
@@ -71,7 +56,7 @@
         }
     }
 
-    @*.circle .p-right {
+    .circle .p-right {
         z-index: 3;
         transform: rotate(@ViewBag.PercentageStringStartRightC);
     }
@@ -84,7 +69,7 @@
         100% {
             transform: rotate(@ViewBag.PercentageStringRightC);
         }
-    }*@
+    }
 
    /*TEST*/
     .circle .c-left .progress {
@@ -109,16 +94,16 @@
         animation-delay: @Model.CirclesStats[0].LeftSpeed;
     }
 
-    @*.circle .p-left .progress {
+    .circle .p-left .progress {
         z-index: 4;
-        animation: u-left @ViewBag.LeftSpeedU   linear both;
+        animation: u-left @ViewBag.LeftSpeedU linear both;
     }
 
 
     .circle .p-right .progress {
         animation: u-right @ViewBag.RightSpeedU linear both;
         animation-delay: @ViewBag.LeftSpeedU;
-    }*@
+    }
 
 
 /*#endregion */
@@ -185,9 +170,31 @@
     .stackedCircles {
         margin: auto 0;
     }
+
+    #adviceDiv {
+        border: 3px solid #434d56;
+        border-radius: 5px;
+        background-color: #2d3339;
+        color: #9ba6b0;
+        padding: 0;
+    }
+        #adviceDiv .adviceHeader {
+            padding: 6px 0 0 10px;
+            width: 100%;
+            height: 41px;
+            font-size: 20px;
+            font-weight: bolder;
+            border-bottom: 1px solid #434d56;
+            background-color: #434d56;
+        }
     /*#endregion */
 
-
+    .fa-arrow-up {
+        color: red;
+    }
+    .fa-arrow-down {
+        color: lawngreen;
+    }
 </style>
 
 @section Styles{
@@ -216,7 +223,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark py-2" style="background-color: #2d3339;">
+    @*<nav class="navbar navbar-expand-lg navbar-dark py-2" style="background-color: #2d3339;">
         <div class="container-fluid">
             <button class="btn btn-lg btn-dark btn-outline-light"></button>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbarToggler" aria-controls="topNavbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -233,7 +240,7 @@
                 </div>
             </div>
         </div>
-    </nav>
+    </nav>*@
 
     <div style="height:100%;overflow-y:auto;">
         <div class="row" style="margin:15px 0 15px 15px">
@@ -345,6 +352,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-2 topCategoryColumn table-responsive">
                     <table class="table table-hover">
                         <thead class="sticky-top">
@@ -368,6 +376,36 @@
                         </tbody>
                     </table>
             </div>
+            <div class="col-2 stackedCircles">
+                <div class="p-statCircle">
+                    <div class="smallerCircle">
+                        <p class="boldHeader">@ViewBag.SumLast30$</p>
+                        <p>
+                            of <a id="paycheckAmount">@ViewBag.SumBeforeLast30$</a>
+                            <input id="paycheckInputField" type="text" hidden style="width:50px;height:18px;" />
+                            <a onclick="EditPaycheck()"><i class="fas fa-pen"></i></a>
+                        </p>
+                        <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
+                        <p><small>@Model.CirclesStats[0].UnderMonthAmount$ under</small></p>
+                        <p><small>last month</small></p>
+                    </div>
+                    <div class="circle">
+                        <div class="bar p-left">
+                            <div class="progress"></div>
+                        </div>
+                        <div class="bar p-right">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="col-2" id="adviceDiv">
+                <label class="adviceHeader">Advice</label>
+                <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 0},Context.Request.Scheme)','New expense')">Add daily payments to make your life easier</a></p>
+                <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 2},Context.Request.Scheme)','New expense')">Add monthly payments to make your life easier</a></p>
+                <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 4},Context.Request.Scheme)','New expense')">Add your custom recurring payment</a></p>
+                <p><a onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)','Recurring payments')" class="btn btn-success btn-sm">Recurring payments</a>
+            </div>*@
         </div>
         
         <div class="row" style="margin:20px 0 20px 20px;">
@@ -387,15 +425,15 @@
 
     $(document).ready(function () {
         var arrowPercentage = $('#percentageArrowValue').val();
-        if (arrowPercentage > 0) {
-            document.getElementById('arrowUp').setAttribute("hidden", "");
-            document.getElementById('arrowDown').removeAttribute("hidden");
-            document.getElementById('arrowPercentage').style.color = 'lawngreen';
-        }
-        else {
+        if (parseFloat(arrowPercentage) > 0) {
             document.getElementById('arrowDown').setAttribute("hidden", "");
             document.getElementById('arrowUp').removeAttribute("hidden");
             document.getElementById('arrowPercentage').style.color = 'red';
+        }
+        else {
+            document.getElementById('arrowUp').setAttribute("hidden", "");
+            document.getElementById('arrowDown').removeAttribute("hidden");
+            document.getElementById('arrowPercentage').style.color = 'lawngreen';
         }
     });
     //function EditPaycheck() {

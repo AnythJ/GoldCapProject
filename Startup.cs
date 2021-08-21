@@ -2,6 +2,7 @@ using GoldCap.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,8 @@ namespace GoldCap
             services.AddDbContextPool<AppDbContext>(
                 options => options.UseSqlServer(_config.GetConnectionString("ExpenseDBConnection")));
 
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddScoped<IExpenseRepository, SQLExpenseRepository>();
         }
@@ -43,6 +46,7 @@ namespace GoldCap
             }
 
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",

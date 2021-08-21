@@ -13,7 +13,25 @@
     @*<link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />*@
     @RenderSection("Styles", required: false)
     <link href="~/css/LayoutCSS/Layout.css" rel="stylesheet" />
+    <style>
+        div .dropdown {
+            border: 3px solid white;
+            border-radius: 50%;
+            margin-left: 20px;
+            width: 45px;
+            height: 45px;
+        }
 
+        .dropdownAvatar, .dropdown-toggle:hover, .dropdown-toggle:active, .dropdown-toggle:active, .dropdown-toggle:focus {
+            width: 100%;
+            height: 100%;
+            color: transparent;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
+    </style>
     <title>@ViewBag.Title</title>
 </head>
 <body>
@@ -46,6 +64,33 @@
 
 
     <div class="column main">
+        <nav class="navbar navbar-expand-lg navbar-dark py-2" style="background-color: #2d3339;">
+            <div class="container-fluid">
+                <button class="btn btn-lg btn-dark btn-outline-light"></button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbarToggler" aria-controls="topNavbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="topNavbarToggler">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    </ul>
+                    <button class="btn btn-outline-info m-1">Week</button>
+                    <button class="btn btn-outline-info m-1">Month</button>
+                    <button class="btn btn-outline-info m-1">Year</button>
+                    <div class="dropdown bg-dark">
+                        <a class="btn btn-secondary dropdown-toggle dropdownAvatar" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-sm-end dropdown-menu-dark" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">My Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications</a></li>
+                            <li style="margin-top:50px;"><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
         @RenderBody()
     </div>
 

@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "GoldCap";
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <style>
+        .btn {
+            width: 150px;
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+    <div>
+        <p>
+            <a class="btn btn-outline-info" asp-controller="account" asp-action="login">Login in</a>
+        </p>
+        <p>
+            <a class="btn btn-outline-info" asp-controller="account" asp-action="register">Register</a>
+        </p>
+        <p>
+            <a class="btn btn-outline-info" asp-controller="account" asp-action="loginGuest">Login in as guest</a>
+        </p>
+    </div>
+</body>
+</html>

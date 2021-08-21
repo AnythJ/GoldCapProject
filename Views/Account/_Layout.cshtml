@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<IdentityUser> signInManager;
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -21,6 +23,7 @@
             text-align: center;
             margin-top: calc(0.06*100%);
         }
+
         h1 {
             font-size: 120px;
             font-weight: bold;

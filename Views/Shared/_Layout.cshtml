@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<IdentityUser> signInManager;
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -84,7 +86,19 @@
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-sm-end dropdown-menu-dark" aria-labelledby="dropdownMenuLink">
                             <li><a class="dropdown-item" href="#">My Profile</a></li>
                             <li><a class="dropdown-item" href="#">Notifications</a></li>
-                            <li style="margin-top:50px;"><a class="dropdown-item" href="#">Logout</a></li>
+                            @if (signInManager.IsSignedIn(User))
+                            {
+                                <li style="margin-top:50px;"><a class="dropdown-item" >@User.Identity.Name</a></li>
+                                <li>
+                                    <div class="dropdown-item">
+                                        <form method="post" asp-action="logout" asp-controller="account">
+                                            <button class="text-danger" style="outline:none;border:none;background-color:transparent;margin-left:0;padding-left:0;" type="submit">
+                                                Logout
+                                            </button>
+                                        </form>
+                                    </div>
+                                </li>
+                            }
                         </ul>
                     </div>
 

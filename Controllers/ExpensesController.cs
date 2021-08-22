@@ -1,10 +1,12 @@
 ﻿using GoldCap.Models;
 using GoldCap.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using static GoldCap.Helper;
 
@@ -12,10 +14,12 @@ namespace GoldCap.Controllers
 {
     public class ExpensesController : Controller
     {
+        private UserManager<ApplicationUser> userManager;
         private IExpenseRepository _expenseRepository;
 
-        public ExpensesController(IExpenseRepository expenseRepository)
+        public ExpensesController(IExpenseRepository expenseRepository, UserManager<ApplicationUser> userManager)
         {
+            this.userManager = userManager;
             _expenseRepository = expenseRepository;
         }
 
@@ -57,6 +61,8 @@ namespace GoldCap.Controllers
             {
                 if (id == 0)
                 {
+                    var userLogin = User.FindFirstValue(ClaimTypes.Name);
+                    expense.ExpenseManagerLogin = userLogin;
                     _expenseRepository.Add(expense);
                 }
                 else

@@ -1,5 +1,6 @@
 ﻿using GoldCap.Models;
 using GoldCap.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -300,11 +301,20 @@ namespace GoldCap.Controllers
                 AmountInt = (int)lastExpense.Amount,
                 Category = lastExpense.Category,
                 DatetimeString = lastExpense.Date.Value.DayOfWeek + ", " + lastExpense.Date.Value.Day + " " + lastExpense.Date.Value.ToString("MMMM", CultureInfo.InvariantCulture),
-                //Percentage = (sumExpensesLastMonth != 0) ? Decimal.Round((Convert.ToDecimal(lastExpense.Amount) / sumExpensesLastMonth) * 100, 1) : 0
-                Percentage = Decimal.Round((aboveOrBelow-1) * 100, 1)
-        };
+                Percentage = Decimal.Round((aboveOrBelow - 1) * 100, 1)
+            };
+            var lowestExpense = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderBy(d => d.Amount).FirstOrDefault();
+            StatPill thirdPill = new StatPill()
+            {
+                AmountInt = (int)lowestExpense.Amount,
+                Category = lowestExpense.Category,
+                Date = lowestExpense.Date,
+                Percentage = (sumExpensesLastMonth != 0) ? Decimal.Round((Convert.ToDecimal(lowestExpense.Amount) / sumExpensesLastMonth) * 100, 1) : 0,
+                DatetimeString = lowestExpense.Date.Value.ToString("dd/M/yyyy hh:mm")
+            };
             pillsStats.Add(firstPill);
             pillsStats.Add(secondPill);
+            pillsStats.Add(thirdPill);
             #endregion
 
             dashboardViewModel.PillsStats = pillsStats;

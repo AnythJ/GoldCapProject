@@ -255,12 +255,13 @@
             <div class="col statPill">
                 <div class="row">
                     <div class="col my-auto pill-left">
-                        <span>440$</span>
+                        <span>Lowest expense</span>
+                        <span class="pillAmount">@Model.PillsStats[2].AmountInt$</span>
                     </div>
                     <div class="col pill-right">
-                        <p>Category</p>
-                        <p>Category</p>
-                        <p>Category</p>
+                        <p>@Model.PillsStats[2].Category</p>
+                        <p>@Model.PillsStats[2].DatetimeString</p>
+                        <p>@Model.PillsStats[2].Percentage% of @Model.CirclesStats[0].SumLast30Days$</p>
                     </div>
                 </div>
             </div>

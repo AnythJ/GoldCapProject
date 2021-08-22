@@ -16,14 +16,19 @@
     @RenderSection("Styles", required: false)
     <link href="~/css/LayoutCSS/Layout.css" rel="stylesheet" />
     <style>
+        body {
+            background-color: #212529;
+            color: #9ba6b0;
+        }
         .main {
             height: 100%;
             width: 100%;
             margin: 0 auto;
             text-align: center;
             margin-top: calc(0.06*100%);
+            background-color: #212529;
+            color: #9ba6b0;
         }
-
         h1 {
             font-size: 120px;
             font-weight: bold;
@@ -43,6 +48,8 @@
     <footer>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     @*<script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script> ADDED 09.08*@
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/jss/site.js" asp-append-version="true"></script>

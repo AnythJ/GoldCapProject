@@ -16,6 +16,7 @@ namespace GoldCap.Models
         [DisplayName("Category")]
         [StringLength(16)]
         public string Name { get; set; }
+        public string ExpenseManagerLogin { get; set; }
 
     }
 }

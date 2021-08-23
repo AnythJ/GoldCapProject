@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace GoldCap.Controllers
@@ -18,7 +19,7 @@ namespace GoldCap.Controllers
         }
         public IActionResult Index()
         {
-            var categoriesList = _expenseRepository.GetAllCategories();
+            var categoriesList = _expenseRepository.GetAllCategories().Where(c => c.ExpenseManagerLogin == User.FindFirstValue(ClaimTypes.Name));
             CategoryListViewModel viewModel = new CategoryListViewModel()
             {
                 Category = new Category(),
@@ -31,6 +32,7 @@ namespace GoldCap.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
+            category.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
             if (ModelState.IsValid)
             {
                 _expenseRepository.AddCategory(category);

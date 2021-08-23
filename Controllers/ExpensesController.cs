@@ -25,7 +25,7 @@ namespace GoldCap.Controllers
 
         public IActionResult Index()
         {
-            var expenses = _expenseRepository.GetAllExpenses().OrderByDescending(e => e.Date);
+            var expenses = _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == User.FindFirstValue(ClaimTypes.Name)).OrderByDescending(e => e.Date);
 
             return View(expenses);
         }
@@ -54,15 +54,15 @@ namespace GoldCap.Controllers
         // POST: Expenses/CreateOrEdit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date")] Expense expense)
+        public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date,ExpenseManagerLogin")] Expense expense)
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList();
+            var userLogin = User.FindFirstValue(ClaimTypes.Name);
+            expense.ExpenseManagerLogin = userLogin;
             if (ModelState.IsValid)
             {
                 if (id == 0)
                 {
-                    var userLogin = User.FindFirstValue(ClaimTypes.Name);
-                    expense.ExpenseManagerLogin = userLogin;
                     _expenseRepository.Add(expense);
                 }
                 else
@@ -71,7 +71,7 @@ namespace GoldCap.Controllers
                 }
 
 
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().OrderByDescending(e => e.Date)) });
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == User.FindFirstValue(ClaimTypes.Name)).OrderByDescending(e => e.Date)) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) });
         }
@@ -82,7 +82,7 @@ namespace GoldCap.Controllers
         {
             _expenseRepository.Delete(id);
 
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().OrderByDescending(e => e.Date)) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == User.FindFirstValue(ClaimTypes.Name)).OrderByDescending(e => e.Date)) });
         }
     }
 }

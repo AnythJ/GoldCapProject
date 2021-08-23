@@ -1,0 +1,66 @@
+﻿@model Income
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+
+<style>
+    span {
+        color: white;
+        font-size: 15px;
+    }
+
+    #description-input {
+        color: white;
+        background-color: #6C757D;
+        border-color: #6C757D;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="CreateOrEditIncome" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPost(this);" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input id="amountinput" asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Date" class="control-label"></label>
+                        <input id="dateinput" asp-for="Date" style="height:38px;" class="form-control" />
+                        <span asp-validation-for="Date"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea style="resize:none;height:90px;" id="description-input" asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description"></span>
+            </div>
+
+            <div class="form-group" style="margin-top:15px;text-align:right;">
+                <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@if (Model.Id == 0)
+{
+    <script>
+    // Date format: 17.07.2021 10:50:20
+    @*$("#dateinput").val(@DateTime.Now.ToString("dd/MM/yyyy HH:mm");*@
+    $("#amountinput").val("");
+    </script>
+}
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

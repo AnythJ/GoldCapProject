@@ -39,8 +39,13 @@ namespace GoldCap.Models
         ExpenseRecurring DeleteExpenses(ExpenseRecurring modelExpense);
         ExpenseRecurring GetRecurring(int id);
 
+        // Income
+        Income AddIncome(Income income);
+        Income DeleteIncome(int id);
+        IEnumerable<Income> GetIncome(string userLogin);
+        Income UpdateIncome(Income incomeChanges);
 
-       
+
 
     }
 }

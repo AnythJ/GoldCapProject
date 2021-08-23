@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace GoldCap.Models
@@ -201,15 +205,15 @@ namespace GoldCap.Models
                 List<string> noRepeats = cate.Distinct().ToList();
 
                 List<List<decimal>> amountList = new List<List<decimal>>();
-                
-                if(exp != null)
+
+                if (exp != null)
                 {
                     List<decimal> smallerList = new List<decimal>();
                     foreach (var item in noRepeats)
                     {
                         var amount = exp.Where(e => e.Category == item).Select(e => e.Amount);
                         decimal fa = 0;
-                        foreach(var a in amount)
+                        foreach (var a in amount)
                         {
                             fa += (decimal)a;
                         }
@@ -272,7 +276,7 @@ namespace GoldCap.Models
 
             var list = context.Expenses.Where(e => e.StatusId == modelExpense.Id);
 
-            if(list != null)
+            if (list != null)
             {
                 context.Expenses.RemoveRange(list);
                 context.SaveChanges();
@@ -287,7 +291,7 @@ namespace GoldCap.Models
 
         public IEnumerable<Expense> AddExpenses(IEnumerable<Expense> expenses)
         {
-            if(expenses != null)
+            if (expenses != null)
             {
                 context.Expenses.AddRange(expenses);
                 context.SaveChanges();
@@ -295,6 +299,37 @@ namespace GoldCap.Models
             return expenses;
         }
 
-        
+        public Income AddIncome(Income income)
+        {
+            context.Incomes.Add(income);
+            context.SaveChanges();
+
+            return income;
+        }
+
+        public Income DeleteIncome(int id)
+        {
+            Income income = context.Incomes.Find(id);
+            if (income != null)
+            {
+                context.Incomes.Remove(income);
+                context.SaveChanges();
+            }
+            return income;
+        }
+
+        public IEnumerable<Income> GetIncome(string userLogin)
+        {
+            return context.Incomes.Where(i => i.ExpenseManagerLogin == userLogin).AsEnumerable();
+        }
+
+        public Income UpdateIncome(Income incomeChanges)
+        {
+            var income = context.Incomes.Attach(incomeChanges);
+            income.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            context.SaveChanges();
+
+            return incomeChanges;
+        }
     }
 }

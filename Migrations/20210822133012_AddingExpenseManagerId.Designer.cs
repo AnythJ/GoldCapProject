@@ -4,14 +4,16 @@ using GoldCap.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GoldCap.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210822133012_AddingExpenseManagerId")]
+    partial class AddingExpenseManagerId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,8 +171,8 @@ namespace GoldCap.Migrations
                         .HasMaxLength(135)
                         .HasColumnType("nvarchar(135)");
 
-                    b.Property<string>("ExpenseManagerLogin")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ExpenseManagerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
@@ -218,33 +220,6 @@ namespace GoldCap.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RecurringExpenses");
-                });
-
-            modelBuilder.Entity("GoldCap.Models.Income", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal?>("Amount")
-                        .IsRequired()
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("Date")
-                        .IsRequired()
-                        .HasColumnType("smalldatetime");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(135)
-                        .HasColumnType("nvarchar(135)");
-
-                    b.Property<string>("ExpenseManagerLogin")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Incomes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

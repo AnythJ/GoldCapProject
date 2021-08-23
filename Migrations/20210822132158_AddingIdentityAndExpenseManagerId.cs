@@ -3,10 +3,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GoldCap.Migrations
 {
-    public partial class AddingIdentity : Migration
+    public partial class AddingIdentityAndExpenseManagerId : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<int>(
+                name: "ExpenseManagerId",
+                table: "Expenses",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -214,6 +221,10 @@ namespace GoldCap.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "ExpenseManagerId",
+                table: "Expenses");
         }
     }
 }

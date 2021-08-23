@@ -365,7 +365,7 @@
                         <p>
                             of <a id="paycheckAmount">@ViewBag.SumBeforeLast30$</a>
                             <input id="paycheckInputField" type="text" hidden style="width:50px;height:18px;" />
-                            <a onclick="EditPaycheck()"><i class="fas fa-pen"></i></a>
+                            <a onclick="showInPopup('@Url.Action("IncomeList","Dashboard",new { id = 0},Context.Request.Scheme)','Recurring payments')" ><i class="fas fa-pen"></i></a>
                         </p>
                         <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
                         <p><small>@Model.CirclesStats[0].UnderMonthAmount$ under</small></p>

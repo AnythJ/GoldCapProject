@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Income>
+@{
+    ViewData["Title"] = "Incomes";
+    Layout = null;
+}
+
+@section Styles {
+    <link href="~/css/LayoutCSS/List.css" rel="stylesheet" />
+}
+<style>
+    .modal-backdrop {
+        display: none;
+    }
+
+</style>
+<div class="table-responsive tableContainer" id="tableInModal">
+    <table class="table table-hover">
+        <thead class="sticky-top">
+            <tr class="align-text-top">
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th style="padding-left:20px;">
+                    Last Payed
+                </th>
+                <th style="text-align:right; padding-right:30px;">
+                    <a onclick="showInPopup('@Url.Action("CreateOrEditIncome","Dashboard",new { id = 0},Context.Request.Scheme)','New income')" class="btn btn-success btn-sm">New expense</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td class="description">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td style="width:220px;padding-left:20px;">
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td align="right" style="padding-right:30px;width:220px;">
+                        <form asp-controller="dashboard" asp-action="DeleteIncome" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDeleteDashboard(this)" class="d-inline">
+                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                        </form>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@*<script>$.ajaxPrefilter(function (options, originalOptions, jqXHR) { options.async = true; });</script>*@

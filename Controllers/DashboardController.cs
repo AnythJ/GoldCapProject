@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static GoldCap.Helper;
@@ -32,6 +33,21 @@ namespace GoldCap.Controllers
             DashboardViewModel dashboardViewModel = new DashboardViewModel();
 
             #region MonthlyAddition
+            var userIncome = _expenseRepository.GetIncome(User.FindFirstValue(ClaimTypes.Name)).FirstOrDefault();
+            if (userIncome != null && userIncome.Date.Value >= DateTime.Today.AddDays(-365) && userIncome.Date.Value <= DateTime.Now)
+            {
+                Income income = new Income();
+                DateTime finalIncomeDate = userIncome.Date.Value;
+                for (var i = userIncome.Date.Value; i <= DateTime.Today.AddDays(1); i = i.AddMonths(1))
+                {
+                    income.Amount = userIncome.Amount;
+                    income.Description = userIncome.Description;
+                    income.Date = i;
+                    finalIncomeDate = i.AddMonths(1);
+                }
+                userIncome.Date = finalIncomeDate;
+                _expenseRepository.UpdateIncome(userIncome);
+            }
 
             var allRecurring = _expenseRepository.GetAllRecurring().ToList();
             foreach (var item in allRecurring)
@@ -286,32 +302,39 @@ namespace GoldCap.Controllers
             List<StatPill> pillsStats = new List<StatPill>();
             var topExpense = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Amount).FirstOrDefault();
             var lastExpense = thisMonth.FirstOrDefault();
-            StatPill firstPill = new StatPill()
+            StatPill firstPill = new StatPill();
+            if (topExpense != null)
             {
-                AmountInt = (int)topExpense.Amount,
-                Category = topExpense.Category,
-                Date = topExpense.Date,
-                Percentage = (sumExpensesLastMonth != 0) ? Decimal.Round((Convert.ToDecimal(topExpense.Amount) / sumExpensesLastMonth) * 100, 1) : 0,
-                DatetimeString = topExpense.Date.Value.ToString("dd/M/yyyy hh:mm")
-            };
-            decimal averageAmount = sumExpenses / thisMonth.Count();
-            decimal aboveOrBelow = (decimal)lastExpense.Amount / averageAmount;
-            StatPill secondPill = new StatPill()
+                firstPill.AmountInt = (int)topExpense.Amount;
+                firstPill.Category = topExpense.Category;
+                firstPill.Date = topExpense.Date;
+                firstPill.Percentage = (sumExpensesLastMonth != 0) ? Decimal.Round((Convert.ToDecimal(topExpense.Amount) / sumExpensesLastMonth) * 100, 1) : 0;
+                firstPill.DatetimeString = topExpense.Date.Value.ToString("dd/M/yyyy hh:mm");
+
+            }
+
+            decimal averageAmount = thisMonth.Count() != 0 ? sumExpenses / thisMonth.Count() : 0;
+            decimal aboveOrBelow = averageAmount != 0 ? (decimal)lastExpense.Amount / averageAmount : 0;
+            StatPill secondPill = new StatPill();
+            if (lastExpense != null)
             {
-                AmountInt = (int)lastExpense.Amount,
-                Category = lastExpense.Category,
-                DatetimeString = lastExpense.Date.Value.DayOfWeek + ", " + lastExpense.Date.Value.Day + " " + lastExpense.Date.Value.ToString("MMMM", CultureInfo.InvariantCulture),
-                Percentage = Decimal.Round((aboveOrBelow - 1) * 100, 1)
-            };
+                secondPill.AmountInt = (int)lastExpense.Amount;
+                secondPill.Category = lastExpense.Category;
+                secondPill.DatetimeString = lastExpense.Date.Value.DayOfWeek + ", " + lastExpense.Date.Value.Day + " " + lastExpense.Date.Value.ToString("MMMM", CultureInfo.InvariantCulture);
+                secondPill.Percentage = Decimal.Round((aboveOrBelow - 1) * 100, 1);
+            }
             var lowestExpense = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderBy(d => d.Amount).FirstOrDefault();
-            StatPill thirdPill = new StatPill()
+            StatPill thirdPill = new StatPill();
+            if(lowestExpense != null)
             {
-                AmountInt = (int)lowestExpense.Amount,
-                Category = lowestExpense.Category,
-                Date = lowestExpense.Date,
-                Percentage = (sumExpensesLastMonth != 0) ? Decimal.Round((Convert.ToDecimal(lowestExpense.Amount) / sumExpensesLastMonth) * 100, 1) : 0,
-                DatetimeString = lowestExpense.Date.Value.ToString("dd/M/yyyy hh:mm")
-            };
+                thirdPill.AmountInt = (int)lowestExpense.Amount;
+                thirdPill.Category = lowestExpense.Category;
+                thirdPill.Date = lowestExpense.Date;
+                thirdPill.Percentage = (sumExpensesLastMonth != 0) ? Decimal.Round((Convert.ToDecimal(lowestExpense.Amount) / sumExpensesLastMonth) * 100, 1) : 0;
+                thirdPill.DatetimeString = lowestExpense.Date.Value.ToString("dd/M/yyyy hh:mm");
+            }
+            
+
             pillsStats.Add(firstPill);
             pillsStats.Add(secondPill);
             pillsStats.Add(thirdPill);
@@ -406,6 +429,17 @@ namespace GoldCap.Controllers
             return Json(new { html = Helper.RenderRazorViewToString(this, "RecurringPayments", _expenseRepository.GetAllRecurring()) });
         }
 
+        [HttpPost, ActionName("DeleteIncome")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteIncome(int id)
+        {
+            var userLogin = User.FindFirstValue(ClaimTypes.Name);
+            var inc = _expenseRepository.GetIncome(userLogin).FirstOrDefault();
+            _expenseRepository.DeleteIncome(id);
+
+            return Json(new { html = Helper.RenderRazorViewToString(this, "IncomeList", _expenseRepository.GetIncome(userLogin)) });
+        }
+
         [HttpGet]
         [NoDirectAccess]
         public IActionResult RecurringPayments()
@@ -419,6 +453,19 @@ namespace GoldCap.Controllers
 
         }
 
+        [HttpGet]
+        [NoDirectAccess]
+        public IActionResult IncomeList()
+        {
+            var userLogin = User.FindFirstValue(ClaimTypes.Name);
+            var incomeModel = _expenseRepository.GetIncome(userLogin);
+            if (incomeModel == null)
+            {
+                return View("IncomeList");
+            }
+            return View("IncomeList", incomeModel);
+
+        }
 
         [HttpGet]
         [NoDirectAccess]
@@ -634,6 +681,29 @@ namespace GoldCap.Controllers
             }
         }
 
+        [HttpGet]
+        [NoDirectAccess]
+        public IActionResult CreateOrEditIncome(int id = 0)
+        {
+            return View(new Income());
+        }
+
+        // POST: Expenses/CreateOrEdit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateOrEditIncome(int id, [Bind("Id,Amount,Description,Date")] Income income)
+        {
+            if (ModelState.IsValid)
+            {
+                var userLogin = User.FindFirstValue(ClaimTypes.Name);
+                income.ExpenseManagerLogin = userLogin;
+                income.Date = income.Date.Value.AddMonths(1);
+                _expenseRepository.AddIncome(income);
+
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().OrderByDescending(e => e.Date)) });
+            }
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEditIncome", income) });
+        }
         public JsonResult GetData()
         {
             List<string> newList = new List<string>();

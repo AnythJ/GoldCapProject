@@ -1,6 +1,7 @@
 ﻿using GoldCap.Models;
 using GoldCap.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -28,7 +29,7 @@ namespace GoldCap.Controllers
             var thisMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
             var lastMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-60) && m.Date <= DateTime.Now.AddDays(-30));
             var topCategories = _expenseRepository.GetCategoryRatios().Where(c => c.CategoryPercentage > 0);
-            var topCategory = _expenseRepository.GetCategoryRatios().First();
+            var topCategory = _expenseRepository.GetCategoryRatios() != null ? _expenseRepository.GetCategoryRatios().FirstOrDefault() : null;
 
             DashboardViewModel dashboardViewModel = new DashboardViewModel();
 
@@ -250,7 +251,7 @@ namespace GoldCap.Controllers
             decimal percentageCategory = sumExpenses != 0 ? Decimal.Round((Convert.ToDecimal(topCate) / sumExpenses) * 100) : 0;
 
             cateCircle.TopCategoryPercentage = percentageCategory;
-            cateCircle.TopCategoryName = topCategory.CategoryName;
+            cateCircle.TopCategoryName = topCategory != null ? topCategory.CategoryName : null;
             cateCircle.TopCategoryAmount = (int)topCate;
 
             cateCircle.SumLast30Days = sumExpenses;

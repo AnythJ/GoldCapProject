@@ -41,6 +41,7 @@ namespace GoldCap
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
             services.AddScoped<IExpenseRepository, SQLExpenseRepository>();
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

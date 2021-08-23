@@ -36,5 +36,6 @@ namespace GoldCap.Models
         public int Status { get; set; }
         public int? HowOften { get; set; }
         public string WeekdaysInString { get; set; }
+        public string ExpenseManagerLogin { get; set; }
     }
 }

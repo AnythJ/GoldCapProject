@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,10 +15,14 @@ namespace GoldCap.Models
     public class SQLExpenseRepository : IExpenseRepository
     {
         private readonly AppDbContext context;
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly string userLogin;
 
-        public SQLExpenseRepository(AppDbContext context)
+        public SQLExpenseRepository(AppDbContext context, IHttpContextAccessor httpContextAccessor)
         {
+            this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
             this.context = context;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         // EXPENSES
@@ -28,7 +33,7 @@ namespace GoldCap.Models
 
         public IEnumerable<Expense> GetAllExpenses()
         {
-            return context.Expenses;
+            return context.Expenses.Where(e => e.ExpenseManagerLogin == userLogin);
         }
 
         public Expense Add(Expense expense)
@@ -68,7 +73,7 @@ namespace GoldCap.Models
 
         public IEnumerable<Category> GetAllCategories()
         {
-            return context.Categories;
+            return context.Categories.Where(e => e.ExpenseManagerLogin == userLogin);
         }
 
         public Category AddCategory(Category category)
@@ -94,7 +99,7 @@ namespace GoldCap.Models
         // DASHBOARD
         public List<Category> GetCategoryList()
         {
-            IEnumerable<Category> ctg = context.Categories;
+            IEnumerable<Category> ctg = context.Categories.Where(e => e.ExpenseManagerLogin == userLogin);
             List<Category> ctgList = ctg.ToList();
 
             return ctgList;
@@ -107,7 +112,7 @@ namespace GoldCap.Models
             for (int i = 0; i <= 30; i++)
             {
                 var exp = context.Expenses.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-30 + i).Day &&
-                e.Date.Value.Month == DateTime.Now.AddDays(-30 + i).Month)).AsEnumerable();
+                e.Date.Value.Month == DateTime.Now.AddDays(-30 + i).Month) && e.ExpenseManagerLogin == userLogin).AsEnumerable();
 
                 _30daysModel model = new _30daysModel()
                 {
@@ -135,9 +140,9 @@ namespace GoldCap.Models
 
         public List<CategoryChart> GetMostUsedCategoryRatios()
         {
-            var categoryNames = context.Categories.Select(n => n.Name).ToList();
+            var categoryNames = context.Categories.Where(e => e.ExpenseManagerLogin == userLogin).Select(n => n.Name).ToList();
 
-            var expenses = context.Expenses.Where(e => (e.Date.Value >= DateTime.Now.AddDays(-30))).AsEnumerable();
+            var expenses = context.Expenses.Where(e => (e.Date.Value >= DateTime.Now.AddDays(-30)) && e.ExpenseManagerLogin == userLogin).AsEnumerable();
 
             List<CategoryChart> newList = new List<CategoryChart>();
 
@@ -164,9 +169,9 @@ namespace GoldCap.Models
 
         public List<CategoryChart> GetCategoryRatios()
         {
-            var categoryNames = context.Categories.Select(n => n.Name).ToList();
+            var categoryNames = context.Categories.Where(e => e.ExpenseManagerLogin == userLogin).Select(n => n.Name).ToList();
 
-            var expenses = context.Expenses.Where(e => (e.Date.Value >= DateTime.Now.AddDays(-30))).AsEnumerable();
+            var expenses = context.Expenses.Where(e => (e.Date.Value >= DateTime.Now.AddDays(-30)) && e.ExpenseManagerLogin == userLogin).AsEnumerable();
 
             List<CategoryChart> newList = new List<CategoryChart>();
 
@@ -197,11 +202,11 @@ namespace GoldCap.Models
             for (int i = 0; i <= 30; i++)
             {
                 var exp = context.Expenses.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-30 + i).Day &&
-                e.Date.Value.Month == DateTime.Now.AddDays(-30 + i).Month)).AsEnumerable();
+                e.Date.Value.Month == DateTime.Now.AddDays(-30 + i).Month) && e.ExpenseManagerLogin == userLogin).AsEnumerable();
 
 
                 var cate = context.Expenses.Where(e => e.Date.Value.Day == DateTime.Today.AddDays(-30 + i).Day
-                && e.Date.Value.Month == DateTime.Today.AddDays(-30 + i).Month).Select(e => e.Category).ToList<string>();
+                && e.Date.Value.Month == DateTime.Today.AddDays(-30 + i).Month && e.ExpenseManagerLogin == userLogin).Select(e => e.Category).ToList<string>();
                 List<string> noRepeats = cate.Distinct().ToList();
 
                 List<List<decimal>> amountList = new List<List<decimal>>();
@@ -236,7 +241,7 @@ namespace GoldCap.Models
 
         public IEnumerable<ExpenseRecurring> GetAllRecurring()
         {
-            return context.RecurringExpenses;
+            return context.RecurringExpenses.Where(e => e.ExpenseManagerLogin == userLogin);
         }
 
         public ExpenseRecurring DeleteRecurring(int id)
@@ -269,12 +274,7 @@ namespace GoldCap.Models
 
         public ExpenseRecurring DeleteExpenses(ExpenseRecurring modelExpense)
         {
-            //var list = context.Expenses.Where(e => e.Amount == modelExpense.Amount && e.Category == modelExpense.Category
-            //&& e.Description == modelExpense.Description && e.Status == ((StatusName)modelExpense.Status).ToString() 
-            //&& e.Date.Value.Day == modelExpense.Date.Value.Day && e.Date.Value.Hour == modelExpense.Date.Value.Hour 
-            //&& e.Date.Value.Minute == modelExpense.Date.Value.Minute && e.Date.Value.Second == modelExpense.Date.Value.Second);
-
-            var list = context.Expenses.Where(e => e.StatusId == modelExpense.Id);
+            var list = context.Expenses.Where(e => e.StatusId == modelExpense.Id && e.ExpenseManagerLogin == userLogin);
 
             if (list != null)
             {

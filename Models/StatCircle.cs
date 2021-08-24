@@ -19,6 +19,7 @@ namespace GoldCap.Models
         public decimal TopCategoryPercentage { get; set; }
         public string TopCategoryName { get; set; }
         public int TopCategoryAmount { get; set; }
+        public string PeriodName { get; set; }
 
     }
 }

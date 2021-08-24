@@ -10,74 +10,72 @@
         font-weight: bold;
     }
 
-    .modal-body, .modal-header, .modal-footer {
-        background-color: #212529;
-        color: white;
-    }
-
-    input[type=text], select, textarea {
-        background-color: #6C757D;
-        border: 1px solid #6C757D;
-        border-radius: 4px;
-        color: white;
-    }
-
-    textarea {
-        color: white;
-    }
-
-    .modal-title {
-        padding-left: 20px;
-    }
-
-
-    #date-input {
-        width: 221px;
-        margin-right: 0;
-        height: 28px;
-        background-color: #6C757D;
-        border: 1px solid #6C757D;
-        border-radius: 4px;
-        color: white;
-    }
-
     .btn-close {
         -webkit-filter: invert(100%);
         filter: invert(100%);
     }
 
-    
-    
+    .modal-body, .modal-header, .modal-title, .modal-footer {
+        font-family: Arial;
+        background-color: #212529;
+        color: #9ba6b0;
+    }
+    .modal-content, modal-dialog, .modal {
+        border: 3px solid #434d56;
+        border-radius: 5px;
+    }
+    .modal-header {
+        border: none;
+        border-bottom: 3px solid #434d56;
+        border-radius: 0;
+    }
+    input[type=text]:disabled, input[type=datetime-local]:disabled, select:disabled {
+        background-color: #2d3339;
+        color: #9ba6b0;
+        border-color: #0DCAF0;
+    }
+    textarea:disabled {
+        background-color: #2d3339 !important;
+        color: #9ba6b0 !important;
+        resize: none;
+        max-width: 135ch;
+        border: 0.5px solid #0DCAF0;
+    }
+
 </style>
 
 <div class="row">
     <div class="col-md-12">
         <form asp-action="Details" asp-route-id="@Model.Id" autocomplete="off">
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Amount" class="control-label"></label>
-                <input disabled asp-for="Amount" class="form-control" style="background-color: #6C757D; color: white;"/>
+            <div class="row justify-content-center">
+                <div class="col-4 align-self-center">
+                    <div class="form-group justify-content-center">
+                        <label asp-for="Amount" class="control-label"></label>
+                        <input disabled asp-for="Amount" class="form-control" />
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Category" class="control-label"></label>
-                        <input readonly asp-for="Category" class="form-control" style="background-color: #6C757D; color: white;"/>
+                        <input disabled asp-for="Category" class="form-control"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Date" class="control-label"></label>
-                        <input readonly id="date-input" asp-for="Date" style="height:38px;" class="form-control" />
+                        <input disabled asp-for="Date" class="form-control" />
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea readonly style="resize: none; height: 90px; background-color: #6C757D; color: white;" id="description-input" asp-for="Description" class="form-control"></textarea>
+                <textarea disabled asp-for="Description" class="form-control"></textarea>
             </div>
 
-            <div style="margin-top:15px;text-align:right;">
+            <div>
                 <a class="btn btn-primary" asp-controller="Expenses" asp-action="Index">Go to full list</a>
             </div>
         </form>

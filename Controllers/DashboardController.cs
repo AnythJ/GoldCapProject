@@ -24,12 +24,12 @@ namespace GoldCap.Controllers
             _expenseRepository = expenseRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int period = 30)
         {
-            var thisMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date);
-            var lastMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-60) && m.Date <= DateTime.Now.AddDays(-30));
-            var topCategories = _expenseRepository.GetCategoryRatios().Where(c => c.CategoryPercentage > 0);
-            var topCategory = _expenseRepository.GetCategoryRatios() != null ? _expenseRepository.GetCategoryRatios().FirstOrDefault() : null;
+            var thisMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderByDescending(d => d.Date);
+            var lastMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period*2) && m.Date <= DateTime.Now.AddDays(-period));
+            var topCategories = _expenseRepository.GetCategoryRatios(period).Where(c => c.CategoryPercentage > 0);
+            var topCategory = _expenseRepository.GetCategoryRatios(period) != null ? _expenseRepository.GetCategoryRatios(period).FirstOrDefault() : null;
 
             DashboardViewModel dashboardViewModel = new DashboardViewModel();
 
@@ -301,7 +301,7 @@ namespace GoldCap.Controllers
 
             #region StatPills
             List<StatPill> pillsStats = new List<StatPill>();
-            var topExpense = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Amount).FirstOrDefault();
+            var topExpense = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderByDescending(d => d.Amount).FirstOrDefault();
             var lastExpense = thisMonth.FirstOrDefault();
             StatPill firstPill = new StatPill();
             if (topExpense != null)
@@ -324,7 +324,7 @@ namespace GoldCap.Controllers
                 secondPill.DatetimeString = lastExpense.Date.Value.DayOfWeek + ", " + lastExpense.Date.Value.Day + " " + lastExpense.Date.Value.ToString("MMMM", CultureInfo.InvariantCulture);
                 secondPill.Percentage = Decimal.Round((aboveOrBelow - 1) * 100, 1);
             }
-            var lowestExpense = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderBy(d => d.Amount).FirstOrDefault();
+            var lowestExpense = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderBy(d => d.Amount).FirstOrDefault();
             StatPill thirdPill = new StatPill();
             if(lowestExpense != null)
             {
@@ -350,13 +350,14 @@ namespace GoldCap.Controllers
                 dashboardViewModel.Categories = topCategories;
             }
 
+
             return View(dashboardViewModel);
         }
 
 
-        public IActionResult Sort(string sortOrder, int id, string categoryName = null)
+        public IActionResult Sort(string sortOrder, int id, string categoryName = null, int period=30)
         {
-            var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30));
+            var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period));
 
             if (id > 0 && sortOrder != "default")
             {
@@ -365,7 +366,7 @@ namespace GoldCap.Controllers
             }
             else if (categoryName != null)
             {
-                model = _expenseRepository.GetAllExpenses().Where(e => e.Category == categoryName.Split(" ")[0] && e.Date >= DateTime.Today.AddDays(-30));
+                model = _expenseRepository.GetAllExpenses().Where(e => e.Category == categoryName.Split(" ")[0] && e.Date >= DateTime.Today.AddDays(-period));
             }
 
 
@@ -658,7 +659,7 @@ namespace GoldCap.Controllers
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expenseVM) });
         }
 
-        public IActionResult TooltipSort(int id, string categoryName)
+        public IActionResult TooltipSort(int id, string categoryName, int period)
         {
             if (id >= 0)
             {
@@ -671,14 +672,14 @@ namespace GoldCap.Controllers
             }
             else if (categoryName == null)
             {
-                return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Date)) });
+                return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderByDescending(d => d.Date)) });
             }
             else
             {
                 var withPercentage = categoryName.Split(' ');
                 withPercentage = withPercentage.Take(withPercentage.Count() - 1).ToArray();
                 string str = String.Join(' ', withPercentage).Trim();
-                return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30) && m.Category == str).OrderByDescending(d => d.Date)) });
+                return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period) && m.Category == str).OrderByDescending(d => d.Date)) });
             }
         }
 
@@ -705,10 +706,10 @@ namespace GoldCap.Controllers
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEditIncome", income) });
         }
-        public JsonResult GetData()
+        public JsonResult GetData(int period=30)
         {
             List<string> newList = new List<string>();
-            var ctg = _expenseRepository.GetCategoryRatios();
+            var ctg = _expenseRepository.GetCategoryRatios(period);
             foreach (var item in ctg)
             {
                 newList.Add(item.CategoryPercentage.ToString());
@@ -717,11 +718,11 @@ namespace GoldCap.Controllers
 
             DashboardDataModel data = new DashboardDataModel()
             {
-                ListLast30 = _expenseRepository.GetSumDayExpense30(),
-                CategoryRatios = _expenseRepository.GetCategoryRatios(),
+                ListLast30 = _expenseRepository.GetSumDayExpense30(period),
+                CategoryRatios = _expenseRepository.GetCategoryRatios(period),
                 CategoryCount = _expenseRepository.GetAllCategories().Count(),
-                TooltipList = _expenseRepository.GetTooltipList(),
-                ExpensesList = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-30)).OrderBy(e => e.Date).AsEnumerable()
+                TooltipList = _expenseRepository.GetTooltipList(period),
+                ExpensesList = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderBy(e => e.Date).AsEnumerable()
             };
 
             return Json(data);

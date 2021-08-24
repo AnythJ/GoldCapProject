@@ -1,14 +1,13 @@
 ﻿
-function showLineChart() {
-    $.getJSON("Dashboard/GetData", function (result) {
-
+function showLineChart(period) {
+    $.getJSON("Dashboard/GetData/?period="+String(period), function (result) {
         var lineTimeStamps = [];
         var lineAmounts = [];
         var tooltipStrings = [];
         var tooltipDecimals = [];
         var monthNames = [];
         var rd = [];
-        for (var i = 0; i < 31; i++) {
+        for (var i = 0; i < parseFloat(period)+1; i++) {
             rd.push(String(i));
         }
         var xStart = result.listLast30[0].timeStamp;
@@ -63,7 +62,7 @@ function showLineChart() {
                         enabled: false
                     },
                     title: {
-                        text: 'Expenses in the last 30 days',
+                        text: 'Expenses in the last ' + String(lineTimeStamps.length-1) + ' days',
                         style: {
                             color: '#9ba6b0'
                         }

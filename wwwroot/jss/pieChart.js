@@ -1,6 +1,6 @@
 ﻿
-function showPieChart() {
-    $.getJSON("Dashboard/GetData", function (result) {
+function showPieChart(period) {
+    $.getJSON("Dashboard/GetData/?period=" + String(period), function (result) {
         var cateData = [];
         var cateNames = [];
         $.each(result.categoryRatios, function (index, element) {
@@ -138,7 +138,7 @@ function showPieChart() {
                                                     row.style.fontWeight = "bold";
                                                     row.setAttribute("id", "active");
                                                     finalRow = row;
-                                                    sendToList(-1, finalRow.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim());
+                                                    sendToList(-1, finalRow.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim(), period);
                                                     if (idElement != null) {
                                                         sendToList(-1, finalRow.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim());
                                                         idElement.style.fontWeight = "normal";

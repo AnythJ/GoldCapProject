@@ -181,13 +181,13 @@ JqueryAjaxSort = (url, title, refresh) => {
     if (activeElement != null && refresh != true)
         activeElement = activeElement.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
     else activeElement = null;
-    
     var x = $('#idForSort').val();
     $.ajax({
         type: "GET",
         data: {
             'id': $('#idForSort').val(),
-            'categoryName': activeElement
+            'categoryName': activeElement,
+            'period': getParameterByName("period")
         },
         url: url,
         success: function (res) {
@@ -198,12 +198,13 @@ JqueryAjaxSort = (url, title, refresh) => {
 };
 
 
-sendToList = (id, categoryName) => {
+sendToList = (id, categoryName, period) => {
     $.ajax({
         type: "GET",
         data: {
             'id': id,
-            'categoryName': categoryName
+            'categoryName': categoryName,
+            'period': period
         },
         url: '/Dashboard/TooltipSort',
         success: function (res) {
@@ -214,7 +215,14 @@ sendToList = (id, categoryName) => {
 };
 
 
-
+function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
 
 
 

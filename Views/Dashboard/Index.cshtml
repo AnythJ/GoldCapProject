@@ -24,7 +24,7 @@
         }
     }
 
-    
+
 
     .circle .u-right {
         z-index: 3;
@@ -121,10 +121,12 @@
         max-height: auto;
     }
 
-        .statPill span.pillAmount{
+        .statPill p.pillAmount {
             font-size: 35px;
             font-weight: bold;
             text-align: center;
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
 
         .statPill .pill-left {
@@ -137,9 +139,18 @@
             margin-bottom: 5px;
             text-align: center;
         }
-        .fa-arrow-up {
-            color: red;
+        div.statPillButtons {
+            display: table;
+            text-align: right;
+            vertical-align: middle;
         }
+            div.statPillButtons .btn {
+                font-size: 15px;
+                border-radius: 0;
+            }
+    .fa-arrow-up {
+        color: red;
+    }
     .fa-arrow-down {
         color: lawngreen;
     }
@@ -229,7 +240,7 @@
                 <div class="row">
                     <div class="col my-auto ms-4 pill-left">
                         <span>Highest expense</span>
-                        <span class="pillAmount">@Model.PillsStats[0].AmountInt$</span>
+                        <p class="pillAmount">@Model.PillsStats[0].AmountInt$</>
                     </div>
                     <div class="col pill-right">
                         <p>@Model.PillsStats[0].Category</p>
@@ -242,7 +253,7 @@
                 <div class="row">
                     <div class="col my-auto pill-left">
                         <span>Last expense</span>
-                        <span class="pillAmount">@Model.PillsStats[1].AmountInt$</span>
+                        <p class="pillAmount">@Model.PillsStats[1].AmountInt$</p>
                     </div>
                     <div class="col pill-right">
                         <p>@Model.PillsStats[1].Category</p>
@@ -256,7 +267,7 @@
                 <div class="row">
                     <div class="col my-auto pill-left">
                         <span>Lowest expense</span>
-                        <span class="pillAmount">@Model.PillsStats[2].AmountInt$</span>
+                        <p class="pillAmount">@Model.PillsStats[2].AmountInt$</p>
                     </div>
                     <div class="col pill-right">
                         <p>@Model.PillsStats[2].Category</p>
@@ -265,19 +276,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col statPill">
-                <div class="row">
-                    <div class="col my-auto pill-left">
-                        <span>440$</span>
-                    </div>
-                    <div class="col pill-right">
-                        <p>Category</p>
-                        <p>Category</p>
-                        <p>Category</p>
-                    </div>
-                </div>
+            <div class="col statPillButtons">
+                @Html.ActionLink("Week", "Index", "Dashboard", new { period = 7 }, new { @class = "btn btn-outline-info btn-custom", @id = "btnWeek", @onclick="stayActive(this.id)" })
+                @Html.ActionLink("Month", "Index", "Dashboard", new { period = 30 }, new { @class = "btn btn-outline-info btn-custom", @id = "btnMonth", @onclick = "stayActive(this.id)" })
+                @Html.ActionLink("Year", "Index", "Dashboard", new { period = 365 }, new { @class = "btn btn-outline-info btn-custom", @id = "btnYear", @onclick = "stayActive(this.id)" })
+                <a onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)',
+                                        'Recurring payments')" class="btn btn-outline-light m-1">Recurring payments</a>
             </div>
-
         </div>
 
         <div class="row" style="margin: 15px 0 15px 15px; ">
@@ -336,27 +341,27 @@
             </div>
 
             <div class="col-2 topCategoryColumn table-responsive">
-                    <table class="table table-hover">
-                        <thead class="sticky-top">
-                            <tr>
-                                <td id="tableRowId">Categories by amount</td>
-                                <td class="percentageCol">%</td>
+                <table class="table table-hover">
+                    <thead class="sticky-top">
+                        <tr>
+                            <td id="tableRowId">Categories by amount</td>
+                            <td class="percentageCol">%</td>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        @foreach (var item in Model.Categories)
+                        {
+                            <tr class="trClass">
+                                <td>
+                                    @item.CategoryName
+                                </td>
+                                <td class="percentageCol">
+                                    @String.Format("{0:0.00}", item.CategoryPercentage)
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            @foreach (var item in Model.Categories)
-                            {
-                                <tr class="trClass">
-                                    <td>
-                                        @item.CategoryName
-                                    </td>
-                                    <td class="percentageCol">
-                                        @String.Format("{0:0.00}", item.CategoryPercentage)
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                        }
+                    </tbody>
+                </table>
             </div>
             <div class="col-2 stackedCircles">
                 <div class="p-statCircle">
@@ -365,7 +370,7 @@
                         <p>
                             of <a id="paycheckAmount">@ViewBag.SumBeforeLast30$</a>
                             <input id="paycheckInputField" type="text" hidden style="width:50px;height:18px;" />
-                            <a onclick="showInPopup('@Url.Action("IncomeList","Dashboard",new { id = 0},Context.Request.Scheme)','Recurring payments')" ><i class="fas fa-pen"></i></a>
+                            <a onclick="showInPopup('@Url.Action("IncomeList","Dashboard",new { id = 0},Context.Request.Scheme)','Recurring payments')"><i class="fas fa-pen"></i></a>
                         </p>
                         <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
                         <p><small>@Model.CirclesStats[0].UnderMonthAmount$ under</small></p>
@@ -382,14 +387,14 @@
                 </div>
             </div>
             @*<div class="col-2" id="adviceDiv">
-                <label class="adviceHeader">Advice</label>
-                <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 0},Context.Request.Scheme)','New expense')">Add daily payments to make your life easier</a></p>
-                <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 2},Context.Request.Scheme)','New expense')">Add monthly payments to make your life easier</a></p>
-                <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 4},Context.Request.Scheme)','New expense')">Add your custom recurring payment</a></p>
-                <p><a onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)','Recurring payments')" class="btn btn-success btn-sm">Recurring payments</a>
-            </div>*@
+                    <label class="adviceHeader">Advice</label>
+                    <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 0},Context.Request.Scheme)','New expense')">Add daily payments to make your life easier</a></p>
+                    <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 2},Context.Request.Scheme)','New expense')">Add monthly payments to make your life easier</a></p>
+                    <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 4},Context.Request.Scheme)','New expense')">Add your custom recurring payment</a></p>
+                    <p><a onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)','Recurring payments')" class="btn btn-success btn-sm">Recurring payments</a>
+                </div>*@
         </div>
-        
+
         <div class="row" style="margin:20px 0 20px 20px;">
 
         </div>
@@ -399,8 +404,23 @@
 </html>
 
 <script>
-    $(showLineChart);
-    $(showPieChart);
+    function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+    var period;
+    if (getParameterByName('period') == null) {
+        period = 30;
+    } else {
+        period = parseFloat(getParameterByName('period'));
+    }
+    console.log(period);
+    $(showLineChart(period));
+    $(showPieChart(period));
     function showPercentage() {
         $('#amountP').tooltip('show');
     }
@@ -418,6 +438,30 @@
             document.getElementById('arrowPercentage').style.color = 'lawngreen';
         }
     });
+
+
+    function stayActive(id) {
+        document.getElementById(id).classList.add("active");
+    }
+    $(document).ready(function () {
+        var period = getParameterByName("period");
+        console.log(period);
+        switch (parseFloat(period)) {
+            case 7:
+                document.getElementById('btnWeek').classList.add("active");
+                break;
+            case 30:
+                document.getElementById('btnMonth').classList.add("active");
+                break;
+            case 365:
+                document.getElementById('btnYear').classList.add("active");
+                break;
+            default:
+                document.getElementById('btnMonth').classList.add("active");
+        }
+        
+    });
+
     //function EditPaycheck() {
     //    var amountField = document.getElementById('paycheckAmount');
     //    if (amountField.hidden == false) {

@@ -1,5 +1,6 @@
 ﻿using GoldCap.Models;
 using GoldCap.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,16 +17,19 @@ namespace GoldCap.Controllers
     {
         private UserManager<ApplicationUser> userManager;
         private IExpenseRepository _expenseRepository;
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly string userLogin;
 
-        public ExpensesController(IExpenseRepository expenseRepository, UserManager<ApplicationUser> userManager)
+        public ExpensesController(IExpenseRepository expenseRepository, UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             this.userManager = userManager;
             _expenseRepository = expenseRepository;
+            this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name) == "guestTest@gm.com" ? null : httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
         }
 
         public IActionResult Index()
         {
-            var expenses = _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == User.FindFirstValue(ClaimTypes.Name)).OrderByDescending(e => e.Date);
+            var expenses = _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date);
 
             return View(expenses);
         }
@@ -57,7 +61,6 @@ namespace GoldCap.Controllers
         public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date,ExpenseManagerLogin")] Expense expense)
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList();
-            var userLogin = User.FindFirstValue(ClaimTypes.Name);
             expense.ExpenseManagerLogin = userLogin;
             if (ModelState.IsValid)
             {
@@ -71,7 +74,7 @@ namespace GoldCap.Controllers
                 }
 
 
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == User.FindFirstValue(ClaimTypes.Name)).OrderByDescending(e => e.Date)) });
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date)) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) });
         }
@@ -82,7 +85,7 @@ namespace GoldCap.Controllers
         {
             _expenseRepository.Delete(id);
 
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == User.FindFirstValue(ClaimTypes.Name)).OrderByDescending(e => e.Date)) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date)) });
         }
     }
 }

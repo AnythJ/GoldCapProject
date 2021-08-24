@@ -1,5 +1,6 @@
 ﻿using GoldCap.Models;
 using GoldCap.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,17 @@ namespace GoldCap.Controllers
     public class CategoriesController : Controller
     {
         private IExpenseRepository _expenseRepository;
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly string userLogin;
 
-        public CategoriesController(IExpenseRepository expenseRepository)
+        public CategoriesController(IExpenseRepository expenseRepository, IHttpContextAccessor httpContextAccessor)
         {
             _expenseRepository = expenseRepository;
+            this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name) == "guestTest@gm.com" ? null : httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
         }
         public IActionResult Index()
         {
-            var categoriesList = _expenseRepository.GetAllCategories().Where(c => c.ExpenseManagerLogin == User.FindFirstValue(ClaimTypes.Name));
+            var categoriesList = _expenseRepository.GetAllCategories().Where(c => c.ExpenseManagerLogin == userLogin);
             CategoryListViewModel viewModel = new CategoryListViewModel()
             {
                 Category = new Category(),
@@ -32,7 +36,7 @@ namespace GoldCap.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
-            category.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
+            category.ExpenseManagerLogin = userLogin;
             if (ModelState.IsValid)
             {
                 _expenseRepository.AddCategory(category);

@@ -20,7 +20,8 @@ namespace GoldCap.Models
 
         public SQLExpenseRepository(AppDbContext context, IHttpContextAccessor httpContextAccessor)
         {
-            this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+            //this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+            this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name) == "guestTest@gm.com" ? null: httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
             this.context = context;
             this.httpContextAccessor = httpContextAccessor;
         }
@@ -105,21 +106,21 @@ namespace GoldCap.Models
             return ctgList;
         }
 
-        public List<_30daysModel> GetSumDayExpense30()
+        public List<_30daysModel> GetSumDayExpense30(int period)
         {
             List<_30daysModel> finalList = new List<_30daysModel>();
 
-            for (int i = 0; i <= 30; i++)
+            for (int i = 0; i <= period; i++)
             {
-                var exp = context.Expenses.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-30 + i).Day &&
-                e.Date.Value.Month == DateTime.Now.AddDays(-30 + i).Month) && e.ExpenseManagerLogin == userLogin).AsEnumerable();
+                var exp = context.Expenses.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-period + i).Day &&
+                e.Date.Value.Month == DateTime.Now.AddDays(-period + i).Month) && e.ExpenseManagerLogin == userLogin).AsEnumerable();
 
                 _30daysModel model = new _30daysModel()
                 {
                     Amount = 0,
-                    TimeStamp = DateTime.Now.AddDays(-30 + i).Day.ToString(),
+                    TimeStamp = DateTime.Now.AddDays(-period + i).Day.ToString(),
                     OneId = -1,
-                    MonthName = DateTime.Now.AddDays(-30 + i).ToString("MMMM", CultureInfo.InvariantCulture)
+                    MonthName = DateTime.Now.AddDays(-period + i).ToString("MMMM", CultureInfo.InvariantCulture)
                 };
 
                 if (exp != null)
@@ -167,11 +168,11 @@ namespace GoldCap.Models
             return newList.OrderByDescending(d => d.CategoryPercentage).ToList<CategoryChart>();
         }
 
-        public List<CategoryChart> GetCategoryRatios()
+        public List<CategoryChart> GetCategoryRatios(int period)
         {
             var categoryNames = context.Categories.Where(e => e.ExpenseManagerLogin == userLogin).Select(n => n.Name).ToList();
 
-            var expenses = context.Expenses.Where(e => (e.Date.Value >= DateTime.Now.AddDays(-30)) && e.ExpenseManagerLogin == userLogin).AsEnumerable();
+            var expenses = context.Expenses.Where(e => (e.Date.Value >= DateTime.Now.AddDays(-period)) && e.ExpenseManagerLogin == userLogin).AsEnumerable();
 
             List<CategoryChart> newList = new List<CategoryChart>();
 
@@ -196,17 +197,17 @@ namespace GoldCap.Models
             return newList.OrderByDescending(d => d.CategoryPercentage).ToList<CategoryChart>();
         }
 
-        public List<TooltipModel> GetTooltipList()
+        public List<TooltipModel> GetTooltipList(int period)
         {
             List<TooltipModel> finalList = new List<TooltipModel>();
-            for (int i = 0; i <= 30; i++)
+            for (int i = 0; i <= period; i++)
             {
-                var exp = context.Expenses.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-30 + i).Day &&
-                e.Date.Value.Month == DateTime.Now.AddDays(-30 + i).Month) && e.ExpenseManagerLogin == userLogin).AsEnumerable();
+                var exp = context.Expenses.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-period + i).Day &&
+                e.Date.Value.Month == DateTime.Now.AddDays(-period + i).Month) && e.ExpenseManagerLogin == userLogin).AsEnumerable();
 
 
-                var cate = context.Expenses.Where(e => e.Date.Value.Day == DateTime.Today.AddDays(-30 + i).Day
-                && e.Date.Value.Month == DateTime.Today.AddDays(-30 + i).Month && e.ExpenseManagerLogin == userLogin).Select(e => e.Category).ToList<string>();
+                var cate = context.Expenses.Where(e => e.Date.Value.Day == DateTime.Today.AddDays(-period + i).Day
+                && e.Date.Value.Month == DateTime.Today.AddDays(-period + i).Month && e.ExpenseManagerLogin == userLogin).Select(e => e.Category).ToList<string>();
                 List<string> noRepeats = cate.Distinct().ToList();
 
                 List<List<decimal>> amountList = new List<List<decimal>>();

@@ -14,8 +14,8 @@ namespace GoldCap.Models
         Expense Add(Expense expense);
         Expense Update(Expense expenseChanges);
         Expense Delete(int id);
-        List<_30daysModel> GetSumDayExpense30();
-        List<TooltipModel> GetTooltipList();
+        List<_30daysModel> GetSumDayExpense30(int period);
+        List<TooltipModel> GetTooltipList(int period);
         IEnumerable<Expense> AddExpenses(IEnumerable<Expense> expenses);
         
 
@@ -28,7 +28,7 @@ namespace GoldCap.Models
 
         // NEW
         List<Category> GetCategoryList();
-        List<CategoryChart> GetCategoryRatios();
+        List<CategoryChart> GetCategoryRatios(int period);
 
         // Recurring expense
 

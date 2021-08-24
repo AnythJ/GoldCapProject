@@ -243,6 +243,18 @@ namespace GoldCap.Controllers
             underCircle.SumBeforeLast30Days = sumExpensesLastMonth;
             underCircle.UnderMonthAmount = underMonth;
             underCircle.TooltipPercentage = Decimal.Round(percentage);
+            switch (period)
+            {
+                case 7:
+                    underCircle.PeriodName = "week";
+                    break;
+                case 30:
+                    underCircle.PeriodName = "month";
+                    break;
+                case 365:
+                    underCircle.PeriodName = "year";
+                    break;
+            }
             #endregion
 
             #region CategoryCircle
@@ -311,7 +323,6 @@ namespace GoldCap.Controllers
                 firstPill.Date = topExpense.Date;
                 firstPill.Percentage = (sumExpensesLastMonth != 0) ? Decimal.Round((Convert.ToDecimal(topExpense.Amount) / sumExpensesLastMonth) * 100, 1) : 0;
                 firstPill.DatetimeString = topExpense.Date.Value.ToString("dd/M/yyyy hh:mm");
-
             }
 
             decimal averageAmount = thisMonth.Count() != 0 ? sumExpenses / thisMonth.Count() : 0;

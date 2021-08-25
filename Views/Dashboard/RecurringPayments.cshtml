@@ -11,6 +11,36 @@
     .modal-backdrop {
         display: none;
     }
+
+    .modal-title {
+        font-weight: bold;
+    }
+
+    .btn-close {
+        -webkit-filter: invert(100%);
+        filter: invert(100%);
+    }
+
+    .modal-body, .modal-header, .modal-title, .modal-footer {
+        font-family: Arial;
+        background-color: #212529;
+        color: #9ba6b0;
+    }
+
+    .modal-content, modal-dialog {
+        border: 3px solid white;
+        border-radius: 5px;
+    }
+
+    .modal-header {
+        border: none;
+        border-bottom: 3px solid #434d56;
+        border-radius: 0;
+    }
+    .modal-body {
+        padding: 0;
+    }
+
 </style>
 <script type="text/javascript">
     if (document.getElementById("tableInModal")) {
@@ -56,7 +86,7 @@
                     </td>
                     <td align="right" style="padding-right:30px;width:220px;">
                         <form asp-controller="dashboard" asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDeleteDashboard(this)" class="d-inline">
-                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                            <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm" />
                         </form>
                         
                     </td>

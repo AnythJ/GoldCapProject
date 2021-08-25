@@ -22,8 +22,12 @@
         color: white;
     }
 </style>
-
-<div class="row">
+<script type="text/javascript">
+    if (document.getElementById("createRecurring")) {
+        document.getElementById("modalDialog").classList.remove("modal-lg");
+    }
+</script>
+<div class="row" id="createRecurring">
     <div class="col-md-12">
         <form asp-action="CreateOrEdit" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPostDashboard(this);" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

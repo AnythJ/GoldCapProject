@@ -20,7 +20,7 @@
         background-color: #212529;
         color: #9ba6b0;
     }
-    .modal-content, modal-dialog, .modal {
+    .modal-content, modal-dialog {
         border: 3px solid #434d56;
         border-radius: 5px;
     }
@@ -33,6 +33,7 @@
         background-color: #2d3339;
         color: #9ba6b0;
         border-color: #0DCAF0;
+        border-radius: 5px;
     }
     textarea:disabled {
         background-color: #2d3339 !important;
@@ -40,6 +41,11 @@
         resize: none;
         max-width: 135ch;
         border: 0.5px solid #0DCAF0;
+        border-radius: 5px;
+    }
+
+    .listButton {
+        text-align: right;
     }
 
 </style>
@@ -48,9 +54,9 @@
     <div class="col-md-12">
         <form asp-action="Details" asp-route-id="@Model.Id" autocomplete="off">
             <input type="hidden" asp-for="Id" />
-            <div class="row justify-content-center">
-                <div class="col-4 align-self-center">
-                    <div class="form-group justify-content-center">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
                         <label asp-for="Amount" class="control-label"></label>
                         <input disabled asp-for="Amount" class="form-control" />
                     </div>
@@ -75,8 +81,8 @@
                 <textarea disabled asp-for="Description" class="form-control"></textarea>
             </div>
 
-            <div>
-                <a class="btn btn-primary" asp-controller="Expenses" asp-action="Index">Go to full list</a>
+            <div class="listButton">
+                <a class="btn btn-outline-info mt-4" asp-controller="Expenses" asp-action="Index">Go to full list</a>
             </div>
         </form>
     </div>

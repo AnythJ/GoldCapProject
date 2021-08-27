@@ -6,10 +6,77 @@
 }
 
 <style>
+    .modal-title {
+        font-weight: bold;
+    }
+
+    .btn-close {
+        -webkit-filter: invert(100%);
+        filter: invert(100%);
+    }
+
+    .modal-body, .modal-header, .modal-title, .modal-footer {
+        font-family: Arial;
+        background-color: #212529;
+        color: #9ba6b0;
+    }
+
+    .modal-content, modal-dialog {
+        border: 3px solid #434d56;
+        border-radius: 5px;
+    }
+
+    .modal-header {
+        border: none;
+        border-bottom: 3px solid #434d56;
+        border-radius: 0;
+    }
+
+    input[type=text], input[type=text]:focus, input[type=datetime-local], input[type=datetime-local]:focus, select, select:focus {
+        background-color: #2d3339;
+        color: #9ba6b0;
+        border-color: #0DCAF0;
+        border-radius: 5px;
+    }
+
+    .description-textarea, .description-textarea:focus {
+        background-color: #2d3339;
+        color: #9ba6b0;
+        resize: none;
+        max-width: 135ch;
+        border: 0.5px solid #0DCAF0;
+        border-radius: 5px;
+    }
+
+    .category-select, .category-select:focus {
+        background-color: #2d3339;
+        color: #9ba6b0;
+        border: 0.5px solid #0DCAF0;
+        border-radius: 5px;
+    }
+
+    .recurring-select, .recurring-select:focus {
+        background-color: #2d3339;
+        color: #9ba6b0;
+        border: 0.5px solid #0DCAF0;
+        border-radius: 5px;
+    }
+
+    .every-weeks-control {
+        background-color: transparent;
+        color: #9ba6b0;
+        border: none;
+        margin-bottom: 5px;
+    }
+        .every-weeks-control input[type=number] {
+            background-color: #2d3339;
+            color: #9ba6b0;
+        }
     .weekdayCheckbox span {
         display: inline-block;
         border-radius: 5px;
-        background-color: lightgray;
+        background-color: #2d3339;
+        color: #9ba6b0;
         width: 2em;
         height: 2em;
         text-align: center;
@@ -17,10 +84,21 @@
         padding-top: 5px;
     }
 
-    .weekdayCheckbox  :checked + span {
-        background-color: Highlight;
-        color: white;
+    .weekdayCheckbox :checked + span {
+        background-color: #0DCAF0;
+        color: #2d3339;
     }
+
+    #customStatusDays {
+        visibility: hidden;
+    }
+
+    #submitRecurring {
+        text-align: right;
+        margin-top: 15px;
+        font-weight: normal;
+    }
+
 </style>
 <script type="text/javascript">
     if (document.getElementById("createRecurring")) {
@@ -41,47 +119,57 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Category" class="control-label"></label>
-                        <select asp-for="Category" style="height:38px;" asp-items="@(new SelectList(ViewBag.CategoryList,"Name","Name"))"></select>
+                        <select asp-for="Category" class="form-control category-select" asp-items="@(new SelectList(ViewBag.CategoryList,"Name","Name"))"></select>
                         <span asp-validation-for="Category"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Date" class="control-label" id="startDate" onmouseover="showStartDateTooltip()" data-toggle="tooltip" data-placement="top" title="If you choose custom every > 1 week, better set Start Date on the first day you want to add this expense, otherwise first addition will be in chosen day after chosen number of weeks.">Start Date</label>
-                        <input id="dateinput" asp-for="Date" style="height:38px;" class="form-control" />
+                        <input asp-for="Date" class="form-control" />
                         <span asp-validation-for="Date"></span>
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea style="resize:none;height:90px;" id="description-input" asp-for="Description" class="form-control"></textarea>
+                <textarea asp-for="Description" class="form-control description-textarea"></textarea>
                 <span asp-validation-for="Description"></span>
             </div>
-            <div class="col-md-10">
-                <div class="form-group">
-                    <label asp-for="Status" class="control-label"></label>
-                    <select id="recurringSelect" onchange="customField()" asp-for="Status" style="height:38px;" asp-items="Html.GetEnumSelectList<StatusName>()"></select>
-                    <span asp-validation-for="Status"></span>
-
-                    <div id="customStatus" style="margin-top:15px;visibility:hidden;">
-                        <label style="margin-right:5px;">Every</label>
-                        <input id="focusableInput" type="number" min="1" max="999" style="width:2em;" asp-for="HowOften">
-                        <label style="margin: 0 5px 0 5px;">Weeks</label>
-                        @for (int i = 0; i < 7; i++)
-                        {
-                            <label class="weekdayCheckbox">
-                                @Html.CheckBoxFor(item => item.Weekdays[i], new { @style = "display:none;" })
-                                <span>@ViewBag.Weekdays[i]</span>
-                            </label>
-                        }
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Status" class="control-label"></label>
+                        <select id="recurringSelect" class="form-control recurring-select" onchange="customField()" asp-for="Status" asp-items="Html.GetEnumSelectList<StatusName>()"></select>
+                        <span asp-validation-for="Status"></span>
                     </div>
-
+                </div>
+                <div class="col-md-8">
+                    <div id="customStatus" style="visibility:hidden;">
+                        <label class="control-label"></label>
+                        <div class="form-control every-weeks-control">
+                            <label>Every</label>
+                            <input id="focusableInput" type="number" min="1" max="999" style="width:2em;" asp-for="HowOften">
+                            <label style="margin: 0 5px 0 5px;">Weeks</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-8" id="customStatusDays">
+                    @for (int i = 0; i < 7; i++)
+                    {
+                        <label class="weekdayCheckbox">
+                            @Html.CheckBoxFor(item => item.Weekdays[i], new { @style = "display:none;" })
+                            <span>@ViewBag.Weekdays[i]</span>
+                        </label>
+                    }
                 </div>
             </div>
 
-            <div class="form-group" style="margin-top:15px;text-align:right;">
-                <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+            <div id="submitRecurring" class="form-group">
+                <input type="submit" value="Submit" class="btn btn-outline-info" />
             </div>
         </form>
     </div>
@@ -95,16 +183,19 @@
         function customField() {
             var x = document.getElementById('customStatus');
             var y = document.getElementById('focusableInput');
+            var z = document.getElementById('customStatusDays');
             if (document.getElementById('recurringSelect').value == 4) {
                 x.style.visibility = "visible";
                 y.required = true;
+                z.style.visibility = "visible";
             }
             else {
                 x.style.visibility = "hidden";
                 y.required = false;
+                z.style.visibility = "hidden";
             }
         }
-        
+
         function showStartDateTooltip() {
             $('#startDate').tooltip('show');
         }

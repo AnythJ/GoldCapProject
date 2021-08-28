@@ -6,45 +6,88 @@
 }
 
 <style>
-    span {
-        color: white;
-        font-size: 15px;
+    .modal-title {
+        font-weight: bold;
     }
 
-    #description-input {
-        color: white;
-        background-color: #6C757D;
-        border-color: #6C757D;
+    .btn-close {
+        -webkit-filter: invert(100%);
+        filter: invert(100%);
+    }
+
+    .modal-body, .modal-header, .modal-title, .modal-footer {
+        font-family: Arial;
+        background-color: #212529;
+        color: #9ba6b0;
+    }
+
+    .modal-content, modal-dialog {
+        border: 3px solid #434d56;
+        border-radius: 5px;
+    }
+
+    .modal-header {
+        border: none;
+        border-bottom: 3px solid #434d56;
+        border-radius: 0;
+    }
+
+    input[type=text], input[type=text]:focus, input[type=datetime-local], input[type=datetime-local]:focus, select, select:focus {
+        background-color: #2d3339;
+        color: #9ba6b0;
+        border-color: #0DCAF0;
+        border-radius: 5px;
+    }
+
+    .description-textarea, .description-textarea:focus {
+        background-color: #2d3339;
+        color: #9ba6b0;
+        resize: none;
+        max-width: 135ch;
+        border: 0.5px solid #0DCAF0;
+        border-radius: 5px;
+    }
+
+    
+    #submitRecurring {
+        text-align: right;
+        margin-top: 15px;
+    }
+
+    input.btn-outline-info {
+        font-weight: normal;
     }
 </style>
 
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="CreateOrEditIncome" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPost(this);" autocomplete="off">
+        <form asp-action="CreateOrEditIncome" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPostDashboard(this, '#tableInModalIncome');" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Amount" class="control-label"></label>
-                <input id="amountinput" asp-for="Amount" class="form-control" />
-                <span asp-validation-for="Amount"></span>
-            </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
+                        <label asp-for="Amount" class="control-label"></label>
+                        <input id="amountinput" asp-for="Amount" class="form-control" />
+                        <span asp-validation-for="Amount"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
                         <label asp-for="Date" class="control-label"></label>
-                        <input id="dateinput" asp-for="Date" style="height:38px;" class="form-control" />
+                        <input id="dateinput" asp-for="Date" class="form-control" />
                         <span asp-validation-for="Date"></span>
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea style="resize:none;height:90px;" id="description-input" asp-for="Description" class="form-control"></textarea>
+                <textarea asp-for="Description" class="form-control description-textarea"></textarea>
                 <span asp-validation-for="Description"></span>
             </div>
 
-            <div class="form-group" style="margin-top:15px;text-align:right;">
-                <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+            <div id="submitRecurring" class="form-group">
+                <input type="submit" value="Submit" class="btn btn-outline-info" />
             </div>
         </form>
     </div>

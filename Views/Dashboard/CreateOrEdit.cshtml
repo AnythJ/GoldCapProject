@@ -96,6 +96,9 @@
     #submitRecurring {
         text-align: right;
         margin-top: 15px;
+    }
+
+    input.btn-outline-info {
         font-weight: normal;
     }
 
@@ -107,7 +110,7 @@
 </script>
 <div class="row" id="createRecurring">
     <div class="col-md-12">
-        <form asp-action="CreateOrEdit" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPostDashboard(this);" autocomplete="off">
+        <form asp-action="CreateOrEdit" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPostDashboard(this, '#tableInModal');" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -126,7 +129,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Date" class="control-label" id="startDate" onmouseover="showStartDateTooltip()" data-toggle="tooltip" data-placement="top" title="If you choose custom every > 1 week, better set Start Date on the first day you want to add this expense, otherwise first addition will be in chosen day after chosen number of weeks.">Start Date</label>
-                        <input asp-for="Date" class="form-control" />
+                        <input asp-for="Date" class="form-control date-input" />
                         <span asp-validation-for="Date"></span>
                     </div>
                 </div>
@@ -169,7 +172,7 @@
             </div>
 
             <div id="submitRecurring" class="form-group">
-                <input type="submit" value="Submit" class="btn btn-outline-info" />
+                <input type="submit" value="Submit" class="btn btn-outline-info"/>
             </div>
         </form>
     </div>

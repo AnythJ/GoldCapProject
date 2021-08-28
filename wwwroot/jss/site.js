@@ -71,20 +71,22 @@ jQueryAjaxDelete = form => {
 
     
 
-jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
+jQueryAjaxDeleteDashboard = (form, tableId) => { //SEEMS LIKE WORKING FOR NOW
     try {
         $.confirm({
             title: 'Delete Expense',
             content: 'Are you sure you want to delete this expense?',
-            type: 'red',
+            type: 'light',
+            theme: 'dark',
             icon: 'fa fa-warning',
             animateFromElement: false,
             offsetBottom: 600,
             typeAnimated: true,
+            draggable: true,
             buttons: {
                 confirm: {
                     text: 'Confirm',
-                    btnClass: 'btn-red',
+                    btnClass: 'btn-danger',
                     action: function () {
                         $.ajax({
                             type: 'POST',
@@ -94,7 +96,8 @@ jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
                             processData: false,
                             success: function (res) {
                                 showLineChart();
-                                $('#tableInModal').html(res.html);
+                                showPieChart();
+                                $(tableId).html(res.html);
                             },
                             error: function (err) {
                                 console.log(err)
@@ -104,7 +107,7 @@ jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
                 },
                 confirmAll: {
                     text: 'Delete old too',
-                    btnClass: 'btn-red',
+                    btnClass: 'btn-danger',
                     action: function () {
                         var formData = new FormData(form);
                         formData.append('oneOrAll', true);
@@ -116,7 +119,8 @@ jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
                             processData: false,
                             success: function (res) {
                                 showLineChart();
-                                $('#tableInModal').html(res.html);
+                                showPieChart();
+                                $(tableId).html(res.html);
                             },
                             error: function (err) {
                                 console.log(err)
@@ -125,6 +129,7 @@ jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
                     }
                 },
                 close: function () {
+                    btnClass: 'btn'
                 }
             }
         });
@@ -141,7 +146,7 @@ jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
 
 
 
-jQueryAjaxPostDashboard = form => {
+jQueryAjaxPostDashboard = (form, tableId) => {
     try {
         $.ajax({
             type: 'POST',
@@ -151,12 +156,18 @@ jQueryAjaxPostDashboard = form => {
             processData: false,
             success: function (res) {
                 if (res.isValid) {
-                    $('#tableInModal').html(res.html)
+                    $(tableId).html(res.html)
                     $('#form-modal .modal-body').html('');
                     $('#form-modal .modal-title').html('');
                     $('#form-modal').modal('hide');
                     showLineChart();
-                    showInPopup("/Dashboard/RecurringPayments", "Recurring payments");
+                    showPieChart();
+                    if (tableId == '#tableInModalIncome') {
+                        showInPopup("/Dashboard/IncomeList", "Income list");
+                    }
+                    else {
+                        showInPopup("/Dashboard/RecurringPayments", "Recurring payments");
+                    }
                 }
                 else
                     $('#form-modal .modal-body').html(res.html);

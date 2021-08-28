@@ -86,7 +86,7 @@
                         @Html.DisplayFor(modelItem => item.Date)
                     </td>
                     <td align="right" style="padding-right:30px;width:220px;">
-                        <form asp-controller="dashboard" asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDeleteDashboard(this)" class="d-inline">
+                        <form asp-controller="dashboard" asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDeleteDashboard(this, '#tableInModal')" class="d-inline">
                             <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm" />
                         </form>
                         

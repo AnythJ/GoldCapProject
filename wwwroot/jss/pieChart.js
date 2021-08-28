@@ -153,7 +153,7 @@ function showPieChart(period) {
                                                     row.style.color = "#9ba6b0";
                                                     row.style.fontWeight = "normal";
                                                     row.setAttribute("id", "");
-                                                    sendToList(-1, null);
+                                                    sendToList(-1, null, period);
                                                 }
                                             }
                                         }

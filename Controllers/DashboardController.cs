@@ -27,27 +27,36 @@ namespace GoldCap.Controllers
         public IActionResult Index(int period = 30)
         {
             var thisMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderByDescending(d => d.Date);
-            var lastMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period*2) && m.Date <= DateTime.Now.AddDays(-period));
+            var lastMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period * 2) && m.Date <= DateTime.Now.AddDays(-period));
             var topCategories = _expenseRepository.GetCategoryRatios(period).Where(c => c.CategoryPercentage > 0);
             var topCategory = _expenseRepository.GetCategoryRatios(period) != null ? _expenseRepository.GetCategoryRatios(period).FirstOrDefault() : null;
 
             DashboardViewModel dashboardViewModel = new DashboardViewModel();
 
             #region MonthlyAddition
-            var userIncome = _expenseRepository.GetIncome(User.FindFirstValue(ClaimTypes.Name)).FirstOrDefault();
-            if (userIncome != null && userIncome.Date.Value >= DateTime.Today.AddDays(-365) && userIncome.Date.Value <= DateTime.Now)
+            var userIncomes = _expenseRepository.GetIncome(User.FindFirstValue(ClaimTypes.Name)).ToList();
+            int totalIncome = 0;
+            foreach (var item in userIncomes)
             {
-                Income income = new Income();
-                DateTime finalIncomeDate = userIncome.Date.Value;
-                for (var i = userIncome.Date.Value; i <= DateTime.Today.AddDays(1); i = i.AddMonths(1))
+                if (item != null && item.Date.Value >= DateTime.Today.AddDays(-365) && item.Date.Value <= DateTime.Now)
                 {
-                    income.Amount = userIncome.Amount;
-                    income.Description = userIncome.Description;
-                    income.Date = i;
-                    finalIncomeDate = i.AddMonths(1);
+                    Income income = new Income();
+                    DateTime finalIncomeDate = item.Date.Value;
+                    for (var i = item.Date.Value; i <= DateTime.Today.AddDays(1); i = i.AddMonths(1))
+                    {
+                        income.Amount = item.Amount;
+                        income.Description = item.Description;
+                        income.Date = i;
+                        finalIncomeDate = i.AddMonths(1);
+                    }
+                    item.Date = finalIncomeDate;
+                    _expenseRepository.UpdateIncome(item);
                 }
-                userIncome.Date = finalIncomeDate;
-                _expenseRepository.UpdateIncome(userIncome);
+
+
+                totalIncome += (int)item.Amount;
+                if (period >= 31)
+                    totalIncome *= 12;
             }
 
             var allRecurring = _expenseRepository.GetAllRecurring().ToList();
@@ -256,7 +265,38 @@ namespace GoldCap.Controllers
                     break;
             }
             #endregion
+            #region IncomeCircle
+            StatCircle incomeCircle = new StatCircle();
+            decimal percentageIncome = totalIncome != 0 ? Decimal.Round((Convert.ToDecimal(sumExpenses) / totalIncome) * 100) : 0;
 
+            incomeCircle.TotalIncome = (int)totalIncome;
+            incomeCircle.IncomePercentage = percentageIncome;
+            incomeCircle.SumLast30Days = sumExpenses;
+
+            int avgI = (int)(3.6 * (int)percentageIncome);
+
+            var rightStartI = 0;
+            var avgRightI = 0;
+            var avgLeftI = 0;
+
+            if (avgI >= 0 && avgI <= 180)
+            {
+                rightStartI = 0;
+                avgRightI = 0;
+                avgLeftI = avgI;
+            }
+            else
+            {
+                rightStartI = 180;
+                avgRightI = (avgI - 180) > 180 ? 180 : avgI - 180;
+                avgLeftI = 180;
+            }
+
+
+            incomeCircle.PercentageLeft = avgLeftI + "deg";
+            incomeCircle.PercentageStartRight = rightStartI + "deg";
+            incomeCircle.PercentageRight = avgRightI + "deg";
+            #endregion
             #region CategoryCircle
             var topCate = thisMonth.Where(e => e.Category == topCategory.CategoryName).Sum(e => e.Amount);
             StatCircle cateCircle = new StatCircle();
@@ -286,6 +326,8 @@ namespace GoldCap.Controllers
                 avgLeftC = 180;
             }
 
+
+            
             #region AnimationSpeed
             NumberFormatInfo dotFormat = new NumberFormatInfo();
             dotFormat.NumberDecimalSeparator = ".";
@@ -299,6 +341,11 @@ namespace GoldCap.Controllers
             double animationProportionUnder = avgLeft / gd;
             underCircle.LeftSpeed = (animationProportionUnder * 0.5).ToString(dotFormat) + "s";
             underCircle.RightSpeed = (0.5 - (animationProportionUnder * 0.5)).ToString(dotFormat) + "s";
+
+            double ic = avgLeftI + avgRightI;
+            double animationProportionIncome = avgLeftI / ic;
+            incomeCircle.LeftSpeed = (animationProportionIncome * 0.5).ToString(dotFormat) + "s";
+            incomeCircle.RightSpeed = (0.5 - (animationProportionIncome * 0.5)).ToString(dotFormat) + "s";
             #endregion
 
             cateCircle.PercentageLeft = avgLeftC + "deg";
@@ -306,9 +353,11 @@ namespace GoldCap.Controllers
             cateCircle.PercentageRight = avgRightC + "deg";
             #endregion
 
+
             List<StatCircle> circleStats = new List<StatCircle>();
             circleStats.Add(underCircle);
             circleStats.Add(cateCircle);
+            circleStats.Add(incomeCircle);
             #endregion
 
             #region StatPills
@@ -337,7 +386,7 @@ namespace GoldCap.Controllers
             }
             var lowestExpense = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderBy(d => d.Amount).FirstOrDefault();
             StatPill thirdPill = new StatPill();
-            if(lowestExpense != null)
+            if (lowestExpense != null)
             {
                 thirdPill.AmountInt = (int)lowestExpense.Amount;
                 thirdPill.Category = lowestExpense.Category;
@@ -345,7 +394,7 @@ namespace GoldCap.Controllers
                 thirdPill.Percentage = (sumExpensesLastMonth != 0) ? Decimal.Round((Convert.ToDecimal(lowestExpense.Amount) / sumExpensesLastMonth) * 100, 1) : 0;
                 thirdPill.DatetimeString = lowestExpense.Date.Value.ToString("dd/M/yyyy hh:mm");
             }
-            
+
 
             pillsStats.Add(firstPill);
             pillsStats.Add(secondPill);
@@ -366,7 +415,7 @@ namespace GoldCap.Controllers
         }
 
 
-        public IActionResult Sort(string sortOrder, int id, string categoryName = null, int period=30)
+        public IActionResult Sort(string sortOrder, int id, string categoryName = null, int period = 30)
         {
             var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period));
 
@@ -710,6 +759,8 @@ namespace GoldCap.Controllers
             {
                 var userLogin = User.FindFirstValue(ClaimTypes.Name);
                 income.ExpenseManagerLogin = userLogin;
+                income.FirstPaycheckDate = income.Date;
+
                 income.Date = income.Date.Value.AddMonths(1);
                 _expenseRepository.AddIncome(income);
 
@@ -717,7 +768,7 @@ namespace GoldCap.Controllers
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEditIncome", income) });
         }
-        public JsonResult GetData(int period=30)
+        public JsonResult GetData(int period = 30)
         {
             List<string> newList = new List<string>();
             var ctg = _expenseRepository.GetCategoryRatios(period);

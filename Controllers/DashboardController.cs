@@ -236,6 +236,12 @@ namespace GoldCap.Controllers
                 avgRight = 0;
                 avgLeft = avg;
             }
+            else if (avg == 0)
+            {
+                rightStart = 180;
+                avgRight = 180;
+                avgLeft = 180;
+            }
             else
             {
                 rightStart = 180;
@@ -279,11 +285,17 @@ namespace GoldCap.Controllers
             var avgRightI = 0;
             var avgLeftI = 0;
 
-            if (avgI >= 0 && avgI <= 180)
+            if (avgI > 0 && avgI <= 180)
             {
                 rightStartI = 0;
                 avgRightI = 0;
                 avgLeftI = avgI;
+            }
+            else if(avgI == 0)
+            {
+                rightStartI = 180;
+                avgRightI = 180;
+                avgLeftI = 180;
             }
             else
             {
@@ -319,6 +331,12 @@ namespace GoldCap.Controllers
                 avgRightC = 0;
                 avgLeftC = avgC;
             }
+            else if (avgC == 0)
+            {
+                rightStartC = 180;
+                avgRightC = 180;
+                avgLeftC = 180;
+            }
             else
             {
                 rightStartC = 180;
@@ -333,17 +351,17 @@ namespace GoldCap.Controllers
             dotFormat.NumberDecimalSeparator = ".";
 
             double dg = avgLeftC + avgRightC;
-            double animationProportionCategory = avgLeftC / dg;
+            double animationProportionCategory = dg != 0 ? avgLeftC / dg : 0.5;
             cateCircle.LeftSpeed = (animationProportionCategory * 0.5).ToString(dotFormat) + "s";
             cateCircle.RightSpeed = (0.5 - (animationProportionCategory * 0.5)).ToString(dotFormat) + "s";
 
             double gd = avgLeft + avgRight;
-            double animationProportionUnder = avgLeft / gd;
+            double animationProportionUnder = gd != 0 ? avgLeft / gd : 0.5;
             underCircle.LeftSpeed = (animationProportionUnder * 0.5).ToString(dotFormat) + "s";
             underCircle.RightSpeed = (0.5 - (animationProportionUnder * 0.5)).ToString(dotFormat) + "s";
 
             double ic = avgLeftI + avgRightI;
-            double animationProportionIncome = avgLeftI / ic;
+            double animationProportionIncome = ic != 0 ? avgLeftI / ic : 0.5;
             incomeCircle.LeftSpeed = (animationProportionIncome * 0.5).ToString(dotFormat) + "s";
             incomeCircle.RightSpeed = (0.5 - (animationProportionIncome * 0.5)).ToString(dotFormat) + "s";
             #endregion

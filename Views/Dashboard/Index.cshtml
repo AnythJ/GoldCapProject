@@ -368,27 +368,27 @@
                 </table>
             </div>
             <div class="col-2 stackedCircles">
-                <div class="p-statCircle">
-                    <div class="smallerCircle">
-                        <p class="boldHeader">@Model.CirclesStats[2].SumLast30Days$</p>
-                        <p>
-                            of <a id="paycheckAmount">@Model.CirclesStats[2].TotalIncome$</a>
-                            <input id="paycheckInputField" type="text" hidden style="width:50px;height:18px;" />
-                            <a onclick="showInPopup('@Url.Action("IncomeList","Dashboard",new { id = 0},Context.Request.Scheme)','Income list')"><i class="fas fa-pen"></i></a>
-                        </p>
-                        <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                        <p><small>@Model.CirclesStats[2].IncomePercentage% of your</small></p>
-                        <p><small>income</small></p>
-                    </div>
-                    <div class="circle">
-                        <div class="bar p-left">
-                            <div class="progress"></div>
+                    <div class="p-statCircle">
+                        <div class="smallerCircle">
+                            <p class="boldHeader">@Model.CirclesStats[2].SumLast30Days$</p>
+                            <p>
+                                of <a id="paycheckAmount">@Model.CirclesStats[2].TotalIncome$</a>
+                                <input id="paycheckInputField" type="text" hidden style="width:50px;height:18px;" />
+                                <a onclick="showInPopup('@Url.Action("IncomeList","Dashboard",new { id = 0},Context.Request.Scheme)','Income list')"><i class="fas fa-pen"></i></a>
+                            </p>
+                            <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
+                            <p><small>@Model.CirclesStats[2].IncomePercentage% of your</small></p>
+                            <p><small>income</small></p>
                         </div>
-                        <div class="bar p-right">
-                            <div class="progress"></div>
+                        <div class="circle">
+                            <div class="bar p-left">
+                                <div class="progress"></div>
+                            </div>
+                            <div class="bar p-right">
+                                <div class="progress"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
             @*<div class="col-2" id="adviceDiv">
                     <label class="adviceHeader">Advice</label>

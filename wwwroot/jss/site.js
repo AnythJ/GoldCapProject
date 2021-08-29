@@ -71,7 +71,7 @@ jQueryAjaxDelete = form => {
 
     
 
-jQueryAjaxDeleteDashboard = (form, tableId) => { //SEEMS LIKE WORKING FOR NOW
+jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
     try {
         $.confirm({
             title: 'Delete Expense',
@@ -97,7 +97,7 @@ jQueryAjaxDeleteDashboard = (form, tableId) => { //SEEMS LIKE WORKING FOR NOW
                             success: function (res) {
                                 showLineChart();
                                 showPieChart();
-                                $(tableId).html(res.html);
+                                $('#tableInModal').html(res.html);
                             },
                             error: function (err) {
                                 console.log(err)
@@ -120,7 +120,7 @@ jQueryAjaxDeleteDashboard = (form, tableId) => { //SEEMS LIKE WORKING FOR NOW
                             success: function (res) {
                                 showLineChart();
                                 showPieChart();
-                                $(tableId).html(res.html);
+                                $('#tableInModal').html(res.html);
                             },
                             error: function (err) {
                                 console.log(err)
@@ -143,7 +143,54 @@ jQueryAjaxDeleteDashboard = (form, tableId) => { //SEEMS LIKE WORKING FOR NOW
     
 }
 
+jQueryAjaxDeleteIncome = form => { //SEEMS LIKE WORKING FOR NOW
+    try {
+        $.confirm({
+            title: 'Delete Income',
+            content: 'Are you sure you want to delete this income?',
+            type: 'light',
+            theme: 'dark',
+            icon: 'fa fa-warning',
+            animateFromElement: false,
+            offsetBottom: 600,
+            typeAnimated: true,
+            draggable: true,
+            buttons: {
+                confirm: {
+                    text: 'Confirm',
+                    btnClass: 'btn-danger',
+                    action: function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: form.action,
+                            data: new FormData(form),
+                            contentType: false,
+                            processData: false,
+                            success: function (res) {
+                                showLineChart();
+                                showPieChart();
+                                $('#tableInModalIncome').html(res.html);
+                            },
+                            error: function (err) {
+                                console.log(err)
+                            }
+                        })
+                    }
+                },
+                close: function () {
+                    btnClass: 'btn'
+                }
+            }
+        });
 
+    } catch (ex) {
+        console.log(ex)
+    }
+
+    //prevent default form submit event
+    return false;
+
+}
 
 
 jQueryAjaxPostDashboard = (form, tableId) => {

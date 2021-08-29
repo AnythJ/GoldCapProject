@@ -1,9 +1,7 @@
 ﻿.p-statCircle {
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     position: relative;
-    border-radius: 50%;
-    margin: 0 auto;
 }
 
     .p-statCircle .circle {
@@ -12,7 +10,6 @@
         height: 100%;
         width: 100%;
         border-radius: 50%;
-        background-color: transparent;
     }
 
     .p-statCircle .bar {
@@ -21,7 +18,7 @@
         width: 100%;
         -webkit-border-radius: 50%;
         background-color: transparent;
-        clip: rect(0px, 200px, 200px, 100px);
+        clip: rect(0px, 150px, 150px, 75px);
     }
 
     .p-statCircle .smallerCircle {
@@ -43,7 +40,7 @@
         height: 100%;
         width: 100%;
         -webkit-border-radius: 50%;
-        clip: rect(0px, 100px, 266.7px, 0px);
+        clip: rect(0px, 75px, 200px, 0px);
         background-color: #DFF8EB;
         z-index: 3;
     }

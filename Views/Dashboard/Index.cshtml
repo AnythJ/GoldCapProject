@@ -183,6 +183,7 @@
     }
 
     .stackedCircles {
+        min-width: 187px;
         margin: auto 0;
     }
 
@@ -302,11 +303,11 @@
             </div>
         </div>
 
-        <div class="row" style="margin: 15px 0 15px 15px; ">
+        <div class="row" style="margin: 15px 0 15px 15px;">
             <div class="col-6 tableColumn table-responsive" id="view-all">
                 @await Html.PartialAsync("_ViewAll", Model.Expenses)
             </div>
-            <div class="col-2 stackedCircles">
+            <div class="col-2 stackedCircles container">
                 <div class="u-statCircle">
                     <div class="smallerCircle">
                         <p id="amountP" class="boldHeader" onmouseover="showPercentage()" data-toggle="tooltip" data-placement="top" title="@Model.CirclesStats[0].TooltipPercentage%">@Model.CirclesStats[0].SumLast30Days$</p>

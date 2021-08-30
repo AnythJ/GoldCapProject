@@ -4,11 +4,10 @@
     padding: 0;
     border: 3px solid #434d56;
     border-radius: 5px;
-    border-right: none;
+    border-right: 1px solid transparent;
     overflow-x: auto;
     height: 360px;
     overflow-y: scroll;
-    /*margin-left: 15px;*/
 }
 .topCategoryColumn tbody td {
     height: 48px;

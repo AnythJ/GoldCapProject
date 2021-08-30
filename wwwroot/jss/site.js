@@ -98,6 +98,10 @@ jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
                                 showLineChart();
                                 showPieChart();
                                 $('#tableInModal').html(res.html);
+                                $.notify(
+                                    "Refresh to see all changes",
+                                    { globalPosition: "top left", clickToHide: true, autoHide: false, className: 'info' }
+                                );
                             },
                             error: function (err) {
                                 console.log(err)
@@ -121,6 +125,10 @@ jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
                                 showLineChart();
                                 showPieChart();
                                 $('#tableInModal').html(res.html);
+                                $.notify(
+                                    "Refresh to see all changes",
+                                    { globalPosition: "top left", clickToHide: true, autoHide: false, className: 'info' }
+                                );
                             },
                             error: function (err) {
                                 console.log(err)
@@ -170,6 +178,10 @@ jQueryAjaxDeleteIncome = form => { //SEEMS LIKE WORKING FOR NOW
                                 showLineChart();
                                 showPieChart();
                                 $('#tableInModalIncome').html(res.html);
+                                $.notify(
+                                    "Refresh to see all changes",
+                                    { globalPosition: "top left", clickToHide: true, autoHide: false, className: 'info' }
+                                );
                             },
                             error: function (err) {
                                 console.log(err)
@@ -215,6 +227,11 @@ jQueryAjaxPostDashboard = (form, tableId) => {
                     else {
                         showInPopup("/Dashboard/RecurringPayments", "Recurring payments");
                     }
+
+                    $.notify(
+                        "Refresh to see all changes",
+                        { globalPosition: "top left", clickToHide: true, autoHide: false, className: 'info' }
+                    );
                 }
                 else
                     $('#form-modal .modal-body').html(res.html);

@@ -95,8 +95,6 @@ jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
                             contentType: false,
                             processData: false,
                             success: function (res) {
-                                showLineChart();
-                                showPieChart();
                                 $('#tableInModal').html(res.html);
                                 $.notify(
                                     "Refresh to see all changes",
@@ -122,8 +120,6 @@ jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
                             contentType: false,
                             processData: false,
                             success: function (res) {
-                                showLineChart();
-                                showPieChart();
                                 $('#tableInModal').html(res.html);
                                 $.notify(
                                     "Refresh to see all changes",
@@ -175,8 +171,6 @@ jQueryAjaxDeleteIncome = form => { //SEEMS LIKE WORKING FOR NOW
                             contentType: false,
                             processData: false,
                             success: function (res) {
-                                showLineChart();
-                                showPieChart();
                                 $('#tableInModalIncome').html(res.html);
                                 $.notify(
                                     "Refresh to see all changes",
@@ -219,8 +213,6 @@ jQueryAjaxPostDashboard = (form, tableId) => {
                     $('#form-modal .modal-body').html('');
                     $('#form-modal .modal-title').html('');
                     $('#form-modal').modal('hide');
-                    showLineChart();
-                    showPieChart();
                     if (tableId == '#tableInModalIncome') {
                         showInPopup("/Dashboard/IncomeList", "Income list");
                     }

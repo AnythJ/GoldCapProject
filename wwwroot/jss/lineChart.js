@@ -106,7 +106,7 @@ function showLineChart(period) {
                             label: {
                                 connectorAllowed: false
                             },
-                            fillColor: '#2589BD',
+                            fillColor: '#0DCAF0',
                             cursor: 'pointer',
                             events: {
                                 click: function (event) {

@@ -256,8 +256,9 @@ namespace GoldCap.Controllers
 
             underCircle.SumLast30Days = sumExpenses;
             underCircle.SumBeforeLast30Days = sumExpensesLastMonth;
-            underCircle.UnderMonthAmount = underMonth;
+            underCircle.UnderMonthAmount = Math.Abs(underMonth);
             underCircle.TooltipPercentage = Decimal.Round(percentage);
+            underCircle.AdditionalString = underMonth >= 0 ? "under" : "above";
             switch (period)
             {
                 case 7:

@@ -22,6 +22,7 @@ namespace GoldCap.Models
         public string PeriodName { get; set; }
         public int TotalIncome { get; set; }
         public decimal IncomePercentage { get; set; }
+        public string AdditionalString { get; set; }
 
     }
 }

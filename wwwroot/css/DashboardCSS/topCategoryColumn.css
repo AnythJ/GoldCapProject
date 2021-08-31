@@ -9,6 +9,14 @@
     height: 360px;
     overflow-y: scroll;
 }
+
+    .topCategoryColumn thead tr {
+        max-height: 41px;
+    }
+    #tableRowId {
+        white-space: nowrap;
+    }
+
 .topCategoryColumn tbody td {
     height: 48px;
 }
@@ -23,6 +31,8 @@
         scrollbar-track-color: red;
     }
 
-    .topCategoryColumn::-webkit-scrollbar-thumb {
-        background-color: #0790ab;
-    }
+.topCategoryColumn::-webkit-scrollbar-thumb {
+    background-color: #0790ab;
+    border: 0.1px solid #0790ab;
+    border-radius: 5px;
+}

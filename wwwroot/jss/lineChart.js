@@ -1,6 +1,20 @@
 ﻿
 function showLineChart(period) {
-    $.getJSON("Dashboard/GetData/?period="+String(period), function (result) {
+    $.getJSON("Dashboard/GetData/?period=" + String(period), function (result) {
+        var periodName;
+        switch (period) {
+            case 7:
+                periodName = 'week'
+                break;
+            case 30:
+                periodName = 'month'
+                break;
+            case 365:
+                periodName = 'year'
+                break;
+            default:
+                break;
+        }
         var lineTimeStamps = [];
         var lineAmounts = [];
         var tooltipStrings = [];
@@ -87,7 +101,7 @@ function showLineChart(period) {
                             style: {
                                 color: '#9ba6b0'
                             },
-                            text: 'Day of the month'
+                            text: 'Day of the ' + periodName
                         },
                         labels: {
                             style: {

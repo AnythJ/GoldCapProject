@@ -637,7 +637,7 @@ namespace GoldCap.Controllers
                             break;
                         case 2:
                             DateTime finalDate3 = DateTime.Today;
-                            for (var i = expense.Date; i <= DateTime.Today.AddMonths(1); i = i.Value.AddMonths(1))
+                            for (var i = expense.Date; i <= DateTime.Today; i = i.Value.AddMonths(1))
                             {
                                 Expense exp = new Expense()
                                 {
@@ -657,7 +657,7 @@ namespace GoldCap.Controllers
                             break;
                         case 3:
                             DateTime finalDate4 = DateTime.Today;
-                            for (var i = expense.Date; i <= DateTime.Today.AddYears(1); i = i.Value.AddYears(1))
+                            for (var i = expense.Date; i <= DateTime.Today; i = i.Value.AddYears(1))
                             {
                                 Expense exp = new Expense()
                                 {

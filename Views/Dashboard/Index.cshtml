@@ -1,34 +1,12 @@
 ﻿@model DashboardViewModel
 
 <style>
-    body {
-        font-family: Arial;
-        background-color: #212529;
-        color: #9ba6b0;
-    }
-    /*#region old */
-
     /*#region StatCircles */
-
-    div .u-statCircle, div .c-statCircle, div.p-statCircle {
-        animation: circleShow 0.6s linear;
-    }
-
-    @@keyframes circleShow {
-        0% {
-            opacity: 0;
-        }
-
-        100% {
-            opacity: 1;
-        }
-    }
-
-
 
     .circle .u-right {
         z-index: 3;
-        transform: rotate( @Model.CirclesStats[0].PercentageStartRight);
+        transform: rotate(
+@Model.CirclesStats[0].PercentageStartRight );
     }
     @@keyframes u-left {
         100% {
@@ -71,7 +49,7 @@
         }
     }
 
-   /*TEST*/
+
     .circle .c-left .progress {
         z-index: 4;
         animation: c-left @Model.CirclesStats[1].LeftSpeed linear both;
@@ -105,115 +83,11 @@
         animation-delay: @Model.CirclesStats[2].LeftSpeed;
     }
 
-
 /*#endregion */
-
-/*#endregion */
-
-    /*#region Pills row */
-
-    .statPill {
-        background-color: #2d3339;
-        color: #9ba6b0;
-        border: 3px solid #434d56;
-        border-radius: 5px;
-        margin-right: 15px;
-        max-height: auto;
-    }
-
-        .statPill p.pillAmount {
-            font-size: 35px;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-
-        .statPill .pill-left {
-            text-align: center;
-            align-content: center;
-        }
-
-        .statPill .pill-right p {
-            margin-top: 5px;
-            margin-bottom: 5px;
-            text-align: center;
-        }
-        div.statPillButtons {
-            display: table;
-            text-align: right;
-            vertical-align: middle;
-        }
-            div.statPillButtons .btn {
-                font-size: 15px;
-                border-radius: 0;
-                border: 3px solid #434d56;
-            }
-            div.statPillButtons .btn-outline-info:not(:first-of-type) {
-                border-left: none;
-            }
-    .fa-arrow-up {
-        color: red;
-    }
-    .fa-arrow-down {
-        color: lawngreen;
-    }
-
-    /*#endregion */
-
-    /*#region AreaChart row */
-    .areaChartDiv {
-        width: 100%;
-        border: 3px solid #434d56;
-        border-radius: 5px;
-        padding: 0;
-    }
-    .areaChartCol {
-        padding: 0;
-    }
-    .pieChartDiv {
-        width: 100%;
-    }
-    /*#endregion */
-
-    /*#region Table row */
-    .percentageCol {
-        text-align: right;
-        font-weight: bold;
-    }
-
-    .stackedCircles {
-        min-width: 187px;
-        margin: auto 0;
-    }
-
-    #adviceDiv {
-        border: 3px solid #434d56;
-        border-radius: 5px;
-        background-color: #2d3339;
-        color: #9ba6b0;
-        padding: 0;
-    }
-        #adviceDiv .adviceHeader {
-            padding: 6px 0 0 10px;
-            width: 100%;
-            height: 41px;
-            font-size: 20px;
-            font-weight: bolder;
-            border-bottom: 1px solid #434d56;
-            background-color: #434d56;
-        }
-    /*#endregion */
-
-    .fa-arrow-up {
-        color: red;
-    }
-    .fa-arrow-down {
-        color: lawngreen;
-    }
 </style>
 
 @section Styles{
+    <link href="~/css/DashboardCSS/Index.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/areaChart.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/pieChart.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/underCircle.css" rel="stylesheet" />
@@ -221,6 +95,7 @@
     <link href="~/css/DashboardCSS/paycheckCircle.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/listColumn.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/topCategoryColumn.css" rel="stylesheet" />
+
     <link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
 }
 
@@ -239,7 +114,7 @@
 </head>
 
 <body>
-    <div style="height:100%;overflow-y:auto;">
+    <div class="mainDiv">
         <div class="row" style="margin:15px 0 15px 15px">
             <div class="col statPill">
                 <div class="row">
@@ -282,7 +157,7 @@
                 </div>
             </div>
             <div class="col statPillButtons">
-                @Html.ActionLink("Week", "Index", "Dashboard", new { period = 7 }, new { @class = "btn btn-outline-info btn-custom", @id = "btnWeek", @onclick="stayActive(this.id)" })
+                @Html.ActionLink("Week", "Index", "Dashboard", new { period = 7 }, new { @class = "btn btn-outline-info btn-custom", @id = "btnWeek", @onclick = "stayActive(this.id)" })
                 @Html.ActionLink("Month", "Index", "Dashboard", new { period = 30 }, new { @class = "btn btn-outline-info btn-custom", @id = "btnMonth", @onclick = "stayActive(this.id)" })
                 @Html.ActionLink("Year", "Index", "Dashboard", new { period = 365 }, new { @class = "btn btn-outline-info btn-custom", @id = "btnYear", @onclick = "stayActive(this.id)" })
                 <a onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)',
@@ -313,7 +188,7 @@
                         <p id="amountP" class="boldHeader" onmouseover="showPercentage()" data-toggle="tooltip" data-placement="top" title="@Model.CirclesStats[0].TooltipPercentage%">@Model.CirclesStats[0].SumLast30Days$</p>
                         <p>of @Model.CirclesStats[0].SumBeforeLast30Days$</p>
                         <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                        <p><small>@Model.CirclesStats[0].UnderMonthAmount$ under</small></p>
+                        <p><small>@Model.CirclesStats[0].UnderMonthAmount$ @Model.CirclesStats[0].AdditionalString</small></p>
                         <p><small>last @Model.CirclesStats[0].PeriodName</small></p>
                     </div>
                     <div class="circle">
@@ -369,35 +244,29 @@
                 </table>
             </div>
             <div class="col-2 stackedCircles">
-                    <div class="p-statCircle">
-                        <div class="smallerCircle">
-                            <p class="boldHeader">@Model.CirclesStats[2].SumLast30Days$</p>
-                            <p>
-                                of <a id="paycheckAmount">@Model.CirclesStats[2].TotalIncome$</a>
-                                <input id="paycheckInputField" type="text" hidden style="width:50px;height:18px;" />
-                                <a onclick="showInPopup('@Url.Action("IncomeList","Dashboard",new { id = 0},Context.Request.Scheme)','Income list')"><i class="fas fa-pen"></i></a>
-                            </p>
-                            <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                            <p><small>@Model.CirclesStats[2].IncomePercentage% of your</small></p>
-                            <p><small>income</small></p>
+                <div class="p-statCircle">
+                    <div class="smallerCircle">
+                        <p class="boldHeader">@Model.CirclesStats[2].SumLast30Days$</p>
+                        <p>
+                            of <a id="paycheckAmount">@Model.CirclesStats[2].TotalIncome$</a>
+                            <input id="paycheckInputField" type="text" hidden style="width:50px;height:18px;" />
+                            <a onclick="showInPopup('@Url.Action("IncomeList","Dashboard",new { id = 0},Context.Request.Scheme)','Income list')"><i class="fas fa-pen"></i></a>
+                        </p>
+                        <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
+                        <p><small>@Model.CirclesStats[2].IncomePercentage% of your</small></p>
+                        <p><small>income</small></p>
+                    </div>
+                    <div class="circle">
+                        <div class="bar p-left">
+                            <div class="progress"></div>
                         </div>
-                        <div class="circle">
-                            <div class="bar p-left">
-                                <div class="progress"></div>
-                            </div>
-                            <div class="bar p-right">
-                                <div class="progress"></div>
-                            </div>
+                        <div class="bar p-right">
+                            <div class="progress"></div>
                         </div>
                     </div>
+                </div>
             </div>
-            @*<div class="col-2" id="adviceDiv">
-                    <label class="adviceHeader">Advice</label>
-                    <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 0},Context.Request.Scheme)','New expense')">Add daily payments to make your life easier</a></p>
-                    <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 2},Context.Request.Scheme)','New expense')">Add monthly payments to make your life easier</a></p>
-                    <p><a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0, preStatus = 4},Context.Request.Scheme)','New expense')">Add your custom recurring payment</a></p>
-                    <p><a onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)','Recurring payments')" class="btn btn-success btn-sm">Recurring payments</a>
-                </div>*@
+
         </div>
 
         <div class="row" style="margin:20px 0 20px 20px;">
@@ -423,7 +292,8 @@
     } else {
         period = parseFloat(getParameterByName('period'));
     }
-    console.log(period);
+
+
     $(showLineChart(period));
     $(showPieChart(period));
     function showPercentage() {
@@ -450,7 +320,6 @@
     }
     $(document).ready(function () {
         var period = getParameterByName("period");
-        console.log(period);
         switch (parseFloat(period)) {
             case 7:
                 document.getElementById('btnWeek').classList.add("active");
@@ -464,7 +333,7 @@
             default:
                 document.getElementById('btnMonth').classList.add("active");
         }
-        
+
     });
 
     //function EditPaycheck() {

@@ -63,6 +63,10 @@ function showPieChart(period) {
                     } while (pieColors.indexOf(color) >= 0);
                     pieColors.push("#" + ("000000" + color.toString(16)).slice(-6));
                 }
+                //var base = '#0DCAF0';
+                //for (var i = 0; i < 25; i++) {
+                //    pieColors.push(Highcharts.color(base).brighten((i - 7.5) / 21).get());
+                //}
             var pieChart = Highcharts.chart('container-pie', {
                 chart: {
                     plotBackgroundColor: null,
@@ -133,17 +137,16 @@ function showPieChart(period) {
                                                     //active
                                                     row.style.backgroundColor = "#384047";
                                                     col.style.borderLeft = "10px solid " + event.point.color;
-                                                    console.log("thick solid " + event.point.color);
                                                     row.style.color = "#9ba6b0";
                                                     row.style.fontWeight = "bold";
                                                     row.setAttribute("id", "active");
                                                     finalRow = row;
-                                                    sendToList(-1, finalRow.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim(), period);
                                                     if (idElement != null) {
-                                                        sendToList(-1, finalRow.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim());
                                                         idElement.style.fontWeight = "normal";
                                                         idElement.setAttribute("id", "");
                                                     }
+
+                                                    sendToList(-1, finalRow.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim(), period);
                                                     break;
                                                     
                                                 }

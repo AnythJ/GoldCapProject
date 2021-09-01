@@ -87,5 +87,12 @@ namespace GoldCap.Controllers
 
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date)) });
         }
+
+        public IActionResult DeleteAll()
+        {
+            _expenseRepository.DeleteAllExpenses();
+
+            return RedirectToAction("index", "expenses");
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace GoldCap.Models
         List<_30daysModel> GetSumDayExpense30(int period);
         List<TooltipModel> GetTooltipList(int period);
         IEnumerable<Expense> AddExpenses(IEnumerable<Expense> expenses);
+        IEnumerable<Expense> DeleteAllExpenses();
         
 
         // Category

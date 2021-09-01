@@ -20,8 +20,7 @@ namespace GoldCap.Models
 
         public SQLExpenseRepository(AppDbContext context, IHttpContextAccessor httpContextAccessor)
         {
-            //this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
-            this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name) == "guestTest@gm.com" ? null: httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+            this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
             this.context = context;
             this.httpContextAccessor = httpContextAccessor;
         }
@@ -297,6 +296,7 @@ namespace GoldCap.Models
                 context.Expenses.AddRange(expenses);
                 context.SaveChanges();
             }
+
             return expenses;
         }
 
@@ -331,6 +331,19 @@ namespace GoldCap.Models
             context.SaveChanges();
 
             return incomeChanges;
+        }
+
+        public IEnumerable<Expense> DeleteAllExpenses()
+        {
+            var list = context.Expenses.Where(e => e.ExpenseManagerLogin == userLogin).ToList();
+
+            foreach (var item in list)
+            {
+                context.Expenses.Remove(item);
+                context.SaveChanges();
+            }
+
+            return null;
         }
     }
 }

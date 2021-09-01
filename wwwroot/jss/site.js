@@ -227,7 +227,7 @@ jQueryAjaxPostDashboard = (form, tableId) => {
                 }
                 else
                     $('#form-modal .modal-body').html(res.html);
-                if (document.getElementById('recurringSelect').value == 4) {
+                if (document.getElementById('recurringSelect') != null && document.getElementById('recurringSelect').value == 4) {
                     document.getElementById('customStatus').style.visibility = "visible";
                 }
                 

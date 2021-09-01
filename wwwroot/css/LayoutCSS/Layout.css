@@ -21,7 +21,7 @@
     width: calc(100% - 220px);
     margin-left: 220px;
     padding: 0;
-    height: 100%;
+    height: calc(100% - 61px);
 }
 
 .navUl {

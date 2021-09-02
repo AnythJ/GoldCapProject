@@ -68,7 +68,8 @@ function showLineChart(period) {
                     chart: {
                         type: 'area',
                         style: {
-                            fontFamily: 'Arial'
+                            fontFamily: 'Arial',
+                            cursor: 'crosshair',
                         },
                         backgroundColor: '#2d3339',
                     },

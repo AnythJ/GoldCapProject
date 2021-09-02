@@ -24,7 +24,7 @@ namespace GoldCap.Controllers
         {
             this.userManager = userManager;
             _expenseRepository = expenseRepository;
-            this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name) == "guestTest@gm.com" ? null : httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+            this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
         }
 
         public IActionResult Index()

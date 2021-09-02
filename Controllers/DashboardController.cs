@@ -398,11 +398,9 @@ namespace GoldCap.Controllers
             }
 
 
-
             ViewBag.AmountSortParm = sortOrder == "Amount" ? "amount_desc" : "Amount";
             ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-
 
             switch (sortOrder)
             {
@@ -504,6 +502,7 @@ namespace GoldCap.Controllers
             ViewBag.CategoryList = _expenseRepository.GetCategoryList();
             string[] weekdays = new string[7] { "Sn", "M", "T", "W", "Th", "F", "S" };
             ViewBag.Weekdays = weekdays;
+
             ExpenseRecurringViewModel model = new ExpenseRecurringViewModel();
             model.Status = preStatus;
 
@@ -522,7 +521,8 @@ namespace GoldCap.Controllers
             }
             string[] weekdays = new string[7] { "Sn", "M", "T", "W", "Th", "F", "S" };
             ViewBag.Weekdays = weekdays;
-            ExpenseRecurring expense = new ExpenseRecurring()
+            ViewBag.CategoryList = _expenseRepository.GetCategoryList();
+            ExpenseRecurring expenseRecurring = new ExpenseRecurring()
             {
                 Amount = expenseVM.Amount,
                 Category = expenseVM.Category,
@@ -533,137 +533,106 @@ namespace GoldCap.Controllers
                 WeekdaysInString = weekdaysToModel,
                 ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name)
             };
-            ViewBag.CategoryList = _expenseRepository.GetCategoryList();
+            
             if (ModelState.IsValid)
             {
-                _expenseRepository.AddRecurring(expense);
-                var lastAddedRecurring = _expenseRepository.UpdateRecurring(expense);
+                _expenseRepository.AddRecurring(expenseRecurring);
+                var lastAddedRecurring = _expenseRepository.UpdateRecurring(expenseRecurring);
+                _expenseRepository.UpdateRecurring(expenseRecurring);
 
-                _expenseRepository.UpdateRecurring(expense);
-                if (expense.Date.Value <= DateTime.Today)
+                if (expenseRecurring.Date.Value <= DateTime.Today)
                 {
                     List<Expense> list = new List<Expense>();
-                    var expDate = expense.Date;
-                    var x = lastAddedRecurring.Id;
-                    switch (expense.Status)
+                    var expDate = expenseRecurring.Date;
+                    var recurringId = lastAddedRecurring.Id;
+                    switch (expenseRecurring.Status)
                     {
                         case 0:
-                            DateTime finalDate1 = DateTime.Today;
-                            for (var i = expense.Date; i <= DateTime.Today.AddDays(1); i = i.Value.AddDays(1))
+                            DateTime nextDate0 = DateTime.Today;
+                            for (var i = expenseRecurring.Date; i <= DateTime.Today.AddDays(1); i = i.Value.AddDays(1))
                             {
-
-                                Expense exp = new Expense()
-                                {
-                                    Amount = expense.Amount,
-                                    Category = expense.Category,
-                                    Description = expense.Description,
-                                    Status = ((StatusName)expense.Status).ToString(),
-                                    Date = expDate,
-                                    StatusId = x,
-                                    ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name)
-                                };
-                                list.Add(exp);
-                                finalDate1 = exp.Date.Value;
+                                Expense expense = CreateExpenseFromRecurring(expenseRecurring, expDate.Value);
+                                expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
+                                expense.StatusId = recurringId;
+                                
+                                list.Add(expense);
+                                nextDate0 = expense.Date.Value;
                                 expDate = expDate.Value.AddDays(1);
                             }
-                            expense.Date = finalDate1.AddDays(1);
-                            _expenseRepository.UpdateRecurring(expense);
+                            expenseRecurring.Date = nextDate0.AddDays(1);
+                            _expenseRepository.UpdateRecurring(expenseRecurring);
                             break;
                         case 1:
-                            DateTime finalDate2 = DateTime.Today;
-                            for (var i = expense.Date; i <= DateTime.Today.AddDays(1); i = i.Value.AddDays(7))
+                            DateTime nextDate1 = DateTime.Today;
+                            for (var i = expenseRecurring.Date; i <= DateTime.Today.AddDays(1); i = i.Value.AddDays(7))
                             {
-                                Expense exp = new Expense()
-                                {
-                                    Amount = expense.Amount,
-                                    Category = expense.Category,
-                                    Description = expense.Description,
-                                    Status = ((StatusName)expense.Status).ToString(),
-                                    Date = expDate,
-                                    StatusId = x,
-                                    ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name)
-                                };
-                                list.Add(exp);
-                                finalDate2 = exp.Date.Value;
+                                Expense expense = CreateExpenseFromRecurring(expenseRecurring, expDate.Value);
+                                expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
+                                expense.StatusId = recurringId;
+
+                                list.Add(expense);
+                                nextDate1 = expense.Date.Value;
                                 expDate = expDate.Value.AddDays(7);
                             }
-                            expense.Date = finalDate2.AddDays(7);
-                            _expenseRepository.UpdateRecurring(expense);
+                            expenseRecurring.Date = nextDate1.AddDays(7);
+                            _expenseRepository.UpdateRecurring(expenseRecurring);
                             break;
                         case 2:
-                            DateTime finalDate3 = DateTime.Today;
-                            for (var i = expense.Date; i <= DateTime.Today; i = i.Value.AddMonths(1))
+                            DateTime nextDate2 = DateTime.Today;
+                            for (var i = expenseRecurring.Date; i <= DateTime.Today; i = i.Value.AddMonths(1))
                             {
-                                Expense exp = new Expense()
-                                {
-                                    Amount = expense.Amount,
-                                    Category = expense.Category,
-                                    Description = expense.Description,
-                                    Status = ((StatusName)expense.Status).ToString(),
-                                    Date = expDate,
-                                    StatusId = x,
-                                    ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name)
-                                };
-                                list.Add(exp);
-                                finalDate3 = exp.Date.Value;
+                                Expense expense = CreateExpenseFromRecurring(expenseRecurring, expDate.Value);
+                                expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
+                                expense.StatusId = recurringId;
+
+                                list.Add(expense);
+                                nextDate2 = expense.Date.Value;
                                 expDate = expDate.Value.AddMonths(1);
                             }
-                            expense.Date = finalDate3.AddMonths(1);
-                            _expenseRepository.UpdateRecurring(expense);
+                            expenseRecurring.Date = nextDate2.AddMonths(1);
+                            _expenseRepository.UpdateRecurring(expenseRecurring);
                             break;
                         case 3:
-                            DateTime finalDate4 = DateTime.Today;
-                            for (var i = expense.Date; i <= DateTime.Today; i = i.Value.AddYears(1))
+                            DateTime nextDate3 = DateTime.Today;
+                            for (var i = expenseRecurring.Date; i <= DateTime.Today; i = i.Value.AddYears(1))
                             {
-                                Expense exp = new Expense()
-                                {
-                                    Amount = expense.Amount,
-                                    Category = expense.Category,
-                                    Description = expense.Description,
-                                    Status = ((StatusName)expense.Status).ToString(),
-                                    Date = expDate,
-                                    StatusId = x,
-                                    ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name)
-                                };
-                                list.Add(exp);
-                                finalDate4 = exp.Date.Value;
+                                Expense expense = CreateExpenseFromRecurring(expenseRecurring, expDate.Value);
+                                expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
+                                expense.StatusId = recurringId;
+
+                                list.Add(expense);
+                                nextDate3 = expense.Date.Value;
                                 expDate = expDate.Value.AddYears(1);
                             }
-                            expense.Date = finalDate4.AddYears(1);
-                            _expenseRepository.UpdateRecurring(expense);
+                            expenseRecurring.Date = nextDate3.AddYears(1);
+                            _expenseRepository.UpdateRecurring(expenseRecurring);
                             break;
                         case 4:
-                            DateTime finalDate5 = DateTime.Today;
-                            for (var i = expense.Date; i <= DateTime.Now; i = i.Value.AddDays(7 * (int)expenseVM.HowOften))
+                            DateTime nextDate4 = DateTime.Today;
+                            for (var i = expenseRecurring.Date; i <= DateTime.Now; i = i.Value.AddDays(7 * (int)expenseVM.HowOften))
                             {
                                 for (int j = 0; j < 7; j++)
                                 {
-                                    Expense exp = new Expense()
-                                    {
-                                        Amount = expense.Amount,
-                                        Category = expense.Category,
-                                        Description = expense.Description,
-                                        Status = ((StatusName)expense.Status).ToString(),
-                                        Date = expDate,
-                                        StatusId = x,
-                                        ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name)
-                                    };
+                                    Expense expense = CreateExpenseFromRecurring(expenseRecurring, expDate.Value);
+                                    expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
+                                    expense.StatusId = recurringId;
+
                                     var d = ((int)i.Value.DayOfWeek) - j;
                                     if (expenseVM.Weekdays[j] == true && i.Value.AddDays(-d) >= expenseVM.Date && i.Value.AddDays(-d) <= DateTime.Today)
                                     {
-                                        exp.Date = exp.Date.Value.AddDays(-d);
-                                        list.Add(exp);
-                                        finalDate5 = exp.Date.Value;
+                                        expense.Date = expense.Date.Value.AddDays(-d);
+                                        list.Add(expense);
+                                        nextDate4 = expense.Date.Value;
                                     }
                                 }
                                 expDate = expDate.Value.AddDays(7 * (int)expenseVM.HowOften);
                             }
-                            int day = (int)finalDate5.DayOfWeek;
+                            int day = (int)nextDate4.DayOfWeek;
                             for (int k = day + 1; k < 7; k++)
                             {
                                 if (expenseVM.Weekdays[k] == true)
                                 {
-                                    finalDate5 = finalDate5.AddDays(k - day);
+                                    nextDate4 = nextDate4.AddDays(k - day);
                                     break;
                                 }
                                 else if (k == 6 && expenseVM.Weekdays[k] == false)
@@ -672,15 +641,15 @@ namespace GoldCap.Controllers
                                     {
                                         if (expenseVM.Weekdays[r] == true)
                                         {
-                                            finalDate5 = finalDate5.AddDays(r - day + 7);
+                                            nextDate4 = nextDate4.AddDays(r - day + 7);
                                             break;
                                         }
                                     }
 
                                 }
                             }
-                            expense.Date = finalDate5;
-                            _expenseRepository.UpdateRecurring(expense);
+                            expenseRecurring.Date = nextDate4;
+                            _expenseRepository.UpdateRecurring(expenseRecurring);
                             break;
                         default:
                             break;
@@ -702,7 +671,6 @@ namespace GoldCap.Controllers
                 var expense = _expenseRepository.GetExpense(id);
                 var model = _expenseRepository.GetAllExpenses().Where(e => (e.Date.Value.Day == expense.Date.Value.Day
                            && e.Date.Value.Month == expense.Date.Value.Month));
-
 
                 return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", model) });
             }
@@ -752,7 +720,6 @@ namespace GoldCap.Controllers
             {
                 newList.Add(item.CategoryPercentage.ToString());
             }
-
 
             DashboardDataModel data = new DashboardDataModel()
             {

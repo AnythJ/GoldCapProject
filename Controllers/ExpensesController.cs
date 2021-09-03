@@ -40,7 +40,7 @@ namespace GoldCap.Controllers
         [NoDirectAccess]
         public IActionResult CreateOrEdit(int id = 0)
         {
-            ViewBag.CategoryList = _expenseRepository.GetCategoryList();
+            ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
 
             if (id == 0)
                 return View(new Expense());
@@ -60,7 +60,7 @@ namespace GoldCap.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date,ExpenseManagerLogin")] Expense expense)
         {
-            ViewBag.CategoryList = _expenseRepository.GetCategoryList();
+            ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
             expense.ExpenseManagerLogin = userLogin;
             if (ModelState.IsValid)
             {

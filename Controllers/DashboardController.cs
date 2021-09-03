@@ -284,7 +284,7 @@ namespace GoldCap.Controllers
             else
             {
                 degreesStartRightCategory = 180;
-                degreesRightCategory = (degreesCategory - 180) == -180 ? 180 : degreesCategory - 100;
+                degreesRightCategory = (degreesCategory - 180) > 180 ? 180 : ((degreesCategory - 180) == -180 ? 180 : (degreesCategory - 180));
                 degreesLeftCategory = 180;
             }
 
@@ -310,7 +310,7 @@ namespace GoldCap.Controllers
             underCircle.RightSpeed = (0.5 - (animationProportionUnder * 0.5)).ToString(dotFormat) + "s";
 
             double sum1 = degreesLeftCategory + degreesRightCategory;
-            double animationProportionCategory = sum0 != 0 ? degreesLeftCategory / sum0 : 0.5;
+            double animationProportionCategory = sum1 != 0 ? degreesLeftCategory / sum1 : 0.5;
             cateCircle.LeftSpeed = (animationProportionCategory * 0.5).ToString(dotFormat) + "s";
             cateCircle.RightSpeed = (0.5 - (animationProportionCategory * 0.5)).ToString(dotFormat) + "s";
 
@@ -321,7 +321,7 @@ namespace GoldCap.Controllers
             #endregion
 
             List<StatCircle> circleStats = new List<StatCircle>();
-            circleStats.Add(incomeCircle);
+            circleStats.Add(underCircle);
             circleStats.Add(cateCircle);
             circleStats.Add(incomeCircle);
             #endregion
@@ -499,7 +499,7 @@ namespace GoldCap.Controllers
         [NoDirectAccess]
         public IActionResult CreateOrEdit(int id = 0, int preStatus = 0)
         {
-            ViewBag.CategoryList = _expenseRepository.GetCategoryList();
+            ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
             string[] weekdays = new string[7] { "Sn", "M", "T", "W", "Th", "F", "S" };
             ViewBag.Weekdays = weekdays;
 
@@ -521,7 +521,7 @@ namespace GoldCap.Controllers
             }
             string[] weekdays = new string[7] { "Sn", "M", "T", "W", "Th", "F", "S" };
             ViewBag.Weekdays = weekdays;
-            ViewBag.CategoryList = _expenseRepository.GetCategoryList();
+            ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
             ExpenseRecurring expenseRecurring = new ExpenseRecurring()
             {
                 Amount = expenseVM.Amount,

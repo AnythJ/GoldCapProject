@@ -1,55 +1,137 @@
 ﻿@model IEnumerable<Expense>
 
 
-@section Styles {
-    <link href="~/css/LayoutCSS/List.css" rel="stylesheet" />
-}
+
 <style>
-</style>
-<table class="table table-hover">
-    <thead class="sticky-top">
-        <tr class="align-text-top">
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th style="padding-left:20px;">
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th style="text-align:right; padding-right:30px;">
-                <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-success btn-sm">New expense</a>
-                <a asp-action="deleteall" asp-controller="expenses">Delete All</a>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category)
-                </td>
-                <td class="description">
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td style="width:220px;padding-left:20px;">
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td align="right" style="padding-right:30px;width:220px;">
-                    <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')" class="btn btn-primary btn-sm">Edit</a>
-                    <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
-                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
-                    </form>
-                </td>
-            </tr>
+
+    .modal-backdrop {
+        z-index: -1;
+    }
+
+    td.date_column, th.date_column {
+        max-width: 240px;
+    }
+
+    .tableColumn {
+        background-color: #2D3339;
+        color: #9ba6b0;
+        padding: 0;
+        border: 3px solid #434d56;
+        border-radius: 5px;
+        border-right: none;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        overflow-x: auto;
+        height: 100%;
+        width: 80%;
+        margin: 15px;
+        overflow-y: scroll;
+        float: left;
+        margin-right: 0;
+    }
+
+        .tableColumn::-webkit-scrollbar {
+            display: block;
+            width: 3px;
+            background-color: #434d56;
         }
-    </tbody>
-</table>
+
+        .tableColumn::-webkit-scrollbar-track-piece:start {
+            margin-top: 47px;
+            scrollbar-track-color: red;
+        }
+
+        .tableColumn::-webkit-scrollbar-thumb {
+            background-color: #0790ab;
+        }
+
+
+    #sortMenu {
+        border: 3px solid #434d56;
+        border-radius: 5px;
+        height: 100%;
+        border-left: none;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        width: 18%;
+        float: left;
+        margin-top: 15px;
+        margin-right: 15px;
+    }
+
+    p.sort-header {
+        background-color: #434d56;
+        color: #9ba6b0;
+        height: 48px;
+        font-size: 16px;
+        margin: 0;
+        line-height: 48px;
+        text-align: right;
+        padding-right: 15px;
+    }
+    p.sort-header span {
+        padding-right: 35px;
+    }
+</style>
+
+<link href="~/css/ExpensesCSS/table.css" rel="stylesheet" />
+
+<div id="listCol" class="table-responsive tableColumn">
+    <table class="table table-hover">
+        <thead class="sticky-top">
+            <tr class="align-text-top">
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th class="date_column">
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th class="button_column">
+                    <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-success btn-sm">New expense</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td class="descriptionTd">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td class="date_column">
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td class="button_column">
+                        <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')" class="btn btn-primary btn-sm">Edit</a>
+                        <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div id="sortMenu">
+    <p class="sort-header">
+        <span>Sort options</span>
+        <a class="btn btn-outline-info btn-sm btn-sort">Search</a>
+    </p>
+</div>
+
+
+
+
+

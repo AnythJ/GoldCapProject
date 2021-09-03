@@ -5,11 +5,11 @@
 }
 
 
+<style>
+    
+</style>
 
-@section Styles {
-    <link href="~/css/LayoutCSS/List.css" rel="stylesheet" />
-}
 
-<div id="view-all" class="table-responsive tableContainer">
+<div id="view-all" style="height: calc(100% - 31px); width: 100%;margin:0;padding:0;">
     @await Html.PartialAsync("_ViewAll", Model)
 </div>

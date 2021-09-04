@@ -29,6 +29,7 @@ namespace GoldCap.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
             var expenses = _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date);
 
             return View(expenses);
@@ -93,6 +94,53 @@ namespace GoldCap.Controllers
             _expenseRepository.DeleteAllExpenses();
 
             return RedirectToAction("index", "expenses");
+        }
+
+
+        public IActionResult Sort(string sortOrder, int id, string categoryName = null, int period = 30)
+        {
+            var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period));
+
+            if (id > 0 && sortOrder != "default")
+            {
+                var expense = _expenseRepository.GetExpense(id);
+                model = _expenseRepository.GetAllExpenses().Where(e => e.Date.Value.DayOfYear == expense.Date.Value.DayOfYear && e.Date.Value.Year == expense.Date.Value.Year);
+            }
+            else if (categoryName != null)
+            {
+                model = _expenseRepository.GetAllExpenses().Where(e => e.Category == categoryName.Split(" ")[0] && e.Date >= DateTime.Today.AddDays(-period));
+            }
+
+
+            ViewBag.AmountSortParm = sortOrder == "Amount" ? "amount_desc" : "Amount";
+            ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            switch (sortOrder)
+            {
+                case "Date":
+                    model = model.OrderBy(d => d.Date);
+                    break;
+                case "date_desc":
+                    model = model.OrderByDescending(d => d.Date);
+                    break;
+                case "Category":
+                    model = model.OrderBy(d => d.Category);
+                    break;
+                case "category_desc":
+                    model = model.OrderByDescending(d => d.Category);
+                    break;
+                case "Amount":
+                    model = model.OrderBy(d => d.Amount);
+                    break;
+                case "amount_desc":
+                    model = model.OrderByDescending(d => d.Amount);
+                    break;
+                default:
+                    model = model.OrderByDescending(d => d.Date);
+                    break;
+            }
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", model) });
         }
     }
 }

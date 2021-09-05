@@ -271,16 +271,16 @@
 <div id="sortMenu">
     <p class="sort-header">
         <span>Sort options</span>
-        <a class="btn btn-outline-info btn-sm btn-sort">Search</a>
+        <a class="btn btn-outline-info btn-sm btn-sort" onclick="sortBtn()">Search</a>
     </p>
     <div class="sort-paragraph description-section">
-        <label>Description<input type="text" placeholder="search" /></label>
+        <label>Description<input id="descriptionField" type="text" placeholder="search" /></label>
     </div>
     <div class="sort-paragraph price-section">
         <label>Price</label>
-        <input type="number" placeholder="from" /><input type="number" class="currency" placeholder="$" disabled />
+        <input id="priceFromField" type="number" placeholder="from" /><input type="number" class="currency" placeholder="$" disabled />
         <span class="priceLink"></span>
-        <input type="number" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
+        <input id="priceToField" type="number" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
     </div>
     <div class="sort-paragraph categories-section">
         <h1 class="section-name">Categories</h1>
@@ -327,7 +327,7 @@
             document.getElementById('showArrow').classList.add('fa-chevron-down');
             document.getElementById('showArrow').classList.remove('fa-chevron-up');
         }
-        
+
     };
 
     ListSort = (url, title, refresh) => {
@@ -340,6 +340,28 @@
                 $('#view-all').html(res.html);
             }
         })
+    };
+    sendToSort = (description, priceFrom, priceTo, categoriesChosen, dateFrom, dateTo) => {
+        $.ajax({
+            type: "GET",
+            data: {
+                'description': description,
+                'priceFrom': priceFrom,
+                'priceTo': priceTo,
+                'categoriesChosen': categoriesChosen,
+                'dateFrom': dateFrom,
+                'dateTo': dateTo
+            },
+            url: '/Dashboard/Sort',
+            success: function (res) {
+                $('#view-all').html(res.html);
+            }
+        })
+    };
+    function sortBtn() {
+        var description = $('descriptionField').val();
+        var priceFrom = $('priceFromField').val();
+        var priceTo = $('priceToField').val();
     };
 </script>
 

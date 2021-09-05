@@ -30,9 +30,13 @@ namespace GoldCap.Controllers
         public IActionResult Index()
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
-            var expenses = _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date);
+            ExpensesListViewModel viewModel = new ExpensesListViewModel()
+            {
+                Expenses = _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date),
+                CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList()
+            };
 
-            return View(expenses);
+            return View(viewModel);
         }
 
         // GET: Expenses/CreateOrEdit
@@ -99,6 +103,7 @@ namespace GoldCap.Controllers
 
         public IActionResult Sort(string sortOrder, int id, string categoryName = null, int period = 30)
         {
+            ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
             var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period));
 
             if (id > 0 && sortOrder != "default")

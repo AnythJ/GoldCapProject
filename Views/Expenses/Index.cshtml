@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Expense>
+﻿@model ExpensesListViewModel
 
 @{
     ViewData["Title"] = "List of Expenses";
@@ -9,7 +9,7 @@
     
 </style>
 
-
+<link href="~/css/ExpensesCSS/table.css" rel="stylesheet" />
 <div id="view-all" style="height: calc(100% - 31px); width: 100%;margin:0;padding:0;">
     @await Html.PartialAsync("_ViewAll", Model)
 </div>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Expense>
+﻿@model ExpensesListViewModel
 
 
 
@@ -69,16 +69,18 @@
         text-align: right;
         white-space: nowrap;
     }
-    p.sort-header a {
-        align-self: end;
-        margin-right: 15px;
-    }
-    p.sort-paragraph {
+
+        p.sort-header a {
+            align-self: end;
+            margin-right: 15px;
+        }
+
+    div.sort-paragraph {
         margin-top: 15px;
-        text-align: center;
         color: #9ba6b0;
     }
-    input[type=number], input[type=number]:focus {
+
+    input[type=number], input[type=number] {
         border: 1px solid #434d56;
         border-radius: 15px;
         background-color: #434d56;
@@ -90,15 +92,20 @@
         border-bottom-right-radius: 0;
         width: 80px;
     }
+        input[type=number]:focus {
+            border-color: #0DCAF0;
+        }
+
     input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
     }
-        input[type=number]::placeholder {
-            color: #9ba6b0;
-            -moz-appearance: textfield;
-        }
-    
+
+    input[type=number]::placeholder {
+        color: #9ba6b0;
+        -moz-appearance: textfield;
+    }
+
     span.priceLink {
         display: inline-block;
         height: 5px;
@@ -121,35 +128,112 @@
     }
 
 
-    #category-section {
-        list-style-type: none;
-        padding-left: 16px;
-        height: 100%;
-    }
     h1.section-name {
         font-size: 20px;
         text-align: left;
         margin-left: 10px;
     }
+
+    div.price-section {
+        text-align: center;
+    }
+
+    div.categories-section {
+        text-align: left;
+    }
+
+    #categoryList {
+        list-style-type: none;
+        padding-left: 16px;
+        margin-bottom: 0;
+    }
+
+        #categoryList li:nth-child(n+8) {
+            display: none;
+        }
+    #showMore {
+        padding-left: 16px;
+        font-size: 12px;
+        margin-top: 0;
+        cursor: pointer;
+    }
+        #showMore:hover {
+            color: #657381;
+        }
+    #showArrow {
+        cursor: pointer;
+        color: #9ba6b0;
+        font-size: 12px;
+        margin-left: 4px;
+    }
+    input.form-check-input {
+        background-color: #9ba6b0;
+    }
+        input.form-check-input:hover, input.form-check-input:checked {
+            background-color: #0DCAF0;
+            color: #9ba6b0;
+        }
+    input[type=datetime-local] {
+        border: 1px solid #434d56;
+        border-radius: 15px;
+        background-color: #434d56;
+        text-align: center;
+        outline: none;
+        margin-left: 5px;
+        color: #9ba6b0;
+        width: 200px;
+    }
+        input[type=datetime-local]:focus {
+            border-color: #0DCAF0;
+        }
+    div.date-header {
+        display: flex;
+        vertical-align: middle;
+        align-items: center;
+        height: 52px;
+    }
+    div.date-input-div {
+        text-align: center;
+        padding-left: 0;
+        padding-right: 35px;
+    }
+    #date-from {
+        margin-bottom: 5px;
+    }
+    input[type=text] {
+        border: 1px solid #434d56;
+        border-radius: 15px;
+        background-color: #434d56;
+        text-align: center;
+        outline: none;
+        margin-left: 5px;
+        color: #9ba6b0;
+    }
+        input[type=text]:focus {
+            border-color: #0DCAF0;
+        }
+    div.description-section {
+        text-align: center;
+    }
 </style>
 
-<link href="~/css/ExpensesCSS/table.css" rel="stylesheet" />
+
 
 <div id="listCol" class="table-responsive tableColumn">
     <table class="table table-hover">
         <thead class="sticky-top">
             <tr class="align-text-top">
                 <th>
-                    <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort", "Expenses", new { sortOrder = (ViewBag.AmountSortParm == null ? "Amount" : ViewBag.AmountSortParm)}, Context.Request.Scheme)','Sort')">Amount</a>
+                    <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort", "Expenses", new { sortOrder = (ViewBag.AmountSortParm == null ? "Amount" : ViewBag.AmountSortParm)}, Context.Request.Scheme)','Sort')">Amount</a>
                 </th>
                 <th>
-                    <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)},Context.Request.Scheme)','Sort')">Category</a>
+                    <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)},Context.Request.Scheme)','Sort')">Category</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Description)
+                    Description
                 </th>
                 <th class="date_column">
-                    <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
+                    <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
                 </th>
                 <th class="button_column">
                     <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-success btn-sm">New expense</a>
@@ -157,7 +241,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Expenses)
             {
                 <tr>
                     <td>
@@ -189,28 +273,74 @@
         <span>Sort options</span>
         <a class="btn btn-outline-info btn-sm btn-sort">Search</a>
     </p>
-    <p class="sort-paragraph">
+    <div class="sort-paragraph description-section">
+        <label>Description<input type="text" placeholder="search" /></label>
+    </div>
+    <div class="sort-paragraph price-section">
         <label>Price</label>
-        <input type="number" placeholder="from"/><input type="number" class="currency" placeholder="$" disabled/>
+        <input type="number" placeholder="from" /><input type="number" class="currency" placeholder="$" disabled />
         <span class="priceLink"></span>
-        <input type="number" placeholder="to"/><input type="number" class="currency" placeholder="$" disabled/>
-    </p>
-    <p class="sort-paragraph">
+        <input type="number" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
+    </div>
+    <div class="sort-paragraph categories-section">
         <h1 class="section-name">Categories</h1>
-        <ul id="category-section">
-            @foreach (var item in ViewBag.CategoryList)
+        <ul id="categoryList">
+            @for (int i = 0; i < Model.CategoriesList.Count(); i++)
             {
-            <li>
-                <input type="checkbox" />
-                <span>@item.Name</span>
-            </li>
+                <li>
+                    <div class="form-check">
+                        <label class="form-check-label">@Html.CheckBoxFor(c => c.ChosenCategories[i], new { @class = "form-check-input", @type = "checkbox" }) @Model.CategoriesList[i].Name</label>
+                    </div>
+                </li>
             }
         </ul>
-        
-    </p>
+        <span id="showMore" onclick="showMore()">Show More</span><i onclick="showMore()" id="showArrow" class="fas fa-chevron-down"></i>
+    </div>
+    <div class="sort-paragraph date-section">
+        <div class="row">
+            <div class="col date-header"><h1 class="section-name">Date</h1></div>
+            <div class="col date-input-div">
+                <input type="datetime-local" placeholder="from" id="date-from"/>
+                <input type="datetime-local" placeholder="to" id="date-to"/>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
+    function showMore() {
+        var x = $('#showMore').text();
+        var listLen = document.getElementById('categoryList').getElementsByTagName("li").length;
+        if (x == 'Show More') {
+            $('#categoryList li:hidden').slice(0, listLen).show();
+            if ($('#categoryList li').length == $('#categoryList li:visible').length) {
+                $('#showMore').innerHtml == 'Show Less';
+                document.getElementById('showMore').innerHTML = 'Show Less';
+                document.getElementById('showArrow').classList.remove('fa-chevron-down');
+                document.getElementById('showArrow').classList.add('fa-chevron-up');
+            }
+        }
+        else if (x == 'Show Less'){
+            $('#categoryList li').slice(7, listLen).hide();
+            $('#showMore').innerHtml == 'Show More';
+            document.getElementById('showMore').innerHTML = 'Show More';
+            document.getElementById('showArrow').classList.add('fa-chevron-down');
+            document.getElementById('showArrow').classList.remove('fa-chevron-up');
+        }
+        
+    };
+
+    ListSort = (url, title, refresh) => {
+        $.ajax({
+            type: "GET",
+            data: {
+            },
+            url: url,
+            success: function (res) {
+                $('#view-all').html(res.html);
+            }
+        })
+    };
 </script>
 
 

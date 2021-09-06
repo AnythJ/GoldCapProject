@@ -101,22 +101,25 @@ namespace GoldCap.Controllers
         }
 
 
-        public IActionResult Sort(string sortOrder, int id, string categoryName = null, int period = 30)
+        public JsonResult Sort(string sortOrder, ExpensesListViewModel viewModel)
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
-            var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period));
+            var model = _expenseRepository.GetAllExpenses();
 
-            if (id > 0 && sortOrder != "default")
+            if(viewModel != null)
             {
-                var expense = _expenseRepository.GetExpense(id);
-                model = _expenseRepository.GetAllExpenses().Where(e => e.Date.Value.DayOfYear == expense.Date.Value.DayOfYear && e.Date.Value.Year == expense.Date.Value.Year);
+                model = _expenseRepository.GetAllExpenses();
+                if (viewModel.SortMenu.DateFrom != null)
+                    model = model.Where(e => e.Date >= viewModel.SortMenu.DateFrom);
+                else if (viewModel.SortMenu.DateTo != null)
+                    model = model.Where(e => e.Date <= viewModel.SortMenu.DateTo);
+                else if (viewModel.SortMenu.PriceTo != 0)
+                    model = model.Where(e => e.Amount <= viewModel.SortMenu.PriceTo);
+                else if (viewModel.SortMenu.PriceFrom != 0)
+                    model = model.Where(e => e.Amount >= viewModel.SortMenu.PriceFrom);
+                else if (viewModel.SortMenu.DescriptionSearch != null)
+                    model = model.Where(e => e.Description != null).Where(e => e.Description.Contains(viewModel.SortMenu.DescriptionSearch) == true);
             }
-            else if (categoryName != null)
-            {
-                model = _expenseRepository.GetAllExpenses().Where(e => e.Category == categoryName.Split(" ")[0] && e.Date >= DateTime.Today.AddDays(-period));
-            }
-
-
             ViewBag.AmountSortParm = sortOrder == "Amount" ? "amount_desc" : "Amount";
             ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
@@ -145,7 +148,15 @@ namespace GoldCap.Controllers
                     model = model.OrderByDescending(d => d.Date);
                     break;
             }
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", model) });
+            ExpensesListViewModel expVM = new ExpensesListViewModel()
+            {
+                CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList(),
+                Expenses = model
+            };
+            ExpensesListViewModel newViewModel = viewModel;
+            newViewModel.CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList();
+            newViewModel.Expenses = model;
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", newViewModel), html2 = Helper.RenderRazorViewToString(this, "_ViewAll", newViewModel.SortMenu) });
         }
     }
 }

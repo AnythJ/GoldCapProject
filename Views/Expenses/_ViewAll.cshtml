@@ -70,9 +70,10 @@
         white-space: nowrap;
     }
 
-        p.sort-header a {
+        p.sort-header input.btn-sort {
             align-self: end;
             margin-right: 15px;
+            font-weight: normal;
         }
 
     div.sort-paragraph {
@@ -195,7 +196,8 @@
     div.date-input-div {
         text-align: center;
         padding-left: 0;
-        padding-right: 35px;
+        margin-left: 5px;
+        margin-right: 15px;
     }
     #date-from {
         margin-bottom: 5px;
@@ -269,42 +271,44 @@
 </div>
 
 <div id="sortMenu">
-    <p class="sort-header">
-        <span>Sort options</span>
-        <a class="btn btn-outline-info btn-sm btn-sort" onclick="sortBtn()">Search</a>
-    </p>
-    <div class="sort-paragraph description-section">
-        <label>Description<input id="descriptionField" type="text" placeholder="search" /></label>
-    </div>
-    <div class="sort-paragraph price-section">
-        <label>Price</label>
-        <input id="priceFromField" type="number" placeholder="from" /><input type="number" class="currency" placeholder="$" disabled />
-        <span class="priceLink"></span>
-        <input id="priceToField" type="number" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
-    </div>
-    <div class="sort-paragraph categories-section">
-        <h1 class="section-name">Categories</h1>
-        <ul id="categoryList">
-            @for (int i = 0; i < Model.CategoriesList.Count(); i++)
-            {
-                <li>
-                    <div class="form-check">
-                        <label class="form-check-label">@Html.CheckBoxFor(c => c.ChosenCategories[i], new { @class = "form-check-input", @type = "checkbox" }) @Model.CategoriesList[i].Name</label>
-                    </div>
-                </li>
-            }
-        </ul>
-        <span id="showMore" onclick="showMore()">Show More</span><i onclick="showMore()" id="showArrow" class="fas fa-chevron-down"></i>
-    </div>
-    <div class="sort-paragraph date-section">
-        <div class="row">
-            <div class="col date-header"><h1 class="section-name">Date</h1></div>
-            <div class="col date-input-div">
-                <input type="datetime-local" placeholder="from" id="date-from"/>
-                <input type="datetime-local" placeholder="to" id="date-to"/>
+    <form id="sortMenuForm" asp-action="Sort" onsubmit="return PostSort(this);" autocomplete="off">
+        <p class="sort-header">
+            <span>Sort options</span>
+            <input type="submit" value="Search" class="btn btn-outline-info btn-sm btn-sort" />
+        </p>
+        <div class="sort-paragraph description-section">
+            <label>Description<input id="descriptionField" type="text" placeholder="search" asp-for="SortMenu.DescriptionSearch" /></label>
+        </div>
+        <div class="sort-paragraph price-section">
+            <label>Price</label>
+            <input id="priceFromField" asp-for="SortMenu.PriceFrom" type="number" value="" placeholder="from" /><input type="number" class="currency" placeholder="$" disabled />
+            <span class="priceLink"></span>
+            <input id="priceToField" asp-for="SortMenu.PriceTo" type="number" value="" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
+        </div>
+        <div class="sort-paragraph categories-section">
+            <h1 class="section-name">Categories</h1>
+            <ul id="categoryList">
+                @for (int i = 0; i < Model.CategoriesList.Count(); i++)
+                {
+                    <li>
+                        <div class="form-check">
+                            <label class="form-check-label">@Html.CheckBoxFor(c => c.SortMenu.ChosenCategories[i], new { @class = "form-check-input", @type = "checkbox" }) @Model.CategoriesList[i].Name</label>
+                        </div>
+                    </li>
+                }
+            </ul>
+            <span id="showMore" onclick="showMore()">Show More</span><i onclick="showMore()" id="showArrow" class="fas fa-chevron-down"></i>
+        </div>
+        <div class="sort-paragraph date-section">
+            <div class="row">
+                <div class="col date-header"><h1 class="section-name">Date</h1></div>
+                <div class="col date-input-div">
+                    <input type="datetime-local" id="date-from" asp-for="SortMenu.DateFrom" placeholder="DD/MM/YYYY HH:DD"/>
+                    <input type="datetime-local" asp-for="SortMenu.DateTo" />
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 
 <script>
@@ -341,28 +345,36 @@
             }
         })
     };
-    sendToSort = (description, priceFrom, priceTo, categoriesChosen, dateFrom, dateTo) => {
-        $.ajax({
-            type: "GET",
-            data: {
-                'description': description,
-                'priceFrom': priceFrom,
-                'priceTo': priceTo,
-                'categoriesChosen': categoriesChosen,
-                'dateFrom': dateFrom,
-                'dateTo': dateTo
-            },
-            url: '/Dashboard/Sort',
-            success: function (res) {
-                $('#view-all').html(res.html);
-            }
-        })
-    };
-    function sortBtn() {
-        var description = $('descriptionField').val();
-        var priceFrom = $('priceFromField').val();
-        var priceTo = $('priceToField').val();
-    };
+    
+    PostSort = form => {
+        try {
+            $.ajax({
+                type: 'POST',
+                url: form.action,
+                data: new FormData(form),
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    if (res.isValid) {
+                        $('#view-all').html(res.html);
+                        $('#sortMenuForm').html(res.html2); /*HERE 06.09*/
+                    }
+                    else {
+                        $('#view-all').html(res.html);
+                    }
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            })
+            //to prevent default form submit event
+            return false;
+        } catch (ex) {
+            console.log(ex)
+        }
+    }
+
+
 </script>
 
 

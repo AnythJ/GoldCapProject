@@ -75,11 +75,20 @@
             margin-right: 15px;
             font-weight: normal;
         }
+        p.sort-header a.refresh-button {
+            margin-right: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #9ba6b0;
+        }
+            p.sort-header a.refresh-button:hover {
+                color: #0DCAF0;
+            }
 
-    div.sort-paragraph {
-        margin-top: 15px;
-        color: #9ba6b0;
-    }
+        div.sort-paragraph {
+            margin-top: 15px;
+            color: #9ba6b0;
+        }
 
     input[type=number], input[type=number] {
         border: 1px solid #434d56;
@@ -273,6 +282,9 @@
 <div id="sortMenu">
     <form id="sortMenuForm" asp-action="Sort" onsubmit="return PostSort(this);" autocomplete="off">
         <p class="sort-header">
+            <a class="refresh-button" onclick="JqueryAjaxSort('@Url.Action("Sort", "Expenses", new { sortOrder = "default", refresh = true}, Context.Request.Scheme)','Sort', true)">
+                <i class="fas fa-sync-alt"></i>
+            </a>
             <span>Sort options</span>
             <input type="submit" value="Search" class="btn btn-outline-info btn-sm btn-sort" />
         </p>
@@ -281,9 +293,9 @@
         </div>
         <div class="sort-paragraph price-section">
             <label>Price</label>
-            <input id="priceFromField" asp-for="SortMenu.PriceFrom" type="number" value="" placeholder="from" /><input type="number" class="currency" placeholder="$" disabled />
+            <input id="priceFromField" asp-for="SortMenu.PriceFrom" type="number" placeholder="from" /><input type="number" class="currency" placeholder="$" disabled />
             <span class="priceLink"></span>
-            <input id="priceToField" asp-for="SortMenu.PriceTo" type="number" value="" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
+            <input id="priceToField" asp-for="SortMenu.PriceTo" type="number" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
         </div>
         <div class="sort-paragraph categories-section">
             <h1 class="section-name">Categories</h1>

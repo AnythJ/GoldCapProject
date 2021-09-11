@@ -101,25 +101,31 @@ namespace GoldCap.Controllers
         }
 
 
-        public JsonResult Sort(string sortOrder, ExpensesListViewModel viewModel)
+        public JsonResult Sort(string sortOrder, ExpensesListViewModel viewModel, bool refresh = false)
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
             var model = _expenseRepository.GetAllExpenses();
 
-            if(viewModel != null)
+            
+            if(viewModel != null && !refresh)
             {
                 model = _expenseRepository.GetAllExpenses();
                 if (viewModel.SortMenu.DateFrom != null)
                     model = model.Where(e => e.Date >= viewModel.SortMenu.DateFrom);
-                else if (viewModel.SortMenu.DateTo != null)
+
+                if (viewModel.SortMenu.DateTo != null)
                     model = model.Where(e => e.Date <= viewModel.SortMenu.DateTo);
-                else if (viewModel.SortMenu.PriceTo != 0)
+
+                if (viewModel.SortMenu.PriceTo != 0)
                     model = model.Where(e => e.Amount <= viewModel.SortMenu.PriceTo);
-                else if (viewModel.SortMenu.PriceFrom != 0)
+
+                if (viewModel.SortMenu.PriceFrom != 0)
                     model = model.Where(e => e.Amount >= viewModel.SortMenu.PriceFrom);
-                else if (viewModel.SortMenu.DescriptionSearch != null)
+
+                if (viewModel.SortMenu.DescriptionSearch != null)
                     model = model.Where(e => e.Description != null).Where(e => e.Description.Contains(viewModel.SortMenu.DescriptionSearch) == true);
             }
+
             ViewBag.AmountSortParm = sortOrder == "Amount" ? "amount_desc" : "Amount";
             ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";

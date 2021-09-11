@@ -347,15 +347,25 @@
     };
 
     ListSort = (url, title, refresh) => {
-        $.ajax({
-            type: "GET",
-            data: {
-            },
-            url: url,
-            success: function (res) {
-                $('#view-all').html(res.html);
-            }
-        })
+        var form = document.getElementById('sortMenuForm');
+        try {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: new FormData(form),
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                        $('#view-all').html(res.html);
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            })
+            return false;
+        } catch (ex) {
+            console.log(ex)
+        }
     };
     
     PostSort = form => {
@@ -369,7 +379,8 @@
                 success: function (res) {
                     if (res.isValid) {
                         $('#view-all').html(res.html);
-                        $('#sortMenuForm').html(res.html2); /*HERE 06.09*/
+                        console.log(form);
+                       /* $('#sortMenuForm').html(res.html2); *//*HERE 06.09*/
                     }
                     else {
                         $('#view-all').html(res.html);

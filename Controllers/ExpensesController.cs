@@ -104,10 +104,12 @@ namespace GoldCap.Controllers
         public JsonResult Sort(string sortOrder, ExpensesListViewModel viewModel, bool refresh = false)
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
-            var model = _expenseRepository.GetAllExpenses();
 
-            
-            if(viewModel != null && !refresh)
+            var model = _expenseRepository.GetAllExpenses();
+            if (viewModel.Expenses != null)
+                model = viewModel.Expenses;
+
+            if (viewModel.SortMenu != null && !refresh)
             {
                 model = _expenseRepository.GetAllExpenses();
                 if (viewModel.SortMenu.DateFrom != null)
@@ -124,6 +126,22 @@ namespace GoldCap.Controllers
 
                 if (viewModel.SortMenu.DescriptionSearch != null)
                     model = model.Where(e => e.Description != null).Where(e => e.Description.Contains(viewModel.SortMenu.DescriptionSearch) == true);
+
+                if (viewModel.SortMenu.ChosenCategories.Contains(true))
+                {
+                    var cateList = _expenseRepository.GetCategoryList().Select(e => e.Name).OrderBy(c => c).ToList();
+                    List<string> categoriesList = new List<string>();
+                    var chosenCategoriesList = viewModel.SortMenu.ChosenCategories.ToList();
+                    var cateLength = chosenCategoriesList.Count();
+                    for (int i = 0; i < cateLength; i++)
+                    {
+                        if (chosenCategoriesList[i])
+                        {
+                            categoriesList.Add(cateList[i]);
+                        }
+                    }
+                    model = model.Where(e => categoriesList.Contains(e.Category));
+                }
             }
 
             ViewBag.AmountSortParm = sortOrder == "Amount" ? "amount_desc" : "Amount";
@@ -162,7 +180,7 @@ namespace GoldCap.Controllers
             ExpensesListViewModel newViewModel = viewModel;
             newViewModel.CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList();
             newViewModel.Expenses = model;
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", newViewModel), html2 = Helper.RenderRazorViewToString(this, "_ViewAll", newViewModel.SortMenu) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", newViewModel) /*html2 = Helper.RenderRazorViewToString(this, "_ViewAll", newViewModel.SortMenu)*/ });
         }
     }
 }

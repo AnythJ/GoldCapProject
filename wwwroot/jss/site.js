@@ -244,24 +244,24 @@ jQueryAjaxPostDashboard = (form, tableId) => {
 }
 
 JqueryAjaxSort = (url, title, refresh) => {
-    var activeElement = document.getElementById('active');
-    if (activeElement != null && refresh != true)
-        activeElement = activeElement.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
-    else activeElement = null;
-    var x = $('#idForSort').val();
-    $.ajax({
-        type: "GET",
-        data: {
-            'id': $('#idForSort').val(),
-            'categoryName': activeElement,
-            'period': getParameterByName("period")
-        },
-        url: url,
-        success: function (res) {
-            $('#view-all').html(res.html);
-            $('#idForSort').val(x);
-        }
-    })
+        var activeElement = document.getElementById('active');
+        if (activeElement != null && refresh != true)
+            activeElement = activeElement.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
+        else activeElement = null;
+        var x = $('#idForSort').val();
+        $.ajax({
+            type: "GET",
+            data: {
+                'id': $('#idForSort').val(),
+                'categoryName': activeElement,
+                'period': getParameterByName("period")
+            },
+            url: url,
+            success: function (res) {
+                $('#view-all').html(res.html);
+                $('#idForSort').val(x);
+            }
+        })
 };
 
 

@@ -86,11 +86,16 @@ namespace GoldCap.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(string sortOrder, int id, ExpensesListViewModel viewModel)
         {
             _expenseRepository.Delete(id);
-
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date)) });
+            ExpensesListViewModel newViewModel = new ExpensesListViewModel()
+            {
+                Expenses = _expenseRepository.GetAllExpenses().OrderByDescending(e => e.Date),
+                CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList(),
+                SortMenu = viewModel.SortMenu
+            };
+            return Sort(sortOrder, newViewModel);
         }
 
         public IActionResult DeleteAll()
@@ -180,7 +185,7 @@ namespace GoldCap.Controllers
             ExpensesListViewModel newViewModel = viewModel;
             newViewModel.CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList();
             newViewModel.Expenses = model;
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", newViewModel) /*html2 = Helper.RenderRazorViewToString(this, "_ViewAll", newViewModel.SortMenu)*/ });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", newViewModel) });
         }
     }
 }

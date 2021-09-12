@@ -57,7 +57,23 @@
         float: left;
         margin-top: 15px;
         color: #9ba6b0;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
+        #sortMenu::-webkit-scrollbar {
+            display: block;
+            width: 3px;
+            background-color: #434d56;
+        }
+
+        #sortMenu::-webkit-scrollbar-track-piece:start {
+            margin-top: 47px;
+            scrollbar-track-color: red;
+        }
+
+        #sortMenu::-webkit-scrollbar-thumb {
+            background-color: #0790ab;
+        }
 
     p.sort-header {
         background-color: #434d56;
@@ -68,6 +84,7 @@
         line-height: 48px;
         text-align: right;
         white-space: nowrap;
+        z-index: 1;
     }
 
         p.sort-header input.btn-sort {
@@ -269,9 +286,10 @@
                     </td>
                     <td class="button_column">
                         <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')" class="btn btn-primary btn-sm">Edit</a>
-                        <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+                        @*<form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDeleteSort(this)" class="d-inline">
                             <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
-                        </form>
+                        </form>*@
+                    <a class="btn btn-danger btn-sm" onclick="jQueryAjaxDeleteSort('@Url.Action("Delete","Expenses",new { sortOrder = (ViewBag.CategorySortParm == null ? "Date" : ViewBag.CategorySortParm), id = item.Id},Context.Request.Scheme)')">Delete</a>
                     </td>
                 </tr>
             }
@@ -281,7 +299,7 @@
 
 <div id="sortMenu">
     <form id="sortMenuForm" asp-action="Sort" onsubmit="return PostSort(this);" autocomplete="off">
-        <p class="sort-header">
+        <p class="sort-header sticky-top">
             <a class="refresh-button" onclick="JqueryAjaxSort('@Url.Action("Sort", "Expenses", new { sortOrder = "default", refresh = true}, Context.Request.Scheme)','Sort', true)">
                 <i class="fas fa-sync-alt"></i>
             </a>
@@ -309,7 +327,12 @@
                     </li>
                 }
             </ul>
-            <span id="showMore" onclick="showMore()">Show More</span><i onclick="showMore()" id="showArrow" class="fas fa-chevron-down"></i>
+            @if (Model.CategoriesList.Count() > 7)
+            {
+                <span id="showMore" onclick="showMore()">Show More</span><i onclick="showMore()" id="showArrow" class="fas fa-chevron-down"></i>
+            }
+            else
+            { <span id="showMore"></span>}
         </div>
         <div class="sort-paragraph date-section">
             <div class="row">
@@ -324,6 +347,13 @@
 </div>
 
 <script>
+    $(document).ready(function () {
+        if (sessionStorage.getItem('showButton') != null)
+            document.getElementById('showMore').textContent = sessionStorage.getItem('showButton');
+
+        showMore();
+    });
+
     function showMore() {
         var x = $('#showMore').text();
         var listLen = document.getElementById('categoryList').getElementsByTagName("li").length;
@@ -334,6 +364,7 @@
                 document.getElementById('showMore').innerHTML = 'Show Less';
                 document.getElementById('showArrow').classList.remove('fa-chevron-down');
                 document.getElementById('showArrow').classList.add('fa-chevron-up');
+                sessionStorage.setItem('showButton', 'Show More');
             }
         }
         else if (x == 'Show Less'){
@@ -342,6 +373,7 @@
             document.getElementById('showMore').innerHTML = 'Show More';
             document.getElementById('showArrow').classList.add('fa-chevron-down');
             document.getElementById('showArrow').classList.remove('fa-chevron-up');
+            sessionStorage.setItem('showButton', 'Show Less');
         }
 
     };
@@ -377,14 +409,7 @@
                 contentType: false,
                 processData: false,
                 success: function (res) {
-                    if (res.isValid) {
-                        $('#view-all').html(res.html);
-                        console.log(form);
-                       /* $('#sortMenuForm').html(res.html2); *//*HERE 06.09*/
-                    }
-                    else {
-                        $('#view-all').html(res.html);
-                    }
+                    $('#view-all').html(res.html);
                 },
                 error: function (err) {
                     console.log(err)
@@ -397,8 +422,35 @@
         }
     }
 
+    jQueryAjaxDeleteSort = (url) => {
+        if (confirm('Are you sure to delete this record ?')) {
+            var sortForm = document.getElementById('sortMenuForm');
+            try {
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: new FormData(sortForm),
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+                        $('#view-all').html(res.html);
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                })
+            } catch (ex) {
+                console.log(ex)
+            }
+        }
+
+        //prevent default form submit event
+        return false;
+    }
 
 </script>
 
-
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+}
 

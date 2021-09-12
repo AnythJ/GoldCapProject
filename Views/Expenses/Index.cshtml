@@ -10,6 +10,9 @@
 </style>
 
 <link href="~/css/ExpensesCSS/table.css" rel="stylesheet" />
+<head>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</head>
 <div id="view-all" style="height: calc(100% - 31px); width: 100%;margin:0;padding:0;">
     @await Html.PartialAsync("_ViewAll", Model)
 </div>

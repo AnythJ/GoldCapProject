@@ -36,13 +36,17 @@
         border-radius: 0;
     }
 
-    input[type=text], input[type=text]:focus, input[type=datetime-local], input[type=datetime-local]:focus, select, select:focus {
+    input[type=text].modalInput, input[type=text].modalInput:focus, input[type=datetime-local].modalInput, input[type=datetime-local].modalInput:focus, select.modalInput, select.modalInput:focus {
         background-color: #2d3339;
         color: #9ba6b0;
         border-color: #0DCAF0;
         border-radius: 5px;
+        margin: 0;
     }
-
+    input[type=datetime-local] {
+        margin: 0;
+        width: 100%;
+    }
     .description-textarea, .description-textarea:focus {
         background-color: #2d3339;
         color: #9ba6b0;
@@ -58,16 +62,28 @@
         border: 0.5px solid #0DCAF0;
         border-radius: 5px;
     }
+
+    select.category-select::-webkit-scrollbar {
+        display: block;
+        width: 3px;
+        background-color: #434d56;
+    }
+
+    select.category-select::-webkit-scrollbar-thumb {
+        background-color: #0790ab;
+    }
+
     div.btn-submit {
         text-align: right;
         margin-top: 15px;
     }
-    div.btn-submit .btn-outline-info {
-        font-weight: normal;
-    }
+
+        div.btn-submit .btn-outline-info {
+            font-weight: normal;
+        }
+
     
 </style>
-
 <div class="row">
     <div class="col-md-12">
         <form asp-action="CreateOrEdit" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPostSort(this, '@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.CategorySortParm == null ? "Date" : ViewBag.CategorySortParm)},Context.Request.Scheme)','Sort');" autocomplete="off">
@@ -75,21 +91,21 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Amount" class="control-label"></label>
-                <input id="amountinput" asp-for="Amount" class="form-control" />
+                <input id="amountinput" asp-for="Amount" class="form-control modalInput" />
                 <span asp-validation-for="Amount"></span>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Category" class="control-label"></label>
-                        <select class="form-control category-select" asp-for="Category" asp-items="@(new SelectList(ViewBag.CategoryList,"Name","Name"))"></select>
+                        <select class="form-control category-select modalInput" asp-for="Category" asp-items="@(new SelectList(ViewBag.CategoryList,"Name","Name"))"></select>
                         <span asp-validation-for="Category"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Date" class="control-label"></label>
-                        <input id="dateinput" asp-for="Date" class="form-control" />
+                        <input id="dateinput" asp-for="Date" class="form-control modalInput" />
                         <span asp-validation-for="Date"></span>
                     </div>
                 </div>

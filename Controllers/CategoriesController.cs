@@ -62,5 +62,31 @@ namespace GoldCap.Controllers
 
             return RedirectToAction("index");
         }
+
+        public JsonResult Sort(string sortOrder)
+        {
+            var model = _expenseRepository.GetAllCategories().Where(c => c.ExpenseManagerLogin == userLogin);
+
+            ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
+
+            switch (sortOrder)
+            {
+                case "Category":
+                    model = model.OrderBy(d => d.Name);
+                    break;
+                case "category_desc":
+                    model = model.OrderByDescending(d => d.Name);
+                    break;
+                default:
+                    break;
+            }
+
+            CategoryListViewModel viewModel = new CategoryListViewModel()
+            {
+                Category = new Category(),
+                Categories = model
+            };
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", viewModel) });
+        }
     }
 }

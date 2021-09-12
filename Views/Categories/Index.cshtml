@@ -5,42 +5,12 @@
 }
 
 
-    <link href="~/css/CategoryList.css" rel="stylesheet" />
+<style>
+</style>
 
-
-<div class="table-responsive categoryContainer">
-    <table class="table table-hover">
-        <thead class="sticky-top">
-            <tr class="align-text-top">
-                <th>
-                    @Html.DisplayNameFor(model => model.Category.Name)
-                </th>
-                <th>
-                    <form id="createform" asp-action="Create" asp-route-id="@Model.Category.Id" style="text-align:right;">
-                        <input type="hidden" asp-for="Category.Id" />
-                        <span asp-validation-for="Category.Name" style="margin-right:5px;font-size:12px;"></span>
-                        <input class="category" asp-for="Category.Name" />
-                        <input type="submit" value="Add new" class="btn btn-success btn-sm" />
-                    </form>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Categories)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td align="right">
-                        <a class="btn btn-danger btn-sm" asp-controller="Categories" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<head>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</head>
+<div id="view-all" style="height: 100%; width: 100%;margin:0;padding:0;">
+    @await Html.PartialAsync("_ViewAll", Model)
 </div>
-
-<script>
-
-</script>

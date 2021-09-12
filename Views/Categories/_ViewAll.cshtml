@@ -1,0 +1,183 @@
+﻿@model CategoryListViewModel
+
+@{
+    ViewData["Title"] = "List of Categories";
+}
+<style>
+    input[type="submit"] {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+    }
+
+    a.refreshIcon {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+    }
+
+    i.fa-plus-square:hover {
+        background-color: gray;
+    }
+
+    .modal-backdrop {
+        z-index: -1;
+        display: none;
+    }
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .descriptionTd {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 160px;
+    }
+
+    .table {
+        background-color: #2D3339;
+        color: #9ba6b0;
+    }
+
+        .table thead {
+            background-color: #434d56;
+            color: #9ba6b0;
+        }
+
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        color: white;
+    }
+
+    .table tr th, .table tr td {
+        vertical-align: middle;
+    }
+
+    .table .button_column {
+        text-align: right;
+    }
+
+    .table .refresh_button {
+        text-align: right;
+        padding-right: 30px;
+    }
+
+
+    .modal-backdrop {
+        z-index: -1;
+    }
+
+    .tableColumn {
+        background-color: #2D3339;
+        color: #9ba6b0;
+        padding: 0;
+        border: 3px solid #434d56;
+        border-radius: 5px;
+        border-right: none;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        overflow-x: hidden;
+        height: 97%;
+        width: 40%;
+        margin: 15px;
+        overflow-y: scroll;
+        float: left;
+        margin-right: 0;
+    }
+
+        .tableColumn::-webkit-scrollbar {
+            display: block;
+            width: 3px;
+            background-color: #434d56;
+        }
+
+        .tableColumn::-webkit-scrollbar-track-piece:start {
+            margin-top: 47px;
+            scrollbar-track-color: red;
+        }
+
+        .tableColumn::-webkit-scrollbar-thumb {
+            background-color: #0790ab;
+        }
+
+    input.category-input {
+        border: 1px solid #212529;
+        border-radius: 15px;
+        background-color: #212529;
+        text-align: center;
+        outline: none;
+        margin-left: 5px;
+        color: #9ba6b0;
+        margin-right: 5px;
+    }
+
+        input.category-input:focus {
+            border-color: #0DCAF0;
+        }
+
+    #submitBtn-category {
+        font-weight: normal;
+    }
+
+    a.category-label {
+        cursor: pointer;
+        text-decoration: none;
+        color: #9ba6b0;
+    }
+</style>
+
+
+<div class="table-responsive tableColumn">
+    <table class="table table-hover">
+        <thead class="sticky-top">
+            <tr class="align-text-top">
+                <th>
+                    <a class="category-label" onclick="ListSort('@Url.Action("Sort", "Categories", new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)}, Context.Request.Scheme)','Sort')">Category</a>
+                </th>
+                <th>
+                    <form id="createform" asp-action="Create" asp-route-id="@Model.Category.Id" style="text-align:right;">
+                        <input type="hidden" asp-for="Category.Id" />
+                        <span asp-validation-for="Category.Name" style="margin-right: 5px; font-size: 12px; color: #0DCAF0;"></span>
+                        <input class="category-input" asp-for="Category.Name" />
+                        <input id="submitBtn-category" type="submit" value="Add" class="btn btn-success btn-sm" />
+                    </form>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Categories)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td align="right">
+                        <a class="btn btn-danger btn-sm" asp-controller="Categories" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    ListSort = (url, refresh) => {
+        try {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    $('#view-all').html(res.html);
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            })
+            return false;
+        } catch (ex) {
+            console.log(ex)
+        }
+    };
+</script>

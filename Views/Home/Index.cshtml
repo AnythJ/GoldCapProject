@@ -1,0 +1,273 @@
+﻿@model HomeViewModel
+@inject SignInManager<ApplicationUser> signInManager;
+
+@{
+    Layout = null;
+    ViewData["Title"] = "GoldCap";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+            html::-webkit-scrollbar {
+                display: block;
+                width: 0;
+                scroll-behavior: smooth;
+            }
+
+        body {
+            font-family: Arial;
+            background-color: #212529;
+            color: #9ba6b0;
+            margin: 0;
+            padding: 0;
+            overflow: hidden scroll;
+            scroll-behavior: smooth;
+        }
+
+            body::-webkit-scrollbar {
+                display: none;
+            }
+
+        nav.navbar {
+            padding: 0;
+        }
+
+        #topNavbar.container-fluid {
+            margin: 0;
+            padding: 6px 12px;
+            justify-content: right;
+            background-color: hsl(210, 11%, 18%);
+        }
+
+        .signInButton {
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background-color: transparent;
+            border-radius: 55px;
+            display: inline-block;
+            z-index: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .signInButton:hover {
+                color: #212529;
+            }
+
+                .signInButton:hover:after {
+                    width: 100%;
+                }
+
+            .signInButton:after {
+                content: "";
+                z-index: -1;
+                position: absolute;
+                transition: all 0.3s ease;
+                left: 0;
+                top: 0;
+                width: 0;
+                height: 100%;
+                background-color: #0DCAF0;
+            }
+
+        .main {
+            width: 100%;
+            height: calc(100vh * 3);
+        }
+
+            .main section {
+                height: 100vh;
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+                align-items: center;
+                top: 0;
+                left: 0;
+                right: 0;
+                display: flex;
+            }
+
+        .first-section {
+            background-color: transparent;
+        }
+
+        .second-section {
+            background-color: hsl(210, 11%, 18%);
+        }
+
+        .section-col {
+            width: 50%;
+            height: 100vh;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            padding: 0 25vh;
+        }
+
+        p.main-description {
+            font-weight: bold;
+            font-size: 30px;
+            color: white;
+            margin: auto 0;
+        }
+
+        #goldCapText {
+            font-weight: bold;
+            font-size: 45px;
+            color: #0DCAF0;
+        }
+
+        div.first-image {
+            border: 5px solid;
+            border-color: #0DCAF0;
+            margin: 100px 200px 0 0;
+            z-index: 4;
+            position: absolute;
+            -webkit-animation: imgHoverOut 0.2s ease forwards;
+        }
+        div.first-image:hover {
+            -webkit-animation: imgHoverIn 0.2s ease forwards;
+        }
+        @@keyframes imgHoverIn {
+            from {
+                transform: translate(0, 0);
+            }
+            to {
+                transform: translate(-25px, 25px);
+                border: 2px solid #0DCAF0;
+                z-index: 6;
+            }
+        }
+        @@keyframes imgHoverOut {
+            from {
+                transform: translate(-25px, 25px);
+                border: 2px solid #0DCAF0;
+                z-index: 6;
+            }
+
+            to {
+                transform: translate(0, 0);
+            }
+        }
+        .first-image-background {
+            position: absolute;
+            margin: 100px 200px 0 0;
+            border: 5px solid #0DCAF0;
+            height: 349px;
+            width: 678px;
+            background-color: #212529;
+            z-index: 3;
+        }
+
+        div.second-image {
+            position: absolute;
+            border: 5px solid;
+            border-color: #0DCAF0;
+            margin: -100px 50px 0 0;
+            z-index: 1;
+            -webkit-animation: imgHoverOut 0.2s ease forwards;
+        }
+            div.second-image:hover {
+                -webkit-animation: imgHoverIn 0.2s ease forwards;
+            }
+
+        .second-image-background {
+            position: absolute;
+            margin: -100px 50px 0 0;
+            border: 5px solid #0DCAF0;
+            height: 349px;
+            width: 678px;
+            background-color: #212529;
+            z-index: 0;
+        }
+        div.third-image {
+            position: absolute;
+            border: 5px solid;
+            border-color: #0DCAF0;
+            margin: -200px 50px 0 0;
+            z-index: 3;
+            -webkit-animation: imgHoverOut 0.2s ease forwards;
+        }
+        div.third-image:hover {
+            -webkit-animation: imgHoverIn 0.2s ease forwards;
+        }
+        .third-image-background {
+            position: absolute;
+            margin: -200px 50px 0 0;
+            border: 5px solid #0DCAF0;
+            height: 349px;
+            width: 279px;
+            background-color: #212529;
+            z-index:2;
+        }
+
+        body.prevent-animation * {
+            animation-duration: 0s !important;
+            -webkit-animation-duration: 0s !important;
+            transition: background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
+        }
+        
+    </style>
+</head>
+<body class="prevent-animation">
+    <div class="main">
+        <nav class="navbar navbar-dark bg-dark sticky-top">
+            <div id="topNavbar" class="container-fluid">
+                <a asp-action="login" asp-controller="account" class="btn btn-outline-info signInButton">Sign in</a>
+            </div>
+        </nav>
+
+        <section class="first-section">
+            <div class="section-col">
+                <p class="main-description"><small id="goldCapText">GoldCap</small> - Make your own expenses history, manage them daily and check overall statistics. All by yourself.</p>
+            </div>
+            <div class="section-col">
+                <div id="first-image" class="first-image">
+                    <img src="~/images/dashboard.png" alt="Dashboard view" width="678" height="349" />
+                </div>
+                <div class="first-image-background">
+
+                </div>
+                <div class="second-image">
+                    <img src="~/images/list.png" alt="List view" width="678" height="349" />
+                </div>
+                <div class="second-image-background">
+
+                </div>
+                <div class="third-image">
+                    <img src="~/images/categoryList.png" alt="List view" width="279" height="349" />
+                </div>
+                <div class="third-image-background">
+
+                </div>
+            </div>
+
+        </section>
+        <section class="second-section">
+            <a>Second</a>
+        </section>
+    </div>
+
+</body>
+</html>
+<script>
+    setTimeout(function () {
+        document.body.className = "";
+    }, 500);
+</script>

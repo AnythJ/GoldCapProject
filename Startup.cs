@@ -58,7 +58,7 @@ namespace GoldCap
             app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=dashboard}/{action=index}/{id?}");
+                    template: "{controller=home}/{action=index}/{id?}");
             });
             //app.UseMvcWithDefaultRoute();
         }

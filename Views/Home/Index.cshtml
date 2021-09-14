@@ -133,97 +133,114 @@
             color: #0DCAF0;
         }
 
-        div.first-image {
-            border: 5px solid;
+        #firstImageBackground {
+            border: 3px solid;
             border-color: #0DCAF0;
             margin: 100px 200px 0 0;
-            z-index: 4;
+            z-index: 5;
             position: absolute;
+            background-color: #212529;
+        }
+
+            #firstImageBackground:hover #firstImage {
+                -webkit-animation: imgHoverIn 0.2s ease forwards;
+            }
+            #firstImageBackground:hover {
+                z-index: 10;
+            }
+        #firstImage {
+            border: 2px solid #0DCAF0;
             -webkit-animation: imgHoverOut 0.2s ease forwards;
+            position: relative;
+            z-index: 6;
         }
-        div.first-image:hover {
-            -webkit-animation: imgHoverIn 0.2s ease forwards;
+
+        #secondImageBackground {
+            border: 3px solid;
+            border-color: #0DCAF0;
+            margin: -200px 50px 0 0;
+            z-index: 3;
+            position: absolute;
+            background-color: #212529;
         }
+
+            #secondImageBackground:hover #secondImage {
+                -webkit-animation: imgHoverIn 0.2s ease forwards;
+            }
+        #secondImageBackground:hover {
+            z-index: 10;
+        }
+
+        #secondImage {
+            border: 2px solid #0DCAF0;
+            -webkit-animation: imgHoverOut 0.2s ease forwards;
+            position: relative;
+            z-index: 4;
+        }
+
+        #thirdImageBackground {
+            border: 3px solid;
+            border-color: #0DCAF0;
+            margin: -100px 50px 0 0;
+            z-index: 1;
+            position: absolute;
+            background-color: #212529;
+        }
+
+            #thirdImageBackground:hover #thirdImage {
+                -webkit-animation: imgHoverIn 0.2s ease forwards;
+            }
+            #thirdImageBackground:hover {
+                z-index: 10;
+            }
+
+        #thirdImage {
+            border: 2px solid #0DCAF0;
+            -webkit-animation: imgHoverOut 0.2s ease forwards;
+            z-index: 2;
+            position: relative;
+        }
+
         @@keyframes imgHoverIn {
             from {
                 transform: translate(0, 0);
             }
+
             to {
                 transform: translate(-25px, 25px);
                 border: 2px solid #0DCAF0;
-                z-index: 6;
+                z-index: 10;
             }
         }
+
         @@keyframes imgHoverOut {
             from {
                 transform: translate(-25px, 25px);
                 border: 2px solid #0DCAF0;
-                z-index: 6;
+                z-index: 10;
             }
 
             to {
                 transform: translate(0, 0);
             }
         }
-        .first-image-background {
-            position: absolute;
-            margin: 100px 200px 0 0;
-            border: 5px solid #0DCAF0;
-            height: 349px;
-            width: 678px;
-            background-color: #212529;
-            z-index: 3;
-        }
 
-        div.second-image {
-            position: absolute;
-            border: 5px solid;
-            border-color: #0DCAF0;
-            margin: -100px 50px 0 0;
-            z-index: 1;
-            -webkit-animation: imgHoverOut 0.2s ease forwards;
-        }
-            div.second-image:hover {
-                -webkit-animation: imgHoverIn 0.2s ease forwards;
+        @@keyframes zindexChange {
+            100% {
+                z-index: 10;
             }
+        }
 
-        .second-image-background {
-            position: absolute;
-            margin: -100px 50px 0 0;
-            border: 5px solid #0DCAF0;
-            height: 349px;
-            width: 678px;
-            background-color: #212529;
-            z-index: 0;
-        }
-        div.third-image {
-            position: absolute;
-            border: 5px solid;
-            border-color: #0DCAF0;
-            margin: -200px 50px 0 0;
-            z-index: 3;
-            -webkit-animation: imgHoverOut 0.2s ease forwards;
-        }
-        div.third-image:hover {
-            -webkit-animation: imgHoverIn 0.2s ease forwards;
-        }
-        .third-image-background {
-            position: absolute;
-            margin: -200px 50px 0 0;
-            border: 5px solid #0DCAF0;
-            height: 349px;
-            width: 279px;
-            background-color: #212529;
-            z-index:2;
-        }
+
+
 
         body.prevent-animation * {
             animation-duration: 0s !important;
             -webkit-animation-duration: 0s !important;
             transition: background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
         }
-        
     </style>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
 <body class="prevent-animation">
     <div class="main">
@@ -238,23 +255,22 @@
                 <p class="main-description"><small id="goldCapText">GoldCap</small> - Make your own expenses history, manage them daily and check overall statistics. All by yourself.</p>
             </div>
             <div class="section-col">
-                <div id="first-image" class="first-image">
-                    <img src="~/images/dashboard.png" alt="Dashboard view" width="678" height="349" />
+                <div id="firstImageBackground">
+                    <div id="firstImage">
+                        <img src="~/images/dashboard.png" alt="Dashboard view" width="678" height="349" />
+                    </div>
                 </div>
-                <div class="first-image-background">
 
+                <div id="secondImageBackground">
+                    <div id="secondImage">
+                        <img src="~/images/categoryList.png" alt="List view" width="279" height="349" />
+                    </div>
                 </div>
-                <div class="second-image">
-                    <img src="~/images/list.png" alt="List view" width="678" height="349" />
-                </div>
-                <div class="second-image-background">
 
-                </div>
-                <div class="third-image">
-                    <img src="~/images/categoryList.png" alt="List view" width="279" height="349" />
-                </div>
-                <div class="third-image-background">
-
+                <div id="thirdImageBackground">
+                    <div id="thirdImage">
+                        <img src="~/images/list.png" alt="List view" width="678" height="349" />
+                    </div>
                 </div>
             </div>
 
@@ -270,4 +286,7 @@
     setTimeout(function () {
         document.body.className = "";
     }, 500);
+
+
+
 </script>

@@ -48,6 +48,7 @@
             animation: showNavbar 0.3s ease forwards;
             animation-delay: 0.6s;
         }
+
         @@keyframes showNavbar {
             to {
                 opacity: 1;
@@ -111,12 +112,13 @@
             }
 
         .first-section {
-            background-color: transparent;
+            background-color: #212529;
         }
 
         .second-section {
             background-color: hsl(210, 11%, 18%);
         }
+
 
         .section-col {
             width: 50%;
@@ -137,11 +139,11 @@
             color: white;
             margin: auto 0;
             opacity: 0;
-
             -webkit-animation: slide-text-1 0.3s ease forwards;
             -webkit-animation-delay: 0.6s;
             animation: slide-text-1 0.3s ease forwards;
             animation-delay: 0.6s;
+            cursor: default;
         }
 
         @@keyframes slide-text-1 {
@@ -149,14 +151,13 @@
                 opacity: 1;
             }
         }
+
         a.startNow {
             margin-left: 20px;
+            margin-top: 20px;
+            min-width: 150px;
         }
-        #goldCapText {
-            font-weight: bold;
-            font-size: 45px;
-            color: #0DCAF0;
-        }
+
 
         #firstImageBackground {
             border: 3px solid;
@@ -170,19 +171,20 @@
             animation: slide1 0.3s ease forwards;
             animation-delay: 0.8s;
         }
+
         @@keyframes slide1 {
             to {
                 margin: 100px 200px 0 0;
             }
         }
-        
-            #firstImageBackground:hover #firstImage {
-                -webkit-animation: imgHoverIn 0.2s ease forwards;
-            }
 
-            #firstImageBackground:hover {
-                z-index: 10;
-            }
+        #firstImageBackground:hover #firstImage {
+            -webkit-animation: imgHoverIn 0.2s ease forwards;
+        }
+
+        #firstImageBackground:hover {
+            z-index: 10;
+        }
 
         #firstImage {
             border: 2px solid #0DCAF0;
@@ -203,18 +205,20 @@
             animation: slide2 0.3s ease forwards;
             animation-delay: 0.7s;
         }
+
         @@keyframes slide2 {
             to {
                 margin: -200px 50px 0 0;
             }
         }
-            #secondImageBackground:hover #secondImage {
-                -webkit-animation: imgHoverIn 0.2s ease forwards;
-            }
 
-            #secondImageBackground:hover {
-                z-index: 10;
-            }
+        #secondImageBackground:hover #secondImage {
+            -webkit-animation: imgHoverIn 0.2s ease forwards;
+        }
+
+        #secondImageBackground:hover {
+            z-index: 10;
+        }
 
         #secondImage {
             border: 2px solid #0DCAF0;
@@ -235,18 +239,20 @@
             animation: slide3 0.3s ease forwards;
             animation-delay: 0.6s;
         }
+
         @@keyframes slide3 {
             to {
                 margin: -100px 50px 0 0;
             }
         }
-            #thirdImageBackground:hover #thirdImage {
-                -webkit-animation: imgHoverIn 0.2s ease forwards;
-            }
 
-            #thirdImageBackground:hover {
-                z-index: 10;
-            }
+        #thirdImageBackground:hover #thirdImage {
+            -webkit-animation: imgHoverIn 0.2s ease forwards;
+        }
+
+        #thirdImageBackground:hover {
+            z-index: 10;
+        }
 
         #thirdImage {
             border: 2px solid #0DCAF0;
@@ -283,9 +289,9 @@
 
         .background-stripe-1 {
             position: absolute;
-            z-index: -2;
+            z-index: 0;
             width: 150px;
-            height: 200%;
+            height: 600%;
             background-color: hsl(210, 11%, 18%);
             transform: translate(-800px, 0) rotate(-45deg);
             opacity: 0.4;
@@ -293,9 +299,9 @@
 
         .background-stripe-2 {
             position: absolute;
-            z-index: -2;
+            z-index: 0;
             width: 150px;
-            height: 200%;
+            height: 600%;
             background-color: #434D56;
             transform: translate(-700px, 0) rotate(-45deg);
             opacity: 0.4;
@@ -303,9 +309,9 @@
 
         .background-stripe-3 {
             position: absolute;
-            z-index: -2;
+            z-index: 0;
             width: 150px;
-            height: 200%;
+            height: 600%;
             background-color: hsl(210, 11%, 18%);
             transform: translate(-500px, 0) rotate(-45deg);
             opacity: 0.4;
@@ -313,9 +319,9 @@
 
         .background-stripe-4 {
             position: absolute;
-            z-index: -2;
+            z-index: 0;
             width: 150px;
-            height: 200%;
+            height: 600%;
             background-color: #434D56;
             transform: translate(-400px, 0) rotate(-45deg);
             opacity: 0.4;
@@ -323,9 +329,9 @@
 
         .background-stripe-5 {
             position: absolute;
-            z-index: -2;
+            z-index: 0;
             width: 150px;
-            height: 200%;
+            height: 500%;
             background-color: hsl(210, 11%, 18%);
             transform: translate(500px, 0) rotate(-45deg);
             opacity: 0.4;
@@ -333,7 +339,7 @@
 
         .background-stripe-6 {
             position: absolute;
-            z-index: -1;
+            z-index: 1;
             width: 150px;
             height: 200%;
             background-color: #0DCAF0;
@@ -347,16 +353,17 @@
 
         .background-stripe-7 {
             position: absolute;
-            z-index: -2;
+            z-index: 0;
             width: 150px;
-            height: 200%;
+            height: 500%;
             background-color: hsl(210, 11%, 18%);
             transform: translate(700px, 0) rotate(-45deg);
             opacity: 0.4;
         }
+
         .background-text-1 {
             position: absolute;
-            z-index: -2;
+            z-index: 1;
             opacity: 0;
             transform: translate(-400px, -300px);
             font-size: 240px;
@@ -368,14 +375,110 @@
             animation: goldcapText 0.3s ease forwards;
             animation-delay: 0.6s;
         }
+        .animatedLetter {
+            display: inline-block;
+        }
+        .animatedLetter:hover {
+            -webkit-animation: letterHover 0.3s ease;
+            animation: letterHover 0.3s ease;
+        }
+        @@keyframes letterHover {
+            50% {
+                transform: scaleX(0.8)
+            }
+
+            70% {
+                transform: scaleX(1.2)
+            }
+
+            90% {
+                transform: scaleX(0.9)
+            }
+
+            100% {
+                transform: scaleX(1)
+            }
+        }
+
         @@keyframes goldcapText {
             100% {
                 opacity: 0.2;
             }
         }
+
         @@keyframes slide-stripe-1 {
             to {
                 transform: translate(600px, 0) rotate(-45deg);
+            }
+        }
+
+        .background-stripe2-6 {
+            position: absolute;
+            z-index: 0;
+            width: 150px;
+            height: 600%;
+            background-color: #0DCAF0;
+            transform: translate(-600px, 0) rotate(-45deg);
+            opacity: 1;
+        }
+
+        #firstImageBackground2 {
+            border: 3px solid;
+            border-color: #0DCAF0;
+            margin: 0 2000px 0 0;
+            z-index: 5;
+            position: absolute;
+            background-color: #212529;
+            -webkit-animation: slide1 0.3s ease forwards;
+            -webkit-animation-delay: 0.8s;
+            animation: slide1 0.3s ease forwards;
+            animation-delay: 0.8s;
+        }
+
+        @@keyframes slide1 {
+            to {
+                margin: 0 -200px 0 0;
+            }
+        }
+
+        #firstImageBackground2:hover #firstImage2 {
+            -webkit-animation: imgHoverIn2 0.2s ease forwards;
+        }
+
+
+        #firstImageBackground2:hover {
+            z-index: 10;
+        }
+
+        #firstImage2 {
+            border: 2px solid #0DCAF0;
+            -webkit-animation: imgHoverOut2 0.2s ease forwards;
+            position: relative;
+            z-index: 6;
+        }
+
+        @@keyframes imgHoverIn2 {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(60px, 25px) scale(1.5);
+                border: 2px solid #0DCAF0;
+                z-index: 10;
+                cursor: crosshair;
+            }
+        }
+
+        @@keyframes imgHoverOut2 {
+            from {
+                transform: translate(60px, 25px) scale(1.5);
+                border: 2px solid #0DCAF0;
+                z-index: 10;
+            }
+
+            to {
+                transform: translate(0, 0) scale(1);
             }
         }
         /*#endregion */
@@ -404,36 +507,52 @@
             <div class="background-stripe-5"></div>
             <div class="background-stripe-6"></div>
             <div class="background-stripe-7"></div>
-            <div class="background-text-1">GoldCap</div>
+            <div class="background-text-1 animatedLogoText">GoldCap</div>
             <div class="section-col">
                 <p class="main-description">
-                    <small id="goldCapText">GoldCap</small> - Make your own expenses history, manage them daily and check overall statistics. All by yourself.
+                    Make your own expenses history, manage them daily and check overall statistics. All by yourself.
                     <a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a>
                 </p>
             </div>
             <div class="section-col">
-            <div id="firstImageBackground">
-                <div id="firstImage">
-                    <img src="~/images/dashboard.png" alt="Dashboard view" width="678" height="349" />
+                <div id="firstImageBackground">
+                    <div id="firstImage">
+                        <img src="~/images/dashboard.png" alt="Dashboard view" width="678" height="349" />
+                    </div>
                 </div>
-            </div>
 
-            <div id="secondImageBackground">
-                <div id="secondImage">
-                    <img src="~/images/categoryList.png" alt="List view" width="279" height="349" />
+                <div id="secondImageBackground">
+                    <div id="secondImage">
+                        <img src="~/images/categoryList.png" alt="List view" width="279" height="349" />
+                    </div>
                 </div>
-            </div>
 
-            <div id="thirdImageBackground">
-                <div id="thirdImage">
-                    <img src="~/images/list.png" alt="List view" width="678" height="349" />
+                <div id="thirdImageBackground">
+                    <div id="thirdImage">
+                        <img src="~/images/list.png" alt="List view" width="678" height="349" />
+                    </div>
                 </div>
             </div>
-        </div>
 
         </section>
         <section class="second-section">
-            <a>Second</a>
+            <div class="background-stripe2-6"></div>
+            <div class="section-col">
+                <div id="firstImageBackground2">
+                    <div id="firstImage2">
+                        <img src="~/images/list2.png" alt="List view" width="842" height="432" />
+                    </div>
+                </div>
+            </div>
+            <div class="section-col">
+                <p id="description2" class="main-description">
+                    Gain complete control on your finances and save important informations about specific expenses.
+                </p>
+            </div>
+        </section>
+
+        <section class="third-section">
+
         </section>
     </div>
 
@@ -444,5 +563,28 @@
         document.body.className = "";
     }, 500);
 
+    function changeTextToCharacters() {
+        var sentences = $('.animatedLogoText');
 
+        sentences.each(function () {
+            var txt = $(this);
+            var newHtml = '';
+
+
+            for (i = 0; i < txt.text().length; i++) {
+                var substring = txt.text().substr(i, 1);
+
+                if (substring != " ") {
+                    newHtml += '<span class="animatedLetter">' + substring + '</span>';
+                }
+                else {
+                    newHtml += substring;
+                }
+            }
+
+            txt.html(newHtml);
+        });
+    }
+
+    changeTextToCharacters();
 </script>

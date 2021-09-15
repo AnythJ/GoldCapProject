@@ -42,6 +42,16 @@
 
         nav.navbar {
             padding: 0;
+            opacity: 0;
+            -webkit-animation: showNavbar 0.3s ease forwards;
+            -webkit-animation-delay: 0.6s;
+            animation: showNavbar 0.3s ease forwards;
+            animation-delay: 0.6s;
+        }
+        @@keyframes showNavbar {
+            to {
+                opacity: 1;
+            }
         }
 
         #topNavbar.container-fluid {
@@ -87,6 +97,7 @@
             height: calc(100vh * 3);
         }
 
+
             .main section {
                 height: 100vh;
                 width: 100%;
@@ -125,8 +136,22 @@
             font-size: 30px;
             color: white;
             margin: auto 0;
+            opacity: 0;
+
+            -webkit-animation: slide-text-1 0.3s ease forwards;
+            -webkit-animation-delay: 0.6s;
+            animation: slide-text-1 0.3s ease forwards;
+            animation-delay: 0.6s;
         }
 
+        @@keyframes slide-text-1 {
+            to {
+                opacity: 1;
+            }
+        }
+        a.startNow {
+            margin-left: 20px;
+        }
         #goldCapText {
             font-weight: bold;
             font-size: 45px;
@@ -136,18 +161,29 @@
         #firstImageBackground {
             border: 3px solid;
             border-color: #0DCAF0;
-            margin: 100px 200px 0 0;
+            margin: 100px -2000px 0 0;
             z-index: 5;
             position: absolute;
             background-color: #212529;
+            -webkit-animation: slide1 0.3s ease forwards;
+            -webkit-animation-delay: 0.8s;
+            animation: slide1 0.3s ease forwards;
+            animation-delay: 0.8s;
         }
-
+        @@keyframes slide1 {
+            to {
+                margin: 100px 200px 0 0;
+            }
+        }
+        
             #firstImageBackground:hover #firstImage {
                 -webkit-animation: imgHoverIn 0.2s ease forwards;
             }
+
             #firstImageBackground:hover {
                 z-index: 10;
             }
+
         #firstImage {
             border: 2px solid #0DCAF0;
             -webkit-animation: imgHoverOut 0.2s ease forwards;
@@ -158,18 +194,27 @@
         #secondImageBackground {
             border: 3px solid;
             border-color: #0DCAF0;
-            margin: -200px 50px 0 0;
+            margin: -200px -2000px 0 0;
             z-index: 3;
             position: absolute;
             background-color: #212529;
+            -webkit-animation: slide2 0.3s ease forwards;
+            -webkit-animation-delay: 0.7s;
+            animation: slide2 0.3s ease forwards;
+            animation-delay: 0.7s;
         }
-
+        @@keyframes slide2 {
+            to {
+                margin: -200px 50px 0 0;
+            }
+        }
             #secondImageBackground:hover #secondImage {
                 -webkit-animation: imgHoverIn 0.2s ease forwards;
             }
-        #secondImageBackground:hover {
-            z-index: 10;
-        }
+
+            #secondImageBackground:hover {
+                z-index: 10;
+            }
 
         #secondImage {
             border: 2px solid #0DCAF0;
@@ -181,15 +226,24 @@
         #thirdImageBackground {
             border: 3px solid;
             border-color: #0DCAF0;
-            margin: -100px 50px 0 0;
+            margin: -100px -2000px 0 0;
             z-index: 1;
             position: absolute;
             background-color: #212529;
+            -webkit-animation: slide3 0.3s ease forwards;
+            -webkit-animation-delay: 0.6s;
+            animation: slide3 0.3s ease forwards;
+            animation-delay: 0.6s;
         }
-
+        @@keyframes slide3 {
+            to {
+                margin: -100px 50px 0 0;
+            }
+        }
             #thirdImageBackground:hover #thirdImage {
                 -webkit-animation: imgHoverIn 0.2s ease forwards;
             }
+
             #thirdImageBackground:hover {
                 z-index: 10;
             }
@@ -225,21 +279,113 @@
             }
         }
 
-        @@keyframes zindexChange {
-            100% {
-                z-index: 10;
-            }
+        /*#region DIV STRIPES */
+
+        .background-stripe-1 {
+            position: absolute;
+            z-index: -2;
+            width: 150px;
+            height: 200%;
+            background-color: hsl(210, 11%, 18%);
+            transform: translate(-800px, 0) rotate(-45deg);
+            opacity: 0.4;
         }
 
+        .background-stripe-2 {
+            position: absolute;
+            z-index: -2;
+            width: 150px;
+            height: 200%;
+            background-color: #434D56;
+            transform: translate(-700px, 0) rotate(-45deg);
+            opacity: 0.4;
+        }
 
+        .background-stripe-3 {
+            position: absolute;
+            z-index: -2;
+            width: 150px;
+            height: 200%;
+            background-color: hsl(210, 11%, 18%);
+            transform: translate(-500px, 0) rotate(-45deg);
+            opacity: 0.4;
+        }
 
+        .background-stripe-4 {
+            position: absolute;
+            z-index: -2;
+            width: 150px;
+            height: 200%;
+            background-color: #434D56;
+            transform: translate(-400px, 0) rotate(-45deg);
+            opacity: 0.4;
+        }
 
+        .background-stripe-5 {
+            position: absolute;
+            z-index: -2;
+            width: 150px;
+            height: 200%;
+            background-color: hsl(210, 11%, 18%);
+            transform: translate(500px, 0) rotate(-45deg);
+            opacity: 0.4;
+        }
+
+        .background-stripe-6 {
+            position: absolute;
+            z-index: -1;
+            width: 150px;
+            height: 200%;
+            background-color: #0DCAF0;
+            transform: translate(1600px, 0) rotate(-45deg);
+            opacity: 1;
+            -webkit-animation: slide-stripe-1 0.3s ease forwards;
+            -webkit-animation-delay: 0.6s;
+            animation: slide-stripe-1 0.3s ease forwards;
+            animation-delay: 0.6s;
+        }
+
+        .background-stripe-7 {
+            position: absolute;
+            z-index: -2;
+            width: 150px;
+            height: 200%;
+            background-color: hsl(210, 11%, 18%);
+            transform: translate(700px, 0) rotate(-45deg);
+            opacity: 0.4;
+        }
+        .background-text-1 {
+            position: absolute;
+            z-index: -2;
+            opacity: 0;
+            transform: translate(-400px, -300px);
+            font-size: 240px;
+            font-weight: bold;
+            line-height: 240px;
+            color: white;
+            -webkit-animation: goldcapText 0.3s ease forwards;
+            -webkit-animation-delay: 0.6s;
+            animation: goldcapText 0.3s ease forwards;
+            animation-delay: 0.6s;
+        }
+        @@keyframes goldcapText {
+            100% {
+                opacity: 0.2;
+            }
+        }
+        @@keyframes slide-stripe-1 {
+            to {
+                transform: translate(600px, 0) rotate(-45deg);
+            }
+        }
+        /*#endregion */
         body.prevent-animation * {
             animation-duration: 0s !important;
             -webkit-animation-duration: 0s !important;
             transition: background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
         }
     </style>
+
     <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
 <body class="prevent-animation">
@@ -251,28 +397,39 @@
         </nav>
 
         <section class="first-section">
+            <div class="background-stripe-1"></div>
+            <div class="background-stripe-2"></div>
+            <div class="background-stripe-3"></div>
+            <div class="background-stripe-4"></div>
+            <div class="background-stripe-5"></div>
+            <div class="background-stripe-6"></div>
+            <div class="background-stripe-7"></div>
+            <div class="background-text-1">GoldCap</div>
             <div class="section-col">
-                <p class="main-description"><small id="goldCapText">GoldCap</small> - Make your own expenses history, manage them daily and check overall statistics. All by yourself.</p>
+                <p class="main-description">
+                    <small id="goldCapText">GoldCap</small> - Make your own expenses history, manage them daily and check overall statistics. All by yourself.
+                    <a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a>
+                </p>
             </div>
             <div class="section-col">
-                <div id="firstImageBackground">
-                    <div id="firstImage">
-                        <img src="~/images/dashboard.png" alt="Dashboard view" width="678" height="349" />
-                    </div>
-                </div>
-
-                <div id="secondImageBackground">
-                    <div id="secondImage">
-                        <img src="~/images/categoryList.png" alt="List view" width="279" height="349" />
-                    </div>
-                </div>
-
-                <div id="thirdImageBackground">
-                    <div id="thirdImage">
-                        <img src="~/images/list.png" alt="List view" width="678" height="349" />
-                    </div>
+            <div id="firstImageBackground">
+                <div id="firstImage">
+                    <img src="~/images/dashboard.png" alt="Dashboard view" width="678" height="349" />
                 </div>
             </div>
+
+            <div id="secondImageBackground">
+                <div id="secondImage">
+                    <img src="~/images/categoryList.png" alt="List view" width="279" height="349" />
+                </div>
+            </div>
+
+            <div id="thirdImageBackground">
+                <div id="thirdImage">
+                    <img src="~/images/list.png" alt="List view" width="678" height="349" />
+                </div>
+            </div>
+        </div>
 
         </section>
         <section class="second-section">
@@ -286,7 +443,6 @@
     setTimeout(function () {
         document.body.className = "";
     }, 500);
-
 
 
 </script>

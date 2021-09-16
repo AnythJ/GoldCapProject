@@ -130,7 +130,7 @@
             left: 0;
             right: 0;
             display: flex;
-            padding: 0 25vh;
+            padding: 15vh;
         }
 
         p.main-description {
@@ -154,7 +154,6 @@
 
         a.startNow {
             margin-left: 20px;
-            margin-top: 20px;
             min-width: 150px;
         }
 
@@ -375,13 +374,16 @@
             animation: goldcapText 0.3s ease forwards;
             animation-delay: 0.6s;
         }
+
         .animatedLetter {
             display: inline-block;
         }
-        .animatedLetter:hover {
-            -webkit-animation: letterHover 0.3s ease;
-            animation: letterHover 0.3s ease;
-        }
+
+            .animatedLetter:hover {
+                -webkit-animation: letterHover 0.3s ease;
+                animation: letterHover 0.3s ease;
+            }
+
         @@keyframes letterHover {
             50% {
                 transform: scaleX(0.8)
@@ -426,16 +428,12 @@
             border: 3px solid;
             border-color: #0DCAF0;
             margin: 0 2000px 0 0;
-            z-index: 5;
+            z-index: 2;
             position: absolute;
             background-color: #212529;
-            -webkit-animation: slide1 0.3s ease forwards;
-            -webkit-animation-delay: 0.8s;
-            animation: slide1 0.3s ease forwards;
-            animation-delay: 0.8s;
         }
 
-        @@keyframes slide1 {
+        @@keyframes slide2-1 {
             to {
                 margin: 0 -200px 0 0;
             }
@@ -454,7 +452,7 @@
             border: 2px solid #0DCAF0;
             -webkit-animation: imgHoverOut2 0.2s ease forwards;
             position: relative;
-            z-index: 6;
+            z-index: 2;
         }
 
         @@keyframes imgHoverIn2 {
@@ -481,6 +479,86 @@
                 transform: translate(0, 0) scale(1);
             }
         }
+
+        
+
+        #secondImageBackground2 {
+            border: 3px solid;
+            border-color: #0DCAF0;
+            margin: -100px 2000px 0 0;
+            z-index: 1;
+            position: absolute;
+            background-color: #212529;
+        }
+
+        @@keyframes slide2-2 {
+            to {
+                margin: -100px -100px 0 0;
+            }
+        }
+
+        #secondImageBackground2:hover #secondImage2 {
+            -webkit-animation: imgHoverIn3 0.2s ease forwards;
+        }
+
+
+        #secondImageBackground2:hover {
+            z-index: 10;
+        }
+
+        #secondImage2 {
+            border: 2px solid #0DCAF0;
+            -webkit-animation: imgHoverOut3 0.2s ease forwards;
+            position: relative;
+            z-index: 1;
+        }
+        @@keyframes imgHoverIn3 {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(110px, 25px) scale(1.5);
+                border: 2px solid #0DCAF0;
+                z-index: 10;
+                cursor: crosshair;
+            }
+        }
+
+        @@keyframes imgHoverOut3 {
+            from {
+                transform: translate(110px, 25px) scale(1.5);
+                border: 2px solid #0DCAF0;
+                z-index: 10;
+            }
+
+            to {
+                transform: translate(0, 0) scale(1);
+            }
+        }
+        p.main-description-2 {
+            font-weight: bold;
+            font-size: 30px;
+            color: white;
+            margin: auto 0;
+            opacity: 0;
+            /*-webkit-animation: slide-text2-1 0.3s ease forwards;
+            -webkit-animation-delay: 0.6s;
+            animation: slide-text2-1 0.3s ease forwards;
+            animation-delay: 0.6s;*/
+            cursor: default;
+        }
+
+        @@keyframes slide-text2-1 {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .stop-scrolling {
+            height: 100%;
+            overflow: hidden;
+        }
         /*#endregion */
         body.prevent-animation * {
             animation-duration: 0s !important;
@@ -499,7 +577,7 @@
             </div>
         </nav>
 
-        <section class="first-section">
+        <section id="firstSection" class="first-section">
             <div class="background-stripe-1"></div>
             <div class="background-stripe-2"></div>
             <div class="background-stripe-3"></div>
@@ -543,16 +621,21 @@
                         <img src="~/images/list2.png" alt="List view" width="842" height="432" />
                     </div>
                 </div>
+                <div id="secondImageBackground2">
+                    <div id="secondImage2">
+                        <img src="~/images/dashboard.png" width="842" height="432" />
+                    </div>
+                </div>
+
             </div>
             <div class="section-col">
-                <p id="description2" class="main-description">
+                <p id="description2" class="main-description-2">
                     Gain complete control on your finances and save important informations about specific expenses.
                 </p>
             </div>
         </section>
 
         <section class="third-section">
-
         </section>
     </div>
 
@@ -587,4 +670,48 @@
     }
 
     changeTextToCharacters();
+
+    function addAnimation() {
+        document.getElementById('firstImageBackground2').style.animation = "slide2-1 0.3s ease forwards";
+        document.getElementById('firstImageBackground2').style.animationDelay = "0.6s";
+        document.getElementById('firstImageBackground2').style.webkitAnimation = "slide2-1 0.3s ease forwards";
+        document.getElementById('firstImageBackground2').style.webkitAnimationDelay = "0.6s";
+
+        document.getElementById('description2').style.animation = "slide-text2-1 0.3s ease forwards";
+        document.getElementById('description2').style.animationDelay = "0.6s";
+        document.getElementById('description2').style.webkitAnimation = "slide-text2-1 0.3s ease forwards";
+        document.getElementById('description2').style.webkitAnimationDelay = "0.6s";
+
+        document.getElementById('secondImageBackground2').style.animation = "slide2-2 0.3s ease forwards";
+        document.getElementById('secondImageBackground2').style.animationDelay = "0.7s";
+        document.getElementById('secondImageBackground2').style.webkitAnimation = "slide2-2 0.3s ease forwards";
+        document.getElementById('secondImageBackground2').style.webkitAnimationDelay = "0.7s";
+
+    }
+    var loadedImg = false;
+    $(window).scroll(function () {
+
+        if (scrollY >= 400 && scrollY < 1900 && loadedImg == false) {
+            addAnimation();
+            loadedImg = true;
+        }
+    
+    });
+    if (scrollY >= 400 && scrollY < 1900) {
+        addAnimation();
+        loadedImg = true;
+    }
+
+    /*$('body').addClass('stop-scrolling');*/
+    //window.addEventListener('wheel', function (event) {
+    //    var vh = document.getElementById("firstSection").clientHeight;
+    //    console.log(vh);
+    //    if (event.deltaY > 0) {
+    //        window.scrollBy(0, vh/3);
+    //    }
+    //    else if (event.deltaY < 0) {
+    //        window.scrollBy(0, -vh/3);
+    //    }
+    //});
+
 </script>

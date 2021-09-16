@@ -1,0 +1,603 @@
+﻿html {
+    scroll-behavior: smooth;
+}
+
+    html::-webkit-scrollbar {
+        display: block;
+        width: 0;
+        scroll-behavior: smooth;
+    }
+
+body {
+    font-family: Arial;
+    background-color: #212529;
+    color: #9ba6b0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden scroll;
+    scroll-behavior: smooth;
+}
+
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
+nav.navbar {
+    padding: 0;
+    opacity: 0;
+    -webkit-animation: showNavbar 0.3s ease forwards;
+    -webkit-animation-delay: 0.6s;
+    animation: showNavbar 0.3s ease forwards;
+    animation-delay: 0.6s;
+}
+
+@keyframes showNavbar {
+    to {
+        opacity: 1;
+    }
+}
+
+#topNavbar.container-fluid {
+    margin: 0;
+    padding: 6px 12px;
+    justify-content: right;
+    background-color: hsl(210, 11%, 18%);
+}
+
+.signInButton {
+    font-weight: bold;
+    transition: all 0.3s ease;
+    background-color: transparent;
+    border-radius: 55px;
+    display: inline-block;
+    z-index: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+    .signInButton:hover {
+        color: #212529;
+    }
+
+        .signInButton:hover:after {
+            width: 100%;
+        }
+
+    .signInButton:after {
+        content: "";
+        z-index: -1;
+        position: absolute;
+        transition: all 0.3s ease;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 100%;
+        background-color: #0DCAF0;
+    }
+
+.main {
+    width: 100%;
+    height: 230vh;
+}
+
+
+    .main section.first-section, .main section.second-section {
+        height: 100vh;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+    }
+
+.first-section {
+    background-color: #212529;
+}
+
+.second-section {
+    background-color: hsl(210, 11%, 18%);
+}
+
+section.third-section {
+    height: 30vh;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    background-color: #212529;
+    position: relative;
+    z-index: 10;
+}
+
+.fourth-section {
+    height: 15vh;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    position: relative;
+    z-index: 3;
+    background-color: hsl(210, 11%, 18%);
+}
+
+.section-col {
+    width: 50%;
+    height: 100vh;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    padding: 15vh;
+}
+
+p.main-description {
+    font-weight: bold;
+    font-size: 30px;
+    color: white;
+    margin: auto 0;
+    opacity: 0;
+    -webkit-animation: slide-text-1 0.3s ease forwards;
+    -webkit-animation-delay: 0.6s;
+    animation: slide-text-1 0.3s ease forwards;
+    animation-delay: 0.6s;
+    cursor: default;
+}
+
+@keyframes slide-text-1 {
+    to {
+        opacity: 1;
+    }
+}
+
+a.startNow {
+    margin-left: 20px;
+    min-width: 150px;
+}
+
+
+#firstImageBackground {
+    border: 3px solid;
+    border-color: #0DCAF0;
+    margin: 100px -2000px 0 0;
+    z-index: 5;
+    position: absolute;
+    background-color: #212529;
+    -webkit-animation: slide1 0.3s ease forwards;
+    -webkit-animation-delay: 0.8s;
+    animation: slide1 0.3s ease forwards;
+    animation-delay: 0.8s;
+}
+
+@keyframes slide1 {
+    to {
+        margin: 100px 200px 0 0;
+    }
+}
+
+#firstImageBackground:hover #firstImage {
+    -webkit-animation: imgHoverIn 0.2s ease forwards;
+}
+
+#firstImageBackground:hover {
+    z-index: 10;
+}
+
+#firstImage {
+    border: 2px solid #0DCAF0;
+    -webkit-animation: imgHoverOut 0.2s ease forwards;
+    position: relative;
+    z-index: 6;
+}
+
+#secondImageBackground {
+    border: 3px solid;
+    border-color: #0DCAF0;
+    margin: -200px -2000px 0 0;
+    z-index: 3;
+    position: absolute;
+    background-color: #212529;
+    -webkit-animation: slide2 0.3s ease forwards;
+    -webkit-animation-delay: 0.7s;
+    animation: slide2 0.3s ease forwards;
+    animation-delay: 0.7s;
+}
+
+@keyframes slide2 {
+    to {
+        margin: -200px 50px 0 0;
+    }
+}
+
+#secondImageBackground:hover #secondImage {
+    -webkit-animation: imgHoverIn 0.2s ease forwards;
+}
+
+#secondImageBackground:hover {
+    z-index: 10;
+}
+
+#secondImage {
+    border: 2px solid #0DCAF0;
+    -webkit-animation: imgHoverOut 0.2s ease forwards;
+    position: relative;
+    z-index: 4;
+}
+
+#thirdImageBackground {
+    border: 3px solid;
+    border-color: #0DCAF0;
+    margin: -100px -2000px 0 0;
+    z-index: 1;
+    position: absolute;
+    background-color: #212529;
+    -webkit-animation: slide3 0.3s ease forwards;
+    -webkit-animation-delay: 0.6s;
+    animation: slide3 0.3s ease forwards;
+    animation-delay: 0.6s;
+}
+
+@keyframes slide3 {
+    to {
+        margin: -100px 50px 0 0;
+    }
+}
+
+#thirdImageBackground:hover #thirdImage {
+    -webkit-animation: imgHoverIn 0.2s ease forwards;
+}
+
+#thirdImageBackground:hover {
+    z-index: 10;
+}
+
+#thirdImage {
+    border: 2px solid #0DCAF0;
+    -webkit-animation: imgHoverOut 0.2s ease forwards;
+    z-index: 2;
+    position: relative;
+}
+
+@keyframes imgHoverIn {
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(-25px, 25px);
+        border: 2px solid #0DCAF0;
+        z-index: 10;
+    }
+}
+
+@keyframes imgHoverOut {
+    from {
+        transform: translate(-25px, 25px);
+        border: 2px solid #0DCAF0;
+        z-index: 10;
+    }
+
+    to {
+        transform: translate(0, 0);
+    }
+}
+
+
+.background-stripe-1 {
+    position: absolute;
+    z-index: 0;
+    width: 150px;
+    height: 490%;
+    background-color: hsl(210, 11%, 18%);
+    transform: translate(-800px, 0) rotate(-45deg);
+    opacity: 0.4;
+}
+
+.background-stripe-2 {
+    position: absolute;
+    z-index: 0;
+    width: 150px;
+    height: 490%;
+    background-color: #434D56;
+    transform: translate(-700px, 0) rotate(-45deg);
+    opacity: 0.4;
+}
+
+.background-stripe-3 {
+    position: absolute;
+    z-index: 0;
+    width: 150px;
+    height: 490%;
+    background-color: hsl(210, 11%, 18%);
+    transform: translate(-500px, 0) rotate(-45deg);
+    opacity: 0.4;
+}
+
+.background-stripe-4 {
+    position: absolute;
+    z-index: 0;
+    width: 150px;
+    height: 490%;
+    background-color: #434D56;
+    transform: translate(-400px, 0) rotate(-45deg);
+    opacity: 0.4;
+}
+
+.background-stripe-5 {
+    position: absolute;
+    z-index: 0;
+    width: 150px;
+    height: 500%;
+    background-color: hsl(210, 11%, 18%);
+    transform: translate(500px, 0) rotate(-45deg);
+    opacity: 0.4;
+}
+
+.background-stripe-6 {
+    position: absolute;
+    z-index: 1;
+    width: 150px;
+    height: 200%;
+    background-color: #0DCAF0;
+    transform: translate(1600px, 0) rotate(-45deg);
+    opacity: 1;
+    -webkit-animation: slide-stripe-1 0.3s ease forwards;
+    -webkit-animation-delay: 0.6s;
+    animation: slide-stripe-1 0.3s ease forwards;
+    animation-delay: 0.6s;
+}
+
+.background-stripe-7 {
+    position: absolute;
+    z-index: 0;
+    width: 150px;
+    height: 500%;
+    background-color: hsl(210, 11%, 18%);
+    transform: translate(700px, 0) rotate(-45deg);
+    opacity: 0.4;
+}
+
+.background-text-1 {
+    position: absolute;
+    z-index: 1;
+    opacity: 0;
+    transform: translate(-400px, -300px);
+    font-size: 240px;
+    font-weight: bold;
+    line-height: 240px;
+    color: white;
+    -webkit-animation: goldcapText 0.3s ease forwards;
+    -webkit-animation-delay: 0.6s;
+    animation: goldcapText 0.3s ease forwards;
+    animation-delay: 0.6s;
+}
+
+.animatedLetter {
+    display: inline-block;
+}
+
+    .animatedLetter:hover {
+        -webkit-animation: letterHover 0.3s ease;
+        animation: letterHover 0.3s ease;
+    }
+
+@keyframes letterHover {
+    50% {
+        transform: scaleX(0.8)
+    }
+
+    70% {
+        transform: scaleX(1.2)
+    }
+
+    90% {
+        transform: scaleX(0.9)
+    }
+
+    100% {
+        transform: scaleX(1)
+    }
+}
+
+@keyframes goldcapText {
+    100% {
+        opacity: 0.2;
+    }
+}
+
+@keyframes slide-stripe-1 {
+    to {
+        transform: translate(600px, 0) rotate(-45deg);
+    }
+}
+
+.background-stripe2-6 {
+    position: absolute;
+    z-index: 1;
+    width: 150px;
+    height: 200%;
+    background-color: #0DCAF0;
+    transform: translate(-600px, 0) rotate(-45deg);
+    opacity: 1;
+}
+
+#firstImageBackground2 {
+    border: 3px solid;
+    border-color: #0DCAF0;
+    margin: 0 2000px 0 0;
+    z-index: 2;
+    position: absolute;
+    background-color: #212529;
+}
+
+@keyframes slide2-1 {
+    to {
+        margin: 0 -200px 0 0;
+    }
+}
+
+#firstImageBackground2:hover #firstImage2 {
+    -webkit-animation: imgHoverIn2 0.2s ease forwards;
+}
+
+
+#firstImageBackground2:hover {
+    z-index: 10;
+}
+
+#firstImage2 {
+    border: 2px solid #0DCAF0;
+    -webkit-animation: imgHoverOut2 0.2s ease forwards;
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes imgHoverIn2 {
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(60px, 25px) scale(1.5);
+        border: 2px solid #0DCAF0;
+        z-index: 10;
+        cursor: crosshair;
+    }
+}
+
+@keyframes imgHoverOut2 {
+    from {
+        transform: translate(60px, 25px) scale(1.5);
+        border: 2px solid #0DCAF0;
+        z-index: 10;
+    }
+
+    to {
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+
+
+#secondImageBackground2 {
+    border: 3px solid;
+    border-color: #0DCAF0;
+    margin: -100px 2000px 0 0;
+    z-index: 1;
+    position: absolute;
+    background-color: #212529;
+}
+
+@keyframes slide2-2 {
+    to {
+        margin: -100px -100px 0 0;
+    }
+}
+
+#secondImageBackground2:hover #secondImage2 {
+    -webkit-animation: imgHoverIn3 0.2s ease forwards;
+}
+
+
+#secondImageBackground2:hover {
+    z-index: 10;
+}
+
+#secondImage2 {
+    border: 2px solid #0DCAF0;
+    -webkit-animation: imgHoverOut3 0.2s ease forwards;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes imgHoverIn3 {
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(110px, 25px) scale(1.5);
+        border: 2px solid #0DCAF0;
+        z-index: 10;
+        cursor: crosshair;
+    }
+}
+
+@keyframes imgHoverOut3 {
+    from {
+        transform: translate(110px, 25px) scale(1.5);
+        border: 2px solid #0DCAF0;
+        z-index: 10;
+    }
+
+    to {
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+p.main-description-2 {
+    font-weight: bold;
+    font-size: 30px;
+    color: white;
+    margin: auto 0;
+    opacity: 0;
+    cursor: default;
+}
+
+@keyframes slide-text2-1 {
+    to {
+        opacity: 1;
+    }
+}
+
+.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+}
+
+#avatarBG {
+    border: 3px solid #0DCAF0;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    margin: 0 25px;
+    opacity: 0;
+}
+@keyframes footerOpacity {
+    to {
+        opacity: 1;
+    }
+}
+
+#githubIcon {
+    color: white;
+    font-size: 50px;
+    border: 1px solid #0DCAF0;
+    border-radius: 50%;
+    text-decoration: none;
+    opacity: 0;
+}
+
+    #githubIcon:hover {
+        color: hsl(210, 11%, 18%);
+        background-color: white;
+    }
+
+body.prevent-animation * {
+    animation-duration: 0s !important;
+    -webkit-animation-duration: 0s !important;
+    transition: background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
+}

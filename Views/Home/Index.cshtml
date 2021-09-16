@@ -95,11 +95,11 @@
 
         .main {
             width: 100%;
-            height: calc(100vh * 3);
+            height: 230vh;
         }
 
 
-            .main section {
+            .main section.first-section, .main section.second-section {
                 height: 100vh;
                 width: 100%;
                 justify-content: center;
@@ -118,7 +118,34 @@
         .second-section {
             background-color: hsl(210, 11%, 18%);
         }
-
+        section.third-section {
+            height: 30vh;
+            width: 100%;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            background-color: #212529;
+            position: relative;
+            z-index: 10;
+        }
+        .fourth-section {
+            height: 15vh;
+            width: 100%;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            position: relative;
+            z-index: 3;
+            background-color: hsl(210, 11%, 18%);
+        }
 
         .section-col {
             width: 50%;
@@ -290,7 +317,7 @@
             position: absolute;
             z-index: 0;
             width: 150px;
-            height: 600%;
+            height: 490%;
             background-color: hsl(210, 11%, 18%);
             transform: translate(-800px, 0) rotate(-45deg);
             opacity: 0.4;
@@ -300,7 +327,7 @@
             position: absolute;
             z-index: 0;
             width: 150px;
-            height: 600%;
+            height: 490%;
             background-color: #434D56;
             transform: translate(-700px, 0) rotate(-45deg);
             opacity: 0.4;
@@ -310,7 +337,7 @@
             position: absolute;
             z-index: 0;
             width: 150px;
-            height: 600%;
+            height: 490%;
             background-color: hsl(210, 11%, 18%);
             transform: translate(-500px, 0) rotate(-45deg);
             opacity: 0.4;
@@ -320,7 +347,7 @@
             position: absolute;
             z-index: 0;
             width: 150px;
-            height: 600%;
+            height: 490%;
             background-color: #434D56;
             transform: translate(-400px, 0) rotate(-45deg);
             opacity: 0.4;
@@ -416,9 +443,9 @@
 
         .background-stripe2-6 {
             position: absolute;
-            z-index: 0;
+            z-index: 1;
             width: 150px;
-            height: 600%;
+            height: 200%;
             background-color: #0DCAF0;
             transform: translate(-600px, 0) rotate(-45deg);
             opacity: 1;
@@ -542,13 +569,8 @@
             color: white;
             margin: auto 0;
             opacity: 0;
-            /*-webkit-animation: slide-text2-1 0.3s ease forwards;
-            -webkit-animation-delay: 0.6s;
-            animation: slide-text2-1 0.3s ease forwards;
-            animation-delay: 0.6s;*/
             cursor: default;
         }
-
         @@keyframes slide-text2-1 {
             to {
                 opacity: 1;
@@ -559,6 +581,26 @@
             height: 100%;
             overflow: hidden;
         }
+
+        .avatar {
+            border: 3px solid #0DCAF0;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            margin: 0 25px;
+        }
+        .githubIcon {
+            color: white;
+            font-size: 50px;
+            border: 1px solid #0DCAF0;
+            border-radius: 50%;
+            text-decoration: none;
+        }
+            .githubIcon:hover {
+                color: hsl(210, 11%, 18%);
+                background-color: white;
+            }
+            
         /*#endregion */
         body.prevent-animation * {
             animation-duration: 0s !important;
@@ -616,12 +658,12 @@
         <section class="second-section">
             <div class="background-stripe2-6"></div>
             <div class="section-col">
-                <div id="firstImageBackground2">
+                <div id="firstImageBackground2" onmouseover="textToSide(false, this)" onmouseout="textToSide(true, this)">
                     <div id="firstImage2">
                         <img src="~/images/list2.png" alt="List view" width="842" height="432" />
                     </div>
                 </div>
-                <div id="secondImageBackground2">
+                <div id="secondImageBackground2" onmouseover="textToSide(false, this)" onmouseout="textToSide(true, this)">
                     <div id="secondImage2">
                         <img src="~/images/dashboard.png" width="842" height="432" />
                     </div>
@@ -636,7 +678,15 @@
         </section>
 
         <section class="third-section">
+            <div class="avatar">
+            </div>
+            <a class="githubIcon" href="https://github.com/AnythJ">
+                <i class="fab fa-github"></i>
+            </a>
         </section>
+        @*<section class="fourth-section">
+
+        </section>*@
     </div>
 
 </body>
@@ -702,6 +752,30 @@
         loadedImg = true;
     }
 
+    function textToSide(back, element) {
+        if (back) {
+            var d2 = document.getElementById('description2');
+            d2.style.maxWidth = "";
+            d2.style.transform = "translate(0, 0)";
+            d2.style.transitionDuration = "0.5s";
+            d2.textContent = "Gain complete control on your finances and save important informations about specific expenses.";
+        }
+        else if (element.id == 'firstImageBackground2')
+        {
+            var d2 = document.getElementById('description2')
+            d2.style.maxWidth = "400px";
+            d2.style.transform = "translate(100px, 0)";
+            d2.style.transitionDuration = "0.5s";
+        }
+        else {
+            var d2 = document.getElementById('description2')
+            d2.textContent = "Monitor your spendings with intuitive dashboard.";
+            d2.style.maxWidth = "400px";
+            d2.style.transform = "translate(100px, 0)";
+            d2.style.transitionDuration = "0.5s";
+            
+        }
+    }
     /*$('body').addClass('stop-scrolling');*/
     //window.addEventListener('wheel', function (event) {
     //    var vh = document.getElementById("firstSection").clientHeight;

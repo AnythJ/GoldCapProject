@@ -5,40 +5,99 @@
 }
 
 <style>
-    .main {
-        width: 400px;
+    .mainForm {
+        max-width: 500px;
+        min-width: 250px;
         margin: 0 auto;
         text-align: center;
-        margin-top: calc(0.06*100%);
-    }
-</style>
-<div class="col-md-2 main">
-    <div class="row">
-        <div class="col-md-12">
-            <form method="post">
-                <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-info"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Password"></label>
-                    <input asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-info"></span>
-                </div>
-                <div class="form-group">
-                    <div class="form-check">
-                        <label asp-for="RememberMe">
-                            Remember me
-                            <input asp-for="RememberMe" />
-                        </label>
-                    </div>
-                </div>
-                <button style="margin-top:25px;" type="submit" class="btn btn-outline-info">Login</button>
-                <div asp-validation-summary="All" class="text-info"></div>
-            </form>
-            <a class="btn btn-outline-info btn-sm" asp-action="index" asp-controller="account">Register</a>
-        </div>
         
+        position: relative;
+        z-index: 6;
+        padding-top: 15%;
+    }
+    .loginForm {
+        position: relative;
+        z-index: 5;
+        margin: 0 auto;
+        text-align: center;
+        border: 3px solid #0DCAF0;
+        border-radius: 5px;
+        padding: 5% 20%;
+        background-color: #212529;
+    }
+    h1 {
+        font-size: 55px;
+        font-weight: bold;
+        color: #9ba6b0;
+    }
+    input[type=text], input[type=text]:active, input[type=text]:hover, input[type=text]:focus { /*HERE 16.09*/
+        background-color: #434D56;
+        color: white;
+    }
+    
+    /*.form-group {
+        max-width: 20%;
+        min-width: 200px;
+    }*/
+
+</style>
+<div class="mainForm">
+    <div class="loginForm">
+        <h1>GoldCap</h1>
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-info"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-info"></span>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <label asp-for="RememberMe">
+                        Remember me
+                        <input asp-for="RememberMe" />
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-info">Login</button>
+            <div asp-validation-summary="All" class="text-info"></div>
+        </form>
+        <a class="btn btn-outline-info btn-sm" asp-action="index" asp-controller="account">Register</a>
     </div>
 </div>
+
+@*<div class="col-md-12 loginForm">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 formCol">
+                <form method="post">
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-info"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-info"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <label asp-for="RememberMe">
+                                Remember me
+                                <input asp-for="RememberMe" />
+                            </label>
+                        </div>
+                    </div>
+                    <button style="margin-top:25px;" type="submit" class="btn btn-outline-info">Login</button>
+                    <div asp-validation-summary="All" class="text-info"></div>
+                </form>
+                <a class="btn btn-outline-info btn-sm" asp-action="index" asp-controller="account">Register</a>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>*@

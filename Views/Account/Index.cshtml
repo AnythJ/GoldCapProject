@@ -4,23 +4,86 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <style>
-        .btn {
-            width: 150px;
+        .mainForm {
+            max-width: 500px;
+            min-width: 250px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 6;
+            padding-top: 15%;
+        }
+
+        .loginForm {
+            position: relative;
+            z-index: 5;
+            margin: 0 auto;
+            text-align: center;
+            border: 3px solid #0DCAF0;
+            border-radius: 5px;
+            padding: 5% 20%;
+            background-color: #212529;
+        }
+
+        h1 {
+            font-size: 55px;
+            font-weight: bold;
+            color: #9ba6b0;
+        }
+        a {
+            min-width: 180px;
+        }
+
+        .signInButton {
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background-color: transparent;
+            border-radius: 5px;
+            display: inline-block;
+            z-index: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .signInButton:hover {
+                color: #212529;
+            }
+
+                .signInButton:hover:after {
+                    width: 100%;
+                }
+
+            .signInButton:after {
+                content: "";
+                z-index: -1;
+                position: absolute;
+                transition: all 0.3s ease;
+                left: 0;
+                top: 0;
+                width: 0;
+                height: 100%;
+                background-color: #0DCAF0;
+            }
+        .loginButton {
+            margin-top: 20px;
         }
     </style>
     <title></title>
 </head>
 <body>
-    <div>
-        <p>
-            <a class="btn btn-outline-info" asp-controller="account" asp-action="login">Login in</a>
-        </p>
-        <p>
-            <a class="btn btn-outline-info" asp-controller="account" asp-action="register">Register</a>
-        </p>
-        <p>
-            <a class="btn btn-outline-info" asp-controller="account" asp-action="loginGuest">Login in as guest</a>
-        </p>
-    </div>
+    <div class="mainForm">
+        <div class="loginForm">
+            <h1>GoldCap</h1>
+            <p class="loginButton">
+                <a class="btn btn-outline-info signInButton" asp-controller="account" asp-action="login">Login in</a>
+            </p>
+            <p>
+                <a class="btn btn-outline-info signInButton" asp-controller="account" asp-action="register">Register</a>
+            </p>
+            <p>
+                <a class="btn btn-outline-info signInButton" asp-controller="account" asp-action="loginGuest">Login in as guest</a>
+            </p>
+        </div>
+        </div>
 </body>
 </html>

@@ -35,6 +35,7 @@
         main {
             margin-left: 14rem;
             padding: 1rem;
+            transition: margin 0.2s ease;
         }
 
         .navbar-side {
@@ -95,6 +96,58 @@
             margin: 0 1.5rem;
         }
 
+        .goldcapLogo {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            width: 100%;
+            color: var(--bg-third);
+            background-color: var(--bg-secondary);
+            letter-spacing: 0.2ch;
+        }
+
+        .goldcapLogo-text {
+            text-align: center;
+            display: none;
+            position: absolute;
+            transition: 0.6s;
+            margin: 0 2.5rem;
+            color: var(--bg-third);
+        }
+
+        .navbar-side:hover {
+            width: 14rem !important;
+        }
+        .navbar-side:hover .link-text {
+            display: inline !important;
+        }
+        .navbar-side:hover .goldcapLogo i{
+            display: none !important;
+        }
+        
+
+        .nav-side-link-logo {
+            color: var(--bg-third);
+            height: 5rem;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            filter: grayscale(100%) opacity(0.6);
+            transition: 0.6s;
+        }
+
+            .nav-side-link-logo:hover {
+                filter: grayscale(0%) opacity(1);
+                background-color: var(--bg-primary);
+                color: var(--bg-third);
+            }
+
+            .nav-side-link-logo i {
+                color: var(--bg-third);
+                font-size: 2rem;
+                min-width: 2rem;
+                margin: 0 1.5rem;
+            }
 
         @@media only screen and (max-width: 600px) {
             .navbar-side {
@@ -127,112 +180,99 @@
                 top: 0;
             }
 
-                .navbar-side:hover {
-                    width: 14rem;
-                }
-
-                    .navbar-side:hover .link-text {
-                        display: inline;
-                        transition: 0.1s;
-                    }
-        }
-
-        .goldcapLogo {
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            width: 100%;
-            color: var(--bg-third);
-            background-color: var(--bg-secondary);
-            letter-spacing: 0.2ch;
-        }
-
-        .goldcapLogo-text {
-            text-align: center;
-            display: none;
-            position: absolute;
-            transition: 0.6s;
-            margin: 0 2.5rem;
-            color: var(--bg-third);
-        }
-
-        .navbar-side:hover .goldcapLogo i {
-            display: none;
-        }
-
-        .nav-side-link-logo {
-            color: var(--bg-third);
-            height: 5rem;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            filter: grayscale(100%) opacity(0.6);
-            transition: 0.6s;
-        }
-
-            .nav-side-link-logo:hover {
-                filter: grayscale(0%) opacity(1);
-                background-color: var(--bg-primary);
-                color: var(--bg-third);
+            .link-text {
+                display: none;
+                transition: 0.1s;
             }
 
-            .nav-side-link-logo i {
-                color: var(--bg-third);
-                font-size: 2rem;
-                min-width: 2rem;
-                margin: 0 1.5rem;
+            .goldcapLogo-text {
+                display: none;
             }
+        }
+
+        
     </style>
     <title></title>
 </head>
 
 <body>
-    <nav class="navbar-side">
-        <ul class="navbar-nav-side">
-            <li class="goldcapLogo">
-                <a href="#" class="nav-side-link-logo">
-                    <i class="fas fa-home fa-primary"></i>
-                    <span class="link-text goldcapLogo-text fa-primary">GOLDCAP</span>
-                </a>
-            </li>
+        <nav id="sideNavbar" class="navbar-side">
+            <ul class="navbar-nav-side">
+                <li class="goldcapLogo">
+                    <a href="#" class="nav-side-link-logo">
+                        <i id="logo-icon" class="fas fa-home fa-primary"></i>
+                        <span class="link-text goldcapLogo-text fa-primary">GOLDCAP</span>
+                    </a>
+                </li>
 
-            <li class="nav-side-item">
-                <a href="#" class="nav-side-link">
-                    <i class="fas fa-chart-line fa-primary"></i>
-                    <span class="link-text fa-primary">Dashboard</span>
-                </a>
-            </li>
+                <li class="nav-side-item">
+                    <a class="nav-side-link">
+                        <i class="fas fa-chart-line fa-primary"></i>
+                        <span class="link-text fa-primary">Dashboard</span>
+                    </a>
+                </li>
 
-            <li class="nav-side-item">
-                <a href="#" class="nav-side-link">
-                    <i class="fas fa-list fa-primary"></i>
-                    <span class="link-text fa-primary">Expenses</span>
-                </a>
-            </li>
+                <li class="nav-side-item">
+                    <a href="#" class="nav-side-link">
+                        <i class="fas fa-list fa-primary"></i>
+                        <span class="link-text fa-primary">Expenses</span>
+                    </a>
+                </li>
 
-            <li class="nav-side-item">
-                <a href="#" class="nav-side-link">
-                    <i class="fas fa-list-alt"></i>
-                    <span class="link-text fa-primary">Categories</span>
-                </a>
-            </li>
+                <li class="nav-side-item">
+                    <a href="#" class="nav-side-link">
+                        <i class="fas fa-list-alt"></i>
+                        <span class="link-text fa-primary">Categories</span>
+                    </a>
+                </li>
 
-            <li class="nav-side-item">
-                <a href="#" class="nav-side-link">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span class="link-text fa-primary">Logout</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+                <li class="nav-side-item">
+                    <a href="#" class="nav-side-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="link-text fa-primary">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     <main>
         <h1>Main content here</h1>
-        <i class="fas fa-angle-double-left" style="font-size: 5rem;"></i>
+        <i onclick="hideSideNavbar()" class="fas fa-angle-double-left" style="font-size: 5rem;"></i>
     </main>
 </body>
 </html>
 <script>
+    function navbarStartStyle() {
+        document.getElementById("sideNavbar").style.width = "14rem";
+        document.getElementById("logo-icon").style.display = "none";
+        var links = document.getElementsByClassName("link-text");
+        for (var i = 0; i < links.length; i++) {
+            links[i].style.display = "inline";
+        }
+    }
+    
 
+    function hideSideNavbar() {
+        var sideNavbarSize = document.getElementById("sideNavbar").offsetWidth;
+        if (sideNavbarSize > 80) {
+            document.getElementById("logo-icon").style.display = "block";
+            document.getElementById("sideNavbar").style.width = "5rem";
+            var links = document.getElementsByClassName("link-text");
+            for (var i = 0; i < links.length; i++) {
+                links[i].style.display = "none";
+            }
+            document.getElementsByTagName("main")[0].style.marginLeft = "5rem";
+        }
+        else {
+            document.getElementById("logo-icon").style.display = "none";
+            document.getElementById("sideNavbar").style.width = "14rem";
+            var links = document.getElementsByClassName("link-text");
+            for (var i = 0; i < links.length; i++) {
+                links[i].style.display = "inline";
+            }
+            document.getElementsByTagName("main")[0].style.marginLeft = "14rem";
+        }
+
+    }
 </script>
 @*<i class="fas fa-chart-line"></i>
     <i class="fas fa-list"></i>

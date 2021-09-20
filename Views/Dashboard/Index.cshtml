@@ -84,9 +84,10 @@
 
     .row-first {
         display: flex;
-        justify-content: space-around;
     }
-
+    .row-second {
+        display: flex;
+    }
     .statPill {
         border: 3px solid var(--text-primary);
         border-radius: 5px;
@@ -99,6 +100,10 @@
         width: 49%;
         min-width: 11rem;
         height: 100%;
+        margin-right: 0.5rem;
+    }
+    .two-statPill:last-child .statPill:last-child {
+        margin-right: 0;
     }
 
     .pill-right p {
@@ -120,8 +125,9 @@
     .two-statPill {
         flex: 2;
         display: flex;
-        justify-content: space-around;
+        margin: 0;
     }
+
         @@media only screen and (max-width: 806px)
         {
             .statPill {
@@ -158,7 +164,17 @@
             align-content: center;
             border-color: transparent;
         }
-        
+
+    #container {
+        width: 100%;
+        border: 3px solid var(--text-primary);
+        border-radius: 5px;
+        padding: 0;
+    }
+    #container-pie {
+        width: 100%;
+    }
+    
 /*#endregion */
 </style>
 
@@ -257,18 +273,18 @@
                 </div>*@
         </div>
 
-        @*<div class="row">
-                <div class="col-8 areaChartCol">
-                    <figure id="areafigure" class="highcharts-figure">
-                        <div id="container" class="areaChartDiv"></div>
-                    </figure>
-                </div>
-                <div class="col-4">
-                    <figure id="pieFigure" class="highcharts-figure">
-                        <div id="container-pie" class="pieChartDiv"></div>
-                    </figure>
-                </div>
-            </div>*@
+        @*<div class="row-second">
+            <div class="lineChart-div">
+                <figure id="areafigure" class="highcharts-figure">
+                    <div id="container"></div>
+                </figure>
+            </div>
+            <div class="pieChart-div">
+                <figure id="pieFigure" class="highcharts-figure">
+                    <div id="container-pie"></div>
+                </figure>
+            </div>
+        </div>*@
 
         @*<div class="row">
                 <div class="col-6 tableColumn table-responsive" id="view-all">
@@ -368,63 +384,63 @@
 </html>
 
 <script>
-    //function getParameterByName(name, url = window.location.href) {
-    //    name = name.replace(/[\[\]]/g, '\\$&');
-    //    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-    //        results = regex.exec(url);
-    //    if (!results) return null;
-    //    if (!results[2]) return '';
-    //    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-    //}
-    //var period;
-    //if (getParameterByName('period') == null) {
-    //    period = 30;
-    //} else {
-    //    period = parseFloat(getParameterByName('period'));
-    //}
+    function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+    var period;
+    if (getParameterByName('period') == null) {
+        period = 30;
+    } else {
+        period = parseFloat(getParameterByName('period'));
+    }
 
 
-    //$(showLineChart(period));
-    //$(showPieChart(period));
+    $(showLineChart(period));
+    $(showPieChart(period));
     //function showPercentage() {
     //    $('#amountP').tooltip('show');
     //}
 
-    //$(document).ready(function () {
-    //    var arrowPercentage = $('#percentageArrowValue').val();
-    //    if (parseFloat(arrowPercentage) > 0) {
-    //        document.getElementById('arrowDown').setAttribute("hidden", "");
-    //        document.getElementById('arrowUp').removeAttribute("hidden");
-    //        document.getElementById('arrowPercentage').style.color = 'red';
-    //    }
-    //    else {
-    //        document.getElementById('arrowUp').setAttribute("hidden", "");
-    //        document.getElementById('arrowDown').removeAttribute("hidden");
-    //        document.getElementById('arrowPercentage').style.color = 'lawngreen';
-    //    }
-    //});
+    $(document).ready(function () {
+        var arrowPercentage = $('#percentageArrowValue').val();
+        if (parseFloat(arrowPercentage) > 0) {
+            document.getElementById('arrowDown').setAttribute("hidden", "");
+            document.getElementById('arrowUp').removeAttribute("hidden");
+            document.getElementById('arrowPercentage').style.color = 'red';
+        }
+        else {
+            document.getElementById('arrowUp').setAttribute("hidden", "");
+            document.getElementById('arrowDown').removeAttribute("hidden");
+            document.getElementById('arrowPercentage').style.color = 'lawngreen';
+        }
+    });
 
 
-    //function stayActive(id) {
-    //    document.getElementById(id).classList.add("active");
-    //}
-    //$(document).ready(function () {
-    //    var period = getParameterByName("period");
-    //    switch (parseFloat(period)) {
-    //        case 7:
-    //            document.getElementById('btnWeek').classList.add("active");
-    //            break;
-    //        case 30:
-    //            document.getElementById('btnMonth').classList.add("active");
-    //            break;
-    //        case 365:
-    //            document.getElementById('btnYear').classList.add("active");
-    //            break;
-    //        default:
-    //            document.getElementById('btnMonth').classList.add("active");
-    //    }
+    function stayActive(id) {
+        document.getElementById(id).classList.add("active");
+    }
+    $(document).ready(function () {
+        var period = getParameterByName("period");
+        switch (parseFloat(period)) {
+            case 7:
+                document.getElementById('btnWeek').classList.add("active");
+                break;
+            case 30:
+                document.getElementById('btnMonth').classList.add("active");
+                break;
+            case 365:
+                document.getElementById('btnYear').classList.add("active");
+                break;
+            default:
+                document.getElementById('btnMonth').classList.add("active");
+        }
 
-    //});
+    });
 
     //function EditPaycheck() {
     //    var amountField = document.getElementById('paycheckAmount');

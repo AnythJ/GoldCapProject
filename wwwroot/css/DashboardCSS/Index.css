@@ -66,6 +66,8 @@ div.statPillButtons {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    margin: 0;
+    padding: 0;
 }
 
     .mainDiv::-webkit-scrollbar {

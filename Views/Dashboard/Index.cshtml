@@ -82,8 +82,87 @@
         animation-delay: @Model.CirclesStats[2].LeftSpeed;
     }
 
+    .row-first {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .statPill {
+        border: 3px solid var(--text-primary);
+        border-radius: 5px;
+        background-color: var(--bg-navbar);
+        padding: 0.2rem;
+        display: flex;
+        align-content: center;
+        justify-content: space-evenly;
+        margin: 0;
+        width: 49%;
+        min-width: 11rem;
+        height: 100%;
+    }
+
+    .pill-right p {
+        text-align: center;
+        margin: 0.2rem 0;
+    }
+
+    p.pillAmount {
+        font-size: 2.2rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    .pill-left {
+        text-align: center;
+    }
+
+    .two-statPill {
+        flex: 2;
+        display: flex;
+        justify-content: space-around;
+    }
+        @@media only screen and (max-width: 806px)
+        {
+            .statPill {
+                margin-bottom: 0.5rem !important;
+                width: 98%;
+            }
+            .row-first {
+                flex-direction: column;
+            }
+            .two-statPill {
+                flex-direction: row;
+                margin-right: 0 !important;
+            }
+        }
+        @@media only screen and (max-width: 980px)
+        {
+            .two-statPill {
+                flex-direction: column;
+                margin-right: 0.2rem;
+            }
+            .two-statPill:last-child {
+                margin-right: 0;
+            }
+            .statPill {
+                width: 100%;
+                margin-bottom: 0.2rem;
+            }
+            .statPill:last-child {
+                margin-bottom: 0;
+            }
+        }
+        .two-statPill:last-child .statPill:last-child {
+            background-color: transparent;
+            align-content: center;
+            border-color: transparent;
+        }
+        
 /*#endregion */
 </style>
+
+<!-- #region links -->
 
 @section Styles{
     <link href="~/css/DashboardCSS/Index.css" rel="stylesheet" />
@@ -97,6 +176,8 @@
 
     <link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
 }
+
+<!-- #endregion -->
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -114,27 +195,25 @@
 
 <body>
     <div class="mainDiv">
-        <div class="row" style="margin:15px 0 15px 15px">
-            <div class="col statPill">
-                <div class="row">
-                    <div class="col my-auto ms-4 pill-left">
+        <div class="row-first">
+            <div class="two-statPill">
+                <div class="statPill">
+                    <div class="pill-left">
                         <span>Highest expense</span>
                         <p class="pillAmount">@Model.PillsStats[0].AmountInt$</>
                     </div>
-                    <div class="col pill-right">
+                    <div class="pill-right">
                         <p>@Model.PillsStats[0].Category</p>
                         <p>@Model.PillsStats[0].DatetimeString</p>
                         <p>@Model.PillsStats[0].Percentage% of @Model.CirclesStats[0].SumLast30Days$</p>
                     </div>
                 </div>
-            </div>
-            <div class="col statPill">
-                <div class="row">
-                    <div class="col my-auto pill-left">
+                <div class="statPill">
+                    <div class="pill-left">
                         <span>Last expense</span>
                         <p class="pillAmount">@Model.PillsStats[1].AmountInt$</p>
                     </div>
-                    <div class="col pill-right">
+                    <div class="pill-right">
                         <p>@Model.PillsStats[1].Category</p>
                         <p>@Model.PillsStats[1].DatetimeString</p>
                         <input id="percentageArrowValue" type="hidden" value="@Model.PillsStats[1].Percentage" />
@@ -142,198 +221,210 @@
                     </div>
                 </div>
             </div>
-            <div class="col statPill">
-                <div class="row">
-                    <div class="col my-auto pill-left">
+            <div class="two-statPill">
+                <div class="statPill">
+                    <div class="pill-left">
                         <span>Lowest expense</span>
                         <p class="pillAmount">@Model.PillsStats[2].AmountInt$</p>
                     </div>
-                    <div class="col pill-right">
+                    <div class="pill-right">
                         <p>@Model.PillsStats[2].Category</p>
                         <p>@Model.PillsStats[2].DatetimeString</p>
                         <p>@Model.PillsStats[2].Percentage% of @Model.CirclesStats[0].SumLast30Days$</p>
                     </div>
                 </div>
-            </div>
-            <div class="col statPillButtons">
-                @Html.ActionLink("Week", "Index", "Dashboard", new { period = 7 }, new { @class = "btn btn-outline-info btn-custom", @id = "btnWeek", @onclick = "stayActive(this.id)" })
-                @Html.ActionLink("Month", "Index", "Dashboard", new { period = 30 }, new { @class = "btn btn-outline-info btn-custom", @id = "btnMonth", @onclick = "stayActive(this.id)" })
-                @Html.ActionLink("Year", "Index", "Dashboard", new { period = 365 }, new { @class = "btn btn-outline-info btn-custom", @id = "btnYear", @onclick = "stayActive(this.id)" })
-                <a onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)',
-                                        'Recurring payments')" class="btn btn-outline-light m-1">Recurring payments</a>
-            </div>
-        </div>
-
-        <div class="row" style="margin: 15px 0 15px 15px; ">
-            <div class="col-8 areaChartCol">
-                <figure id="areafigure" class="highcharts-figure">
-                    <div id="container" class="areaChartDiv"></div>
-                </figure>
-            </div>
-            <div class="col-4">
-                <figure id="pieFigure" class="highcharts-figure">
-                    <div id="container-pie" class="pieChartDiv"></div>
-                </figure>
-            </div>
-        </div>
-
-        <div class="row" style="margin: 15px 0 15px 15px;">
-            <div class="col-6 tableColumn table-responsive" id="view-all">
-                @await Html.PartialAsync("_ViewAll", Model.Expenses)
-            </div>
-            <div class="col-2 stackedCircles container">
-                <div class="u-statCircle">
-                    <div class="smallerCircle">
-                        <p id="amountP" class="boldHeader" onmouseover="showPercentage()" data-toggle="tooltip" data-placement="top" title="@Model.CirclesStats[0].TooltipPercentage%">@Model.CirclesStats[0].SumLast30Days$</p>
-                        <p>of @Model.CirclesStats[0].SumBeforeLast30Days$</p>
-                        <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                        <p><small>@Model.CirclesStats[0].UnderMonthAmount$ @Model.CirclesStats[0].AdditionalString</small></p>
-                        <p><small>last @Model.CirclesStats[0].PeriodName</small></p>
+                <div class="statPill">
+                    <div class="pill-left">
+                        @Html.ActionLink("Week", "Index", "Dashboard", new { period = 7 }, new { @class = "btn btn-outline-info", @id = "btnWeek", @onclick = "stayActive(this.id)" })
+                        @Html.ActionLink("Month", "Index", "Dashboard", new { period = 30 }, new { @class = "btn btn-outline-info", @id = "btnMonth", @onclick = "stayActive(this.id)" })
+                        @Html.ActionLink("Year", "Index", "Dashboard", new { period = 365 }, new { @class = "btn btn-outline-info", @id = "btnYear", @onclick = "stayActive(this.id)" })
                     </div>
-                    <div class="circle">
-                        <div class="bar u-left">
-                            <div class="progress"></div>
-                        </div>
-                        <div class="bar u-right">
-                            <div class="progress"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="c-statCircle">
-                    <div class="smallerCircle">
-                        <p class="boldHeader">@Model.CirclesStats[1].TopCategoryPercentage%</p>
-                        <p>@Model.CirclesStats[1].TopCategoryName</p>
-                        <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                        <p><small>@Model.CirclesStats[1].TopCategoryAmount$ of</small></p>
-                        <p><small>@Model.CirclesStats[1].SumLast30Days$</small></p>
-                    </div>
-                    <div class="circle">
-                        <div class="bar c-left">
-                            <div class="progress"></div>
-                        </div>
-                        <div class="bar c-right">
-                            <div class="progress"></div>
-                        </div>
+                    <div class="pill-right">
+                        <a onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)',
+                                                'Recurring payments')" class="btn btn-outline-light">Recurring payments</a>
                     </div>
                 </div>
             </div>
 
-            <div class="col-2 topCategoryColumn table-responsive">
-                <table class="table table-hover">
-                    <thead class="sticky-top">
-                        <tr>
-                            <td id="tableRowId">Categories by amount</td>
-                            <td class="percentageCol">%</td>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        @foreach (var item in Model.Categories)
-                        {
-                            <tr class="trClass">
-                                <td>
-                                    @item.CategoryName
-                                </td>
-                                <td class="percentageCol">
-                                    @String.Format("{0:0.00}", item.CategoryPercentage)
-                                </td>
+
+
+            @*<div class="statPill statPillButtons">
+                    @Html.ActionLink("Week", "Index", "Dashboard", new { period = 7 }, new { @class = "btn btn-outline-info btn-custom", @id = "btnWeek", @onclick = "stayActive(this.id)" })
+                    @Html.ActionLink("Month", "Index", "Dashboard", new { period = 30 }, new { @class = "btn btn-outline-info btn-custom", @id = "btnMonth", @onclick = "stayActive(this.id)" })
+                    @Html.ActionLink("Year", "Index", "Dashboard", new { period = 365 }, new { @class = "btn btn-outline-info btn-custom", @id = "btnYear", @onclick = "stayActive(this.id)" })
+                    <a onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)',
+                                                'Recurring payments')" class="btn btn-outline-light m-1">Recurring payments</a>
+                </div>*@
+        </div>
+
+        @*<div class="row">
+                <div class="col-8 areaChartCol">
+                    <figure id="areafigure" class="highcharts-figure">
+                        <div id="container" class="areaChartDiv"></div>
+                    </figure>
+                </div>
+                <div class="col-4">
+                    <figure id="pieFigure" class="highcharts-figure">
+                        <div id="container-pie" class="pieChartDiv"></div>
+                    </figure>
+                </div>
+            </div>*@
+
+        @*<div class="row">
+                <div class="col-6 tableColumn table-responsive" id="view-all">
+                    @await Html.PartialAsync("_ViewAll", Model.Expenses)
+                </div>
+                <div class="col-2 stackedCircles container">
+                    <div class="u-statCircle">
+                        <div class="smallerCircle">
+                            <p id="amountP" class="boldHeader" onmouseover="showPercentage()" data-toggle="tooltip" data-placement="top" title="@Model.CirclesStats[0].TooltipPercentage%">@Model.CirclesStats[0].SumLast30Days$</p>
+                            <p>of @Model.CirclesStats[0].SumBeforeLast30Days$</p>
+                            <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
+                            <p><small>@Model.CirclesStats[0].UnderMonthAmount$ @Model.CirclesStats[0].AdditionalString</small></p>
+                            <p><small>last @Model.CirclesStats[0].PeriodName</small></p>
+                        </div>
+                        <div class="circle">
+                            <div class="bar u-left">
+                                <div class="progress"></div>
+                            </div>
+                            <div class="bar u-right">
+                                <div class="progress"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-statCircle">
+                        <div class="smallerCircle">
+                            <p class="boldHeader">@Model.CirclesStats[1].TopCategoryPercentage%</p>
+                            <p>@Model.CirclesStats[1].TopCategoryName</p>
+                            <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
+                            <p><small>@Model.CirclesStats[1].TopCategoryAmount$ of</small></p>
+                            <p><small>@Model.CirclesStats[1].SumLast30Days$</small></p>
+                        </div>
+                        <div class="circle">
+                            <div class="bar c-left">
+                                <div class="progress"></div>
+                            </div>
+                            <div class="bar c-right">
+                                <div class="progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-2 topCategoryColumn table-responsive">
+                    <table class="table table-hover">
+                        <thead class="sticky-top">
+                            <tr>
+                                <td id="tableRowId">Categories by amount</td>
+                                <td class="percentageCol">%</td>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-2 stackedCircles">
-                <div class="p-statCircle">
-                    <div class="smallerCircle">
-                        <p class="boldHeader">@Model.CirclesStats[2].SumLast30Days$</p>
-                        <p>
-                            of <a id="paycheckAmount">@Model.CirclesStats[2].TotalIncome$</a>
-                            <input id="paycheckInputField" type="text" hidden style="width:50px;height:18px;" />
-                            <a onclick="showInPopup('@Url.Action("IncomeList","Dashboard",new { id = 0},Context.Request.Scheme)','Income list')"><i class="fas fa-pen"></i></a>
-                        </p>
-                        <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                        <p><small>@Model.CirclesStats[2].IncomePercentage% of your</small></p>
-                        <p><small>income</small></p>
-                    </div>
-                    <div class="circle">
-                        <div class="bar p-left">
-                            <div class="progress"></div>
+                        </thead>
+                        <tbody id="tableBody">
+                            @foreach (var item in Model.Categories)
+                            {
+                                <tr class="trClass">
+                                    <td>
+                                        @item.CategoryName
+                                    </td>
+                                    <td class="percentageCol">
+                                        @String.Format("{0:0.00}", item.CategoryPercentage)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-2 stackedCircles">
+                    <div class="p-statCircle">
+                        <div class="smallerCircle">
+                            <p class="boldHeader">@Model.CirclesStats[2].SumLast30Days$</p>
+                            <p>
+                                of <a id="paycheckAmount">@Model.CirclesStats[2].TotalIncome$</a>
+                                <input id="paycheckInputField" type="text" hidden style="width:50px;height:18px;" />
+                                <a onclick="showInPopup('@Url.Action("IncomeList","Dashboard",new { id = 0},Context.Request.Scheme)','Income list')"><i class="fas fa-pen"></i></a>
+                            </p>
+                            <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
+                            <p><small>@Model.CirclesStats[2].IncomePercentage% of your</small></p>
+                            <p><small>income</small></p>
                         </div>
-                        <div class="bar p-right">
-                            <div class="progress"></div>
+                        <div class="circle">
+                            <div class="bar p-left">
+                                <div class="progress"></div>
+                            </div>
+                            <div class="bar p-right">
+                                <div class="progress"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
+            </div>*@
 
-        <div class="row" style="margin:20px 0 20px 20px;">
 
-        </div>
     </div>
 
 </body>
 </html>
 
 <script>
-    function getParameterByName(name, url = window.location.href) {
-        name = name.replace(/[\[\]]/g, '\\$&');
-        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, ' '));
-    }
-    var period;
-    if (getParameterByName('period') == null) {
-        period = 30;
-    } else {
-        period = parseFloat(getParameterByName('period'));
-    }
+    //function getParameterByName(name, url = window.location.href) {
+    //    name = name.replace(/[\[\]]/g, '\\$&');
+    //    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    //        results = regex.exec(url);
+    //    if (!results) return null;
+    //    if (!results[2]) return '';
+    //    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    //}
+    //var period;
+    //if (getParameterByName('period') == null) {
+    //    period = 30;
+    //} else {
+    //    period = parseFloat(getParameterByName('period'));
+    //}
 
 
-    $(showLineChart(period));
-    $(showPieChart(period));
-    function showPercentage() {
-        $('#amountP').tooltip('show');
-    }
+    //$(showLineChart(period));
+    //$(showPieChart(period));
+    //function showPercentage() {
+    //    $('#amountP').tooltip('show');
+    //}
 
-    $(document).ready(function () {
-        var arrowPercentage = $('#percentageArrowValue').val();
-        if (parseFloat(arrowPercentage) > 0) {
-            document.getElementById('arrowDown').setAttribute("hidden", "");
-            document.getElementById('arrowUp').removeAttribute("hidden");
-            document.getElementById('arrowPercentage').style.color = 'red';
-        }
-        else {
-            document.getElementById('arrowUp').setAttribute("hidden", "");
-            document.getElementById('arrowDown').removeAttribute("hidden");
-            document.getElementById('arrowPercentage').style.color = 'lawngreen';
-        }
-    });
+    //$(document).ready(function () {
+    //    var arrowPercentage = $('#percentageArrowValue').val();
+    //    if (parseFloat(arrowPercentage) > 0) {
+    //        document.getElementById('arrowDown').setAttribute("hidden", "");
+    //        document.getElementById('arrowUp').removeAttribute("hidden");
+    //        document.getElementById('arrowPercentage').style.color = 'red';
+    //    }
+    //    else {
+    //        document.getElementById('arrowUp').setAttribute("hidden", "");
+    //        document.getElementById('arrowDown').removeAttribute("hidden");
+    //        document.getElementById('arrowPercentage').style.color = 'lawngreen';
+    //    }
+    //});
 
 
-    function stayActive(id) {
-        document.getElementById(id).classList.add("active");
-    }
-    $(document).ready(function () {
-        var period = getParameterByName("period");
-        switch (parseFloat(period)) {
-            case 7:
-                document.getElementById('btnWeek').classList.add("active");
-                break;
-            case 30:
-                document.getElementById('btnMonth').classList.add("active");
-                break;
-            case 365:
-                document.getElementById('btnYear').classList.add("active");
-                break;
-            default:
-                document.getElementById('btnMonth').classList.add("active");
-        }
+    //function stayActive(id) {
+    //    document.getElementById(id).classList.add("active");
+    //}
+    //$(document).ready(function () {
+    //    var period = getParameterByName("period");
+    //    switch (parseFloat(period)) {
+    //        case 7:
+    //            document.getElementById('btnWeek').classList.add("active");
+    //            break;
+    //        case 30:
+    //            document.getElementById('btnMonth').classList.add("active");
+    //            break;
+    //        case 365:
+    //            document.getElementById('btnYear').classList.add("active");
+    //            break;
+    //        default:
+    //            document.getElementById('btnMonth').classList.add("active");
+    //    }
 
-    });
+    //});
 
     //function EditPaycheck() {
     //    var amountField = document.getElementById('paycheckAmount');

@@ -1,48 +1,22 @@
 ﻿body {
     font-family: Arial;
     background-color: #212529;
-    color: #9ba6b0;
+    color: var(--text-secondary);
     overflow: hidden;
 }
 
-.statPill {
-    background-color: #2d3339;
-    color: #9ba6b0;
-    border: 3px solid #434d56;
-    border-radius: 5px;
-    margin-right: 15px;
-    max-height: auto;
-}
 
-    .statPill p.pillAmount {
-        font-size: 35px;
-        font-weight: bold;
-        text-align: center;
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
-
-    .statPill .pill-left {
-        text-align: center;
-        align-content: center;
-    }
-
-    .statPill .pill-right p {
-        margin-top: 5px;
-        margin-bottom: 5px;
-        text-align: center;
-    }
 
 div.statPillButtons {
-    display: table;
-    text-align: right;
-    vertical-align: middle;
+    display: flex;
+    align-items: baseline;
+    text-align: center;
 }
 
     div.statPillButtons .btn {
         font-size: 15px;
         border-radius: 0;
-        border: 3px solid #434d56;
+        border: 3px solid var(--text-primary);
     }
 
     div.statPillButtons .btn-outline-info:not(:first-of-type) {
@@ -53,7 +27,7 @@ div.statPillButtons {
 
 .areaChartDiv {
     width: 100%;
-    border: 3px solid #434d56;
+    border: 3px solid var(--text-primary);
     border-radius: 5px;
     padding: 0;
 }
@@ -89,14 +63,15 @@ div.statPillButtons {
 }
 
 .mainDiv {
-    height: 100%;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
     .mainDiv::-webkit-scrollbar {
         display: block;
         width: 3px;
-        background-color: #434d56;
+        background-color: var(--text-primary);
     }
 
     .mainDiv::-webkit-scrollbar-track-piece:start {
@@ -107,7 +82,10 @@ div.statPillButtons {
     .mainDiv::-webkit-scrollbar-thumb {
         background-color: #0790ab;
     }
-
+    .mainDiv-row {
+        display: flex;
+        align-items: center;
+    }
 
 div .u-statCircle, div .c-statCircle, div.p-statCircle {
     animation: circleShow 0.6s linear;

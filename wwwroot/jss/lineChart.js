@@ -70,6 +70,7 @@ function showLineChart(period) {
                         style: {
                             fontFamily: 'Arial',
                             cursor: 'crosshair',
+                            color: '#9ba6b0'
                         },
                         backgroundColor: '#2d3339',
                     },
@@ -155,7 +156,7 @@ function showLineChart(period) {
                             function cateList(array1, array2) {
                                 var firstText = '';
                                 for (var i = 0; i < array1.length; i++) {
-                                    firstText += '<tr><td>' + array1[i] + '&nbsp;&nbsp;' + '</td>' + '<td style="text-align: right">' + array2[i] + '$</td>' + '</tr>';
+                                    firstText += '<tr style="color:#9ba6b0;"><td>' + array1[i] + '&nbsp;&nbsp;' + '</td>' + '<td style="text-align: right">' + array2[i] + '$</td>' + '</tr>';
                                 }
 
                                 return firstText;
@@ -163,7 +164,7 @@ function showLineChart(period) {
 
 
                             if (cateList(tooltipStrings[this.point.x], tooltipDecimals[this.point.x]) != '') {
-                                return '<small>' + this.x + '&nbsp;&nbsp;' + monthNames[this.point.x] + '</small><br/>' + '<table class="table"><tr><th>Category</th><th style="text-align: right">Amount</th></tr>' +
+                                return '<small>' + this.x + '&nbsp;&nbsp;' + monthNames[this.point.x] + '</small><br/>' + '<table style="color:#9ba6b0;" class="table"><tr><th>Category</th><th style="text-align: right">Amount</th></tr>' +
                                     cateList(tooltipStrings[this.point.x], tooltipDecimals[this.point.x]) + '</table>';
                             }
                             else {
@@ -192,7 +193,6 @@ function showLineChart(period) {
                     }
 
                 });
-
             });
 
     });

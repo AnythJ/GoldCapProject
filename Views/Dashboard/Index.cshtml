@@ -82,6 +82,26 @@
         animation-delay: @Model.CirclesStats[2].LeftSpeed;
     }
 
+
+    
+    
+/*#endregion */
+    .mainBody {
+        height: 100%;
+        overflow-y: auto;
+    }
+
+        .mainBody::-webkit-scrollbar {
+            display: block;
+            width: 3px;
+            background-color: var(--bg-secondary);
+        }
+
+        .mainBody::-webkit-scrollbar-thumb {
+            background-color: #0790ab;
+        }
+    /*#region First row */
+
     div.row-first {
         display: flex;
         justify-content: space-between;
@@ -99,10 +119,12 @@
         margin: 0.3rem;
         flex: 1;
     }
-    .statPill:last-child {
-        border-color: transparent;
-        background-color: transparent;
-    }
+
+        .statPill:last-child {
+            border-color: transparent;
+            background-color: transparent;
+        }
+
     .pill-right p {
         text-align: center;
         margin: 0.2rem 0;
@@ -118,31 +140,65 @@
     .pill-left {
         text-align: center;
     }
+
     #btnWeek, #btnMonth, #btnYear, #btnRecurring {
         min-width: 4.5rem;
         margin: 0.1rem;
     }
 
-        @@media only screen and (max-width: 768px)
-        {
-            .row-first {
-                flex-wrap: nowrap;
-                flex-direction: column;
-            }
-
+    @@media only screen and (max-width: 768px) {
+        .row-first {
+            flex-wrap: nowrap;
+            flex-direction: column;
         }
+    }
 
+    /*#endregion */
+
+    .row-second {
+        display: flex;
+        justify-content: stretch;
+        margin: 0.3rem;
+        align-items: center;
+    }
     #container {
-        width: 100%;
         border: 3px solid var(--text-primary);
         border-radius: 5px;
+        width: 100%;
         padding: 0;
+        height: 100%;
     }
     #container-pie {
+        border: 3px solid;
+        border-color: transparent;
+        border-radius: 5px;
         width: 100%;
+        padding: 0;
+        height: 100%;
     }
-    
-/*#endregion */
+    #areafigure {
+        flex: 3 !important;
+    }
+    #pieFigure {
+        flex: 1 !important;
+    }
+    #container, #container-pie {
+        width: 100% !important;
+    }
+    @@media only screen and (max-width: 850px) {
+        .row-second {
+            flex-direction: column;
+        }
+        #areafigure, #pieFigure {
+            width: 100%;
+        }
+    }
+    @@media only screen and (max-width: 768px)
+    {
+        .mainBody::-webkit-scrollbar-track-piece:end {
+            margin-bottom: 5rem;
+        }
+    }
 </style>
 
 <!-- #region links -->
@@ -151,11 +207,11 @@
     <link href="~/css/DashboardCSS/Index.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/areaChart.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/pieChart.css" rel="stylesheet" />
-    <link href="~/css/DashboardCSS/underCircle.css" rel="stylesheet" />
+    @*<link href="~/css/DashboardCSS/underCircle.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/cateCircle.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/paycheckCircle.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/listColumn.css" rel="stylesheet" />
-    <link href="~/css/DashboardCSS/topCategoryColumn.css" rel="stylesheet" />
+    <link href="~/css/DashboardCSS/topCategoryColumn.css" rel="stylesheet" />*@
 
     <link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
 }
@@ -168,16 +224,14 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/series-label.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="~/jss/lineChart.js"></script>
     <script src="~/jss/pieChart.js"></script>
     <title></title>
 </head>
 
-<body>
-    <div class="mainDiv">
+<body class="mainBody">
+    <div class="mainDiv-div">
         <div class="row-first">
                 <div class="statPill">
                     <div class="pill-left">
@@ -236,18 +290,14 @@
                 </div>*@
         </div>
 
-        @*<div class="row-second">
-            <div class="lineChart-div">
+        <div class="row-second">
                 <figure id="areafigure" class="highcharts-figure">
                     <div id="container"></div>
                 </figure>
-            </div>
-            <div class="pieChart-div">
                 <figure id="pieFigure" class="highcharts-figure">
                     <div id="container-pie"></div>
                 </figure>
-            </div>
-        </div>*@
+        </div>
 
         @*<div class="row">
                 <div class="col-6 tableColumn table-responsive" id="view-all">
@@ -362,9 +412,11 @@
         period = parseFloat(getParameterByName('period'));
     }
 
-
-    $(showLineChart(period));
-    $(showPieChart(period));
+    $(document).ready(function () {
+        $(showLineChart(period));
+        $(showPieChart(period));
+    });
+    
     //function showPercentage() {
     //    $('#amountP').tooltip('show');
     //}

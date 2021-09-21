@@ -31,6 +31,7 @@ main {
     margin: 0;
     padding: 0;
     transition: width 0.2s ease;
+    z-index: 2;
 }
 
 
@@ -170,6 +171,7 @@ main {
 
     main {
         margin: 0 !important;
+        margin-bottom: 5rem !important;
     }
 
     .goldcapLogo {

@@ -4,41 +4,7 @@
     color: var(--text-secondary);
     overflow: hidden;
 }
-
-
-
-
-
-
-.areaChartDiv {
-    width: 100%;
-    border: 3px solid var(--text-primary);
-    border-radius: 5px;
-    padding: 0;
-}
-
-.areaChartCol {
-    padding: 0;
-}
-
-.pieChartDiv {
-    width: 100%;
-}
-
-
-.percentageCol {
-    text-align: right;
-    font-weight: bold;
-}
-
-.stackedCircles {
-    min-width: 187px;
-    margin: auto 0;
-}
-
-
-
-
+    
 .fa-arrow-up {
     color: red;
 }
@@ -53,26 +19,8 @@
     flex-direction: column;
     margin: 0;
     padding: 0;
+    height: 100%;
 }
-
-    .mainDiv::-webkit-scrollbar {
-        display: block;
-        width: 3px;
-        background-color: var(--text-primary);
-    }
-
-    .mainDiv::-webkit-scrollbar-track-piece:start {
-        margin-top: 0;
-        scrollbar-track-color: red;
-    }
-
-    .mainDiv::-webkit-scrollbar-thumb {
-        background-color: #0790ab;
-    }
-    .mainDiv-row {
-        display: flex;
-        align-items: center;
-    }
 
 div .u-statCircle, div .c-statCircle, div.p-statCircle {
     animation: circleShow 0.6s linear;

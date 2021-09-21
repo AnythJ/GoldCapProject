@@ -1,12 +1,9 @@
-﻿#pieFigure.highcharts-figure, .highcharts-data-table table {
-    width: 100%;
-    height: 100%;
+﻿#pieFigure.highcharts-figure/*, .highcharts-data-table table*/ {
+    min-width: 279px;
+    max-width: 100%;
     margin: 0;
 }
-#container-pie {
-    height: 360px;
-}
-.highcharts-data-table table {
+/*.highcharts-data-table table {
     font-family: Verdana, sans-serif;
     border-collapse: collapse;
     border: 1px solid #EBEBEB;
@@ -41,4 +38,4 @@
 
 input[type="number"] {
     min-width: 50px;
-}
+}*/

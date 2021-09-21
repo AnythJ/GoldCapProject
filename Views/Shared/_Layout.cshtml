@@ -69,7 +69,7 @@
             </li>
         </ul>
     </nav>
-    <main>
+    <main class="mainContent">
         @RenderBody()
         @*<i id="collapseSideNavbar" onclick="hideSideNavbar()" class="fas fa-angle-double-left" style="font-size: 5rem;"></i>*@
     </main>
@@ -131,6 +131,8 @@
                     links[i].style.display = "none";
                 }
                 document.getElementsByTagName("main")[0].style.marginLeft = "5rem";
+                showLineChart();
+                showPieChart();
             }
             else {
                 document.getElementById("logo-icon").style.display = "none";
@@ -142,6 +144,8 @@
                     links[i].style.display = "inline";
                 }
                 document.getElementsByTagName("main")[0].style.marginLeft = "14rem";
+                showLineChart();
+                showPieChart();
             }
 
         }

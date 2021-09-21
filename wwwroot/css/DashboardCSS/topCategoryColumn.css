@@ -5,9 +5,10 @@
     border: 3px solid #434d56;
     border-radius: 5px;
     border-right: 1px solid transparent;
-    overflow-x: auto;
-    height: 360px;
+    overflow-x: hidden;
+    max-height: 380px;
     overflow-y: scroll;
+    min-width: 235px;
 }
 
     .topCategoryColumn thead tr {

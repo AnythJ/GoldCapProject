@@ -19,7 +19,7 @@ body {
 
 main {
     margin-left: 14rem;
-    padding: 1rem;
+    padding: 0.2rem;
     transition: margin 0.2s ease;
 }
 
@@ -31,7 +31,7 @@ main {
     margin: 0;
     padding: 0;
     transition: width 0.2s ease;
-    z-index: 2;
+    z-index: 3;
 }
 
 
@@ -137,6 +137,7 @@ main {
     top: 0;
     left: 0;
     transition: all 0.2s ease;
+    z-index: 2;
 }
 
 .navbar-nav-top {

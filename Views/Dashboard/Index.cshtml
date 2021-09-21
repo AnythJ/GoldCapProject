@@ -87,14 +87,18 @@
     
 /*#endregion */
     .mainBody {
-        height: 100%;
         overflow-y: auto;
+        overflow-x: hidden;
     }
 
         .mainBody::-webkit-scrollbar {
             display: block;
             width: 3px;
-            background-color: var(--bg-secondary);
+            background-color: var(--bg-navbar);
+        }
+
+        .mainBody::-webkit-scrollbar-track-piece:start {
+            margin-top: 4rem;
         }
 
         .mainBody::-webkit-scrollbar-thumb {
@@ -155,48 +159,95 @@
 
     /*#endregion */
 
+    /*#region Second row */
+
     .row-second {
         display: flex;
         justify-content: stretch;
         margin: 0.3rem;
         align-items: center;
     }
+
     #container {
         border: 3px solid var(--text-primary);
         border-radius: 5px;
         width: 100%;
         padding: 0;
-        height: 100%;
+        height: 360px;
     }
+
     #container-pie {
         border: 3px solid;
         border-color: transparent;
         border-radius: 5px;
         width: 100%;
         padding: 0;
-        height: 100%;
+        height: 360px;
     }
+
     #areafigure {
         flex: 3 !important;
     }
+
     #pieFigure {
         flex: 1 !important;
     }
+
     #container, #container-pie {
         width: 100% !important;
     }
+
     @@media only screen and (max-width: 850px) {
         .row-second {
             flex-direction: column;
         }
+
         #areafigure, #pieFigure {
             width: 100%;
         }
     }
-    @@media only screen and (max-width: 768px)
-    {
+
+    @@media only screen and (max-width: 768px) {
         .mainBody::-webkit-scrollbar-track-piece:end {
             margin-bottom: 5rem;
+        }
+    }
+
+    /*#endregion */
+
+    .third-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin: 0 0.3rem;
+    }
+
+    .tableColumn {
+        flex: 3;
+        margin-top: 0.3rem;
+    }
+    .stackedCircles {
+        flex: 1;
+        margin: 0 0.2rem;
+        margin-top: 0.3rem;
+        z-index: 1;
+    }
+    .topCategoryColumn {
+        flex: 1;
+        margin-top: 0.3rem;
+    }
+    .incomeCircle {
+        flex: 1;
+        margin: 0 0.2rem;
+        margin-top: 0.3rem;
+        z-index: 1;
+    }
+
+    @@media only screen and (max-width: 768px)
+    {
+        .mainBody::-webkit-scrollbar-track-piece:start {
+            margin-top: 0;
         }
     }
 </style>
@@ -207,11 +258,11 @@
     <link href="~/css/DashboardCSS/Index.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/areaChart.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/pieChart.css" rel="stylesheet" />
-    @*<link href="~/css/DashboardCSS/underCircle.css" rel="stylesheet" />
+    <link href="~/css/DashboardCSS/underCircle.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/cateCircle.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/paycheckCircle.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/listColumn.css" rel="stylesheet" />
-    <link href="~/css/DashboardCSS/topCategoryColumn.css" rel="stylesheet" />*@
+    <link href="~/css/DashboardCSS/topCategoryColumn.css" rel="stylesheet" />
 
     <link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
 }
@@ -299,11 +350,11 @@
                 </figure>
         </div>
 
-        @*<div class="row">
-                <div class="col-6 tableColumn table-responsive" id="view-all">
+        <div class="third-row">
+                <div class="tableColumn table-responsive" id="view-all">
                     @await Html.PartialAsync("_ViewAll", Model.Expenses)
                 </div>
-                <div class="col-2 stackedCircles container">
+                <div class="stackedCircles">
                     <div class="u-statCircle">
                         <div class="smallerCircle">
                             <p id="amountP" class="boldHeader" onmouseover="showPercentage()" data-toggle="tooltip" data-placement="top" title="@Model.CirclesStats[0].TooltipPercentage%">@Model.CirclesStats[0].SumLast30Days$</p>
@@ -341,7 +392,7 @@
                     </div>
                 </div>
 
-                <div class="col-2 topCategoryColumn table-responsive">
+                <div class="topCategoryColumn table-responsive">
                     <table class="table table-hover">
                         <thead class="sticky-top">
                             <tr>
@@ -364,7 +415,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-2 stackedCircles">
+                <div class="incomeCircle">
                     <div class="p-statCircle">
                         <div class="smallerCircle">
                             <p class="boldHeader">@Model.CirclesStats[2].SumLast30Days$</p>
@@ -388,7 +439,7 @@
                     </div>
                 </div>
 
-            </div>*@
+            </div>
 
 
     </div>

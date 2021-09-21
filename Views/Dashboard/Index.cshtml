@@ -82,12 +82,12 @@
         animation-delay: @Model.CirclesStats[2].LeftSpeed;
     }
 
-    .row-first {
+    div.row-first {
         display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
     }
-    .row-second {
-        display: flex;
-    }
+
     .statPill {
         border: 3px solid var(--text-primary);
         border-radius: 5px;
@@ -96,16 +96,13 @@
         display: flex;
         align-content: center;
         justify-content: space-evenly;
-        margin: 0;
-        width: 49%;
-        min-width: 11rem;
-        height: 100%;
-        margin-right: 0.5rem;
+        margin: 0.3rem;
+        flex: 1;
     }
-    .two-statPill:last-child .statPill:last-child {
-        margin-right: 0;
+    .statPill:last-child {
+        border-color: transparent;
+        background-color: transparent;
     }
-
     .pill-right p {
         text-align: center;
         margin: 0.2rem 0;
@@ -121,48 +118,18 @@
     .pill-left {
         text-align: center;
     }
-
-    .two-statPill {
-        flex: 2;
-        display: flex;
-        margin: 0;
+    #btnWeek, #btnMonth, #btnYear, #btnRecurring {
+        min-width: 4.5rem;
+        margin: 0.1rem;
     }
 
-        @@media only screen and (max-width: 806px)
+        @@media only screen and (max-width: 768px)
         {
-            .statPill {
-                margin-bottom: 0.5rem !important;
-                width: 98%;
-            }
             .row-first {
+                flex-wrap: nowrap;
                 flex-direction: column;
             }
-            .two-statPill {
-                flex-direction: row;
-                margin-right: 0 !important;
-            }
-        }
-        @@media only screen and (max-width: 980px)
-        {
-            .two-statPill {
-                flex-direction: column;
-                margin-right: 0.2rem;
-            }
-            .two-statPill:last-child {
-                margin-right: 0;
-            }
-            .statPill {
-                width: 100%;
-                margin-bottom: 0.2rem;
-            }
-            .statPill:last-child {
-                margin-bottom: 0;
-            }
-        }
-        .two-statPill:last-child .statPill:last-child {
-            background-color: transparent;
-            align-content: center;
-            border-color: transparent;
+
         }
 
     #container {
@@ -212,7 +179,6 @@
 <body>
     <div class="mainDiv">
         <div class="row-first">
-            <div class="two-statPill">
                 <div class="statPill">
                     <div class="pill-left">
                         <span>Highest expense</span>
@@ -236,8 +202,6 @@
                         <p style="text-align:center;"><i id="arrowUp" hidden class="fas fa-arrow-up"></i><i id="arrowDown" hidden class="fas fa-arrow-down"></i><span id="arrowPercentage"> @Model.PillsStats[1].Percentage% </span><span> average</span></p>
                     </div>
                 </div>
-            </div>
-            <div class="two-statPill">
                 <div class="statPill">
                     <div class="pill-left">
                         <span>Lowest expense</span>
@@ -256,11 +220,10 @@
                         @Html.ActionLink("Year", "Index", "Dashboard", new { period = 365 }, new { @class = "btn btn-outline-info", @id = "btnYear", @onclick = "stayActive(this.id)" })
                     </div>
                     <div class="pill-right">
-                        <a onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)',
+                        <a id="btnRecurring" onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)',
                                                 'Recurring payments')" class="btn btn-outline-light">Recurring payments</a>
                     </div>
                 </div>
-            </div>
 
 
 

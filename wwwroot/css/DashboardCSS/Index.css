@@ -7,21 +7,6 @@
 
 
 
-div.statPillButtons {
-    display: flex;
-    align-items: baseline;
-    text-align: center;
-}
-
-    div.statPillButtons .btn {
-        font-size: 15px;
-        border-radius: 0;
-        border: 3px solid var(--text-primary);
-    }
-
-    div.statPillButtons .btn-outline-info:not(:first-of-type) {
-        border-left: none;
-    }
 
 
 

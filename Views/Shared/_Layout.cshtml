@@ -69,7 +69,7 @@
             </li>
         </ul>
     </nav>
-    <main class="mainContent">
+    <main>
         @RenderBody()
         @*<i id="collapseSideNavbar" onclick="hideSideNavbar()" class="fas fa-angle-double-left" style="font-size: 5rem;"></i>*@
     </main>
@@ -125,12 +125,13 @@
                 document.getElementById("logo-icon").style.display = "block";
                 document.getElementsByClassName("navbar-side")[0].style.width = "5rem";
                 document.getElementsByClassName("navbar-top")[0].style.marginLeft = "5rem";
+                document.getElementsByTagName("main")[0].style.marginLeft = "5rem";
                 document.getElementById("collapseSideNavbar").style.transform = "rotate(180deg)";
                 var links = document.getElementsByClassName("link-text");
                 for (var i = 0; i < links.length; i++) {
                     links[i].style.display = "none";
                 }
-                document.getElementsByTagName("main")[0].style.marginLeft = "5rem";
+                
                 showLineChart();
                 showPieChart();
             }
@@ -138,12 +139,13 @@
                 document.getElementById("logo-icon").style.display = "none";
                 document.getElementsByClassName("navbar-side")[0].style.width = "14rem";
                 document.getElementsByClassName("navbar-top")[0].style.marginLeft = "14rem";
+                document.getElementsByTagName("main")[0].style.marginLeft = "14rem";
                 document.getElementById("collapseSideNavbar").style.transform = "rotate(0deg)";
                 var links = document.getElementsByClassName("link-text");
                 for (var i = 0; i < links.length; i++) {
                     links[i].style.display = "inline";
                 }
-                document.getElementsByTagName("main")[0].style.marginLeft = "14rem";
+                
                 showLineChart();
                 showPieChart();
             }

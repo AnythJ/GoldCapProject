@@ -7,7 +7,7 @@
     border-right: none;
     overflow-x: auto;
     overflow-y: scroll;
-    max-height: 380px;
+    height: 380px;
     min-width: 490px;
 }
 

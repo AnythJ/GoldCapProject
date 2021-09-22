@@ -87,7 +87,7 @@
     
 /*#endregion */
     .mainBody {
-        overflow-y: auto;
+        overflow-y: hidden;
         overflow-x: hidden;
     }
 
@@ -150,13 +150,6 @@
         margin: 0.1rem;
     }
 
-    @@media only screen and (max-width: 768px) {
-        .row-first {
-            flex-wrap: nowrap;
-            flex-direction: column;
-        }
-    }
-
     /*#endregion */
 
     /*#region Second row */
@@ -196,7 +189,12 @@
     #container, #container-pie {
         width: 100% !important;
     }
-
+    @@media only screen and (max-width: 1392px)
+    {
+        .mainBody {
+            overflow-y: auto;
+        }
+    }
     @@media only screen and (max-width: 850px) {
         .row-second {
             flex-direction: column;
@@ -210,6 +208,13 @@
     @@media only screen and (max-width: 768px) {
         .mainBody::-webkit-scrollbar-track-piece:end {
             margin-bottom: 5rem;
+        }
+        .mainBody::-webkit-scrollbar-track-piece:start {
+            margin-top: 0;
+        }
+        .row-first {
+            flex-wrap: nowrap;
+            flex-direction: column;
         }
     }
 
@@ -244,12 +249,75 @@
         z-index: 1;
     }
 
-    @@media only screen and (max-width: 768px)
-    {
-        .mainBody::-webkit-scrollbar-track-piece:start {
-            margin-top: 0;
+    @@media only screen and (max-width: 768px) {
+        .navbar-side {
+            width: 100vw !important;
+            height: 5rem !important;
+            bottom: 0 !important;
+        }
+
+        .navbar-nav-side {
+            flex-direction: row;
+        }
+
+        .nav-side-link {
+            justify-content: center;
+        }
+
+        main {
+            margin: 0 !important;
+            margin-bottom: 5rem !important;
+        }
+
+        .goldcapLogo {
+            display: none;
+        }
+
+        .link-text {
+            display: none !important;
         }
     }
+
+    @@media only screen and (min-width: 769px) {
+        .navbar-side {
+            width: 14rem;
+            height: 100vh;
+            top: 0;
+        }
+
+        .goldcapLogo-text {
+            display: inline;
+        }
+
+        .navbar-side:hover {
+            width: 14rem !important;
+        }
+
+            .navbar-side:hover .link-text {
+                display: inline !important;
+            }
+
+            .navbar-side:hover .goldcapLogo i {
+                display: none !important;
+            }
+
+            .navbar-side:hover ~ .navbar-top {
+                z-index: -1;
+            }
+
+        .navbar-top {
+            display: flex;
+        }
+
+        main {
+            margin-top: 4rem;
+        }
+
+        #collapseSideNavbar {
+            display: inline-block;
+        }
+    }
+
 </style>
 
 <!-- #region links -->
@@ -468,9 +536,9 @@
         $(showPieChart(period));
     });
     
-    //function showPercentage() {
-    //    $('#amountP').tooltip('show');
-    //}
+    function showPercentage() {
+        $('#amountP').tooltip('show');
+    }
 
     $(document).ready(function () {
         var arrowPercentage = $('#percentageArrowValue').val();
@@ -508,17 +576,17 @@
 
     });
 
-    //function EditPaycheck() {
-    //    var amountField = document.getElementById('paycheckAmount');
-    //    if (amountField.hidden == false) {
-    //        amountField.hidden = true;
-    //        document.getElementById('paycheckInputField').hidden = false;
-    //    }
-    //    else {
-    //        amountField.hidden = false;
-    //        document.getElementById('paycheckInputField').hidden = true;
-    //    }
-    //}
+    function EditPaycheck() {
+        var amountField = document.getElementById('paycheckAmount');
+        if (amountField.hidden == false) {
+            amountField.hidden = true;
+            document.getElementById('paycheckInputField').hidden = false;
+        }
+        else {
+            amountField.hidden = false;
+            document.getElementById('paycheckInputField').hidden = true;
+        }
+    }
 </script>
 
 @section Scripts{

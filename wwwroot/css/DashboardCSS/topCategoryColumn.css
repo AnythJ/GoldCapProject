@@ -6,7 +6,7 @@
     border-radius: 5px;
     border-right: 1px solid transparent;
     overflow-x: hidden;
-    max-height: 380px;
+    height: 380px;
     overflow-y: scroll;
     min-width: 235px;
 }

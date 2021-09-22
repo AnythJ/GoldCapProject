@@ -3,7 +3,6 @@
 
 
 <style>
-
     .modal-backdrop {
         z-index: -1;
     }
@@ -14,7 +13,7 @@
 
     .tableColumn {
         background-color: #2D3339;
-        color: #9ba6b0;
+        color: var(--text-primary);
         padding: 0;
         border: 3px solid #434d56;
         border-radius: 5px;
@@ -23,11 +22,12 @@
         border-bottom-right-radius: 0;
         overflow-x: auto;
         height: 100%;
-        width: 80%;
-        margin: 15px;
+        flex: 4;
+        margin: 0.3rem;
         overflow-y: scroll;
         float: left;
         margin-right: 0;
+        min-width: 570px;
     }
 
         .tableColumn::-webkit-scrollbar {
@@ -53,9 +53,11 @@
         border-left: none;
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
-        width: 18%;
+        flex: 1;
         float: left;
-        margin-top: 15px;
+        margin-top: 0.3rem;
+        margin-right: 0.3rem;
+        min-width: 269px;
         color: #9ba6b0;
         overflow-y: auto;
         overflow-x: hidden;
@@ -113,7 +115,6 @@
         background-color: #434d56;
         text-align: center;
         outline: none;
-        margin-left: 5px;
         color: #9ba6b0;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
@@ -139,7 +140,7 @@
         width: 15px;
         border-radius: 5px;
         background-color: #434d56;
-        margin-left: 5px;
+        /*margin-left: 5px;*/
     }
 
     input.currency {
@@ -243,108 +244,191 @@
     div.description-section {
         text-align: center;
     }
+
+    .wholeList {
+        display: flex;
+        height: 100%;
+    }
+
+    @@media only screen and (max-width: 1080px)
+    {
+        #sortMenu {
+            display: none;
+        }
+    }
+    @@media only screen and (max-width: 802px) {
+    .navbar-side {
+        width: 100vw !important;
+        height: 5rem !important;
+        bottom: 0 !important;
+    }
+
+    .navbar-nav-side {
+        flex-direction: row;
+    }
+
+    .nav-side-link {
+        justify-content: center;
+    }
+
+    main {
+        margin: 0 !important;
+        margin-bottom: 5rem !important;
+    }
+
+    .goldcapLogo {
+        display: none;
+    }
+
+    .link-text {
+        display: none !important;
+    }
+}
+    @@media only screen and (min-width: 803px) {
+        .navbar-side {
+            width: 14rem;
+            height: 100vh;
+            top: 0;
+        }
+
+        .goldcapLogo-text {
+            display: inline;
+        }
+
+        .navbar-side:hover {
+            width: 14rem !important;
+        }
+
+            .navbar-side:hover .link-text {
+                display: inline !important;
+            }
+
+            .navbar-side:hover .goldcapLogo i {
+                display: none !important;
+            }
+
+            .navbar-side:hover ~ .navbar-top {
+                z-index: -1;
+            }
+
+        .navbar-top {
+            display: flex;
+        }
+
+        main {
+            margin-top: 4rem;
+        }
+
+        #collapseSideNavbar {
+            display: inline-block;
+        }
+    }
 </style>
 
 
+<body>
+    <div class="wholeList">
+        <div id="listCol" class="table-responsive tableColumn">
+            <table class="table table-hover">
+                <thead class="sticky-top">
+                    <tr class="align-text-top">
+                        <th>
+                            <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort", "Expenses", new { sortOrder = (ViewBag.AmountSortParm == null ? "Amount" : ViewBag.AmountSortParm)}, Context.Request.Scheme)','Sort')">Amount</a>
+                        </th>
+                        <th>
+                            <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)},Context.Request.Scheme)','Sort')">Category</a>
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th class="date_column">
+                            <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
+                        </th>
+                        <th class="button_column">
+                            <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-success btn-sm">New expense</a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Expenses)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Category)
+                            </td>
+                            <td class="descriptionTd">
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td class="date_column">
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td class="button_column">
+                                <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')" class="btn btn-primary btn-sm">Edit</a>
+                                @*<form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDeleteSort(this)" class="d-inline">
+                                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                                    </form>*@
+                                <a class="btn btn-danger btn-sm" onclick="jQueryAjaxDeleteSort('@Url.Action("Delete","Expenses",new { sortOrder = (ViewBag.CategorySortParm == null ? "Date" : ViewBag.CategorySortParm), id = item.Id},Context.Request.Scheme)')">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
-<div id="listCol" class="table-responsive tableColumn">
-    <table class="table table-hover">
-        <thead class="sticky-top">
-            <tr class="align-text-top">
-                <th>
-                    <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort", "Expenses", new { sortOrder = (ViewBag.AmountSortParm == null ? "Amount" : ViewBag.AmountSortParm)}, Context.Request.Scheme)','Sort')">Amount</a>
-                </th>
-                <th>
-                    <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)},Context.Request.Scheme)','Sort')">Category</a>
-                </th>
-                <th>
-                    Description
-                </th>
-                <th class="date_column">
-                    <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
-                </th>
-                <th class="button_column">
-                    <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-success btn-sm">New expense</a>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Expenses)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Category)
-                    </td>
-                    <td class="descriptionTd">
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td class="date_column">
-                        @Html.DisplayFor(modelItem => item.Date)
-                    </td>
-                    <td class="button_column">
-                        <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')" class="btn btn-primary btn-sm">Edit</a>
-                        @*<form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDeleteSort(this)" class="d-inline">
-                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
-                        </form>*@
-                    <a class="btn btn-danger btn-sm" onclick="jQueryAjaxDeleteSort('@Url.Action("Delete","Expenses",new { sortOrder = (ViewBag.CategorySortParm == null ? "Date" : ViewBag.CategorySortParm), id = item.Id},Context.Request.Scheme)')">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-<div id="sortMenu">
-    <form id="sortMenuForm" asp-action="Sort" onsubmit="return PostSort(this);" autocomplete="off">
-        <p class="sort-header sticky-top">
-            <a class="refresh-button" onclick="JqueryAjaxSort('@Url.Action("Sort", "Expenses", new { sortOrder = "default", refresh = true}, Context.Request.Scheme)','Sort', true)">
-                <i class="fas fa-sync-alt"></i>
-            </a>
-            <span>Sort options</span>
-            <input type="submit" value="Search" class="btn btn-outline-info btn-sm btn-sort" />
-        </p>
-        <div class="sort-paragraph description-section">
-            <label>Description<input id="descriptionField" type="text" placeholder="search" asp-for="SortMenu.DescriptionSearch" /></label>
-        </div>
-        <div class="sort-paragraph price-section">
-            <label>Price</label>
-            <input id="priceFromField" asp-for="SortMenu.PriceFrom" type="number" placeholder="from" /><input type="number" class="currency" placeholder="$" disabled />
-            <span class="priceLink"></span>
-            <input id="priceToField" asp-for="SortMenu.PriceTo" type="number" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
-        </div>
-        <div class="sort-paragraph categories-section">
-            <h1 class="section-name">Categories</h1>
-            <ul id="categoryList">
-                @for (int i = 0; i < Model.CategoriesList.Count(); i++)
-                {
-                    <li>
-                        <div class="form-check">
-                            <label class="form-check-label">@Html.CheckBoxFor(c => c.SortMenu.ChosenCategories[i], new { @class = "form-check-input", @type = "checkbox" }) @Model.CategoriesList[i].Name</label>
-                        </div>
-                    </li>
-                }
-            </ul>
-            @if (Model.CategoriesList.Count() > 7)
-            {
-                <span id="showMore" onclick="showMore()">Show More</span><i onclick="showMore()" id="showArrow" class="fas fa-chevron-down"></i>
-            }
-            else
-            { <span id="showMore"></span>}
-        </div>
-        <div class="sort-paragraph date-section">
-            <div class="row">
-                <div class="col date-header"><h1 class="section-name">Date</h1></div>
-                <div class="col date-input-div">
-                    <input type="datetime-local" id="date-from" asp-for="SortMenu.DateFrom" placeholder="DD/MM/YYYY HH:DD"/>
-                    <input type="datetime-local" asp-for="SortMenu.DateTo" />
+        <div id="sortMenu">
+            <form id="sortMenuForm" asp-action="Sort" onsubmit="return PostSort(this);" autocomplete="off">
+                <p class="sort-header sticky-top">
+                    <a class="refresh-button" onclick="JqueryAjaxSort('@Url.Action("Sort", "Expenses", new { sortOrder = "default", refresh = true}, Context.Request.Scheme)','Sort', true)">
+                        <i class="fas fa-sync-alt"></i>
+                    </a>
+                    <span>Sort options</span>
+                    <input type="submit" value="Search" class="btn btn-outline-info btn-sm btn-sort" />
+                </p>
+                <div class="sort-paragraph description-section">
+                    <label>Description<input id="descriptionField" type="text" placeholder="search" asp-for="SortMenu.DescriptionSearch" /></label>
                 </div>
-            </div>
+                <div class="sort-paragraph price-section">
+                    <label>Price</label>
+                    <input id="priceFromField" asp-for="SortMenu.PriceFrom" type="number" placeholder="from" /><input type="number" class="currency" placeholder="$" disabled />
+                    <span class="priceLink"></span>
+                    <input id="priceToField" asp-for="SortMenu.PriceTo" type="number" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
+                </div>
+                <div class="sort-paragraph categories-section">
+                    <h1 class="section-name">Categories</h1>
+                    <ul id="categoryList">
+                        @for (int i = 0; i < Model.CategoriesList.Count(); i++)
+                        {
+                            <li>
+                                <div class="form-check">
+                                    <label class="form-check-label">@Html.CheckBoxFor(c => c.SortMenu.ChosenCategories[i], new { @class = "form-check-input", @type = "checkbox" }) @Model.CategoriesList[i].Name</label>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    @if (Model.CategoriesList.Count() > 7)
+                    {
+                        <span id="showMore" onclick="showMore()">Show More</span><i onclick="showMore()" id="showArrow" class="fas fa-chevron-down"></i>
+                    }
+                    else
+                    { <span id="showMore"></span>}
+                </div>
+                <div class="sort-paragraph date-section">
+                    <div class="row">
+                        <div class="col date-header"><h1 class="section-name">Date</h1></div>
+                        <div class="col date-input-div">
+                            <input type="datetime-local" id="date-from" asp-for="SortMenu.DateFrom" placeholder="DD/MM/YYYY HH:DD" />
+                            <input type="datetime-local" asp-for="SortMenu.DateTo" />
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
-    </form>
-</div>
+    </div>
+</body>
+
 
 <script>
     $(document).ready(function () {
@@ -353,7 +437,7 @@
 
         showMore();
     });
-
+    
     function showMore() {
         var x = $('#showMore').text();
         var listLen = document.getElementById('categoryList').getElementsByTagName("li").length;

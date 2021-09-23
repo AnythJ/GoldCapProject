@@ -38,7 +38,6 @@
 
         .tableColumn::-webkit-scrollbar-track-piece:start {
             margin-top: 47px;
-            scrollbar-track-color: red;
         }
 
         .tableColumn::-webkit-scrollbar-thumb {
@@ -61,7 +60,10 @@
         color: #9ba6b0;
         overflow-y: auto;
         overflow-x: hidden;
+        background-color: var(--bg-primary);
+        transition: all 0.3s ease;
     }
+
         #sortMenu::-webkit-scrollbar {
             display: block;
             width: 3px;
@@ -94,20 +96,22 @@
             margin-right: 15px;
             font-weight: normal;
         }
+
         p.sort-header a.refresh-button {
             margin-right: 5px;
             cursor: pointer;
             text-decoration: none;
             color: #9ba6b0;
         }
+
             p.sort-header a.refresh-button:hover {
                 color: #0DCAF0;
             }
 
-        div.sort-paragraph {
-            margin-top: 15px;
-            color: #9ba6b0;
-        }
+    div.sort-paragraph {
+        margin-top: 15px;
+        color: #9ba6b0;
+    }
 
     input[type=number], input[type=number] {
         border: 1px solid #434d56;
@@ -118,8 +122,9 @@
         color: #9ba6b0;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
-        width: 80px;
+        max-width: 80px;
     }
+
         input[type=number]:focus {
             border-color: #0DCAF0;
         }
@@ -179,28 +184,34 @@
         #categoryList li:nth-child(n+8) {
             display: none;
         }
+
     #showMore {
         padding-left: 16px;
         font-size: 12px;
         margin-top: 0;
         cursor: pointer;
     }
+
         #showMore:hover {
             color: #657381;
         }
+
     #showArrow {
         cursor: pointer;
         color: #9ba6b0;
         font-size: 12px;
         margin-left: 4px;
     }
+
     input.form-check-input {
         background-color: #9ba6b0;
     }
+
         input.form-check-input:hover, input.form-check-input:checked {
             background-color: #0DCAF0;
             color: #9ba6b0;
         }
+
     input[type=datetime-local] {
         border: 1px solid #434d56;
         border-radius: 15px;
@@ -209,10 +220,16 @@
         outline: none;
         margin-left: 5px;
         color: #9ba6b0;
-        width: 200px;
+        max-width: 180px;
     }
+
         input[type=datetime-local]:focus {
             border-color: #0DCAF0;
+        }
+
+        .date-section {
+            display: flex;
+            justify-content: space-between;
         }
     div.date-header {
         display: flex;
@@ -220,15 +237,18 @@
         align-items: center;
         height: 52px;
     }
+
     div.date-input-div {
         text-align: center;
         padding-left: 0;
         margin-left: 5px;
         margin-right: 15px;
     }
+
     #date-from {
         margin-bottom: 5px;
     }
+
     input[type=text] {
         border: 1px solid #434d56;
         border-radius: 15px;
@@ -238,9 +258,11 @@
         margin-left: 5px;
         color: #9ba6b0;
     }
+
         input[type=text]:focus {
             border-color: #0DCAF0;
         }
+
     div.description-section {
         text-align: center;
     }
@@ -250,41 +272,86 @@
         height: 100%;
     }
 
-    @@media only screen and (max-width: 1080px)
+    @@media only screen and (max-width: 590px)
     {
+        .tableColumn {
+            min-width: 100%;
+        }
+    }
+    @@media only screen and (max-width: 1080px) {
+        .navbar-side {
+            width: 100vw !important;
+            height: 5rem !important;
+            bottom: 0 !important;
+        }
+
+        .navbar-nav-side {
+            flex-direction: row;
+        }
+
+        .nav-side-link {
+            justify-content: center;
+        }
+
+        main {
+            margin: 0 !important;
+            margin-bottom: 5rem !important;
+        }
+
+        .goldcapLogo {
+            display: none;
+        }
+
+        .link-text {
+            display: none !important;
+        }
+
+        .tableColumn {
+            height: calc(100% - 1rem);
+        }
+
+        html {
+            overflow: hidden !important;
+        }
+
+        #sortCollapseButton {
+            clip-path: polygon(50% 50%, 0 0, 100% 0);
+            position: absolute;
+            z-index: 4;
+            width: 6rem;
+            height: 4rem;
+            background-color: var(--bg-primary);
+            border-top: 3px solid var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+
+            #sortCollapseButton:hover {
+                background-color: var(--bg-fourth);
+                border-top-color: var(--bg-fourth);
+                cursor: pointer;
+            }
+
+                #sortCollapseButton:hover .sortCollapse {
+                    background-color: var(--bg-third);
+                }
+
+        .sortCollapse {
+            clip-path: polygon(50% 50%, 0 0, 100% 0);
+            position: relative;
+            margin: 0 auto;
+            z-index: 4;
+            width: 4rem;
+            height: 2rem;
+            background-color: var(--bg-secondary);
+            transition: all 0.3s ease;
+        }
+
         #sortMenu {
             display: none;
         }
     }
-    @@media only screen and (max-width: 802px) {
-    .navbar-side {
-        width: 100vw !important;
-        height: 5rem !important;
-        bottom: 0 !important;
-    }
 
-    .navbar-nav-side {
-        flex-direction: row;
-    }
-
-    .nav-side-link {
-        justify-content: center;
-    }
-
-    main {
-        margin: 0 !important;
-        margin-bottom: 5rem !important;
-    }
-
-    .goldcapLogo {
-        display: none;
-    }
-
-    .link-text {
-        display: none !important;
-    }
-}
-    @@media only screen and (min-width: 803px) {
+    @@media only screen and (min-width: 1081px) {
         .navbar-side {
             width: 14rem;
             height: 100vh;
@@ -322,11 +389,20 @@
         #collapseSideNavbar {
             display: inline-block;
         }
+
+        #sortMenu {
+            display: block !important;
+        }
     }
 </style>
 
 
 <body>
+    <a id="sortCollapseButton" onclick="sortCollapseFunction()" class="sortCollapseBorder">
+        <div id="sortCollapseButtonInside" class="sortCollapse">
+
+        </div>
+    </a>
     <div class="wholeList">
         <div id="listCol" class="table-responsive tableColumn">
             <table class="table table-hover">
@@ -388,10 +464,9 @@
                     <input type="submit" value="Search" class="btn btn-outline-info btn-sm btn-sort" />
                 </p>
                 <div class="sort-paragraph description-section">
-                    <label>Description<input id="descriptionField" type="text" placeholder="search" asp-for="SortMenu.DescriptionSearch" /></label>
+                    <label id="descriptionLabel">Description<input id="descriptionField" type="text" placeholder="search" asp-for="SortMenu.DescriptionSearch" /></label>
                 </div>
                 <div class="sort-paragraph price-section">
-                    <label>Price</label>
                     <input id="priceFromField" asp-for="SortMenu.PriceFrom" type="number" placeholder="from" /><input type="number" class="currency" placeholder="$" disabled />
                     <span class="priceLink"></span>
                     <input id="priceToField" asp-for="SortMenu.PriceTo" type="number" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
@@ -416,12 +491,10 @@
                     { <span id="showMore"></span>}
                 </div>
                 <div class="sort-paragraph date-section">
-                    <div class="row">
-                        <div class="col date-header"><h1 class="section-name">Date</h1></div>
-                        <div class="col date-input-div">
-                            <input type="datetime-local" id="date-from" asp-for="SortMenu.DateFrom" placeholder="DD/MM/YYYY HH:DD" />
-                            <input type="datetime-local" asp-for="SortMenu.DateTo" />
-                        </div>
+                    <div class="date-header"><h1 class="section-name">Date</h1></div>
+                    <div class="date-input-div">
+                        <input type="datetime-local" id="date-from" asp-for="SortMenu.DateFrom" placeholder="DD/MM/YYYY HH:DD" />
+                        <input type="datetime-local" asp-for="SortMenu.DateTo" />
                     </div>
                 </div>
             </form>
@@ -432,12 +505,16 @@
 
 <script>
     $(document).ready(function () {
-        if (sessionStorage.getItem('showButton') != null)
+        if (sessionStorage.getItem('showButton') != null) {
             document.getElementById('showMore').textContent = sessionStorage.getItem('showButton');
-
-        showMore();
+            showMore();
+        }
+        else {
+            document.getElementById('showMore').textContent = "Show More";
+            sessionStorage.setItem('showButton', 'Show More');
+        }
     });
-    
+
     function showMore() {
         var x = $('#showMore').text();
         var listLen = document.getElementById('categoryList').getElementsByTagName("li").length;
@@ -451,7 +528,7 @@
                 sessionStorage.setItem('showButton', 'Show More');
             }
         }
-        else if (x == 'Show Less'){
+        else if (x == 'Show Less') {
             $('#categoryList li').slice(7, listLen).hide();
             $('#showMore').innerHtml == 'Show More';
             document.getElementById('showMore').innerHTML = 'Show More';
@@ -459,7 +536,6 @@
             document.getElementById('showArrow').classList.remove('fa-chevron-up');
             sessionStorage.setItem('showButton', 'Show Less');
         }
-
     };
 
     ListSort = (url, title, refresh) => {
@@ -472,7 +548,7 @@
                 contentType: false,
                 processData: false,
                 success: function (res) {
-                        $('#view-all').html(res.html);
+                    $('#view-all').html(res.html);
                 },
                 error: function (err) {
                     console.log(err)
@@ -483,7 +559,7 @@
             console.log(ex)
         }
     };
-    
+
     PostSort = form => {
         try {
             $.ajax({
@@ -532,6 +608,63 @@
         return false;
     }
 
+    $(document).ready(function () {
+        sessionStorage.setItem("sortMenuActive", "false");
+    });
+    function sortCollapseFunction() {
+        var sortParagraphs = document.getElementsByClassName("sort-paragraph");
+        var sortMenu = document.getElementById("sortMenu");
+        var currencyIcons = document.getElementsByClassName("currency");
+        document.getElementById("sortCollapseButton").style.transform = "rotate(180deg) translateY(1.5rem)";
+        if (sessionStorage.getItem("sortMenuActive") == "false") {
+
+            Array.prototype.forEach.call(sortParagraphs, function (item) {
+                item.style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
+            });
+            document.getElementsByClassName("section-name")[0].style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
+            document.getElementsByClassName("section-name")[1].style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
+
+            sortMenu.style.display = "block";
+            sortMenu.style.width = "99.5%";
+            sortMenu.style.height = "calc(100% - 4rem)";
+            sortMenu.style.paddingBottom = "2rem";
+            sortMenu.style.position = "absolute";
+            sortMenu.style.border = "5px solid var(--text-primary)";
+            sortMenu.style.borderRadius = "5px";
+            sortMenu.style.zIndex = "2";
+            sortMenu.style.margin = "0 auto";
+            currencyIcons[0].style.width = "2.50rem"
+            currencyIcons[0].style.height = document.getElementById("priceFromField").offsetHeight + "px";
+            currencyIcons[1].style.width = "2.50rem"
+            currencyIcons[1].style.height = document.getElementById("priceFromField").offsetHeight + "px";
+            document.querySelectorAll('input[type="number"]')[0].style.maxWidth = "100px";
+            sessionStorage.setItem("sortMenuActive", "true");
+        }
+        else {
+            Array.prototype.forEach.call(sortParagraphs, function (item) {
+                item.style.fontSize = "1rem";
+            });
+            document.getElementsByClassName("section-name")[0].style.fontSize = "1.25rem";
+            document.getElementsByClassName("section-name")[1].style.fontSize = "1.25rem";
+
+            sortMenu.style.display = "none";
+            sortMenu.style.width = "";
+            sortMenu.style.height = "100%";
+            sortMenu.style.paddingBottom = "0";
+            sortMenu.style.position = "";
+            sortMenu.style.border = "3px solid var(--text-primary)";
+            sortMenu.style.borderRadius = "5px";
+            sortMenu.style.zIndex = "";
+            sortMenu.style.margin = "";
+            currencyIcons[0].style.width = "1.25rem"
+            currencyIcons[0].style.height = "1.75rem";
+            currencyIcons[1].style.width = "1.25rem"
+            currencyIcons[1].style.height = "1.75rem";
+            document.querySelectorAll('input[type="number"]')[0].style.maxWidth = "80px";
+            document.getElementById("sortCollapseButton").style.transform = "rotate(0) translateY(0)"
+            sessionStorage.setItem("sortMenuActive", "false");
+        }
+    };
 </script>
 
 @section Scripts {

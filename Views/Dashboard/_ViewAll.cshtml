@@ -15,7 +15,7 @@
             <th>
                 <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort","Dashboard",new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)},Context.Request.Scheme)','Sort')">Category</a>
             </th>
-            <th>
+            <th class="descriptionTh">
                 Description
             </th>
             <th>
@@ -45,7 +45,7 @@
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td class="button_column">
-                    <a onclick="showInPopup('@Url.Action("Details","Dashboard",new { id = item.Id},Context.Request.Scheme)','Details')"
+                    <a id="detailsButton" onclick="showInPopup('@Url.Action("Details","Dashboard",new { id = item.Id},Context.Request.Scheme)','Details')"
                        class="btn btn-outline-info btn-sm">Details</a>
                 </td>
             </tr>

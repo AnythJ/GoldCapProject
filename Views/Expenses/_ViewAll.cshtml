@@ -61,7 +61,7 @@
         overflow-y: auto;
         overflow-x: hidden;
         background-color: var(--bg-primary);
-        transition: all 0.3s ease;
+        transition: height 0.3s ease, margin 0.3s ease; /*//HERE 24.09*/
     }
 
         #sortMenu::-webkit-scrollbar {
@@ -145,7 +145,6 @@
         width: 15px;
         border-radius: 5px;
         background-color: #434d56;
-        /*margin-left: 5px;*/
     }
 
     input.currency {
@@ -313,6 +312,31 @@
         html {
             overflow: hidden !important;
         }
+        #sortMenu {
+            height: calc(100% - 1rem);
+        }
+
+    }
+
+    @@media only screen and (min-width: 858px)
+    {
+        #sortMenu {
+            flex: 1 !important;
+            min-width: 269px !important;
+            height: 100% !important;
+            border: 3px solid #434d56 !important;
+            margin-top: 0.3rem !important;
+            margin-right: 0.3rem !important;
+        }
+    }
+    @@media only screen and (max-width: 857px)
+    {
+        #sortMenu {
+            flex: 0;
+            min-width: 0;
+            border: none;
+            height: 0;
+        }
 
         #sortCollapseButton {
             clip-path: polygon(50% 50%, 0 0, 100% 0);
@@ -345,12 +369,7 @@
             background-color: var(--bg-secondary);
             transition: all 0.3s ease;
         }
-
-        #sortMenu {
-            display: none;
-        }
     }
-
     @@media only screen and (min-width: 1081px) {
         .navbar-side {
             width: 14rem;
@@ -390,10 +409,16 @@
             display: inline-block;
         }
 
-        #sortMenu {
-            display: block !important;
+    }
+
+    @@media only screen and (max-width: 456px)
+    {
+        .descriptionTd, .descriptionTh {
+            display: none;
         }
     }
+    
+    
 </style>
 
 
@@ -414,7 +439,7 @@
                         <th>
                             <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)},Context.Request.Scheme)','Sort')">Category</a>
                         </th>
-                        <th>
+                        <th class="descriptionTh">
                             Description
                         </th>
                         <th class="date_column">
@@ -611,28 +636,26 @@
     $(document).ready(function () {
         sessionStorage.setItem("sortMenuActive", "false");
     });
+
     function sortCollapseFunction() {
         var sortParagraphs = document.getElementsByClassName("sort-paragraph");
-        var sortMenu = document.getElementById("sortMenu");
         var currencyIcons = document.getElementsByClassName("currency");
         document.getElementById("sortCollapseButton").style.transform = "rotate(180deg) translateY(1.5rem)";
+        var sortMenu = document.getElementById("sortMenu");
         if (sessionStorage.getItem("sortMenuActive") == "false") {
-
             Array.prototype.forEach.call(sortParagraphs, function (item) {
                 item.style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
             });
             document.getElementsByClassName("section-name")[0].style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
             document.getElementsByClassName("section-name")[1].style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
-
-            sortMenu.style.display = "block";
-            sortMenu.style.width = "99.5%";
-            sortMenu.style.height = "calc(100% - 4rem)";
-            sortMenu.style.paddingBottom = "2rem";
+            sortMenu.style.margin = "0";
+            sortMenu.style.flex = "1";
+            sortMenu.style.minWidth = "99.5%";
+            sortMenu.style.maxHeight = "90%";
             sortMenu.style.position = "absolute";
-            sortMenu.style.border = "5px solid var(--text-primary)";
-            sortMenu.style.borderRadius = "5px";
             sortMenu.style.zIndex = "2";
-            sortMenu.style.margin = "0 auto";
+            sortMenu.style.height = "95%";
+            
             currencyIcons[0].style.width = "2.50rem"
             currencyIcons[0].style.height = document.getElementById("priceFromField").offsetHeight + "px";
             currencyIcons[1].style.width = "2.50rem"
@@ -647,15 +670,15 @@
             document.getElementsByClassName("section-name")[0].style.fontSize = "1.25rem";
             document.getElementsByClassName("section-name")[1].style.fontSize = "1.25rem";
 
-            sortMenu.style.display = "none";
-            sortMenu.style.width = "";
-            sortMenu.style.height = "100%";
-            sortMenu.style.paddingBottom = "0";
-            sortMenu.style.position = "";
-            sortMenu.style.border = "3px solid var(--text-primary)";
-            sortMenu.style.borderRadius = "5px";
-            sortMenu.style.zIndex = "";
-            sortMenu.style.margin = "";
+            
+            sortMenu.style.height = "0";
+            sortMenu.style.margin = "-2000px auto 0 auto";
+            sortMenu.style.flex = "0";
+            sortMenu.style.minWidth = "0";
+            sortMenu.style.maxHeight = "";
+            sortMenu.style.position = "unset";
+            sortMenu.style.zIndex = "2";
+
             currencyIcons[0].style.width = "1.25rem"
             currencyIcons[0].style.height = "1.75rem";
             currencyIcons[1].style.width = "1.25rem"
@@ -665,6 +688,62 @@
             sessionStorage.setItem("sortMenuActive", "false");
         }
     };
+    //function sortCollapseFunction() {
+            
+    //    var sortParagraphs = document.getElementsByClassName("sort-paragraph");
+    //    var sortMenu = document.getElementById("sortMenu");
+    //    var currencyIcons = document.getElementsByClassName("currency");
+    //    document.getElementById("sortCollapseButton").style.transform = "rotate(180deg) translateY(1.5rem)";
+    //    if (sessionStorage.getItem("sortMenuActive") == "false") {
+
+    //        Array.prototype.forEach.call(sortParagraphs, function (item) {
+    //            item.style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
+    //        });
+    //        document.getElementsByClassName("section-name")[0].style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
+    //        document.getElementsByClassName("section-name")[1].style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
+
+    //        sortMenu.style.display = "block";
+    //        sortMenu.style.width = "99.5%";
+    //        sortMenu.style.height = "calc(100% - 4rem)";
+    //        sortMenu.style.paddingBottom = "2rem";
+    //        sortMenu.style.position = "absolute";
+    //        sortMenu.style.border = "5px solid var(--text-primary)";
+    //        sortMenu.style.borderRadius = "5px";
+    //        sortMenu.style.zIndex = "2";
+    //        sortMenu.style.margin = "0 auto";
+    //        currencyIcons[0].style.width = "2.50rem"
+    //        currencyIcons[0].style.height = document.getElementById("priceFromField").offsetHeight + "px";
+    //        currencyIcons[1].style.width = "2.50rem"
+    //        currencyIcons[1].style.height = document.getElementById("priceFromField").offsetHeight + "px";
+    //        document.querySelectorAll('input[type="number"]')[0].style.maxWidth = "100px";
+    //        sessionStorage.setItem("sortMenuActive", "true");
+    //    }
+    //    else {
+    //        Array.prototype.forEach.call(sortParagraphs, function (item) {
+    //            item.style.fontSize = "1rem";
+    //        });
+    //        document.getElementsByClassName("section-name")[0].style.fontSize = "1.25rem";
+    //        document.getElementsByClassName("section-name")[1].style.fontSize = "1.25rem";
+    //        sortMenu.style.display = "none";
+    //        sortMenu.style.minWidth = "269xp";
+    //        sortMenu.style.flex = "1";
+    //        sortMenu.style.width = "";
+    //        sortMenu.style.height = "100%";
+    //        sortMenu.style.paddingBottom = "0";
+    //        sortMenu.style.position = "";
+    //        sortMenu.style.border = "3px solid var(--text-primary)";
+    //        sortMenu.style.borderRadius = "5px";
+    //        sortMenu.style.zIndex = "1";
+    //        sortMenu.style.margin = "0";
+    //        currencyIcons[0].style.width = "1.25rem"
+    //        currencyIcons[0].style.height = "1.75rem";
+    //        currencyIcons[1].style.width = "1.25rem"
+    //        currencyIcons[1].style.height = "1.75rem";
+    //        document.querySelectorAll('input[type="number"]')[0].style.maxWidth = "80px";
+    //        document.getElementById("sortCollapseButton").style.transform = "rotate(0) translateY(0)"
+    //        sessionStorage.setItem("sortMenuActive", "false");
+    //    }
+    //};
 </script>
 
 @section Scripts {

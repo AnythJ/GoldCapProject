@@ -650,9 +650,14 @@
             document.getElementsByClassName("section-name")[0].style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
             document.getElementsByClassName("section-name")[1].style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
 
-            sortMenu.style.transform = "translateY(-450px)";
+            sortMenu.style.zIndex = "2";
             sortMenu.style.flex = "1";
+            sortMenu.style.minWidth = "100%";
+            sortMenu.style.margin = "0 auto";
             sortMenu.style.position = "absolute";
+            sortMenu.style.transform = "translateX(0)";
+            
+
             
             currencyIcons[0].style.width = "2.50rem"
             currencyIcons[0].style.height = document.getElementById("priceFromField").offsetHeight + "px";
@@ -668,7 +673,13 @@
             document.getElementsByClassName("section-name")[0].style.fontSize = "1.25rem";
             document.getElementsByClassName("section-name")[1].style.fontSize = "1.25rem";
 
-            
+            sortMenu.style.zIndex = "-5";
+            sortMenu.style.flex = "0";
+            sortMenu.style.margin = "0.3rem 0.3rem 0 0";
+            sortMenu.style.position = "initial";
+            sortMenu.style.minWidth = "269px";
+            sortMenu.style.transform = "translateX(-400px)";
+            sortMenu.style.height = "calc(100% - 1rem)"
             
 
             currencyIcons[0].style.width = "1.25rem"

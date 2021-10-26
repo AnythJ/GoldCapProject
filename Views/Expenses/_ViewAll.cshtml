@@ -45,22 +45,42 @@
         }
 
     #sortMenu {
-        border: 3px solid #434d56;
-        border-radius: 5px;
-        border-left: none;
-        border-bottom-left-radius: 0;
-        border-top-left-radius: 0;
-        float: left;
-        margin-top: 0.3rem;
-        margin-right: 0.3rem;
-        color: #9ba6b0;
-        overflow-y: auto;
-        overflow-x: hidden;
-        background-color: var(--bg-primary);
-        transition: all 0.3s ease;
         height: 100%;
     }
-
+    
+    @@media only screen and (min-width: 858px)
+    {
+        #sortMenu {
+            flex: 1;
+            min-width: 269px;
+        }
+        .sortMenu {
+            border: 3px solid #434d56;
+            border-radius: 5px;
+            border-left: none;
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+            float: left;
+            margin-top: 0.3rem;
+            margin-right: 0.3rem;
+            color: #9ba6b0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background-color: var(--bg-primary);
+            transition: all 0.3s ease;
+            height: calc(100%-1rem);
+        }
+    }
+    @@media only screen and (max-width: 857px)
+    {
+        #sortMenu {
+            flex: 0;
+            min-width: unset;
+        }
+        .sortMenu {
+            width: 0;
+        }
+    }
         #sortMenu::-webkit-scrollbar {
             display: block;
             width: 3px;
@@ -310,26 +330,10 @@
             overflow: hidden !important;
         }
 
-        #sortMenu {
-            height: calc(100% - 1rem) !important;
-        }
     }
 
-    @@media only screen and (min-width: 858px) {
-        #sortMenu {
-            flex: 1 !important;
-            min-width: 269px !important;
-            z-index: 1 !important;
-            transition: all 0.3s ease, z-index 0.2s ease 0.3s !important;
-        }
-    }
 
     @@media only screen and (max-width: 857px) {
-        #sortMenu {
-            flex: 0;
-            z-index: -5;
-            transition: all 0.3s ease, z-index 0s ease;
-        }
 
         #sortCollapseButton {
             clip-path: polygon(50% 50%, 0 0, 100% 0);
@@ -469,7 +473,7 @@
             </table>
         </div>
 
-        <div id="sortMenu">
+        <div id="sortMenu" class="sortMenu">
             <form id="sortMenuForm" asp-action="Sort" onsubmit="return PostSort(this);" autocomplete="off">
                 <p class="sort-header sticky-top">
                     <a class="refresh-button" onclick="JqueryAjaxSort('@Url.Action("Sort", "Expenses", new { sortOrder = "default", refresh = true}, Context.Request.Scheme)','Sort', true)">
@@ -625,22 +629,20 @@
         var currencyIcons = document.getElementsByClassName("currency");
         document.getElementById("sortCollapseButton").style.transform = "rotate(180deg) translateY(1.5rem)";
         document.getElementById("sortCollapseButton").style.zIndex = "6";
+        var sortMenuClass = document.getElementsByClassName("sortMenu")[0];
         var sortMenu = document.getElementById("sortMenu");
         if (sessionStorage.getItem("sortMenuActive") == "false") {
-            document.getElementById("listCol").classList.remove("tableColumn");
-            document.getElementById("listCol").style.flex = "0";
+
+            sortMenuClass.classList.remove("sortMenu");
             sortMenu.style.flex = "1";
-            sortMenu.style.minWidth = "100%";
+            document.getElementById("listCol").setAttribute("hidden", true);
+
             sessionStorage.setItem("sortMenuActive", "true");
         }
         else {
+            sortMenu.classList.add("sortMenu");
             sortMenu.style.flex = "0";
-            sortMenu.style.minWidth = "0";
-            sortMenu.style.transform = "translateX(1000px)";
-            
-            document.getElementById("listCol").style.flex = "1";
-            document.getElementById("listCol").classList.add("tableColumn");
-
+            document.getElementById("listCol").removeAttribute("hidden");
             document.getElementById("sortCollapseButton").style.transform = "rotate(0) translateY(0)"
             sessionStorage.setItem("sortMenuActive", "false");
 

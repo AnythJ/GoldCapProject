@@ -44,9 +44,7 @@
             background-color: #0790ab;
         }
 
-    #sortMenu {
-        height: 100%;
-    }
+    
     
     @@media only screen and (min-width: 858px)
     {
@@ -67,18 +65,22 @@
             overflow-y: auto;
             overflow-x: hidden;
             background-color: var(--bg-primary);
-            transition: all 0.3s ease;
-            height: calc(100%-1rem);
+            transition: flex 0.3s ease, min-width 0.3s ease, visibility 0.3s ease;
+            height: 100%;
         }
     }
     @@media only screen and (max-width: 857px)
     {
-        #sortMenu {
-            flex: 0;
-            min-width: unset;
+        .tableColumn {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            width: 100%;
         }
         .sortMenu {
+            flex: 0;
+            min-width: unset;
             width: 0;
+            visibility: hidden;
         }
     }
         #sortMenu::-webkit-scrollbar {
@@ -288,11 +290,6 @@
         height: 100%;
     }
     /*#endregion */
-    @@media only screen and (max-width: 590px) {
-        .tableColumn {
-            min-width: 100%;
-        }
-    }
 
     @@media only screen and (max-width: 1080px) {
         .navbar-side {
@@ -325,7 +322,12 @@
         .tableColumn {
             height: calc(100% - 1rem);
         }
-
+        .sortMenu {
+            height: calc(100% - 1rem);
+        }
+        .date-section {
+            padding-bottom: 1rem;
+        }
         html {
             overflow: hidden !important;
         }

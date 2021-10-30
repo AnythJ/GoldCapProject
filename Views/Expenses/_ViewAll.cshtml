@@ -65,8 +65,9 @@
             overflow-y: auto;
             overflow-x: hidden;
             background-color: var(--bg-primary);
-            transition: flex 0.3s ease, min-width 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.3s ease;
             height: 100%;
+            opacity: 1;
         }
     }
     @@media only screen and (max-width: 857px)
@@ -80,7 +81,7 @@
             flex: 0;
             min-width: unset;
             width: 0;
-            visibility: hidden;
+            opacity: 0;
         }
     }
         #sortMenu::-webkit-scrollbar {
@@ -323,7 +324,7 @@
             height: calc(100% - 1rem);
         }
         .sortMenu {
-            height: calc(100% - 1rem);
+            height: calc(100% - 1rem) !important;
         }
         .date-section {
             padding-bottom: 1rem;
@@ -410,11 +411,14 @@
         }
     }
 
-    @@media only screen and (max-width: 456px) {
+    @@media only screen and (max-width: 585px) {
         .descriptionTd, .descriptionTh {
             display: none;
         }
-    }
+        .tableColumn {
+            min-width: 320px;
+        }
+    } 
 </style>
 
 
@@ -639,6 +643,19 @@
             sortMenu.style.flex = "1";
             document.getElementById("listCol").setAttribute("hidden", true);
 
+            Array.prototype.forEach.call(sortParagraphs, function (item) {
+                item.style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
+            });
+            document.getElementsByClassName("section-name")[0].style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
+            document.getElementsByClassName("section-name")[1].style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
+            currencyIcons[0].style.width = "2.50rem";
+            currencyIcons[0].style.height = document.getElementById("priceFromField").offsetHeight + "px";
+            currencyIcons[1].style.width = "2.50rem";
+            currencyIcons[1].style.height = document.getElementById("priceFromField").offsetHeight + "px";
+            document.querySelectorAll('input[type="number"]')[0].style.maxWidth = "100px";
+            sortMenu.style.height = "100%";
+            sortMenu.style.overflowY = "auto";
+
             sessionStorage.setItem("sortMenuActive", "true");
         }
         else {
@@ -646,64 +663,23 @@
             sortMenu.style.flex = "0";
             document.getElementById("listCol").removeAttribute("hidden");
             document.getElementById("sortCollapseButton").style.transform = "rotate(0) translateY(0)"
-            sessionStorage.setItem("sortMenuActive", "false");
 
+            Array.prototype.forEach.call(sortParagraphs, function (item) {
+                item.style.fontSize = "1rem";
+            });
+            document.getElementsByClassName("section-name")[0].style.fontSize = "1rem";
+            document.getElementsByClassName("section-name")[1].style.fontSize = "1rem";
+            currencyIcons[0].style.width = "1.25rem";
+            currencyIcons[0].style.height = "1.75rem";
+            currencyIcons[1].style.width = "1.25rem";
+            currencyIcons[1].style.height = "1.75rem";
+            document.querySelectorAll('input[type="number"]')[0].style.maxWidth = "80px";
+            sortMenu.style.height = "calc(100%-1rem)";
+            sortMenu.style.overflowY = "auto";
+
+            sessionStorage.setItem("sortMenuActive", "false");
         }
     };
-    //function sortCollapseFunction() {
-
-    //    var sortParagraphs = document.getElementsByClassName("sort-paragraph");
-    //    var sortMenu = document.getElementById("sortMenu");
-    //    var currencyIcons = document.getElementsByClassName("currency");
-    //    document.getElementById("sortCollapseButton").style.transform = "rotate(180deg) translateY(1.5rem)";
-    //    if (sessionStorage.getItem("sortMenuActive") == "false") {
-    //        Array.prototype.forEach.call(sortParagraphs, function (item) {
-    //            item.style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
-    //        });
-    //        document.getElementsByClassName("section-name")[0].style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
-    //        document.getElementsByClassName("section-name")[1].style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
-    //        sortMenu.style.display = "block";
-    //        sortMenu.style.width = "99.5%";
-    //        sortMenu.style.height = "calc(100% - 4rem)";
-    //        sortMenu.style.paddingBottom = "2rem";
-    //        sortMenu.style.position = "absolute";
-    //        sortMenu.style.border = "5px solid var(--text-primary)";
-    //        sortMenu.style.borderRadius = "5px";
-    //        sortMenu.style.zIndex = "2";
-    //        sortMenu.style.margin = "0 auto";
-    //        currencyIcons[0].style.width = "2.50rem"
-    //        currencyIcons[0].style.height = document.getElementById("priceFromField").offsetHeight + "px";
-    //        currencyIcons[1].style.width = "2.50rem"
-    //        currencyIcons[1].style.height = document.getElementById("priceFromField").offsetHeight + "px";
-    //        document.querySelectorAll('input[type="number"]')[0].style.maxWidth = "100px";
-    //        sessionStorage.setItem("sortMenuActive", "true");
-    //    }
-    //    else {
-    //        Array.prototype.forEach.call(sortParagraphs, function (item) {
-    //            item.style.fontSize = "1rem";
-    //        });
-    //        document.getElementsByClassName("section-name")[0].style.fontSize = "1.25rem";
-    //        document.getElementsByClassName("section-name")[1].style.fontSize = "1.25rem";
-    //        sortMenu.style.display = "none";
-    //        sortMenu.style.minWidth = "269xp";
-    //        sortMenu.style.flex = "1";
-    //        sortMenu.style.width = "";
-    //        sortMenu.style.height = "100%";
-    //        sortMenu.style.paddingBottom = "0";
-    //        sortMenu.style.position = "";
-    //        sortMenu.style.border = "3px solid var(--text-primary)";
-    //        sortMenu.style.borderRadius = "5px";
-    //        sortMenu.style.zIndex = "1";
-    //        sortMenu.style.margin = "0";
-    //        currencyIcons[0].style.width = "1.25rem"
-    //        currencyIcons[0].style.height = "1.75rem";
-    //        currencyIcons[1].style.width = "1.25rem"
-    //        currencyIcons[1].style.height = "1.75rem";
-    //        document.querySelectorAll('input[type="number"]')[0].style.maxWidth = "80px";
-    //        document.getElementById("sortCollapseButton").style.transform = "rotate(0) translateY(0)"
-    //        sessionStorage.setItem("sortMenuActive", "false");
-    //    }
-    //};
 </script>
 
 @section Scripts {

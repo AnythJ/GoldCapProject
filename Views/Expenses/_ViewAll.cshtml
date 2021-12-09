@@ -14,7 +14,7 @@
         display: flex;
     }
     .sortMenu {
-        flex: 1;
+        
     }
     #listCol {
         margin: 0.3rem;
@@ -23,10 +23,25 @@
         height: 100%;
         padding: 0;
         flex: 4;
+        min-width: 29.5rem;
     }
-    
+        #listCol::-webkit-scrollbar {
+            display: block;
+            width: 3px;
+            background-color: #434d56;
+        }
 
-    @@media only screen and (max-width: 768px) {
+        #listCol::-webkit-scrollbar-track-piece:start {
+            margin-top: 47px;
+            scrollbar-track-color: red;
+        }
+
+        #listCol::-webkit-scrollbar-thumb {
+            background-color: #0790ab;
+        }
+
+        
+    @@media only screen and (max-width: 1084px) {
         .navbar-side {
             width: 100vw !important;
             height: 5rem !important;
@@ -54,9 +69,14 @@
             display: none !important;
         }
 
+        .wholeList {
+            padding-bottom: 1rem;
+        }
     }
+    @@media only screen and (min-width: 1085px) {
 
-    @@media only screen and (min-width: 769px) {
+        /*#region Basic */
+
         .navbar-side {
             width: 14rem;
             height: 100vh;
@@ -91,8 +111,31 @@
             margin-top: 4rem;
         }
 
+        /*#endregion */
+
     }
-    
+    @@media only screen and (min-width: 770px)
+    {
+        .sortMenu {
+            flex: 1;
+            min-width: 17rem;
+        }
+    }
+    @@media only screen and (max-width: 955px)
+    {
+        .descriptionTd, .descriptionTh {
+            display: none;
+        }
+    }
+    @@media only screen and (max-width: 480px) {
+        .date_column {
+            display: none;
+        }
+        
+        #listCol {
+            min-width: 12.5rem;
+        }
+    }
 </style>
 
 

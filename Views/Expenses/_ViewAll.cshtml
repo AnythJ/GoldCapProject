@@ -134,8 +134,24 @@
             height: 100%;
             padding: 0;
             margin-left: 0;
+
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        #sortMenu::-webkit-scrollbar {
+            display: block;
+            width: 0.1875rem;
+            background-color: #434d56;
         }
 
+        #sortMenu::-webkit-scrollbar-track-piece:start {
+            margin-top: 3rem;
+            scrollbar-track-color: red;
+        }
+
+        #sortMenu::-webkit-scrollbar-thumb {
+            background-color: #0790ab;
+        }
         /*#region Header */
 
         p.sort-header {
@@ -198,11 +214,14 @@
 
 
         /*#endregion */
-        
+
+        /*#region Price */
+
         .price-section {
             display: flex;
             justify-content: space-between;
         }
+
         #priceFromField, #priceToField {
             border: 1px solid #434d56;
             border-radius: 0.5rem;
@@ -216,6 +235,7 @@
             min-width: 2rem;
             margin-right: 0;
         }
+
         .currency {
             flex: 1;
             min-width: 0.1rem;
@@ -231,12 +251,56 @@
             margin: 0;
             text-align: center;
         }
-        .currency:not(:last-child) {
-            margin-right: 0.5rem;
+
+            .currency:not(:last-child) {
+                margin-right: 0.5rem;
+            }
+
+        /*#endregion */
+
+        .section-name {
+            color: #9ba6b0;
         }
-       
+
+        #categoryList {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        input.form-check-input {
+            background-color: #9ba6b0;
+        }
+
+            input.form-check-input:hover, input.form-check-input:checked {
+                background-color: #0DCAF0;
+                color: #9ba6b0;
+            }
+
+        #showMore {
+            padding-left: 16px;
+            font-size: 12px;
+            margin-top: 0;
+            cursor: pointer;
+        }
+
+            #showMore:hover {
+                color: #657381;
+            }
+
+        #showArrow {
+            cursor: pointer;
+            color: #9ba6b0;
+            font-size: 12px;
+            margin-left: 4px;
+        }
 
         
+        label.section-name {
+            width: 100%;
+            text-align: center;
+        }
+
     } 
     @@media only screen and (max-width: 769px)
     {
@@ -336,8 +400,8 @@
                     <span class="priceLink"></span>
                     <input id="priceToField" asp-for="SortMenu.PriceTo" type="number" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
                 </p>
-                @*<div class="sort-paragraph categories-section">
-                    <h1 class="section-name">Categories</h1>
+                <div class="sort-paragraph categories-section">
+                    <label class="section-name">Categories</label>
                     <ul id="categoryList">
                         @for (int i = 0; i < Model.CategoriesList.Count(); i++)
                         {
@@ -355,7 +419,7 @@
                     else
                     { <span id="showMore"></span>}
                 </div>
-                <div class="sort-paragraph date-section">
+                @*<div class="sort-paragraph date-section">
                     <div class="date-header"><h1 class="section-name">Date</h1></div>
                     <div class="date-input-div">
                         <input type="datetime-local" id="date-from" asp-for="SortMenu.DateFrom" placeholder="DD/MM/YYYY HH:DD" />
@@ -375,8 +439,8 @@
             showMore();
         }
         else {
-            document.getElementById('showMore').textContent = "Show More";
-            sessionStorage.setItem('showButton', 'Show More');
+            document.getElementById('showMore').textContent = "Show Less";
+            showMore();
         }
     });
     function showMore() {

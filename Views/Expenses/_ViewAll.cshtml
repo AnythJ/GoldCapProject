@@ -40,6 +40,15 @@
             background-color: #0790ab;
         }
 
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
         
     @@media only screen and (max-width: 1084px) {
         .navbar-side {
@@ -127,6 +136,8 @@
             margin-left: 0;
         }
 
+        /*#region Header */
+
         p.sort-header {
             background-color: #434d56;
             color: #9ba6b0;
@@ -155,20 +166,12 @@
                     color: #0DCAF0;
                 }
 
-        p.sort-paragraph {
-            margin: 0.3rem 0.3rem;
-        }
-        #descriptionLabel {
-            display: flex;
-            justify-content: space-between;
-            flex-direction: column;
-            color: #9ba6b0;
-            margin: 0 0.5rem;
-        }
+        /*#endregion */
 
-        #descriptionLabel, #descriptionField {
-            text-align: center;
+        .sort-paragraph {
+            margin: 0.3rem 1rem 1rem 1rem;
         }
+            
         input[type=text] {
             border: 1px solid #434d56;
             border-radius: 0.5rem;
@@ -180,6 +183,60 @@
             input[type=text]:focus {
                 border-color: #0DCAF0;
             }
+        /*#region Description */
+
+        #descriptionLabel {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            color: #9ba6b0;
+        }
+
+        #descriptionLabel {
+            text-align: center;
+        }
+
+
+        /*#endregion */
+        
+        .price-section {
+            display: flex;
+            justify-content: space-between;
+        }
+        #priceFromField, #priceToField {
+            border: 1px solid #434d56;
+            border-radius: 0.5rem;
+            background-color: #434d56;
+            text-align: center;
+            outline: none;
+            color: #9ba6b0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            flex: 4;
+            min-width: 2rem;
+            margin-right: 0;
+        }
+        .currency {
+            flex: 1;
+            min-width: 0.1rem;
+            border: 1px solid #434d56;
+            border-radius: 0.5rem;
+            background-color: #434d56;
+            outline: none;
+            color: #9ba6b0;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-left: 1px solid #9ba6b0;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        .currency:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+       
+
+        
     } 
     @@media only screen and (max-width: 769px)
     {
@@ -271,15 +328,15 @@
                     <span>Sort options</span>
                     <input type="submit" value="Search" class="btn btn-outline-info btn-sm btn-sort" />
                 </p>
-                <div class="sort-paragraph description-section">
+                <p class="sort-paragraph">
                     <label id="descriptionLabel">Description<input id="descriptionField" type="text" placeholder="search" asp-for="SortMenu.DescriptionSearch" /></label>
-                </div>
-                @*<div class="sort-paragraph price-section">
+                </p>
+                <p class="sort-paragraph price-section">
                     <input id="priceFromField" asp-for="SortMenu.PriceFrom" type="number" placeholder="from" /><input type="number" class="currency" placeholder="$" disabled />
                     <span class="priceLink"></span>
                     <input id="priceToField" asp-for="SortMenu.PriceTo" type="number" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
-                </div>
-                <div class="sort-paragraph categories-section">
+                </p>
+                @*<div class="sort-paragraph categories-section">
                     <h1 class="section-name">Categories</h1>
                     <ul id="categoryList">
                         @for (int i = 0; i < Model.CategoriesList.Count(); i++)

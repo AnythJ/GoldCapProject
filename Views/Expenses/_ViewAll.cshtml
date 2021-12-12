@@ -262,6 +262,9 @@
             color: #9ba6b0;
         }
 
+
+        /*#region Category */
+
         #categoryList {
             list-style-type: none;
             padding: 0;
@@ -295,12 +298,37 @@
             margin-left: 4px;
         }
 
-        
+
         label.section-name {
             width: 100%;
             text-align: center;
         }
 
+        /*#endregion */
+
+        .date-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        input[type=datetime-local] {
+            border: 1px solid #434d56;
+            border-radius: 0.5rem;
+            background-color: #434d56;
+            text-align: center;
+            outline: none;
+            color: #9ba6b0;
+            margin-top: 0.5rem;
+        }
+            input[type=datetime-local]:not(:first-child) {
+                margin-top: 1rem;
+            }
+
+
+            input[type=datetime-local]:focus {
+                border-color: #0DCAF0;
+            }
     } 
     @@media only screen and (max-width: 769px)
     {
@@ -400,7 +428,7 @@
                     <span class="priceLink"></span>
                     <input id="priceToField" asp-for="SortMenu.PriceTo" type="number" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
                 </p>
-                <div class="sort-paragraph categories-section">
+                <div class="sort-paragraph">
                     <label class="section-name">Categories</label>
                     <ul id="categoryList">
                         @for (int i = 0; i < Model.CategoriesList.Count(); i++)
@@ -419,13 +447,13 @@
                     else
                     { <span id="showMore"></span>}
                 </div>
-                @*<div class="sort-paragraph date-section">
-                    <div class="date-header"><h1 class="section-name">Date</h1></div>
-                    <div class="date-input-div">
-                        <input type="datetime-local" id="date-from" asp-for="SortMenu.DateFrom" placeholder="DD/MM/YYYY HH:DD" />
+                <div class="sort-paragraph">
+                    <label class="section-name">Date</label>
+                    <div class="date-section">
+                        <input type="datetime-local" id="date-from" asp-for="SortMenu.DateFrom" />
                         <input type="datetime-local" asp-for="SortMenu.DateTo" />
                     </div>
-                </div>*@
+                </div>
             </form>
         </div>
     </div>

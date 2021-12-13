@@ -16,7 +16,12 @@
         display: flex;
     }
 
-    .sortMenu {
+    .sortMenuHidden {
+        display: none;
+    }
+
+    .sortMenuDIsplayed {
+        display: block;
     }
 
     #listCol {
@@ -140,18 +145,18 @@
             overflow-y: auto;
         }
 
-        #sortMenu::-webkit-scrollbar {
+        .sortMenu::-webkit-scrollbar {
             display: block;
             width: 0.1875rem;
             background-color: #434d56;
         }
 
-        #sortMenu::-webkit-scrollbar-track-piece:start {
+        .sortMenu::-webkit-scrollbar-track-piece:start {
             margin-top: 3rem;
             scrollbar-track-color: red;
         }
 
-        #sortMenu::-webkit-scrollbar-thumb {
+        .sortMenu::-webkit-scrollbar-thumb {
             background-color: #0790ab;
         }
         /*#region Header */
@@ -301,6 +306,8 @@
         }
         /*#endregion */
 
+        /*#region Date */
+
         .date-section {
             display: flex;
             flex-direction: column;
@@ -325,6 +332,8 @@
             input[type=datetime-local]:focus {
                 border-color: #0DCAF0;
             }
+
+        /*#endregion */
     }
 
     @@media only screen and (max-width: 769px) {
@@ -345,6 +354,7 @@
             display: flex;
             align-items: center;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
             #sortCollapseButton:hover #sortCollapseButtonInside {
                 background-color: var(--bg-third);
@@ -373,6 +383,21 @@
         #listCol {
             min-width: 12.5rem;
         }
+    }
+
+    .sortMenuCollapsed {
+        flex: 1;
+        width: 100%;
+        margin: 0.3rem;
+        border: 3px solid #434d56;
+        border-radius: 5px;
+        height: 100%;
+        padding: 0;
+        margin-left: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        display: block;
+        z-index: 3;
     }
 </style>
 
@@ -586,54 +611,35 @@
         sessionStorage.setItem("sortMenuActive", "false");
     });
 
-
+    $(window).resize(function () {
+        if ($(window).width() >= 770) {
+            document.getElementById("sortMenu").classList.remove("sortMenuCollapsed");
+            document.getElementById("listCol").style.display = "block";
+        }
+    });
+    
     function sortCollapseFunction() {
         var sortParagraphs = document.getElementsByClassName("sort-paragraph");
+        var sortHeader = document.getElementsByClassName("sort-header")[0];
         var currencyIcons = document.getElementsByClassName("currency");
-        document.getElementById("sortCollapseButton").style.transform = "rotate(180deg) translateY(1.5rem)";
-        document.getElementById("sortCollapseButton").style.zIndex = "6";
+        document.getElementById("sortCollapseButton").style.transform = "scaleX(-1)";
+        document.getElementById("sortCollapseButton").style.transformOrigin = "25% 50%";
+        document.getElementById("sortCollapseButton").style.left = "right";
         var sortMenuClass = document.getElementsByClassName("sortMenu")[0];
         var sortMenu = document.getElementById("sortMenu");
         if (sessionStorage.getItem("sortMenuActive") == "false") {
-
-            sortMenuClass.classList.remove("sortMenu");
-            sortMenu.style.flex = "1";
-            document.getElementById("listCol").setAttribute("hidden", true);
-
-            Array.prototype.forEach.call(sortParagraphs, function (item) {
-                item.style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
-            });
-            document.getElementsByClassName("section-name")[0].style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
-            document.getElementsByClassName("section-name")[1].style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
-            currencyIcons[0].style.width = "2.50rem";
-            currencyIcons[0].style.height = document.getElementById("priceFromField").offsetHeight + "px";
-            currencyIcons[1].style.width = "2.50rem";
-            currencyIcons[1].style.height = document.getElementById("priceFromField").offsetHeight + "px";
-            document.querySelectorAll('input[type="number"]')[0].style.maxWidth = "100px";
-            sortMenu.style.height = "100%";
-            sortMenu.style.overflowY = "auto";
+            sortMenu.classList.add("sortMenuCollapsed");
+            document.getElementById("listCol").style.display = "none";
+            //Array.prototype.forEach.call(sortParagraphs, function (item) {
+            //    item.style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
+            //});
 
             sessionStorage.setItem("sortMenuActive", "true");
         }
         else {
-            sortMenu.classList.add("sortMenu");
-            sortMenu.style.flex = "0";
-            document.getElementById("listCol").removeAttribute("hidden");
-            document.getElementById("sortCollapseButton").style.transform = "rotate(0) translateY(0)"
-
-            Array.prototype.forEach.call(sortParagraphs, function (item) {
-                item.style.fontSize = "1rem";
-            });
-            document.getElementsByClassName("section-name")[0].style.fontSize = "1rem";
-            document.getElementsByClassName("section-name")[1].style.fontSize = "1rem";
-            currencyIcons[0].style.width = "1.25rem";
-            currencyIcons[0].style.height = "1.75rem";
-            currencyIcons[1].style.width = "1.25rem";
-            currencyIcons[1].style.height = "1.75rem";
-            document.querySelectorAll('input[type="number"]')[0].style.maxWidth = "80px";
-            sortMenu.style.height = "calc(100%-1rem)";
-            sortMenu.style.overflowY = "auto";
-
+            sortMenu.classList.remove("sortMenuCollapsed");
+            document.getElementById("listCol").style.display = "block";
+            document.getElementById("sortCollapseButton").style.transform = "scale(1)";
             sessionStorage.setItem("sortMenuActive", "false");
         }
     };

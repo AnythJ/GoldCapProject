@@ -18,7 +18,7 @@
         display: flex;
     }
 
-    
+
 
     #listCol {
         margin: 0.3rem;
@@ -26,8 +26,6 @@
         border-radius: 5px;
         height: 100%;
         padding: 0;
-        width: 60%;
-        min-width: 29.5rem;
         overflow-y: auto;
     }
 
@@ -121,6 +119,21 @@
             margin-top: 4rem;
         }
         /*#endregion */
+
+        #listCol {
+            width: 60%;
+        }
+    }
+
+    @@media only screen and (max-width: 480px) {
+        #listCol {
+            min-width: 12.5rem;
+            width: 100%;
+        }
+
+        .categoryName {
+            width: 4rem;
+        }
     }
 
     input[type=text] {
@@ -136,11 +149,11 @@
         input[type=text]:focus {
             border-color: #0DCAF0;
         }
-        
-        #submitBtn-category {
-            min-width: 3.6rem;
-            font-weight: normal;
-        }
+
+    #submitBtn-category {
+        min-width: 3.6rem;
+        font-weight: normal;
+    }
 
     #createform {
         text-align: right;
@@ -170,7 +183,7 @@
                             <form id="createform" asp-action="Create" asp-route-id="@Model.Category.Id">
                                 <input type="hidden" asp-for="Category.Id" />
                                 <span class="categoryValidation" asp-validation-for="Category.Name"></span>
-                                <input asp-for="Category.Name" />
+                                <input class="categoryName" asp-for="Category.Name" />
                                 <input id="submitBtn-category" type="submit" value="Add" class="btn btn-success btn-sm" />
                             </form>
                         </th>
@@ -195,6 +208,7 @@
 </body>
 
 
+
 <script>
     ListSort = (url, refresh) => {
         try {
@@ -215,7 +229,7 @@
             console.log(ex)
         }
     };
-    
+
     jQueryAjaxDeleteSort = (url) => {
         if (confirm('Are you sure to delete this record ?')) {
             var sortForm = document.getElementById('sortMenuForm');

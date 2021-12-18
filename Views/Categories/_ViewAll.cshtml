@@ -3,162 +3,197 @@
 @{
     ViewData["Title"] = "List of Categories";
 }
+
 <style>
-    input[type="submit"] {
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-    }
-
-    a.refreshIcon {
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-    }
-
-    i.fa-plus-square:hover {
-        background-color: gray;
-    }
-
-    .modal-backdrop {
-        z-index: -1;
-        display: none;
-    }
-
-    table {
-        border-collapse: separate;
-        border-spacing: 0;
-    }
-
-    .descriptionTd {
-        white-space: nowrap;
+    html {
         overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 160px;
     }
-
-    .table {
-        background-color: #2D3339;
-        color: #9ba6b0;
-    }
-
-        .table thead {
-            background-color: #434d56;
-            color: #9ba6b0;
-        }
-
-    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-        color: white;
-    }
-
-    .table tr th, .table tr td {
-        vertical-align: middle;
-    }
-
-    .table .button_column {
-        text-align: right;
-    }
-
-    .table .refresh_button {
-        text-align: right;
-        padding-right: 30px;
-    }
-
 
     .modal-backdrop {
         z-index: -1;
     }
 
-    .tableColumn {
-        background-color: #2D3339;
-        color: #9ba6b0;
-        padding: 0;
+    .wholeList {
+        height: 100%;
+        display: flex;
+    }
+
+    
+
+    #listCol {
+        margin: 0.3rem;
         border: 3px solid #434d56;
         border-radius: 5px;
-        border-right: none;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        overflow-x: hidden;
-        height: 97%;
-        width: 40%;
-        margin: 15px;
-        overflow-y: scroll;
-        float: left;
-        margin-right: 0;
+        height: 100%;
+        padding: 0;
+        width: 60%;
+        min-width: 29.5rem;
+        overflow-y: auto;
     }
 
-        .tableColumn::-webkit-scrollbar {
+        #listCol::-webkit-scrollbar {
             display: block;
             width: 3px;
             background-color: #434d56;
         }
 
-        .tableColumn::-webkit-scrollbar-track-piece:start {
+        #listCol::-webkit-scrollbar-track-piece:start {
             margin-top: 47px;
             scrollbar-track-color: red;
         }
 
-        .tableColumn::-webkit-scrollbar-thumb {
+        #listCol::-webkit-scrollbar-thumb {
             background-color: #0790ab;
         }
 
-    input.category-input {
-        border: 1px solid #212529;
-        border-radius: 15px;
-        background-color: #212529;
-        text-align: center;
-        outline: none;
-        margin-left: 5px;
-        color: #9ba6b0;
-        margin-right: 5px;
-    }
 
-        input.category-input:focus {
-            border-color: #0DCAF0;
+    @@media only screen and (max-width: 1084px) {
+        .navbar-side {
+            width: 100vw !important;
+            height: 5rem !important;
+            bottom: 0 !important;
         }
 
-    #submitBtn-category {
-        font-weight: normal;
+        .navbar-nav-side {
+            flex-direction: row;
+        }
+
+        .nav-side-link {
+            justify-content: center;
+        }
+
+        main {
+            margin: 0 !important;
+            margin-bottom: 5rem !important;
+        }
+
+        .goldcapLogo {
+            display: none;
+        }
+
+        .link-text {
+            display: none !important;
+        }
+
+        .wholeList {
+            padding-bottom: 1rem;
+        }
+
+        #listCol {
+            width: 100%;
+        }
     }
 
-    a.category-label {
-        cursor: pointer;
-        text-decoration: none;
-        color: #9ba6b0;
+    @@media only screen and (min-width: 1085px) {
+        /*#region Basic */
+
+        .navbar-side {
+            width: 14rem;
+            height: 100vh;
+            top: 0;
+        }
+
+        .goldcapLogo-text {
+            display: inline;
+        }
+
+        .navbar-side:hover {
+            width: 14rem !important;
+        }
+
+            .navbar-side:hover .link-text {
+                display: inline !important;
+            }
+
+            .navbar-side:hover .goldcapLogo i {
+                display: none !important;
+            }
+
+            .navbar-side:hover ~ .navbar-top {
+                z-index: -1;
+            }
+
+        .navbar-top {
+            display: flex;
+        }
+
+        main {
+            margin-top: 4rem;
+        }
+        /*#endregion */
+    }
+
+    input[type=text] {
+        border: 1px solid var(--bg-primary);
+        border-radius: 0.5rem;
+        background-color: #5a6772;
+        text-align: center;
+        outline: none;
+        color: white;
+        margin: 0 1rem;
+    }
+
+        input[type=text]:focus {
+            border-color: #0DCAF0;
+        }
+        
+        #submitBtn-category {
+            min-width: 3.6rem;
+            font-weight: normal;
+        }
+
+    #createform {
+        text-align: right;
+        display: flex;
+        justify-content: end;
+        align-content: center;
+    }
+
+    .categoryValidation {
+        margin-right: 5px;
+        font-size: 12px;
+        color: #0DCAF0;
     }
 </style>
 
 
-<div class="table-responsive tableColumn">
-    <table class="table table-hover">
-        <thead class="sticky-top">
-            <tr class="align-text-top">
-                <th>
-                    <a class="category-label" onclick="ListSort('@Url.Action("Sort", "Categories", new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)}, Context.Request.Scheme)','Sort')">Category</a>
-                </th>
-                <th>
-                    <form id="createform" asp-action="Create" asp-route-id="@Model.Category.Id" style="text-align:right;">
-                        <input type="hidden" asp-for="Category.Id" />
-                        <span asp-validation-for="Category.Name" style="margin-right: 5px; font-size: 12px; color: #0DCAF0;"></span>
-                        <input class="category-input" asp-for="Category.Name" />
-                        <input id="submitBtn-category" type="submit" value="Add" class="btn btn-success btn-sm" />
-                    </form>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Categories)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td align="right">
-                        <a class="btn btn-danger btn-sm" asp-controller="Categories" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+<body class="">
+    <div class="wholeList">
+        <div id="listCol" class="table-responsive">
+            <table class="table table-hover">
+                <thead class="sticky-top">
+                    <tr class="align-text-top">
+                        <th>
+                            <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort", "Categories", new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)}, Context.Request.Scheme)','Sort')">Category</a>
+                        </th>
+                        <th>
+                            <form id="createform" asp-action="Create" asp-route-id="@Model.Category.Id">
+                                <input type="hidden" asp-for="Category.Id" />
+                                <span class="categoryValidation" asp-validation-for="Category.Name"></span>
+                                <input asp-for="Category.Name" />
+                                <input id="submitBtn-category" type="submit" value="Add" class="btn btn-success btn-sm" />
+                            </form>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Categories)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td align="right">
+                                <a class="btn btn-danger btn-sm" asp-controller="Categories" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
 
 <script>
     ListSort = (url, refresh) => {
@@ -180,4 +215,33 @@
             console.log(ex)
         }
     };
+    
+    jQueryAjaxDeleteSort = (url) => {
+        if (confirm('Are you sure to delete this record ?')) {
+            var sortForm = document.getElementById('sortMenuForm');
+            try {
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: new FormData(sortForm),
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+                        $('#view-all').html(res.html);
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                })
+            } catch (ex) {
+                console.log(ex)
+            }
+        }
+        //prevent default form submit event
+        return false;
+    }
 </script>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+}

@@ -203,6 +203,13 @@
         #areafigure, #pieFigure {
             width: 100%;
         }
+
+        /*.incomeCircle, .topCategoryColumn, .stackedCircles, .tableColumn, .row-first, .row-second {
+            margin-bottom: 0.5rem;
+        }*/
+        .stackedCircles {
+            margin: 0.5rem 0.2rem !important;
+        }
     }
 
     @@media only screen and (max-width: 768px) {
@@ -326,6 +333,21 @@
             display: none;
         }
     }
+
+
+    @@media only screen and (max-width: 436px) {
+        .pill-left {
+            flex: 0;
+            display: none;
+        }
+        #btnRecurring {
+            width: 100%;
+        }
+        .pill-right {
+            width: 100%;
+        }
+    }
+    
 </style>
 
 <!-- #region links -->

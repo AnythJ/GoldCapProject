@@ -1,9 +1,20 @@
 ﻿@model IEnumerable<Expense>
 
 
-@section Styles {
-    
-}
+<style>
+    @@media only screen and (max-width: 955px) {
+        .descriptionTd, .descriptionTh {
+            display: none;
+        }
+    }
+
+    @@media only screen and (max-width: 356px) {
+        .categoryTd, .categoryTh {
+            display: none;
+        }
+    }
+
+</style>
 <link href="~/css/DashboardCSS/_ViewAll.css" rel="stylesheet" />
 <input hidden id="idForSort" value="" />
 <table class="table table-hover">
@@ -12,7 +23,7 @@
             <th>
                 <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort", "Dashboard", new { sortOrder = (ViewBag.AmountSortParm == null ? "Amount" : ViewBag.AmountSortParm)}, Context.Request.Scheme)','Sort')">Amount</a>
             </th>
-            <th>
+            <th class="categoryTh">
                 <a style="cursor:pointer;" onclick="JqueryAjaxSort('@Url.Action("Sort","Dashboard",new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)},Context.Request.Scheme)','Sort')">Category</a>
             </th>
             <th class="descriptionTh">
@@ -35,7 +46,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Amount)
                 </td>
-                <td>
+                <td class="categoryTd">
                     @Html.DisplayFor(modelItem => item.Category)
                 </td>
                 <td class="descriptionTd">

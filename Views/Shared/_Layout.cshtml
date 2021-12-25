@@ -16,11 +16,26 @@
     @RenderSection("Styles", required: false)
 
     <style>
-        #periodButtons {
-            display: none;
-            
-        }
+        
 
+        .navbar-top-items {
+            display: flex;
+        }
+        #collapseBtn {
+            flex: 1;
+            text-decoration: none;
+        }
+        #periodButtons {
+            flex: 1;
+            display: none;
+            text-align: right;
+            justify-content: end;
+        }
+        .navbar-top-items {
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+        }
     </style>
     <title>@ViewBag.Title</title>
 </head>
@@ -64,8 +79,8 @@
         </ul>
     </nav>
     <nav class="navbar-top">
-        <div class="topNavbarItems">
-            <a>
+        <div class="navbar-top-items">
+            <a id="collapseBtn">
                 <i id="collapseSideNavbar" class="fas fa-angle-double-left" onclick="collapseSideNavbar()"></i>
             </a>
 
@@ -127,8 +142,8 @@
     @*<script src="~/lib/font-awesome/js/all.js"></script>*@
     <script>
         $(document).ready(function () {
-            if (window.location.href.indexOf("/dashboard") != -1) {
-                document.getElementById("periodButtons").style.display = "block";
+            if (window.location.href.toUpperCase().indexOf("/DASHBOARD") != -1) {
+                document.getElementById("periodButtons").style.display = "flex";
             }
         });
        

@@ -134,8 +134,17 @@
         margin: 0.2rem 0;
     }
     .pill-right {
+        text-align: center;
+        margin: 0.2rem 0;
+    }
+    .pill-recurring {
         display: flex;
         align-items: center;
+        flex-direction: column;
+    }
+    .pill-date-span {
+        font-weight: bold;
+        font-size: 1.2rem;
     }
 
     p.pillAmount {
@@ -421,12 +430,8 @@
                     </div>
                 </div>
                 <div class="statPill">
-                    @*<div class="pill-left">
-                        @Html.ActionLink("Week", "Index", "Dashboard", new { period = 7 }, new { @class = "btn btn-outline-info", @id = "btnWeek", @onclick = "stayActive(this.id)" })
-                        @Html.ActionLink("Month", "Index", "Dashboard", new { period = 30 }, new { @class = "btn btn-outline-info", @id = "btnMonth", @onclick = "stayActive(this.id)" })
-                        @Html.ActionLink("Year", "Index", "Dashboard", new { period = 365 }, new { @class = "btn btn-outline-info", @id = "btnYear", @onclick = "stayActive(this.id)" })
-                    </div>*@
-                    <div class="pill-right">
+                    <div class="pill-recurring">
+                        <p class="pill-date-span">@DateTime.Now.AddDays(-30).ToString("dd MMM yyy")  -  @DateTime.Now.ToString("dd MMM yyy")</p>
                         <a id="btnRecurring" onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)',
                                                 'Recurring payments')" class="btn btn-outline-light">Recurring payments</a>
                     </div>

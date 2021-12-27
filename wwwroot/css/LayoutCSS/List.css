@@ -1,6 +1,6 @@
 ﻿body {
-    color: white;
-    background-color: #6C757D;
+    color: var(--text-third);
+    background-color: var(--list-bg);
 }
 .modal-backdrop {
     z-index: -1;
@@ -11,50 +11,50 @@
 }
 
 .modal-body, .modal-header, .modal-footer {
-    background-color: #212529;
-    color: white;
+    background-color: var(--bg-primary);
+    color: var(--text-third);
 }
 
 input[type=text], select, textarea {
-    background-color: #6C757D;
-    border: 1px solid #6C757D;
+    background-color: var(--list-bg);
+    border: 1px solid var(--list-bg);
     border-radius: 4px;
-    color: white;
+    color: var(--text-third);
 }
 
 .leftside {
     width: 50%;
     float: left;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
 }
 
 textarea {
-    color: white;
+    color: var(--text-third);
 }
 
 .modal-title {
-    padding-left: 20px;
+    padding-left: 1.25rem;
 }
 
 span {
     color: lightgray;
-    font-size: 10px;
+    font-size: 0.625rem;
 }
 
 select {
     width: 95%;
-    height: 28px;
+    height: 1.75rem;
 }
 
 #dateinput {
-    width: 221px;
-    margin-right:0;
-    height: 28px;
-    background-color: #6C757D;
-    border: 1px solid #6C757D;
+    width: 13.8125rem;
+    margin-right: 0;
+    height: 1.75rem;
+    background-color: var(--list-bg);
+    border: 1px solid var(--list-bg);
     border-radius: 4px;
-    color: white;
+    color: var(--text-third);
 }
 
 .btn-close {
@@ -66,13 +66,13 @@ select {
 /*xxx*/
 
 .table {
-    color: white;
+    color: var(--text-third);
     height: 100%;
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-    background-color: #5f666d;
-    color: white;
+    background-color: var(--list-hover);
+    color: var(--text-third);
 }
 
 .tableContainer {
@@ -82,8 +82,8 @@ select {
     width: 100%;
     border-left: 2px solid white;
     border-right: 2px solid white;
-    border-top: 6px solid #212529;
-    border-bottom: 6px solid #212529;
+    border-top: 6px solid var(--bg-primary);
+    border-bottom: 6px solid var(--bg-primary);
 }
 
 table {
@@ -92,19 +92,19 @@ table {
 }
 
 thead.sticky-top {
-    background-color: #474d52;
+    background-color: var(--list-thead);
 }
 
 .btn-info {
-    background-color: #17A2B8;
-    color: white;
-    border-color: #17A2B8;
+    background-color: var(--list-btn-bg);
+    color: var(--text-third);
+    border-color: var(--list-btn-bg);
 }
 
     .btn-info:hover, .btn-info:focus {
-        background-color: #138496;
-        border-color: #138496;
-        color: white;
+        background-color: var(--list-btn-bg-hover);
+        border-color: var(--list-btn-bg-hover);
+        color: var(--text-third);
     }
 
 .table td.description {
@@ -116,6 +116,6 @@ thead.sticky-top {
 
 
 #button-column {
-    max-width: 140px;
+    max-width: 8.75rem;
 }
 

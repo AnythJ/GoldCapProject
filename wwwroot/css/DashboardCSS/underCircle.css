@@ -1,6 +1,6 @@
 ﻿.u-statCircle {
-    height: 150px;
-    width: 150px;
+    height: 9.375rem;
+    width: 9.375rem;
     position: relative;
     border-radius: 100%;
     margin: 0 auto;
@@ -22,21 +22,21 @@
         width: 100%;
         -webkit-border-radius: 100%;
         background-color: transparent;
-        clip: rect(0px, 150px, 150px, 75px);
+        clip: rect(0px, 9.375rem, 9.375rem, 4.6875rem);
     }
 
     .u-statCircle .smallerCircle {
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 130px;
-        height: 130px;
-        margin: -65px 0 0 -65px;
-        background-color: #2d3339;
+        width: 8.125rem;
+        height: 8.125rem;
+        margin: -4.0625rem 0 0 -4.0625rem;
+        background-color: var(--bg-navbar);
         z-index: 10;
         -webkit-border-radius: 100%;
-        border: 1px solid #68a4fd;
-        padding-top: 10px;
+        border: 1px solid var(--smallerCircle-color-third);
+        padding-top: 0.625rem;
     }
 
     .u-statCircle .circle .bar .progress {
@@ -44,13 +44,13 @@
         height: 100%;
         width: 100%;
         -webkit-border-radius: 100%;
-        clip: rect(0px, 75px, 200px, 0px);
-        background-color: #0DCAF0;
+        clip: rect(0px, 4.6875rem, 12.5rem, 0px);
+        background-color: var(--bg-third);
         z-index: 3;
     }
 
     .u-statCircle .smallerCircle p, u-statCircle .smallerCircle p small {
-        font-size: 14px;
+        font-size: 0.875rem;
         margin: 0 auto;
     }
 
@@ -71,19 +71,19 @@
 }
 
 .u-statCircle .smallerCircle p {
-    color: #9ba6b0;
+    color: var(--text-secondary);
     margin-top: 0;
     margin-bottom: 0;
     text-align: center;
 }
 
     .u-statCircle .smallerCircle p.boldHeader {
-        font-size: 20px;
+        font-size: 1.25rem;
         font-weight: bold;
     }
 
 hr {
-    border-top: 3px solid #5a6672;
+    border-top: 3px solid var(--hr-primary);
     background-color: transparent;
     z-index: inherit;
     opacity: 1;

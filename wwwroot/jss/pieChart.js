@@ -80,11 +80,11 @@ function showPieChart(period) {
                     style: {
                         fontFamily: 'Arial'
                     },
-                    backgroundColor: '#212529'
+                    backgroundColor: 'var(--bg-primary)'
                 },
                 title: {
                     style: {
-                        color: '#9ba6b0'
+                        color: 'var(--text-secondary)'
                     },
                     text: 'Categories in %'
                 },
@@ -94,11 +94,11 @@ function showPieChart(period) {
                 tooltip: {
                     useHTML: true,
                     headerFormat: '',
-                    backgroundColor: '#2D3339',
+                    backgroundColor: 'var(--bg-navbar)',
                     style: {
-                        color: '#9ba6b0'
+                        color: 'var(--text-secondary)'
                     },
-                    pointFormat: '<span style="margin-right:5px;height:10px;width:10px;background-color:{point.color};border-radius:50%;display:inline-block;"></span><b>{point.name}</b>: <b>{point.percentage:.1f}%</b>'
+                    pointFormat: '<span style="margin-right:0.3125rem;height:0.625rem;width:0.625rem;background-color:{point.color};border-radius:50%;display:inline-block;"></span><b>{point.name}</b>: <b>{point.percentage:.1f}%</b>'
                 },
                 accessibility: {
                     point: {
@@ -110,7 +110,7 @@ function showPieChart(period) {
                         allowPointSelect: true,
                         cursor: 'pointer',
                         colors: pieColors,
-                        borderColor: '#C9FBFF',
+                        borderColor: 'var(--piechart-border-color)',
                         dataLabels: {
                             enabled: false,
                         },
@@ -120,8 +120,8 @@ function showPieChart(period) {
                                     var tBody = document.getElementById('tableBody');
                                     var trRows = tBody.getElementsByClassName('trClass');
                                     for (var i = 0; i < trRows.length; i++) {
-                                        trRows[i].style.backgroundColor = "#2D3339";
-                                        trRows[i].style.color = "#9ba6b0";
+                                        trRows[i].style.backgroundColor = "var(--bg-navbar)";
+                                        trRows[i].style.color = "var(--text-secondary)";
                                         trRows[i].style.fontWeight = "normal";
                                         trRows[i].cells[0].style.borderLeft = "none";
                                     }
@@ -135,9 +135,9 @@ function showPieChart(period) {
                                             if (col.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim() == this.name) {
                                                 if (idElement == null || idElement != row) {
                                                     //active
-                                                    row.style.backgroundColor = "#384047";
-                                                    col.style.borderLeft = "10px solid " + event.point.color;
-                                                    row.style.color = "#9ba6b0";
+                                                    row.style.backgroundColor = "var(--piechart-row-bg)";
+                                                    col.style.borderLeft = "0.625rem solid " + event.point.color;
+                                                    row.style.color = "var(--text-secondary)";
                                                     row.style.fontWeight = "bold";
                                                     row.setAttribute("id", "active");
                                                     finalRow = row;
@@ -152,8 +152,8 @@ function showPieChart(period) {
                                                 }
                                                 else {
                                                     //unactive
-                                                    row.style.backgroundColor = "#2D3339";
-                                                    row.style.color = "#9ba6b0";
+                                                    row.style.backgroundColor = "var(--bg-navbar)";
+                                                    row.style.color = "var(--text-secondary)";
                                                     row.style.fontWeight = "normal";
                                                     row.setAttribute("id", "");
                                                     sendToList(-1, null, period);

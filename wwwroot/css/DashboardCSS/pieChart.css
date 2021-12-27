@@ -1,5 +1,5 @@
-﻿#pieFigure.highcharts-figure/*, .highcharts-data-table table*/ {
-    min-width: 279px;
+﻿#pieFigure.highcharts-figure /*, .highcharts-data-table table*/ {
+    min-width: 17.4375rem;
     max-width: 100%;
     margin: 0;
 }

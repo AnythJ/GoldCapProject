@@ -6,11 +6,10 @@
 
 <style>
     .mainForm {
-        max-width: 500px;
-        min-width: 250px;
+        max-width: 31.25rem;
+        min-width: 15.625rem;
         margin: 0 auto;
         text-align: center;
-        
         position: relative;
         z-index: 6;
         padding-top: 15%;
@@ -20,37 +19,37 @@
         z-index: 5;
         margin: 0 auto;
         text-align: center;
-        border: 3px solid #0DCAF0;
+        border: 3px solid var(--bg-third);
         border-radius: 5px;
         padding: 5% 20%;
-        background-color: #212529;
+        background-color: var(--bg-primary);
     }
     h1 {
-        font-size: 55px;
+        font-size: 3.4375rem;
         font-weight: bold;
-        color: #9ba6b0;
+        color: var(--text-secondary);
     }
     input.form-control, input.form-control:-webkit-autofill, input.form-control:-webkit-autofill:hover, input.form-control:-webkit-autofill:active {
-        background-color: #2d3339;
-        color: #9ba6b0;
-        border-color: #212529;
+        background-color: var(--bg-navbar);
+        color: var(--text-secondary);
+        border-color: var(--bg-primary);
         border-radius: 5px;
-        -webkit-box-shadow: 0 0 0px 200px #2d3339 inset;
-        -webkit-text-fill-color: #9ba6b0;
+        -webkit-box-shadow: 0 0 0 12.5rem var(--bg-navbar) inset;
+        -webkit-text-fill-color: var(--text-secondary);
     }
         input.form-control:active, input.form-control:focus, input.form-contro:hover, input.form-control:-webkit-autofill:focus {
-            background-color: #2d3339;
-            color: #9ba6b0;
-            border-color: #0DCAF0;
+            background-color: var(--bg-navbar);
+            color: var(--text-secondary);
+            border-color: var(--bg-third);
             border-radius: 5px;
-            -webkit-box-shadow: 0 0 0px 200px #2d3339 inset;
-            -webkit-text-fill-color: #9ba6b0;
+            -webkit-box-shadow: 0 0 0px 12.5rem var(--bg-navbar) inset;
+            -webkit-text-fill-color: var(--text-secondary);
         }
 
-    
-        
+
+
     .form-group {
-        margin: 5px 0;
+        margin: 0.3125rem 0;
     }
 
 </style>

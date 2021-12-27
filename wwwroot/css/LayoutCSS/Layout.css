@@ -8,6 +8,20 @@
     --text-primary: #434D56;
     --text-secondary: #9ba6b0;
     --bg-navbar: #2d3339;
+    /**/
+    --smallerCircle-color: #FFC759;
+    --hr-primary: #5a6672;
+    --scrollbar-primary: #0790ab;
+    --smallerCircle-color-secondary: #DFF8EB;
+    --smallerCircle-color-third: #68a4fd;
+    --list-bg: #6C757D;
+    --list-hover: #5f666d;
+    --list-thead: #474d52;
+    --list-btn-bg: #17A2B8;
+    --list-btn-bg-hover: #138496;
+    --text-third: white;
+    /*JS*/
+    --piechart-border-color: #C9FBFF;
 }
 
 body {

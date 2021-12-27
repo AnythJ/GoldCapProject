@@ -17,30 +17,30 @@
 
     .modal-body, .modal-header, .modal-title, .modal-footer {
         font-family: Arial;
-        background-color: #212529;
-        color: #9ba6b0;
+        background-color: var(--bg-primary);
+        color: var(--text-secondary);
     }
     .modal-content, modal-dialog {
-        border: 3px solid #434d56;
+        border: 3px solid var(--text-primary);
         border-radius: 5px;
     }
     .modal-header {
         border: none;
-        border-bottom: 3px solid #434d56;
+        border-bottom: 3px solid var(--text-primary);
         border-radius: 0;
     }
     input[type=text]:disabled, input[type=datetime-local]:disabled, select:disabled {
-        background-color: #2d3339;
-        color: #9ba6b0;
-        border-color: #0DCAF0;
+        background-color: var(--bg-navbar);
+        color: var(--text-secondary);
+        border-color: var(--bg-third);
         border-radius: 5px;
     }
     textarea:disabled {
-        background-color: #2d3339 !important;
-        color: #9ba6b0 !important;
+        background-color: var(--bg-navbar) !important;
+        color: var(--text-secondary) !important;
         resize: none;
         max-width: 135ch;
-        border: 0.5px solid #0DCAF0;
+        border: 0.5px solid var(--bg-third);
         border-radius: 5px;
     }
 

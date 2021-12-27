@@ -1,27 +1,27 @@
 ﻿.tableColumn {
-    background-color: #2D3339;
-    color: #9ba6b0;
+    background-color: var(--bg-navbar);
+    color: var(--text-secondary);
     padding: 0;
-    border: 3px solid #434d56;
+    border: 3px solid var(--text-primary);
     border-radius: 5px;
     border-right: none;
     overflow-x: auto;
     overflow-y: scroll;
-    height: 380px;
-    min-width: 490px;
+    height: 23.75rem;
+    min-width: 30.625rem;
 }
 
     .tableColumn::-webkit-scrollbar {
         display: block;
         width: 3px;
-        background-color: #434d56;
+        background-color: var(--text-primary);
     }
 
     .tableColumn::-webkit-scrollbar-track-piece:start {
-        margin-top: 40px;
+        margin-top: 2.5rem;
         scrollbar-track-color: red;
     }
 
     .tableColumn::-webkit-scrollbar-thumb {
-        background-color: #0790ab;
+        background-color: var(--scrollbar-primary);
     }

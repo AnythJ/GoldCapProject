@@ -1,4 +1,31 @@
-﻿html {
+﻿:root {
+    font-size: 16px;
+    font-family: Arial;
+    --bg-primary: #212529;
+    --bg-secondary: #2D3339;
+    --bg-third: #0DCAF0;
+    --bg-fourth: hsl(210, 11%, 18%);
+    --text-primary: #434D56;
+    --text-secondary: #9ba6b0;
+    --bg-navbar: #2d3339;
+    /**/
+    --smallerCircle-color: #FFC759;
+    --hr-primary: #5a6672;
+    --scrollbar-primary: #0790ab;
+    --smallerCircle-color-secondary: #DFF8EB;
+    --smallerCircle-color-third: #68a4fd;
+    --list-bg: #6C757D;
+    --list-hover: #5f666d;
+    --list-thead: #474d52;
+    --list-btn-bg: #17A2B8;
+    --list-btn-bg-hover: #138496;
+    --text-third: white;
+    /*JS*/
+    --piechart-border-color: #C9FBFF;
+    --piechart-row-bg: #384047;
+}
+
+html {
     scroll-behavior: smooth;
 }
 
@@ -10,8 +37,8 @@
 
 body {
     font-family: Arial;
-    background-color: #212529;
-    color: #9ba6b0;
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
     margin: 0;
     padding: 0;
     overflow: hidden scroll;
@@ -39,16 +66,16 @@ nav.navbar {
 
 #topNavbar.container-fluid {
     margin: 0;
-    padding: 6px 12px;
+    padding: 0.375rem 0.75rem;
     justify-content: right;
-    background-color: hsl(210, 11%, 18%);
+    background-color: var(--bg-fourth);
 }
 
 .signInButton {
     font-weight: bold;
     transition: all 0.3s ease;
     background-color: transparent;
-    border-radius: 55px;
+    border-radius: 3.4375rem;
     display: inline-block;
     z-index: 0;
     position: relative;
@@ -56,7 +83,7 @@ nav.navbar {
 }
 
     .signInButton:hover {
-        color: #212529;
+        color: var(--bg-primary);
     }
 
         .signInButton:hover:after {
@@ -72,7 +99,7 @@ nav.navbar {
         top: 0;
         width: 0;
         height: 100%;
-        background-color: #0DCAF0;
+        background-color: var(--bg-third);
     }
 
 .main {
@@ -94,11 +121,11 @@ nav.navbar {
     }
 
 .first-section {
-    background-color: #212529;
+    background-color: var(--bg-primary);
 }
 
 .second-section {
-    background-color: hsl(210, 11%, 18%);
+    background-color: var(--bg-fourth);
 }
 
 section.third-section {
@@ -111,7 +138,7 @@ section.third-section {
     left: 0;
     right: 0;
     display: flex;
-    background-color: #212529;
+    background-color: var(--bg-primary);
     position: relative;
     z-index: 10;
 }
@@ -128,7 +155,7 @@ section.third-section {
     display: flex;
     position: relative;
     z-index: 3;
-    background-color: hsl(210, 11%, 18%);
+    background-color: var(--bg-fourth);
 }
 
 .section-col {
@@ -146,8 +173,8 @@ section.third-section {
 
 p.main-description {
     font-weight: bold;
-    font-size: 30px;
-    color: white;
+    font-size: 1.875rem;
+    color: var(--text-third);
     margin: auto 0;
     opacity: 0;
     -webkit-animation: slide-text-1 0.3s ease forwards;
@@ -164,18 +191,18 @@ p.main-description {
 }
 
 a.startNow {
-    margin-left: 20px;
-    min-width: 150px;
+    margin-left: 1.25rem;
+    min-width: 9.375rem;
 }
 
 
 #firstImageBackground {
     border: 3px solid;
-    border-color: #0DCAF0;
-    margin: 100px -2000px 0 0;
+    border-color: var(--bg-third);
+    margin: 6.25rem -125rem 0 0;
     z-index: 5;
     position: absolute;
-    background-color: #212529;
+    background-color: var(--bg-primary);
     -webkit-animation: slide1 0.3s ease forwards;
     -webkit-animation-delay: 0.8s;
     animation: slide1 0.3s ease forwards;
@@ -184,7 +211,7 @@ a.startNow {
 
 @keyframes slide1 {
     to {
-        margin: 100px 200px 0 0;
+        margin: 6.25rem 12.5rem 0 0;
     }
 }
 
@@ -197,7 +224,7 @@ a.startNow {
 }
 
 #firstImage {
-    border: 2px solid #0DCAF0;
+    border: 2px solid var(--bg-third);
     -webkit-animation: imgHoverOut 0.2s ease forwards;
     position: relative;
     z-index: 6;
@@ -205,11 +232,11 @@ a.startNow {
 
 #secondImageBackground {
     border: 3px solid;
-    border-color: #0DCAF0;
-    margin: -200px -2000px 0 0;
+    border-color: var(--bg-third);
+    margin: -12.5rem -125rem 0 0;
     z-index: 3;
     position: absolute;
-    background-color: #212529;
+    background-color: var(--bg-primary);
     -webkit-animation: slide2 0.3s ease forwards;
     -webkit-animation-delay: 0.7s;
     animation: slide2 0.3s ease forwards;
@@ -218,7 +245,7 @@ a.startNow {
 
 @keyframes slide2 {
     to {
-        margin: -200px 50px 0 0;
+        margin: -12.5rem 3.125rem 0 0;
     }
 }
 
@@ -231,7 +258,7 @@ a.startNow {
 }
 
 #secondImage {
-    border: 2px solid #0DCAF0;
+    border: 2px solid var(--bg-third);
     -webkit-animation: imgHoverOut 0.2s ease forwards;
     position: relative;
     z-index: 4;
@@ -239,11 +266,11 @@ a.startNow {
 
 #thirdImageBackground {
     border: 3px solid;
-    border-color: #0DCAF0;
-    margin: -100px -2000px 0 0;
+    border-color: var(--bg-third);
+    margin: -6.25rem -125rem 0 0;
     z-index: 1;
     position: absolute;
-    background-color: #212529;
+    background-color: var(--bg-primary);;
     -webkit-animation: slide3 0.3s ease forwards;
     -webkit-animation-delay: 0.6s;
     animation: slide3 0.3s ease forwards;
@@ -252,7 +279,7 @@ a.startNow {
 
 @keyframes slide3 {
     to {
-        margin: -100px 50px 0 0;
+        margin: -6.25rem 3.125rem 0 0;
     }
 }
 
@@ -265,7 +292,7 @@ a.startNow {
 }
 
 #thirdImage {
-    border: 2px solid #0DCAF0;
+    border: 2px solid var(--bg-third);
     -webkit-animation: imgHoverOut 0.2s ease forwards;
     z-index: 2;
     position: relative;
@@ -277,16 +304,16 @@ a.startNow {
     }
 
     to {
-        transform: translate(-25px, 25px);
-        border: 2px solid #0DCAF0;
+        transform: translate(-1.5625rem, 1.5625rem);
+        border: 2px solid var(--bg-third);
         z-index: 10;
     }
 }
 
 @keyframes imgHoverOut {
     from {
-        transform: translate(-25px, 25px);
-        border: 2px solid #0DCAF0;
+        transform: translate(-1.5625rem, 1.5625rem);
+        border: 2px solid var(--bg-third);
         z-index: 10;
     }
 
@@ -299,10 +326,10 @@ a.startNow {
 .background-stripe-1 {
     position: absolute;
     z-index: 0;
-    width: 150px;
+    width: 9.375rem;
     height: 490%;
-    background-color: hsl(210, 11%, 18%);
-    transform: translate(-800px, 0) rotate(-45deg);
+    background-color: var(--bg-fourth);
+    transform: translate(-50rem, 0) rotate(-45deg);
     opacity: 0.4;
 }
 
@@ -311,8 +338,8 @@ a.startNow {
     z-index: 0;
     width: 150px;
     height: 490%;
-    background-color: #434D56;
-    transform: translate(-700px, 0) rotate(-45deg);
+    background-color: var(--text-primary);
+    transform: translate(-43.75rem, 0) rotate(-45deg);
     opacity: 0.4;
 }
 
@@ -321,8 +348,8 @@ a.startNow {
     z-index: 0;
     width: 150px;
     height: 490%;
-    background-color: hsl(210, 11%, 18%);
-    transform: translate(-500px, 0) rotate(-45deg);
+    background-color: var(--bg-fourth);
+    transform: translate(-31.25rem, 0) rotate(-45deg);
     opacity: 0.4;
 }
 
@@ -331,28 +358,28 @@ a.startNow {
     z-index: 0;
     width: 150px;
     height: 490%;
-    background-color: #434D56;
-    transform: translate(-400px, 0) rotate(-45deg);
+    background-color: var(--text-primary);
+    transform: translate(-25rem, 0) rotate(-45deg);
     opacity: 0.4;
 }
 
 .background-stripe-5 {
     position: absolute;
     z-index: 0;
-    width: 150px;
+    width: 9.375rem;
     height: 500%;
-    background-color: hsl(210, 11%, 18%);
-    transform: translate(500px, 0) rotate(-45deg);
+    background-color: var(--bg-fourth);
+    transform: translate(31.25rem, 0) rotate(-45deg);
     opacity: 0.4;
 }
 
 .background-stripe-6 {
     position: absolute;
     z-index: 1;
-    width: 150px;
+    width: 9.375rem;
     height: 200%;
-    background-color: #0DCAF0;
-    transform: translate(1600px, 0) rotate(-45deg);
+    background-color: var(--bg-third);
+    transform: translate(100rem, 0) rotate(-45deg);
     opacity: 1;
     -webkit-animation: slide-stripe-1 0.3s ease forwards;
     -webkit-animation-delay: 0.6s;
@@ -363,10 +390,10 @@ a.startNow {
 .background-stripe-7 {
     position: absolute;
     z-index: 0;
-    width: 150px;
+    width: 9.375rem;
     height: 500%;
-    background-color: hsl(210, 11%, 18%);
-    transform: translate(700px, 0) rotate(-45deg);
+    background-color: var(--bg-fourth);
+    transform: translate(43.75rem, 0) rotate(-45deg);
     opacity: 0.4;
 }
 
@@ -374,16 +401,16 @@ a.startNow {
     position: absolute;
     z-index: 1;
     opacity: 0;
-    transform: translate(-400px, -300px);
-    font-size: 240px;
+    transform: translate(-25rem, -18.75rem);
+    font-size: 15rem;
     font-weight: bold;
-    line-height: 240px;
-    color: white;
+    line-height: 15rem;
+    color: var(--text-third);
     -webkit-animation: goldcapText 0.3s ease forwards;
     -webkit-animation-delay: 0.6s;
     animation: goldcapText 0.3s ease forwards;
     animation-delay: 0.6s;
-    text-shadow: 4px 4px #434D56;
+    text-shadow: 4px 4px var(--text-primary);
 }
 
 .animatedLetter {
@@ -438,32 +465,32 @@ a.startNow {
 
 @keyframes slide-stripe-1 {
     to {
-        transform: translate(600px, 0) rotate(-45deg);
+        transform: translate(37.5rem, 0) rotate(-45deg);
     }
 }
 
 .background-stripe2-6 {
     position: absolute;
     z-index: 1;
-    width: 150px;
+    width: 9.375rem;
     height: 200%;
-    background-color: #0DCAF0;
-    transform: translate(-600px, 0) rotate(-45deg);
+    background-color: var(--bg-third);
+    transform: translate(-37.5rem, 0) rotate(-45deg);
     opacity: 1;
 }
 
 #firstImageBackground2 {
     border: 3px solid;
-    border-color: #0DCAF0;
-    margin: 0 2000px 0 0;
+    border-color: var(--bg-third);
+    margin: 0 125rem 0 0;
     z-index: 2;
     position: absolute;
-    background-color: #212529;
+    background-color: var(--bg-primary);;
 }
 
 @keyframes slide2-1 {
     to {
-        margin: 0 -200px 0 0;
+        margin: 0 -12.5rem 0 0;
     }
 }
 
@@ -477,7 +504,7 @@ a.startNow {
 }
 
 #firstImage2 {
-    border: 2px solid #0DCAF0;
+    border: 2px solid var(--bg-third);
     -webkit-animation: imgHoverOut2 0.2s ease forwards;
     position: relative;
     z-index: 2;
@@ -489,8 +516,8 @@ a.startNow {
     }
 
     to {
-        transform: translate(60px, 25px) scale(1.5);
-        border: 2px solid #0DCAF0;
+        transform: translate(3.75rem, 1.5625rem) scale(1.5);
+        border: 2px solid var(--bg-third);
         z-index: 10;
         cursor: crosshair;
     }
@@ -498,8 +525,8 @@ a.startNow {
 
 @keyframes imgHoverOut2 {
     from {
-        transform: translate(60px, 25px) scale(1.5);
-        border: 2px solid #0DCAF0;
+        transform: translate(3.75rem, 1.5625rem) scale(1.5);
+        border: 2px solid var(--bg-third);
         z-index: 10;
     }
 
@@ -512,16 +539,16 @@ a.startNow {
 
 #secondImageBackground2 {
     border: 3px solid;
-    border-color: #0DCAF0;
-    margin: -100px 2000px 0 0;
+    border-color: var(--bg-third);
+    margin: -6.25rem 125rem 0 0;
     z-index: 1;
     position: absolute;
-    background-color: #212529;
+    background-color: var(--bg-primary);;
 }
 
 @keyframes slide2-2 {
     to {
-        margin: -100px -100px 0 0;
+        margin: -6.25rem -6.25rem 0 0;
     }
 }
 
@@ -535,7 +562,7 @@ a.startNow {
 }
 
 #secondImage2 {
-    border: 2px solid #0DCAF0;
+    border: 2px solid var(--bg-third);
     -webkit-animation: imgHoverOut3 0.2s ease forwards;
     position: relative;
     z-index: 1;
@@ -547,8 +574,8 @@ a.startNow {
     }
 
     to {
-        transform: translate(110px, 25px) scale(1.5);
-        border: 2px solid #0DCAF0;
+        transform: translate(6.875rem, 1.5625rem) scale(1.5);
+        border: 2px solid var(--bg-third);
         z-index: 10;
         cursor: crosshair;
     }
@@ -556,8 +583,8 @@ a.startNow {
 
 @keyframes imgHoverOut3 {
     from {
-        transform: translate(110px, 25px) scale(1.5);
-        border: 2px solid #0DCAF0;
+        transform: translate(6.875rem, 1.5625rem) scale(1.5);
+        border: 2px solid var(--bg-third);
         z-index: 10;
     }
 
@@ -568,8 +595,8 @@ a.startNow {
 
 p.main-description-2 {
     font-weight: bold;
-    font-size: 30px;
-    color: white;
+    font-size: 1.875rem;
+    color: var(--text-third);
     margin: auto 0;
     opacity: 0;
     cursor: default;
@@ -587,11 +614,11 @@ p.main-description-2 {
 }
 
 #avatarBG {
-    border: 3px solid #0DCAF0;
+    border: 3px solid var(--bg-third);
     border-radius: 50%;
-    width: 150px;
-    height: 150px;
-    margin: 0 25px;
+    width: 9.375rem;
+    height: 9.375rem;
+    margin: 0 1.5625rem;
     opacity: 0;
 }
 @keyframes footerOpacity {
@@ -601,17 +628,17 @@ p.main-description-2 {
 }
 
 #githubIcon {
-    color: white;
-    font-size: 50px;
-    border: 1px solid #0DCAF0;
+    color: var(--text-third);
+    font-size: 3.125rem;
+    border: 1px solid var(--bg-third);
     border-radius: 50%;
     text-decoration: none;
     opacity: 0;
 }
 
     #githubIcon:hover {
-        color: hsl(210, 11%, 18%);
-        background-color: white;
+        color: var(--bg-fourth);
+        background-color: var(--text-third);
     }
 
 body.prevent-animation * {

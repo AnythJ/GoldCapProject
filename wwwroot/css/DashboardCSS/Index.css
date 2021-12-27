@@ -1,6 +1,6 @@
 ﻿body {
     font-family: Arial;
-    background-color: #212529;
+    background-color: var(--bg-primary);
     color: var(--text-secondary);
     overflow: hidden;
 }

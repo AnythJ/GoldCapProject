@@ -141,6 +141,7 @@
         display: flex;
         align-items: center;
         flex-direction: column;
+        width: 100%;
     }
     .pill-date-span {
         font-weight: bold;
@@ -158,7 +159,7 @@
         text-align: center;
     }
 
-    #btnWeek, #btnMonth, #btnYear, #btnRecurring {
+    #btnWeek, #btnMonth, #btnYear {
         min-width: 4.5rem;
         margin: 0.1rem;
     }
@@ -299,6 +300,10 @@
         .tableColumn {
             min-width: 100%;
         }
+
+        .navbar-top {
+            display: none;
+        }
     }
 
     @@media only screen and (min-width: 769px) {
@@ -353,14 +358,11 @@
             flex: 0;
             display: none;
         }
-        #btnRecurring {
-            width: 100%;
-        }
-        .pill-right {
-            width: 100%;
-        }
     }
-    
+
+    #btnRecurring {
+        width: 100%;
+    }
 </style>
 
 <!-- #region links -->

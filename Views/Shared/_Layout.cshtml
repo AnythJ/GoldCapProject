@@ -30,6 +30,7 @@
             display: none;
             text-align: right;
             justify-content: end;
+            margin-right: 1rem;
         }
         .navbar-top-items {
             width: 100%;
@@ -156,6 +157,7 @@
                 document.getElementsByClassName("navbar-top")[0].style.marginLeft = "5rem";
                 document.getElementsByTagName("main")[0].style.marginLeft = "5rem";
                 document.getElementById("collapseSideNavbar").style.transform = "rotate(180deg)";
+                document.getElementsByClassName("navbar-top")[0].style.width = "calc(100% - 5rem)";
                 var links = document.getElementsByClassName("link-text");
                 for (var i = 0; i < links.length; i++) {
                     links[i].style.display = "none";
@@ -170,6 +172,7 @@
                 document.getElementsByClassName("navbar-top")[0].style.marginLeft = "14rem";
                 document.getElementsByTagName("main")[0].style.marginLeft = "14rem";
                 document.getElementById("collapseSideNavbar").style.transform = "rotate(0deg)";
+                document.getElementsByClassName("navbar-top")[0].style.width = "calc(100% - 14rem)";
                 var links = document.getElementsByClassName("link-text");
                 for (var i = 0; i < links.length; i++) {
                     links[i].style.display = "inline";

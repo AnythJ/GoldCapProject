@@ -135,15 +135,17 @@ main {
     width: calc(100% - 14rem);
     height: 4rem;
     transition: all 0.2s ease;
+    z-index: 10;
 }
 
 
 
 #collapseSideNavbar {
-    display: none;
+    /*display: none;*/
     font-size: 3rem;
     margin-left: 0.5rem;
     transition: all 0.2s ease;
+    color: var(--text-secondary);
 }
 
 

@@ -12,6 +12,7 @@ namespace GoldCap.ViewModels
         public IEnumerable<CategoryChart> Categories { get; set; }
         public List<StatCircle> CirclesStats { get; set; }
         public List<StatPill> PillsStats { get; set; }
+        public int Period { get; set; }
 
 
     }

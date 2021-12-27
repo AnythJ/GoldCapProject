@@ -224,6 +224,10 @@
         .stackedCircles {
             margin: 0.5rem 0.2rem !important;
         }
+
+        .tableColumn {
+            margin-bottom: 1rem;
+        }
     }
 
     @@media only screen and (max-width: 768px) {
@@ -266,7 +270,7 @@
     .incomeCircle {
         flex: 1;
         margin: 0 0.2rem;
-        margin-top: 0.3rem;
+        margin-top: 1rem;
         z-index: 1;
     }
 
@@ -353,12 +357,12 @@
     }
 
 
-    @@media only screen and (max-width: 436px) {
-        .pill-left {
+    /*@@media only screen and (max-width: 436px) {*/
+        /*.pill-left {
             flex: 0;
             display: none;
-        }
-    }
+        }*/
+    /*}*/
 
     #btnRecurring {
         width: 100%;
@@ -433,7 +437,7 @@
                 </div>
                 <div class="statPill">
                     <div class="pill-recurring">
-                        <p class="pill-date-span">@DateTime.Now.AddDays(-30).ToString("dd MMM yyy")  -  @DateTime.Now.ToString("dd MMM yyy")</p>
+                        <p class="pill-date-span">@DateTime.Now.AddDays(-Model.Period).ToString("dd MMM yyy") -  @DateTime.Now.ToString("dd MMM yyy")</p>
                         <a id="btnRecurring" onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)',
                                                 'Recurring payments')" class="btn btn-outline-light">Recurring payments</a>
                     </div>

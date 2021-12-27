@@ -64,18 +64,18 @@ namespace GoldCap.Controllers
             #region MonthlyAddition
             var userIncomes = _expenseRepository.GetIncome(User.FindFirstValue(ClaimTypes.Name)).ToList();
             int totalIncome = 0;
-            foreach (var item in userIncomes)
-            {
-                if (item is not null && item.Date.Value <= DateTime.Now)
-                {
-                    Income income = CreateIncomeInPeriod(item).Item1;
-                    _expenseRepository.UpdateIncome(CreateIncomeInPeriod(item).Item2);
-                }
+            //foreach (var item in userIncomes)
+            //{
+            //    if (item is not null && item.Date.Value <= DateTime.Now)
+            //    {
+            //        Income income = CreateIncomeInPeriod(item).Item1;
+            //        _expenseRepository.UpdateIncome(CreateIncomeInPeriod(item).Item2);
+            //    }
 
-                totalIncome += (int)item.Amount;
-                if (period == 365)
-                    totalIncome *= 12;
-            }
+            //    totalIncome += (int)item.Amount;
+            //    if (period == 365)
+            //        totalIncome *= 12;
+            //}
 
             var allRecurring = _expenseRepository.GetAllRecurring().ToList();
             foreach (var item in allRecurring)
@@ -372,6 +372,7 @@ namespace GoldCap.Controllers
             dashboardViewModel.PillsStats = pillsStats;
             dashboardViewModel.Expenses = thisMonth;
             dashboardViewModel.CirclesStats = circleStats;
+            dashboardViewModel.Period = period;
 
             if (topCategories != null)
             {

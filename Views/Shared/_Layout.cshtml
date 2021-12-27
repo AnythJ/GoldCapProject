@@ -37,6 +37,8 @@
             align-items: center;
             justify-content: space-between;
         }
+
+        
     </style>
     <title>@ViewBag.Title</title>
 </head>
@@ -163,8 +165,11 @@
                     links[i].style.display = "none";
                 }
 
-                showLineChart();
-                showPieChart();
+                if (window.location.href.toUpperCase().indexOf("/DASHBOARD") != -1) {
+                    showLineChart();
+                    showPieChart();
+                }
+                
             }
             else {
                 document.getElementById("logo-icon").style.display = "none";
@@ -178,8 +183,10 @@
                     links[i].style.display = "inline";
                 }
 
-                showLineChart();
-                showPieChart();
+                if (window.location.href.toUpperCase().indexOf("/DASHBOARD") != -1) {
+                    showLineChart();
+                    showPieChart();
+                }
             }
 
         }

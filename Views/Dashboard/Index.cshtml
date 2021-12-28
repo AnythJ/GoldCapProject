@@ -94,7 +94,7 @@
         .mainBody::-webkit-scrollbar {
             display: block;
             width: 3px;
-            background-color: var(--bg-navbar);
+            background-color: var(--bg-secondary);
         }
 
         .mainBody::-webkit-scrollbar-track-piece:start {
@@ -115,7 +115,7 @@
     .statPill {
         border: 3px solid var(--text-primary);
         border-radius: 5px;
-        background-color: var(--bg-navbar);
+        background-color: var(--bg-secondary);
         padding: 0.2rem;
         display: flex;
         align-content: center;
@@ -439,7 +439,7 @@
                     <div class="pill-recurring">
                         <p class="pill-date-span">@DateTime.Now.AddDays(-Model.Period).ToString("dd MMM yyy") -  @DateTime.Now.ToString("dd MMM yyy")</p>
                         <a id="btnRecurring" onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)',
-                                                'Recurring payments')" class="btn btn-outline-light">Recurring payments</a>
+                                                'Recurring payments')" class="btn btn-outline-info">Recurring payments</a>
                     </div>
                 </div>
 

@@ -1,5 +1,5 @@
 ﻿.tableColumn {
-    background-color: var(--bg-navbar);
+    background-color: var(--bg-secondary);
     color: var(--text-secondary);
     padding: 0;
     border: 3px solid var(--text-primary);

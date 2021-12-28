@@ -32,7 +32,7 @@
         width: 8.125rem;
         height: 8.125rem;
         margin: -4.0625rem 0 0 -4.0625rem;
-        background-color: var(--bg-navbar);
+        background-color: var(--bg-secondary);
         z-index: 10;
         -webkit-border-radius: 100%;
         border: 1px solid var(--smallerCircle-color-third);

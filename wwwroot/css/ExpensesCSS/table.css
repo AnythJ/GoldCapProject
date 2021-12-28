@@ -30,7 +30,7 @@ table {
 }
 
 .table {
-    background-color: var(--bg-navbar);
+    background-color: var(--bg-secondary);
     color: var(--text-secondary);
 }
 

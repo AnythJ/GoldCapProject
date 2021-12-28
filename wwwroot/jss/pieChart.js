@@ -94,7 +94,7 @@ function showPieChart(period) {
                 tooltip: {
                     useHTML: true,
                     headerFormat: '',
-                    backgroundColor: 'var(--bg-navbar)',
+                    backgroundColor: 'var(--bg-secondary)',
                     style: {
                         color: 'var(--text-secondary)'
                     },
@@ -120,7 +120,7 @@ function showPieChart(period) {
                                     var tBody = document.getElementById('tableBody');
                                     var trRows = tBody.getElementsByClassName('trClass');
                                     for (var i = 0; i < trRows.length; i++) {
-                                        trRows[i].style.backgroundColor = "var(--bg-navbar)";
+                                        trRows[i].style.backgroundColor = "var(--bg-secondary)";
                                         trRows[i].style.color = "var(--text-secondary)";
                                         trRows[i].style.fontWeight = "normal";
                                         trRows[i].cells[0].style.borderLeft = "none";
@@ -152,7 +152,7 @@ function showPieChart(period) {
                                                 }
                                                 else {
                                                     //unactive
-                                                    row.style.backgroundColor = "var(--bg-navbar)";
+                                                    row.style.backgroundColor = "var(--bg-secondary)";
                                                     row.style.color = "var(--text-secondary)";
                                                     row.style.fontWeight = "normal";
                                                     row.setAttribute("id", "");

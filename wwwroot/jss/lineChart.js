@@ -72,7 +72,7 @@ function showLineChart(period) {
                             cursor: 'crosshair',
                             color: 'var(--text-secondary)'
                         },
-                        backgroundColor: 'var(bg-navbar)',
+                        backgroundColor: 'var(--bg-secondary)',
                     },
                     credits: {
                         enabled: false
@@ -147,7 +147,7 @@ function showLineChart(period) {
                     tooltip: {
                         useHTML: true,
                         outside: true,
-                        backgroundColor: 'var(--bg-navbar)',
+                        backgroundColor: 'var(--bg-secondary)',
                         style: {
                             color: 'var(--text-secondary)'
                         },

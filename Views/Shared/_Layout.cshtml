@@ -38,6 +38,37 @@
             justify-content: space-between;
         }
 
+
+        .color-themes-btn {
+            width: 100%;
+            margin-top: auto;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .ct-circle {
+            border: 5px solid var(--text-primary);
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+        }
+
+        .ct-first {
+            background-color: #212529;
+        }
+
+        .ct-second {
+            background-color: #6a040f;
+        }
+
+        .ct-third {
+            background-color: white;
+        }
+
+        
         
     </style>
     <title>@ViewBag.Title</title>
@@ -71,6 +102,12 @@
                     <i class="fas fa-list-alt"></i>
                     <span class="link-text fa-primary">Categories</span>
                 </a>
+            </li>
+
+            <li class="color-themes-btn">
+                <div class="ct-circle ct-first" onclick="changeColorTheme('first')"></div>
+                <div class="ct-circle ct-second" onclick="changeColorTheme('second')"></div>
+                <div class="ct-circle ct-third"></div>
             </li>
 
             <li class="nav-side-item">
@@ -160,6 +197,10 @@
                 document.getElementsByTagName("main")[0].style.marginLeft = "5rem";
                 document.getElementById("collapseSideNavbar").style.transform = "rotate(180deg)";
                 document.getElementsByClassName("navbar-top")[0].style.width = "calc(100% - 5rem)";
+                document.getElementsByClassName("color-themes-btn")[0].style.flexDirection = "column";
+
+
+
                 var links = document.getElementsByClassName("link-text");
                 for (var i = 0; i < links.length; i++) {
                     links[i].style.display = "none";
@@ -178,6 +219,8 @@
                 document.getElementsByTagName("main")[0].style.marginLeft = "14rem";
                 document.getElementById("collapseSideNavbar").style.transform = "rotate(0deg)";
                 document.getElementsByClassName("navbar-top")[0].style.width = "calc(100% - 14rem)";
+                document.getElementsByClassName("color-themes-btn")[0].style.flexDirection = "row";
+
                 var links = document.getElementsByClassName("link-text");
                 for (var i = 0; i < links.length; i++) {
                     links[i].style.display = "inline";
@@ -190,6 +233,29 @@
             }
 
         }
+
+
+        function changeColorTheme(color) {
+            if (color == 'first') {
+                document.documentElement.style.setProperty('--bg-primary', '#212529');
+                document.documentElement.style.setProperty('--bg-secondary', '#2D3339');
+                document.documentElement.style.setProperty('--bg-third', '#0DCAF0');
+                document.documentElement.style.setProperty('--text-primary', '#434D56');
+                document.documentElement.style.setProperty('--text-secondary', '#9ba6b0');
+                document.documentElement.style.setProperty('--text-third', 'white');
+            }
+
+            if (color == 'second') {
+                document.documentElement.style.setProperty('--bg-primary', '#03071e');
+                document.documentElement.style.setProperty('--bg-secondary', '#370617');
+                document.documentElement.style.setProperty('--bg-third', '#dc2f02');
+                document.documentElement.style.setProperty('--text-primary', '#6a040f');
+                document.documentElement.style.setProperty('--text-secondary', '#faa307');
+                document.documentElement.style.setProperty('--text-third', '#faa307');
+            }
+            
+        }
+       
     </script>
     @if (IsSectionDefined("Scripts"))
     {

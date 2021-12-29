@@ -22,7 +22,7 @@
     }
 
     .modal-body, .modal-header, .modal-title, .modal-footer {
-        font-family: Arial;
+        /*font-family: Arial;*/
         background-color: var(--bg-primary);
         color: var(--text-secondary);
     }
@@ -42,6 +42,19 @@
         min-height: calc(0.3*);
     }
 
+    .btn-succes-color {
+        color: var(--bg-primary);
+        border-color: var(--btn-succes);
+        background-color: var(--btn-succes);
+        outline-color: var(--btn-succes);
+    }
+
+        .btn-succes-color:hover {
+            background-color: var(--btn-succes-hover);
+            color: var(--text-third);
+        }
+
+        
 </style>
 <script type="text/javascript">
     if (document.getElementById("tableInModal")) {
@@ -65,7 +78,7 @@
                     Next Payment
                 </th>
                 <th style="text-align:right; padding-right:30px;">
-                    <a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-success btn-sm">New expense</a>
+                    <a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-succes-color btn-sm">New expense</a>
                 </th>
             </tr>
         </thead>

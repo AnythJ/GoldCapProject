@@ -1,6 +1,6 @@
 ﻿:root {
     font-size: 16px;
-    font-family: Arial;
+    font-family: 'Roboto', sans-serif;
     --bg-primary: #212529;
     --bg-secondary: #2D3339;
     --bg-third: #0DCAF0;
@@ -20,6 +20,8 @@
     --list-btn-bg: #17A2B8;
     --list-btn-bg-hover: #138496;
     --text-third: white;
+    --btn-succes: #00A878;
+    --btn-succes-hover: #00805b;
     /*JS*/
     --piechart-border-color: #C9FBFF;
 }
@@ -77,6 +79,7 @@ main {
 
 
 .navbar-nav-side {
+    font-family: 'Roboto', sans-serif;
     list-style: none;
     text-decoration: none;
     padding: 0;
@@ -137,9 +140,9 @@ main {
 .goldcapLogo-text {
     text-align: center;
     display: none;
-    position: absolute;
     transition: 0.6s;
     margin: 0 2.5rem;
+    width: 100%;
     color: var(--bg-third);
 }
 
@@ -152,6 +155,7 @@ main {
     display: flex;
     align-items: center;
     text-decoration: none;
+    width: 100%;
     filter: grayscale(20%) opacity(0.6);
     transition: 0.6s;
 }
@@ -206,3 +210,4 @@ main {
         outline-color: var(--bg-third);
         border-color: var(--bg-third);
     }
+

@@ -4,11 +4,13 @@ function showPieChart(period) {
         var cateData = [];
         var cateNames = [];
         $.each(result.categoryRatios, function (index, element) {
-            cateData.push({
-                name: element.categoryName,
-                y: parseFloat(element.categoryPercentage),
-            });
-            cateNames.push(element.categoryName);
+            if (element.categoryPercentage > 0) {
+                cateData.push({
+                    name: element.categoryName,
+                    y: parseFloat(element.categoryPercentage),
+                });
+                cateNames.push(element.categoryName);
+            }
         }),
 
             //Highcharts.setOptions({
@@ -70,10 +72,7 @@ function showPieChart(period) {
             var pieChart = Highcharts.chart('container-pie', {
                 chart: {
                     plotBackgroundColor: null,
-                    plotBorderWidth: null,
                     plotShadow: false,
-                    //spacingTop: 0,
-                    //spacingBottom: 0,
                     spacingLeft: 0,
                     spacingRight: 0,
                     type: 'pie',

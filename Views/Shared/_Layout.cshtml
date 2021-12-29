@@ -185,6 +185,14 @@
             if (window.location.href.toUpperCase().indexOf("/DASHBOARD") != -1) {
                 document.getElementById("periodButtons").style.display = "flex";
             }
+
+            var colorTheme = sessionStorage.getItem("colorTheme");
+            if (colorTheme == null || colorTheme == 'second') {
+                changeColorTheme('second');
+            }
+            if (colorTheme == 'first') {
+                changeColorTheme('first');
+            }
         });
        
 
@@ -243,6 +251,7 @@
                 document.documentElement.style.setProperty('--text-primary', '#434D56');
                 document.documentElement.style.setProperty('--text-secondary', '#9ba6b0');
                 document.documentElement.style.setProperty('--text-third', 'white');
+                sessionStorage.setItem("colorTheme", "first");
             }
 
             if (color == 'second') {
@@ -252,6 +261,7 @@
                 document.documentElement.style.setProperty('--text-primary', '#6a040f');
                 document.documentElement.style.setProperty('--text-secondary', '#faa307');
                 document.documentElement.style.setProperty('--text-third', '#faa307');
+                sessionStorage.setItem("colorTheme", "second");
             }
             
         }

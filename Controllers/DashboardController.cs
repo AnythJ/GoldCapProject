@@ -64,18 +64,22 @@ namespace GoldCap.Controllers
             #region MonthlyAddition
             var userIncomes = _expenseRepository.GetIncome(User.FindFirstValue(ClaimTypes.Name)).ToList();
             int totalIncome = 0;
-            //foreach (var item in userIncomes)
-            //{
-            //    if (item is not null && item.Date.Value <= DateTime.Now)
-            //    {
-            //        Income income = CreateIncomeInPeriod(item).Item1;
-            //        _expenseRepository.UpdateIncome(CreateIncomeInPeriod(item).Item2);
-            //    }
+            foreach (var item in userIncomes)
+            {
+                if (item.FirstPaycheckDate.Value <= DateTime.Now)
+                {
+                    totalIncome += (int)item.Amount;
+                }
 
-            //    totalIncome += (int)item.Amount;
-            //    if (period == 365)
-            //        totalIncome *= 12;
-            //}
+                if (item is not null && item.Date.Value <= DateTime.Now)
+                {
+                    _expenseRepository.UpdateIncome(CreateIncomeInPeriod(item).Item2);
+                }
+
+                
+                if (period == 365)
+                    totalIncome *= 12;
+            }
 
             var allRecurring = _expenseRepository.GetAllRecurring().ToList();
             foreach (var item in allRecurring)
@@ -705,8 +709,8 @@ namespace GoldCap.Controllers
                 var userLogin = User.FindFirstValue(ClaimTypes.Name);
                 income.ExpenseManagerLogin = userLogin;
                 income.FirstPaycheckDate = income.Date;
-
-                income.Date = income.Date.Value.AddMonths(1);
+                int howManyMonthsToAdd = DateTime.Now.Year >= income.Date.Value.Year ? DateTime.Now.Month + 1 - income.Date.Value.Month : 0;
+                income.Date = income.Date.Value.AddMonths(howManyMonthsToAdd);
                 _expenseRepository.AddIncome(income);
 
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().OrderByDescending(e => e.Date)) });

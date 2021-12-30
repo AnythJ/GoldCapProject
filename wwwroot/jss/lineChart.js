@@ -149,7 +149,8 @@ function showLineChart(period) {
                         outside: true,
                         backgroundColor: 'var(--bg-secondary)',
                         style: {
-                            color: 'var(--text-secondary)'
+                            color: 'var(--text-secondary)',
+                            zIndex: 15,
                         },
                         formatter: function () {
 

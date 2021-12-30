@@ -79,7 +79,7 @@ namespace GoldCap.Controllers
                 }
 
 
-                return Json(new { isValid = true});
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses()) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) });
         }

@@ -67,6 +67,13 @@ namespace GoldCap.Controllers
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
             expense.ExpenseManagerLogin = userLogin;
+
+            ExpensesListViewModel viewModel = new ExpensesListViewModel()
+            {
+                Expenses = _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date),
+                CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList()
+            };
+
             if (ModelState.IsValid)
             {
                 if (id == 0)
@@ -79,7 +86,7 @@ namespace GoldCap.Controllers
                 }
 
 
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses()) });
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date)) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) });
         }

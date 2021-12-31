@@ -113,7 +113,7 @@ namespace GoldCap.Controllers
         }
 
 
-        public JsonResult Sort(string sortOrder, ExpensesListViewModel viewModel, bool refresh = false)
+        public JsonResult Sort(string sortOrder, ExpensesListViewModel viewModel, bool filtered = false,  bool refresh = false)
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
 

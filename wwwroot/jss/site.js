@@ -1,4 +1,5 @@
-﻿
+﻿/*/*const { concat } = require("core-js/library/js/array");*/
+
 showInPopup = (url, title) => {
     $.ajax({
         type: "GET",
@@ -294,6 +295,13 @@ function getParameterByName(name, url = window.location.href) {
 
 
 jQueryAjaxPostSort = (form, url) => {
+    console.log(url);
+    console.log(sessionStorage.getItem("filtered"));
+    if (sessionStorage.getItem("filtered") == "true") {
+        url = url + "&filtered=True"; /*HERE FOR NOW*/
+    }
+
+    console.log(url);
     try {
         $.ajax({
             type: 'POST',

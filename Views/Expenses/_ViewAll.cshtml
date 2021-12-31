@@ -570,6 +570,7 @@
         }
     };
     PostSort = form => {
+        
         try {
             $.ajax({
                 type: 'POST',
@@ -579,6 +580,7 @@
                 processData: false,
                 success: function (res) {
                     $('#view-all').html(res.html);
+                    sessionStorage.setItem("filtered", "true");
                 },
                 error: function (err) {
                     console.log(err)

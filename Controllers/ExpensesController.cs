@@ -86,7 +86,7 @@ namespace GoldCap.Controllers
                 }
 
 
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date)) });
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin)) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) });
         }
@@ -102,7 +102,8 @@ namespace GoldCap.Controllers
                 CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList(),
                 SortMenu = viewModel.SortMenu
             };
-            return Sort(sortOrder, newViewModel);
+
+            return Sort(sortOrder, newViewModel, true);
         }
 
         public IActionResult DeleteAll()

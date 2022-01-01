@@ -299,10 +299,10 @@ function getParameterByName(name, url = window.location.href) {
 jQueryAjaxPostSort = (form, url) => {
 
     if (sessionStorage.getItem("filtered") == "true") {
-        url = url + "&filtered=True"; /*HERE FOR NOW*/
+        url = url + "&filtered=True";
     }
-    console.log(sessionStorage.getItem("filtered"));
-    console.log(url);
+
+
     try {
         $.ajax({
             type: 'POST',

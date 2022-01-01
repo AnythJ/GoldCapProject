@@ -458,7 +458,7 @@
                                 @*<form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDeleteSort(this)" class="d-inline">
                                         <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
                                     </form>*@
-                                <a class="btn btn-danger btn-sm" onclick="jQueryAjaxDeleteSort('@Url.Action("Delete","Expenses",new { sortOrder = (ViewBag.CategorySortParm == null ? "Date" : ViewBag.CategorySortParm), id = item.Id},Context.Request.Scheme)')">Delete</a>
+                                <a class="btn btn-danger btn-sm" onclick="jQueryAjaxDeleteSort('@Url.Action("Delete","Expenses",new { id = item.Id},Context.Request.Scheme)')">Delete</a>
                             </td>
                         </tr>
                     }
@@ -525,6 +525,8 @@
             document.getElementById('showMore').textContent = "Show Less";
             showMore();
         }
+
+
     });
     function showMore() {
         var x = $('#showMore').text();
@@ -551,8 +553,20 @@
     ListSort = (url, title, refresh) => {
         var form = document.getElementById('sortMenuForm');
         if (sessionStorage.getItem("filtered") == "true") {
-            url = url + "&filtered=True"; /*HERE FOR NOW*/
+            url = url + "&filtered=True";
         }
+
+        var sortOrder;
+        if (url.indexOf("sortOrder=Date") != -1) sortOrder = 'Date';
+        if (url.indexOf("sortOrder=date_desc") != -1) sortOrder = 'date_desc';
+        if (url.indexOf("sortOrder=Amount") != -1) sortOrder = 'Amount';
+        if (url.indexOf("sortOrder=amount_desc") != -1) sortOrder = 'amount_desc';
+        if (url.indexOf("sortOrder=Category") != -1) sortOrder = 'Category';
+        if (url.indexOf("sortOrder=category_desc") != -1) sortOrder = 'category_desc';
+
+        sessionStorage.setItem("sortOrder", sortOrder);
+        console.log(sortOrder);
+
         try {
             $.ajax({
                 type: 'POST',
@@ -596,6 +610,8 @@
     }
     jQueryAjaxDeleteSort = (url) => {
         if (confirm('Are you sure to delete this record ?')) {
+            if (sessionStorage.getItem("sortOrder") != null) url = url + "?&sortOrder=" + sessionStorage.getItem("sortOrder");
+            console.log(url);
             var sortForm = document.getElementById('sortMenuForm');
             try {
                 $.ajax({

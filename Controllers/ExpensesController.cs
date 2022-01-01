@@ -121,40 +121,44 @@ namespace GoldCap.Controllers
             if (viewModel.Expenses != null)
                 model = viewModel.Expenses;
 
-            if (viewModel.SortMenu != null && !refresh)
+            if(filtered)
             {
-                model = _expenseRepository.GetAllExpenses();
-                if (viewModel.SortMenu.DateFrom != null)
-                    model = model.Where(e => e.Date >= viewModel.SortMenu.DateFrom);
-
-                if (viewModel.SortMenu.DateTo != null)
-                    model = model.Where(e => e.Date <= viewModel.SortMenu.DateTo);
-
-                if (viewModel.SortMenu.PriceTo != 0)
-                    model = model.Where(e => e.Amount <= viewModel.SortMenu.PriceTo);
-
-                if (viewModel.SortMenu.PriceFrom != 0)
-                    model = model.Where(e => e.Amount >= viewModel.SortMenu.PriceFrom);
-
-                if (viewModel.SortMenu.DescriptionSearch != null)
-                    model = model.Where(e => e.Description != null).Where(e => e.Description.Contains(viewModel.SortMenu.DescriptionSearch) == true);
-
-                if (viewModel.SortMenu.ChosenCategories.Contains(true))
+                if (viewModel.SortMenu != null && !refresh)
                 {
-                    var cateList = _expenseRepository.GetCategoryList().Select(e => e.Name).OrderBy(c => c).ToList();
-                    List<string> categoriesList = new List<string>();
-                    var chosenCategoriesList = viewModel.SortMenu.ChosenCategories.ToList();
-                    var cateLength = chosenCategoriesList.Count();
-                    for (int i = 0; i < cateLength; i++)
+                    model = _expenseRepository.GetAllExpenses();
+                    if (viewModel.SortMenu.DateFrom != null)
+                        model = model.Where(e => e.Date >= viewModel.SortMenu.DateFrom);
+
+                    if (viewModel.SortMenu.DateTo != null)
+                        model = model.Where(e => e.Date <= viewModel.SortMenu.DateTo);
+
+                    if (viewModel.SortMenu.PriceTo != 0)
+                        model = model.Where(e => e.Amount <= viewModel.SortMenu.PriceTo);
+
+                    if (viewModel.SortMenu.PriceFrom != 0)
+                        model = model.Where(e => e.Amount >= viewModel.SortMenu.PriceFrom);
+
+                    if (viewModel.SortMenu.DescriptionSearch != null)
+                        model = model.Where(e => e.Description != null).Where(e => e.Description.Contains(viewModel.SortMenu.DescriptionSearch) == true);
+
+                    if (viewModel.SortMenu.ChosenCategories.Contains(true))
                     {
-                        if (chosenCategoriesList[i])
+                        var cateList = _expenseRepository.GetCategoryList().Select(e => e.Name).OrderBy(c => c).ToList();
+                        List<string> categoriesList = new List<string>();
+                        var chosenCategoriesList = viewModel.SortMenu.ChosenCategories.ToList();
+                        var cateLength = chosenCategoriesList.Count();
+                        for (int i = 0; i < cateLength; i++)
                         {
-                            categoriesList.Add(cateList[i]);
+                            if (chosenCategoriesList[i])
+                            {
+                                categoriesList.Add(cateList[i]);
+                            }
                         }
+                        model = model.Where(e => categoriesList.Contains(e.Category));
                     }
-                    model = model.Where(e => categoriesList.Contains(e.Category));
                 }
             }
+            
 
             ViewBag.AmountSortParm = sortOrder == "Amount" ? "amount_desc" : "Amount";
             ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";

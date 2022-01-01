@@ -550,6 +550,9 @@
     };
     ListSort = (url, title, refresh) => {
         var form = document.getElementById('sortMenuForm');
+        if (sessionStorage.getItem("filtered") == "true") {
+            url = url + "&filtered=True"; /*HERE FOR NOW*/
+        }
         try {
             $.ajax({
                 type: 'POST',
@@ -570,11 +573,10 @@
         }
     };
     PostSort = form => {
-        
         try {
             $.ajax({
                 type: 'POST',
-                url: form.action,
+                url: form.action + "?&filtered=True",
                 data: new FormData(form),
                 contentType: false,
                 processData: false,

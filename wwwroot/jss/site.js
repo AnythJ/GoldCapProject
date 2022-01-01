@@ -245,6 +245,8 @@ jQueryAjaxPostDashboard = (form, tableId) => {
 }
 
 JqueryAjaxSort = (url, title, refresh) => {
+    if (refresh == true) sessionStorage.setItem("filtered", "false");
+
         var activeElement = document.getElementById('active');
         if (activeElement != null && refresh != true)
             activeElement = activeElement.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
@@ -295,12 +297,11 @@ function getParameterByName(name, url = window.location.href) {
 
 
 jQueryAjaxPostSort = (form, url) => {
-    console.log(url);
-    console.log(sessionStorage.getItem("filtered"));
+
     if (sessionStorage.getItem("filtered") == "true") {
         url = url + "&filtered=True"; /*HERE FOR NOW*/
     }
-
+    console.log(sessionStorage.getItem("filtered"));
     console.log(url);
     try {
         $.ajax({
@@ -347,3 +348,4 @@ jQueryAjaxPostSort = (form, url) => {
         console.log(ex)
     }
 }
+

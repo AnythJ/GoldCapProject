@@ -118,7 +118,7 @@ namespace GoldCap.Controllers
         public JsonResult Sort(string sortOrder, ExpensesListViewModel viewModel, bool filtered = false,  bool refresh = false)
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
-
+            bool isSortEmpty = true;
             var model = _expenseRepository.GetAllExpenses();
             if (viewModel.Expenses != null)
                 model = viewModel.Expenses;
@@ -129,19 +129,35 @@ namespace GoldCap.Controllers
                 {
                     model = _expenseRepository.GetAllExpenses();
                     if (viewModel.SortMenu.DateFrom != null)
+                    {
                         model = model.Where(e => e.Date >= viewModel.SortMenu.DateFrom);
-
+                        isSortEmpty = false;
+                    }
+                        
                     if (viewModel.SortMenu.DateTo != null)
+                    {
                         model = model.Where(e => e.Date <= viewModel.SortMenu.DateTo);
-
+                        isSortEmpty = false;
+                    }
+                        
                     if (viewModel.SortMenu.PriceTo != 0)
+                    {
                         model = model.Where(e => e.Amount <= viewModel.SortMenu.PriceTo);
-
+                        isSortEmpty = false;
+                    }
+                        
                     if (viewModel.SortMenu.PriceFrom != 0)
+                    {
                         model = model.Where(e => e.Amount >= viewModel.SortMenu.PriceFrom);
-
+                        isSortEmpty = false;
+                    }
+                      
                     if (viewModel.SortMenu.DescriptionSearch != null)
+                    {
                         model = model.Where(e => e.Description != null).Where(e => e.Description.Contains(viewModel.SortMenu.DescriptionSearch) == true);
+                        isSortEmpty = false;
+                    }
+                        
 
                     if (viewModel.SortMenu.ChosenCategories.Contains(true))
                     {
@@ -157,6 +173,7 @@ namespace GoldCap.Controllers
                             }
                         }
                         model = model.Where(e => categoriesList.Contains(e.Category));
+                        isSortEmpty = false;
                     }
                 }
             }
@@ -198,6 +215,9 @@ namespace GoldCap.Controllers
             ExpensesListViewModel newViewModel = viewModel;
             newViewModel.CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList();
             newViewModel.Expenses = model;
+
+            if (isSortEmpty) newViewModel.SortMenu = null;
+
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", newViewModel) });
         }
     }

@@ -406,6 +406,10 @@
         input[type=datetime-local]:focus {
             border-color: var(--bg-third);
         }
+
+        .sticky-top {
+            z-index: 20;
+        }
 </style>
 
 
@@ -530,8 +534,7 @@
                 sessionStorage.setItem("filtered", "false");
             }
 
-        console.log(sessionStorage.getItem("filtered"));
-        console.log('@Model.SortMenu');
+
     });
     function showMore() {
         var x = $('#showMore').text();
@@ -570,7 +573,6 @@
         if (url.indexOf("sortOrder=category_desc") != -1) sortOrder = 'category_desc';
 
         sessionStorage.setItem("sortOrder", sortOrder);
-        console.log(sortOrder);
 
         try {
             $.ajax({
@@ -616,7 +618,7 @@
     jQueryAjaxDeleteSort = (url) => {
         if (confirm('Are you sure to delete this record ?')) {
             if (sessionStorage.getItem("sortOrder") != null) url = url + "?&sortOrder=" + sessionStorage.getItem("sortOrder");
-            console.log(url);
+
             var sortForm = document.getElementById('sortMenuForm');
             try {
                 $.ajax({

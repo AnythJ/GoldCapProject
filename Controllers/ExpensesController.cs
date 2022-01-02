@@ -33,7 +33,8 @@ namespace GoldCap.Controllers
             ExpensesListViewModel viewModel = new ExpensesListViewModel()
             {
                 Expenses = _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date),
-                CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList()
+                CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList(),
+                SortMenu = null
             };
 
             return View(viewModel);

@@ -526,7 +526,12 @@
             showMore();
         }
 
+        if ('@Model.SortMenu' == null || '@Model.SortMenu' == '') {
+                sessionStorage.setItem("filtered", "false");
+            }
 
+        console.log(sessionStorage.getItem("filtered"));
+        console.log('@Model.SortMenu');
     });
     function showMore() {
         var x = $('#showMore').text();
@@ -647,7 +652,7 @@
             sessionStorage.setItem("sortMenuActive", "false");
         }
     });
-    
+
     function sortCollapseFunction() {
         var sortParagraphs = document.getElementsByClassName("sort-paragraph");
         var sortHeader = document.getElementsByClassName("sort-header")[0];

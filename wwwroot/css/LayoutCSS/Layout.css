@@ -30,13 +30,13 @@
     font-size: 16px;
     font-family: Arial;
     --bg-primary: #03071e;*/ /*background*/
-    /*--bg-secondary: #370617;*/ /*navbars, backgrounds in tables circles, graphs, pills*/
-    /*--bg-third: #dc2f02;*/ /*graph fill, 3 btns*/
-    /*--bg-fourth: hsl(210, 11%, 18%);
+/*--bg-secondary: #370617;*/ /*navbars, backgrounds in tables circles, graphs, pills*/
+/*--bg-third: #dc2f02;*/ /*graph fill, 3 btns*/
+/*--bg-fourth: hsl(210, 11%, 18%);
     --text-primary: #6a040f;*/ /*borders*/
-    /*--text-secondary: #faa307;*/
-    /**/
-    /*--smallerCircle-color: #FFC759;
+/*--text-secondary: #faa307;*/
+/**/
+/*--smallerCircle-color: #FFC759;
     --hr-primary: #5a6672;
     --scrollbar-primary: #0790ab;
     --smallerCircle-color-secondary: #DFF8EB;
@@ -47,16 +47,22 @@
     --list-btn-bg: #17A2B8;
     --list-btn-bg-hover: #138496;
     --text-third: #ffba08;*/
-    /*JS*/
-    /*--piechart-border-color: #C9FBFF;
+/*JS*/
+/*--piechart-border-color: #C9FBFF;
 }*/
 
+/*html {
+    width: 100vw;
+    height: 100vh;
+}*/
 
 body {
     color: var(--text-third);
     background-color: var(--bg-primary);
     margin: 0;
     padding: 0;
+    width: 100vw;
+    height: 100vh;
 }
 
 main {
@@ -173,6 +179,7 @@ main {
         margin: 0 1.5rem;
         display: none;
     }
+
 .navbar-top {
     position: fixed;
     background-color: var(--bg-secondary);
@@ -200,14 +207,15 @@ main {
     border-color: var(--bg-third);
     outline-color: var(--bg-third);
 }
+
     .btn-outline-info:hover {
         background-color: var(--bg-third);
         outline-color: var(--bg-third);
         border-color: var(--bg-third);
     }
+
     .btn-outline-info.active, .btn-outline-info:after {
         background-color: var(--bg-third);
         outline-color: var(--bg-third);
         border-color: var(--bg-third);
     }
-

@@ -91,7 +91,7 @@ namespace GoldCap.Controllers
                     {
                         case 0:
                             DateTime nextDate0 = item.Date.Value;
-                            for (var i = item.Date.Value; i <= DateTime.Today.AddDays(1); i = i.AddDays(1))
+                            for (var i = item.Date.Value; i <= DateTime.Now; i = i.AddDays(1))
                             {
                                 Expense expense = CreateExpenseFromRecurring(item, i);
                                 expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
@@ -103,7 +103,7 @@ namespace GoldCap.Controllers
                             break;
                         case 1:
                             DateTime nextDate1 = item.Date.Value;
-                            for (var i = item.Date.Value; i <= DateTime.Today.AddDays(1); i = i.AddDays(7))
+                            for (var i = item.Date.Value; i <= DateTime.Now; i = i.AddDays(7))
                             {
                                 Expense expense = CreateExpenseFromRecurring(item, i);
                                 expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
@@ -115,7 +115,7 @@ namespace GoldCap.Controllers
                             break;
                         case 2:
                             DateTime nextDate2 = item.Date.Value;
-                            for (var i = item.Date.Value; i <= DateTime.Today.AddDays(1); i = i.AddMonths(1))
+                            for (var i = item.Date.Value; i <= DateTime.Now; i = i.AddMonths(1))
                             {
                                 Expense expense = CreateExpenseFromRecurring(item, i);
                                 expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
@@ -127,7 +127,7 @@ namespace GoldCap.Controllers
                             break;
                         case 3:
                             DateTime nextDate3 = item.Date.Value;
-                            for (var i = item.Date.Value; i <= DateTime.Today.AddDays(1); i = i.AddYears(1))
+                            for (var i = item.Date.Value; i <= DateTime.Now; i = i.AddYears(1))
                             {
                                 Expense expense = CreateExpenseFromRecurring(item, i);
                                 expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
@@ -554,7 +554,7 @@ namespace GoldCap.Controllers
                     {
                         case 0:
                             DateTime nextDate0 = DateTime.Today;
-                            for (var i = expenseRecurring.Date; i <= DateTime.Today.AddDays(1); i = i.Value.AddDays(1))
+                            for (var i = expenseRecurring.Date; i <= DateTime.Now; i = i.Value.AddDays(1))
                             {
                                 Expense expense = CreateExpenseFromRecurring(expenseRecurring, expDate.Value);
                                 expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
@@ -569,7 +569,7 @@ namespace GoldCap.Controllers
                             break;
                         case 1:
                             DateTime nextDate1 = DateTime.Today;
-                            for (var i = expenseRecurring.Date; i <= DateTime.Today.AddDays(1); i = i.Value.AddDays(7))
+                            for (var i = expenseRecurring.Date; i <= DateTime.Now; i = i.Value.AddDays(7))
                             {
                                 Expense expense = CreateExpenseFromRecurring(expenseRecurring, expDate.Value);
                                 expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
@@ -584,7 +584,7 @@ namespace GoldCap.Controllers
                             break;
                         case 2:
                             DateTime nextDate2 = DateTime.Today;
-                            for (var i = expenseRecurring.Date; i <= DateTime.Today; i = i.Value.AddMonths(1))
+                            for (var i = expenseRecurring.Date; i <= DateTime.Now; i = i.Value.AddMonths(1))
                             {
                                 Expense expense = CreateExpenseFromRecurring(expenseRecurring, expDate.Value);
                                 expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
@@ -599,7 +599,7 @@ namespace GoldCap.Controllers
                             break;
                         case 3:
                             DateTime nextDate3 = DateTime.Today;
-                            for (var i = expenseRecurring.Date; i <= DateTime.Today; i = i.Value.AddYears(1))
+                            for (var i = expenseRecurring.Date; i <= DateTime.Now; i = i.Value.AddYears(1))
                             {
                                 Expense expense = CreateExpenseFromRecurring(expenseRecurring, expDate.Value);
                                 expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);

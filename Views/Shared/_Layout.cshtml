@@ -73,9 +73,11 @@
             background-color: white;
         }
 
-      main {
-          display: none;
-      }
+        main {
+            display: none;
+            opacity: 0;
+            animation: fadeIn 0.5s  linear forwards;
+        }
 
         .loadingBackground {
             background-color: var(--bg-primary);
@@ -87,13 +89,28 @@
             z-index: 20;
             height: calc(100vh - 4rem);
         }
+
         @@keyframes fadeOut {
-            50% {opacity: 1;}
+            50% {
+                opacity: 1;
+            }
+
             100% {
-                opacity: 0;
-                display: none;
+                opacity: 0.2;
             }
         }
+
+        @@keyframes fadeIn {
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+                display: block;
+            }
+        }
+
 
         .loadingSpinner {
             background-color: var(--bg-primary);
@@ -104,11 +121,11 @@
             border: 0.8rem solid var(--bg-secondary);
             border-radius: 50%;
             border-top-color: var(--bg-third);
-            animation: spin 1s ease-in-out infinite;*/
+            animation: spin 1s ease-in-out infinite;
         }
 
         .hidden {
-            animation: fadeOut 2s linear forwards;
+            animation: fadeOut 0.5s linear forwards;
             opacity: 1;
         }
 
@@ -120,20 +137,17 @@
             }
         }
 
-        @@media only screen and (min-width: 1092px) {
+        
 
-        }
-
-            @@keyframes spin {
-                0% {
-                    transform: rotate(0deg);
-                }
-
-                100% {
-                    transform: rotate(360deg);
-                }
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
             }
 
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
     <title>@ViewBag.Title</title>
 </head>
@@ -202,7 +216,7 @@
     </div>
     <main class="mainRender">
         @RenderBody()
-        @*<i id="collapseSideNavbar" onclick="hideSideNavbar()" class="fas fa-angle-double-left" style="font-size: 5rem;"></i>*@
+        
     </main>
 
 
@@ -223,19 +237,6 @@
 
 
 
-    @*<div class="modal" tabindex="-1" role="dialog" id="form-modal">
-            <div class="modal-dialog" id="modalDialog">
-                <div class="modal-content">
-                    <div class="modal-header text-center">
-                        <h5 class="modal-title text-center w-100"></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                    </div>
-                </div>
-            </div>
-        </div>*@
 
 
 
@@ -251,8 +252,6 @@
     @*<script src="~/lib/font-awesome/js/all.js"></script>*@
     <script>
         $(document).ready(function () {
-            setTimeout(showPage, 1500);
-
             if (window.location.href.toUpperCase().indexOf("/DASHBOARD") != -1) {
                 document.getElementById("periodButtons").style.display = "flex";
             }
@@ -264,12 +263,20 @@
             if (colorTheme == 'second') {
                 changeColorTheme('second');
             }
+
+            showPage();
         });
 
         function showPage() {
-            document.getElementsByClassName("loadingBackground")[0].classList.add("hidden");
-            /*document.getElementsByClassName("loadingBackground")[0].style.display = "none";*/
-            document.getElementsByTagName("main")[0].style.display = "block";
+            var el = document.getElementsByClassName("loadingBackground")[0];
+            el.classList.add("hidden");
+            el.addEventListener("animationend", (event) => {
+                if (event.type === "animationend") {
+                    el.style.display = "none";
+                    document.getElementsByTagName("main")[0].style.display = "block";
+                }
+            }, false);
+
         }
 
         function collapseSideNavbar() {

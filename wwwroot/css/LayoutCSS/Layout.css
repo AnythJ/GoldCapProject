@@ -26,35 +26,7 @@
     --piechart-border-color: #C9FBFF;
 }
 
-/*:root {
-    font-size: 16px;
-    font-family: Arial;
-    --bg-primary: #03071e;*/ /*background*/
-/*--bg-secondary: #370617;*/ /*navbars, backgrounds in tables circles, graphs, pills*/
-/*--bg-third: #dc2f02;*/ /*graph fill, 3 btns*/
-/*--bg-fourth: hsl(210, 11%, 18%);
-    --text-primary: #6a040f;*/ /*borders*/
-/*--text-secondary: #faa307;*/
-/**/
-/*--smallerCircle-color: #FFC759;
-    --hr-primary: #5a6672;
-    --scrollbar-primary: #0790ab;
-    --smallerCircle-color-secondary: #DFF8EB;
-    --smallerCircle-color-third: #68a4fd;
-    --list-bg: #6C757D;
-    --list-hover: #5f666d;
-    --list-thead: #474d52;
-    --list-btn-bg: #17A2B8;
-    --list-btn-bg-hover: #138496;
-    --text-third: #ffba08;*/
-/*JS*/
-/*--piechart-border-color: #C9FBFF;
-}*/
 
-/*html {
-    width: 100vw;
-    height: 100vh;
-}*/
 
 body {
     color: var(--text-third);

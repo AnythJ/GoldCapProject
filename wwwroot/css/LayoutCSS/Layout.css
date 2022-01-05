@@ -74,6 +74,7 @@ main {
 
 .nav-side-link {
     color: var(--text-third);
+    font-weight: 600;
     height: 5rem;
     display: flex;
     align-items: center;

@@ -76,7 +76,7 @@
         main {
             display: none;
             opacity: 0;
-            animation: fadeIn 0.5s linear forwards;
+            animation: fadeIn 0.3s linear forwards;
         }
 
         .loadingBackground {
@@ -121,11 +121,11 @@
             border: 0.8rem solid var(--bg-secondary);
             border-radius: 50%;
             border-top-color: var(--bg-third);
-            animation: spin 1s ease-in-out infinite;
+            animation: spin 1s cubic-bezier(.58,.1,0,.97) infinite;
         }
 
         .hidden {
-            animation: fadeOut 0.5s linear forwards;
+            animation: fadeOut 0.3s linear forwards;
             opacity: 1;
         }
 
@@ -152,6 +152,14 @@
                 transform: rotate(360deg);
             }
         }
+
+
+        .modal-open {
+            overflow: hidden;
+            overflow-y: inherit !important;
+            padding-right: 0 !important;
+        }
+
     </style>
     <title>@ViewBag.Title</title>
 </head>
@@ -189,7 +197,7 @@
             <li class="color-themes-btn">
                 <div class="ct-circle ct-first" onclick="changeColorTheme('first')"></div>
                 <div class="ct-circle ct-second" onclick="changeColorTheme('second')"></div>
-                <div class="ct-circle ct-third"></div>
+                <div class="ct-circle ct-third" onclick="changeColorTheme('third')"></div>
             </li>
 
             <li class="nav-side-item">
@@ -266,6 +274,9 @@
             }
             if (colorTheme == 'second') {
                 changeColorTheme('second');
+            }
+            if (colorTheme == 'third') {
+                changeColorTheme('third');
             }
 
             if (sessionStorage.getItem("sideNavbarCollapsed") == "true") collapseSideNavbar();
@@ -372,6 +383,23 @@
                 sessionStorage.setItem("colorTheme", "second");
             }
 
+            if (color == 'third') {
+                document.documentElement.style.setProperty('--bg-primary', '#84a59d');
+                document.documentElement.style.setProperty('--bg-secondary', '#f28482');
+                document.documentElement.style.setProperty('--bg-third', '#713E5A');
+                document.documentElement.style.setProperty('--text-primary', '#f5a4a3');
+                document.documentElement.style.setProperty('--text-secondary', '#39393A');
+                document.documentElement.style.setProperty('--text-third', '#39393A');
+                document.documentElement.style.setProperty('--piechart-border-color', '#39393A');
+                document.documentElement.style.setProperty('--scrollbar-primary', '#713E5A');
+                document.documentElement.style.setProperty('--btn-succes', '#82D173');
+                document.documentElement.style.setProperty('--btn-succes-hover', '#65c752');
+                document.documentElement.style.setProperty('--btn-info', '#7EBDC2');
+                document.documentElement.style.setProperty('--btn-info-hover', '#63b0b6');
+                document.documentElement.style.setProperty('--btn-danger', '#EF6461');
+                document.documentElement.style.setProperty('--btn-danger-hover', '#ed4845');
+                sessionStorage.setItem("colorTheme", "third");
+            }
         }
 
     </script>

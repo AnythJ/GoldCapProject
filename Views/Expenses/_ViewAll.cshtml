@@ -652,30 +652,57 @@
         }
     }
     jQueryAjaxDeleteSort = (url) => {
-        if (confirm('Are you sure to delete this record ?')) {
-            if (sessionStorage.getItem("sortOrder") != null) url = url + "?&sortOrder=" + sessionStorage.getItem("sortOrder");
+        try {
+            $.confirm({
+                title: 'Delete Expense',
+                content: 'Are you sure you want to delete this expense?',
+                type: 'light',
+                theme: 'dark',
+                icon: 'fa fa-warning',
+                animateFromElement: false,
+                offsetBottom: 600,
+                typeAnimated: true,
+                draggable: true,
+                buttons: {
+                    confirm: {
+                        text: 'Confirm',
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            if (sessionStorage.getItem("sortOrder") != null) url = url + "?&sortOrder=" + sessionStorage.getItem("sortOrder");
 
-            var sortForm = document.getElementById('sortMenuForm');
-            try {
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: new FormData(sortForm),
-                    contentType: false,
-                    processData: false,
-                    success: function (res) {
-                        $('#view-all').html(res.html);
+                            var sortForm = document.getElementById('sortMenuForm');
+                            $.ajax({
+                                type: 'POST',
+                                url: url,
+                                data: new FormData(sortForm),
+                                contentType: false,
+                                processData: false,
+                                success: function (res) {
+                                    $('#view-all').html(res.html);
+                                    $.notify(
+                                        "Expense deleted",
+                                        { globalPosition: "top left", clickToHide: true, autoHide: false, className: 'info' }
+                                    );
+                                },
+                                error: function (err) {
+                                    console.log(err)
+                                }
+                            })
+                        }
                     },
-                    error: function (err) {
-                        console.log(err)
+                    close: function () {
+                        btnClass: 'btn'
                     }
-                })
-            } catch (ex) {
-                console.log(ex)
-            }
+                }
+            });
+
+        } catch (ex) {
+            console.log(ex)
         }
+
         //prevent default form submit event
         return false;
+
     }
     $(document).ready(function () {
         sessionStorage.setItem("sortMenuActive", "false");

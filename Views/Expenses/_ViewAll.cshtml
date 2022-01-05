@@ -410,6 +410,42 @@
         .sticky-top {
             z-index: 20;
         }
+
+
+
+    .btn-succes-color {
+        color: var(--bg-primary);
+        border-color: var(--btn-succes);
+        background-color: var(--btn-succes);
+        outline-color: var(--btn-succes);
+    }
+
+        .btn-succes-color:hover {
+            background-color: var(--btn-succes-hover);
+            color: var(--text-third);
+        }
+    .btn-info-color {
+        color: var(--bg-primary);
+        border-color: var(--btn-info);
+        background-color: var(--btn-info);
+        outline-color: var(--btn-info);
+    }
+
+        .btn-info-color:hover {
+            background-color: var(--btn-info-hover);
+            color: var(--text-third);
+        }
+    .btn-danger-color {
+        color: var(--bg-primary);
+        border-color: var(--btn-danger);
+        background-color: var(--btn-danger);
+        outline-color: var(--btn-danger);
+    }
+
+        .btn-danger-color:hover {
+            background-color: var(--btn-danger-hover);
+            color: var(--text-third);
+        }
 </style>
 
 
@@ -437,7 +473,7 @@
                             <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
                         </th>
                         <th class="button_column">
-                            <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-success btn-sm">New expense</a>
+                            <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-succes-color btn-sm">New expense</a>
                         </th>
                     </tr>
                 </thead>
@@ -458,11 +494,11 @@
                                 @Html.DisplayFor(modelItem => item.Date)
                             </td>
                             <td class="button_column">
-                                <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')" class="btn btn-primary btn-sm">Edit</a>
+                                <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')" class="btn btn-info-color btn-sm">Edit</a>
                                 @*<form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDeleteSort(this)" class="d-inline">
                                         <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
                                     </form>*@
-                                <a class="btn btn-danger btn-sm" onclick="jQueryAjaxDeleteSort('@Url.Action("Delete","Expenses",new { id = item.Id},Context.Request.Scheme)')">Delete</a>
+                                <a class="btn btn-danger-color btn-sm" onclick="jQueryAjaxDeleteSort('@Url.Action("Delete","Expenses",new { id = item.Id},Context.Request.Scheme)')">Delete</a>
                             </td>
                         </tr>
                     }

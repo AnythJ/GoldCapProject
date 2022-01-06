@@ -35,7 +35,9 @@
             text-align: right;
             justify-content: end;
             margin-right: 1rem;
+            align-items: center;
         }
+
 
         .navbar-top-items {
             width: 100%;
@@ -46,19 +48,39 @@
 
         .color-themes-btn {
             width: 100%;
-            margin-top: auto;
             display: flex;
             justify-content: space-evenly;
             align-items: center;
         }
+        .colorTheme-item {
+            margin-top: auto;
+            cursor: default;
+        }
+        .dropdown-menu {
+            background-color: var(--bg-secondary);
+        }
+        .dropdown-item {
+            color: var(--text-secondary);
+        }
+        .dropdown-menu.dropdown-item:hover, .dropdown-menu .dropdown-item:active, .dropdown-menu .dropdown-item:hover {
+            background-color: var(--bg-primary);
+            color: var(--text-secondary);
+        }
+        .dropdown-item.colorTheme-item:hover, .dropdown-item.colorTheme-item:active, .dropdown-item.colorTheme-item:focus {
+            background-color: var(--bg-secondary);
+        }
+        .dropdown-item.dropdown-item-email:hover, .dropdown-item.dropdown-item-email:active, .dropdown-item.dropdown-item-email:focus {
+            background-color: var(--bg-secondary);
+        }
+        .dropdown-item-email {cursor: default;}
+
 
         .ct-circle {
-            border: 5px solid var(--text-primary);
+            border: 3px solid var(--text-primary);
             border-radius: 50%;
-            width: 3rem;
-            height: 3rem;
+            width: 2.5rem;
+            height: 2.5rem;
             cursor: pointer;
-            margin-bottom: 0.5rem;
         }
 
         .ct-first {
@@ -160,6 +182,34 @@
             padding-right: 0 !important;
         }
 
+
+        div .dropdown {
+            border: 3px solid var(--bg-third);
+            border-radius: 50%;
+            margin-left: 1.25rem;
+            width: 2.8125rem;
+            height: 2.8125rem;
+        }
+
+        .dropdownAvatar, .dropdown-toggle:hover, .dropdown-toggle:active, .dropdown-toggle:active, .dropdown-toggle:focus {
+            width: 100%;
+            height: 100%;
+            color: transparent;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
+
+        .logoutButton {
+            color: var(--btn-danger);
+            outline: none;
+            border: none;
+            background-color: transparent;
+            margin-left: 0;
+            padding-left: 0;
+            font-weight: 600;
+        }
     </style>
     <title>@ViewBag.Title</title>
 </head>
@@ -193,12 +243,6 @@
                     <span class="link-text fa-primary">Categories</span>
                 </a>
             </li>
-            
-            <li class="color-themes-btn">
-                <div class="ct-circle ct-first" onclick="changeColorTheme('first')"></div>
-                <div class="ct-circle ct-second" onclick="changeColorTheme('second')"></div>
-                <div class="ct-circle ct-third" onclick="changeColorTheme('third')"></div>
-            </li>
 
             <li class="nav-side-item">
                 <a asp-action="account" asp-controller="logout" class="nav-side-link">
@@ -218,7 +262,39 @@
                 @Html.ActionLink("Week", "Index", "Dashboard", new { period = 7 }, new { @class = "btn btn-outline-info", @id = "btnWeek", @onclick = "stayActive(this.id)" })
                 @Html.ActionLink("Month", "Index", "Dashboard", new { period = 30 }, new { @class = "btn btn-outline-info", @id = "btnMonth", @onclick = "stayActive(this.id)" })
                 @Html.ActionLink("Year", "Index", "Dashboard", new { period = 365 }, new { @class = "btn btn-outline-info", @id = "btnYear", @onclick = "stayActive(this.id)" })
+
+                <div id="dropdownAvatar" class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle dropdownAvatar" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+
+                    </a>
+
+                    <ul id="dropdownMenuList" class="dropdown-menu dropdown-menu-end dropdown-menu-sm-end" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="#">My Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Notifications</a></li>
+                        <li class="color-theme-li">
+                            <a class="dropdown-item colorTheme-item" href="#">Color themes</a>
+                            <div class="color-themes-btn">
+                                <div class="ct-circle ct-first" onclick="changeColorTheme('first')"></div>
+                                <div class="ct-circle ct-second" onclick="changeColorTheme('second')"></div>
+                                <div class="ct-circle ct-third" onclick="changeColorTheme('third')"></div>
+                            </div>
+                        </li>
+
+                        <li><a class="dropdown-item dropdown-item-email">@User.Identity.Name</a></li>
+                        <li>
+                            <div class="dropdown-item">
+                                <form method="post" asp-action="logout" asp-controller="account">
+                                    <button class="logoutButton" type="submit">
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
+
         </div>
     </nav>
     <div class="loadingBackground">
@@ -402,7 +478,11 @@
             }
         }
 
+        
 
+        $("#dropdownAvatar").on('click', '#dropdownMenuList li', function (e) {
+            e.stopPropagation();
+        });
     </script>
     @if (IsSectionDefined("Scripts"))
     {

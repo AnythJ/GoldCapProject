@@ -95,7 +95,7 @@ main {
 }
 
     .nav-side-item:last-child {
-        /*margin-top: auto;*/
+        margin-top: auto;
     }
 
 .link-text {

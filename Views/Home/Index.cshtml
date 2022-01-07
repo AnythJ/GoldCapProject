@@ -23,77 +23,20 @@
 </head>
 <body class="prevent-animation">
     <div class="main">
-        <nav class="navbar navbar-dark bg-dark sticky-top">
+        <nav class="navbar navbar-top sticky-top">
             <div id="topNavbar" class="container-fluid">
                 <a asp-action="login" asp-controller="account" class="btn btn-outline-info signInButton">Sign in</a>
             </div>
         </nav>
 
-        <section id="firstSection" class="first-section">
-            <div class="background-stripe-1"></div>
-            <div class="background-stripe-2"></div>
-            <div class="background-stripe-3"></div>
-            <div class="background-stripe-4"></div>
-            <div class="background-stripe-5"></div>
-            <div class="background-stripe-6"></div>
-            <div class="background-stripe-7"></div>
-            <div class="background-text-1 animatedLogoText">GoldCap</div>
-            <div class="section-col">
-                <p class="main-description">
-                    Make your own expenses history, manage them daily and check overall statistics. All by yourself.
-                    <a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a>
-                </p>
+        <section class="first-section">
+            <div class="first-section-left">Make your own expenses history, manage them daily and check overall statistics. All by yourself.
+                <p><a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a></p>
             </div>
-            <div class="section-col">
-                <div id="firstImageBackground">
-                    <div id="firstImage">
-                        <img src="~/images/dashboard.png" alt="Dashboard view" width="678" height="349" />
-                    </div>
-                </div>
-
-                <div id="secondImageBackground">
-                    <div id="secondImage">
-                        <img src="~/images/categoryList.png" alt="List view" width="279" height="349" />
-                    </div>
-                </div>
-
-                <div id="thirdImageBackground">
-                    <div id="thirdImage">
-                        <img src="~/images/list.png" alt="List view" width="678" height="349" />
-                    </div>
-                </div>
-            </div>
-
-        </section>
-        <section class="second-section">
-            <div class="background-stripe2-6"></div>
-            <div class="section-col">
-                <div id="firstImageBackground2" onmouseover="textToSide(false, this)" onmouseout="textToSide(true, this)">
-                    <div id="firstImage2">
-                        <img src="~/images/list2.png" alt="List view" width="842" height="432" />
-                    </div>
-                </div>
-                <div id="secondImageBackground2" onmouseover="textToSide(false, this)" onmouseout="textToSide(true, this)">
-                    <div id="secondImage2">
-                        <img src="~/images/dashboard.png" width="842" height="432" />
-                    </div>
-                </div>
-
-            </div>
-            <div class="section-col">
-                <p id="description2" class="main-description-2">
-                    Gain complete control on your finances and save important informations about specific expenses.
-                </p>
-            </div>
+            <div class="first-section-right">Make your own expenses history, manage them daily and check overall statistics. All by yourself.</div>
         </section>
 
-        <section class="third-section">
-            <div id="avatarBG">
-            </div>
-            <a id="githubIcon" href="https://github.com/AnythJ">
-                <i class="fab fa-github"></i>
-            </a>
-        </section>
+        
     </div>
 
 </body>
@@ -103,98 +46,98 @@
         document.body.className = "";
     }, 500);
 
-    function changeTextToCharacters() {
-        var sentences = $('.animatedLogoText');
+    //function changeTextToCharacters() {
+    //    var sentences = $('.animatedLogoText');
 
-        sentences.each(function () {
-            var txt = $(this);
-            var newHtml = '';
+    //    sentences.each(function () {
+    //        var txt = $(this);
+    //        var newHtml = '';
 
 
-            for (i = 0; i < txt.text().length; i++) {
-                var substring = txt.text().substr(i, 1);
+    //        for (i = 0; i < txt.text().length; i++) {
+    //            var substring = txt.text().substr(i, 1);
 
-                if (substring != " ") {
-                    newHtml += '<span class="animatedLetter">' + substring + '</span>';
-                }
-                else {
-                    newHtml += substring;
-                }
-            }
+    //            if (substring != " ") {
+    //                newHtml += '<span class="animatedLetter">' + substring + '</span>';
+    //            }
+    //            else {
+    //                newHtml += substring;
+    //            }
+    //        }
 
-            txt.html(newHtml);
-        });
-    }
+    //        txt.html(newHtml);
+    //    });
+    //}
 
-    changeTextToCharacters();
+    /*changeTextToCharacters();*/
 
-    function addAnimation() {
-            document.getElementById('firstImageBackground2').style.animation = "slide2-1 0.3s ease forwards";
-            document.getElementById('firstImageBackground2').style.animationDelay = "0.6s";
-            document.getElementById('firstImageBackground2').style.webkitAnimation = "slide2-1 0.3s ease forwards";
-            document.getElementById('firstImageBackground2').style.webkitAnimationDelay = "0.6s";
+    //function addAnimation() {
+    //        document.getElementById('firstImageBackground2').style.animation = "slide2-1 0.3s ease forwards";
+    //        document.getElementById('firstImageBackground2').style.animationDelay = "0.6s";
+    //        document.getElementById('firstImageBackground2').style.webkitAnimation = "slide2-1 0.3s ease forwards";
+    //        document.getElementById('firstImageBackground2').style.webkitAnimationDelay = "0.6s";
 
-            document.getElementById('description2').style.animation = "slide-text2-1 0.3s ease forwards";
-            document.getElementById('description2').style.animationDelay = "0.6s";
-            document.getElementById('description2').style.webkitAnimation = "slide-text2-1 0.3s ease forwards";
-            document.getElementById('description2').style.webkitAnimationDelay = "0.6s";
+    //        document.getElementById('description2').style.animation = "slide-text2-1 0.3s ease forwards";
+    //        document.getElementById('description2').style.animationDelay = "0.6s";
+    //        document.getElementById('description2').style.webkitAnimation = "slide-text2-1 0.3s ease forwards";
+    //        document.getElementById('description2').style.webkitAnimationDelay = "0.6s";
 
-            document.getElementById('secondImageBackground2').style.animation = "slide2-2 0.3s ease forwards";
-            document.getElementById('secondImageBackground2').style.animationDelay = "0.7s";
-            document.getElementById('secondImageBackground2').style.webkitAnimation = "slide2-2 0.3s ease forwards";
-            document.getElementById('secondImageBackground2').style.webkitAnimationDelay = "0.7s";
-    }
-    var loadedImg = false;
-    $(window).scroll(function () {
-        console.log(scrollY);
-        if (scrollY >= 400 && scrollY < 1600 && loadedImg == false) {
-            addAnimation();
-            loadedImg = true;
-        }
-        else if (scrollY >= 1000) {
-            console.log(scrollY);
-            document.getElementById('avatarBG').style.animation = "footerOpacity 0.3s ease forwards";
-            document.getElementById('avatarBG').style.animationDelay = "0.6s";
-            document.getElementById('avatarBG').style.webkitAnimation = "footerOpacity 0.3s ease forwards";
-            document.getElementById('avatarBG').style.webkitAnimationDelay = "0.6s";
+    //        document.getElementById('secondImageBackground2').style.animation = "slide2-2 0.3s ease forwards";
+    //        document.getElementById('secondImageBackground2').style.animationDelay = "0.7s";
+    //        document.getElementById('secondImageBackground2').style.webkitAnimation = "slide2-2 0.3s ease forwards";
+    //        document.getElementById('secondImageBackground2').style.webkitAnimationDelay = "0.7s";
+    //}
+    //var loadedImg = false;
+    //$(window).scroll(function () {
+    //    console.log(scrollY);
+    //    if (scrollY >= 400 && scrollY < 1600 && loadedImg == false) {
+    //        addAnimation();
+    //        loadedImg = true;
+    //    }
+    //    else if (scrollY >= 1000) {
+    //        console.log(scrollY);
+    //        document.getElementById('avatarBG').style.animation = "footerOpacity 0.3s ease forwards";
+    //        document.getElementById('avatarBG').style.animationDelay = "0.6s";
+    //        document.getElementById('avatarBG').style.webkitAnimation = "footerOpacity 0.3s ease forwards";
+    //        document.getElementById('avatarBG').style.webkitAnimationDelay = "0.6s";
 
-            document.getElementById('githubIcon').style.animation = "footerOpacity 0.3s ease forwards";
-            document.getElementById('githubIcon').style.animationDelay = "0.6s";
-            document.getElementById('githubIcon').style.webkitAnimation = "footerOpacity 0.3s ease forwards";
-            document.getElementById('githubIcon').style.webkitAnimationDelay = "0.6s";
-        } 
+    //        document.getElementById('githubIcon').style.animation = "footerOpacity 0.3s ease forwards";
+    //        document.getElementById('githubIcon').style.animationDelay = "0.6s";
+    //        document.getElementById('githubIcon').style.webkitAnimation = "footerOpacity 0.3s ease forwards";
+    //        document.getElementById('githubIcon').style.webkitAnimationDelay = "0.6s";
+    //    } 
         
     
-    });
-    if (scrollY >= 400 && scrollY < 1600) {
-        addAnimation();
-        loadedImg = true;
-    }
+    //});
+    //if (scrollY >= 400 && scrollY < 1600) {
+    //    addAnimation();
+    //    loadedImg = true;
+    //}
 
-    function textToSide(back, element) {
-        if (back) {
-            var d2 = document.getElementById('description2');
-            d2.style.maxWidth = "";
-            d2.style.transform = "translate(0, 0)";
-            d2.style.transitionDuration = "0.5s";
-            d2.textContent = "Gain complete control on your finances and save important informations about specific expenses.";
-        }
-        else if (element.id == 'firstImageBackground2')
-        {
-            var d2 = document.getElementById('description2')
-            d2.style.maxWidth = "400px";
-            d2.style.transform = "translate(100px, 0)";
-            d2.style.transitionDuration = "0.5s";
-        }
-        else {
-            var d2 = document.getElementById('description2')
-            d2.textContent = "Monitor your spendings with intuitive dashboard.";
-            d2.style.maxWidth = "400px";
-            d2.style.transform = "translate(100px, 0)";
-            d2.style.transitionDuration = "0.5s";
+    //function textToSide(back, element) {
+    //    if (back) {
+    //        var d2 = document.getElementById('description2');
+    //        d2.style.maxWidth = "";
+    //        d2.style.transform = "translate(0, 0)";
+    //        d2.style.transitionDuration = "0.5s";
+    //        d2.textContent = "Gain complete control on your finances and save important informations about specific expenses.";
+    //    }
+    //    else if (element.id == 'firstImageBackground2')
+    //    {
+    //        var d2 = document.getElementById('description2')
+    //        d2.style.maxWidth = "400px";
+    //        d2.style.transform = "translate(100px, 0)";
+    //        d2.style.transitionDuration = "0.5s";
+    //    }
+    //    else {
+    //        var d2 = document.getElementById('description2')
+    //        d2.textContent = "Monitor your spendings with intuitive dashboard.";
+    //        d2.style.maxWidth = "400px";
+    //        d2.style.transform = "translate(100px, 0)";
+    //        d2.style.transitionDuration = "0.5s";
             
-        }
-    }
+    //    }
+    //}
     /*$('body').addClass('stop-scrolling');*/
     //window.addEventListener('wheel', function (event) {
     //    var vh = document.getElementById("firstSection").clientHeight;

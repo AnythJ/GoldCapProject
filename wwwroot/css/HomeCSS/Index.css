@@ -55,7 +55,8 @@ body {
 
 main {
     width: 100%;
-    height: 100%;
+    height: 300vh;
+    
 }
 
 nav.navbar {
@@ -102,21 +103,7 @@ body.prevent-animation * {
 
 
 
-.first-section {
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-}
-.first-section-left {
-    text-align: center;
-    word-wrap: break-word;
-    margin: 0 4rem;
-    font-size: calc(1.5rem + .3vw);
-}
-.first-section-right {
-    display: none;
-}
+
 
 .signInButton {
     font-weight: bold;
@@ -149,13 +136,48 @@ body.prevent-animation * {
         background-color: var(--bg-third);
     }
 
-
-
-
-
 a.startNow {
-    margin-top: 1rem;
+    margin-top: 2rem;
     min-width: 9.375rem;
+}
+
+.goldcapTitle {
+    margin-bottom: 10vw;
+    font-weight: 600;
+    font-size: calc(4rem + 3vw);
+}
+
+.first-section {
+    display: flex;
+    height: 200vh;
+    flex-direction: column;
+}
+
+.first-section-left {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+    font-size: calc(1.5rem + .3vw);
+    margin: 0 5vw;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.first-section-right {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+    font-size: calc(1.5rem + .3vw);
+    background-color: var(--bg-secondary)
+}
+
+.goldcapTitleXL {
+    display: none;
 }
 
 @media only screen and (min-width: 767px) {
@@ -163,11 +185,16 @@ a.startNow {
         display: flex;
     }
 
-    .first-section-right {
-        display: flex;
-        flex: 1;
+    .first-section {
+        flex-direction: row;
     }
-    .first-section-left {
-        flex: 1;
+
+    .goldcapTitle {
+        display: none;
+    }
+
+    .goldcapTitleXL {
+        display: block;
     }
 }
+

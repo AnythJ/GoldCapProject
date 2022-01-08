@@ -189,12 +189,180 @@ a.startNow {
         flex-direction: row;
     }
 
+    .first-section-right {
+        background-color: var(--bg-primary);
+    }
+
     .goldcapTitle {
         display: none;
     }
 
     .goldcapTitleXL {
         display: block;
+        position: absolute;
+        font-size: calc(11rem + 3vw);
+        top: calc(2rem + 2vw);
+        bottom: 20vw;
+        left: 12vw;
+        opacity: 0.2;
+        text-shadow: 0.4rem 0.4rem var(--bg-third);
+    }
+}
+
+
+
+/*#firstImageBackground {
+    border: 3px solid;
+    border-color: var(--bg-third);*/
+    /*margin: 6.25rem -125rem 0 0;*/
+    /*z-index: 5;
+    position: absolute;
+    background-color: var(--bg-primary);
+    -webkit-animation: slide1 0.3s ease forwards;
+    -webkit-animation-delay: 0.8s;
+    animation: slide1 0.3s ease forwards;
+    animation-delay: 0.8s;
+    width: 80vw;
+    height: auto;
+    opacity: 0.8;
+}
+
+@keyframes slide1 {
+    to {*/
+        /*margin: 6.25rem 12.5rem 0 0;*/
+    /*}
+}
+
+#firstImageBackground:hover #firstImage {
+    -webkit-animation: imgHoverIn 0.2s ease forwards;
+}
+
+#firstImageBackground:hover {
+    z-index: 10;
+}
+
+#firstImage {
+    border: 2px solid var(--bg-third);
+    -webkit-animation: imgHoverOut 0.2s ease forwards;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.firstImage {
+    object-fit: cover;
+    width: 100%;
+}*/
+.dashboardImgXL {
+    max-width: 200vw;
+    max-height: 35.2rem;
+    opacity: 0.6;
+    border: 1px solid var(--bg-third);
+    margin-right: 40vw;
+}
+.firstImageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.textToImage {
+    font-size: calc(1.5rem + .3vw);
+    margin: 10vh 5vw;
+    text-align: center;
+    word-wrap: break-word;
+    width: 80vw;
+}
+
+#secondImageBackground {
+    border: 3px solid;
+    border-color: var(--bg-third);
+    margin: -12.5rem -125rem 0 0;
+    z-index: 3;
+    position: absolute;
+    background-color: var(--bg-primary);
+    -webkit-animation: slide2 0.3s ease forwards;
+    -webkit-animation-delay: 0.7s;
+    animation: slide2 0.3s ease forwards;
+    animation-delay: 0.7s;
+}
+
+@keyframes slide2 {
+    to {
+        margin: -12.5rem 3.125rem 0 0;
+    }
+}
+
+#secondImageBackground:hover #secondImage {
+    -webkit-animation: imgHoverIn 0.2s ease forwards;
+}
+
+#secondImageBackground:hover {
+    z-index: 10;
+}
+
+#secondImage {
+    border: 2px solid var(--bg-third);
+    -webkit-animation: imgHoverOut 0.2s ease forwards;
+    position: relative;
+    z-index: 4;
+}
+
+#thirdImageBackground {
+    border: 3px solid;
+    border-color: var(--bg-third);
+    margin: -6.25rem -125rem 0 0;
+    z-index: 1;
+    position: absolute;
+    background-color: var(--bg-primary);
+    ;
+    -webkit-animation: slide3 0.3s ease forwards;
+    -webkit-animation-delay: 0.6s;
+    animation: slide3 0.3s ease forwards;
+    animation-delay: 0.6s;
+}
+
+@keyframes slide3 {
+    to {
+        margin: -6.25rem 3.125rem 0 0;
+    }
+}
+
+#thirdImageBackground:hover #thirdImage {
+    -webkit-animation: imgHoverIn 0.2s ease forwards;
+}
+
+#thirdImageBackground:hover {
+    z-index: 10;
+}
+
+#thirdImage {
+    border: 2px solid var(--bg-third);
+    -webkit-animation: imgHoverOut 0.2s ease forwards;
+    z-index: 2;
+    position: relative;
+}
+
+@keyframes imgHoverIn {
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(-1.5625rem, 1.5625rem);
+        border: 2px solid var(--bg-third);
+        z-index: 10;
+    }
+}
+
+@keyframes imgHoverOut {
+    from {
+        transform: translate(-1.5625rem, 1.5625rem);
+        border: 2px solid var(--bg-third);
+        z-index: 10;
+    }
+
+    to {
+        transform: translate(0, 0);
     }
 }
 

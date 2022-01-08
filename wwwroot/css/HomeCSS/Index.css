@@ -292,20 +292,52 @@ a.startNow {
         margin-bottom: 5vh;
     }
 
+.footer-home {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100vw;
+    height: 20vh;
+}
 
-
-    #secondImageBackground {
-        border: 3px solid;
-        border-color: var(--bg-third);
-        margin: -12.5rem -125rem 0 0;
-        z-index: 3;
-        position: absolute;
-        background-color: var(--bg-primary);
-        -webkit-animation: slide2 0.3s ease forwards;
-        -webkit-animation-delay: 0.7s;
-        animation: slide2 0.3s ease forwards;
-        animation-delay: 0.7s;
+.footer-home p {
+    margin: 0;
+    
+}
+    .footer-home.socialLinks {
+        display: flex;
     }
+    .socialLinks a {
+        margin: 0 calc(0.2rem + 0.1vw);
+    }
+    .socialLinks a:hover i{
+        color: var(--text-primary);
+    }
+
+    .socialLinks i {
+        font-size: calc(2.5rem + 0.1vw);
+        transition: color 0.2s;
+    }
+
+.authorText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+#secondImageBackground {
+    border: 3px solid;
+    border-color: var(--bg-third);
+    margin: -12.5rem -125rem 0 0;
+    z-index: 3;
+    position: absolute;
+    background-color: var(--bg-primary);
+    -webkit-animation: slide2 0.3s ease forwards;
+    -webkit-animation-delay: 0.7s;
+    animation: slide2 0.3s ease forwards;
+    animation-delay: 0.7s;
+}
 
 @keyframes slide2 {
     to {

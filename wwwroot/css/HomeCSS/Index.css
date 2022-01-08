@@ -253,11 +253,15 @@ a.startNow {
     width: 100%;
 }*/
 .dashboardImgXL {
-    max-width: 200vw;
+    max-width: 110vw;
     max-height: 35.2rem;
     opacity: 0.6;
     border: 1px solid var(--bg-third);
-    margin-right: 40vw;
+    transition: opacity 0.3s ease;
+}
+.dashboardImgXL:hover {
+    opacity: 1;
+    
 }
 .firstImageContainer {
     display: flex;
@@ -273,18 +277,35 @@ a.startNow {
     width: 80vw;
 }
 
-#secondImageBackground {
-    border: 3px solid;
-    border-color: var(--bg-third);
-    margin: -12.5rem -125rem 0 0;
-    z-index: 3;
-    position: absolute;
-    background-color: var(--bg-primary);
-    -webkit-animation: slide2 0.3s ease forwards;
-    -webkit-animation-delay: 0.7s;
-    animation: slide2 0.3s ease forwards;
-    animation-delay: 0.7s;
+.features-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
+    .features-left i {
+        font-size: 16vh;
+        margin-bottom: 1vh;
+    }
+    .features-left p {
+        font-size: 3.5vh;
+        margin-bottom: 5vh;
+    }
+
+
+
+    #secondImageBackground {
+        border: 3px solid;
+        border-color: var(--bg-third);
+        margin: -12.5rem -125rem 0 0;
+        z-index: 3;
+        position: absolute;
+        background-color: var(--bg-primary);
+        -webkit-animation: slide2 0.3s ease forwards;
+        -webkit-animation-delay: 0.7s;
+        animation: slide2 0.3s ease forwards;
+        animation-delay: 0.7s;
+    }
 
 @keyframes slide2 {
     to {

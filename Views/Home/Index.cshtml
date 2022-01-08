@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="~/css/HomeCSS/Index.css" rel="stylesheet" />
     <style>
-        
     </style>
 
     <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -53,34 +52,39 @@
                     <div class="firstImageContainer">
                         <img src="~/images/list.png" alt="List view" class="dashboardImgXL" />
 
-                        <p class="textToImage">Everything you need to know about your spendings in the intuitive dashboard panel.</p>
+                        <p class="textToImage">You can add, edit or delete expense you want at any time, thanks to the complete list.</p>
                     </div>
                 </div>
             </div>
             <div class="first-section-right">
                 <div id="firstImageBackground">
                     <div class="firstImageContainer">
-                        <img src="~/images/list.png" alt="List view" class="dashboardImgXL" />
-
-                        <p class="textToImage">Everything you need to know about your spendings in the intuitive dashboard panel.</p>
+                        <div class="features-left">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <p>Intuitive dashboard</p>
+                            <i class="fas fa-chart-line"></i>
+                            <p>Useful charts</p>
+                            <i class="far fa-calendar-alt"></i>
+                            <p>Recurring expenses</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         @*<section class="first-section">
-            <div class="goldcapTitle">GoldCap</div>
-            <div class="first-section-left">
-                Make your own expenses history, manage them daily and check overall statistics. All by yourself.
-                <p><a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a></p>
-            </div>
-            <div class="first-section-right">
-                Make your own expenses history, manage them daily and check overall statistics. All by yourself.
-                <p><a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a></p>
+                <div class="goldcapTitle">GoldCap</div>
+                <div class="first-section-left">
+                    Make your own expenses history, manage them daily and check overall statistics. All by yourself.
+                    <p><a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a></p>
+                </div>
+                <div class="first-section-right">
+                    Make your own expenses history, manage them daily and check overall statistics. All by yourself.
+                    <p><a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a></p>
 
-            </div>
+                </div>
 
-        </section>*@
+            </section>*@
 
 
     </div>
@@ -91,6 +95,22 @@
     setTimeout(function () {
         document.body.className = "";
     }, 500);
+
+    //function addAnimation() {
+    //    document.getElementsByClassName('textToImage')[0].style.animation = "slideUp-1 0.3s ease forwards";
+    //    document.getElementsByClassName('textToImage')[0].style.animationDelay = "0.3s";
+    //    document.getElementsByClassName('textToImage')[0].style.webkitAnimation = "slideUp 0.3s ease forwards";
+    //    document.getElementsByClassName('textToImage')[0].style.webkitAnimationDelay = "0.3s";
+    //}
+
+    //var loadedImg = false;
+    //$(window).scroll(function () {
+    //    console.log(scrollY);
+    //    if (scrollY >= 700 && scrollY < 1600) {
+    //        addAnimation();
+    //    }
+    //});
+
 
     //function changeTextToCharacters() {
     //    var sentences = $('.animatedLogoText');
@@ -117,48 +137,8 @@
 
     /*changeTextToCharacters();*/
 
-    //function addAnimation() {
-    //        document.getElementById('firstImageBackground2').style.animation = "slide2-1 0.3s ease forwards";
-    //        document.getElementById('firstImageBackground2').style.animationDelay = "0.6s";
-    //        document.getElementById('firstImageBackground2').style.webkitAnimation = "slide2-1 0.3s ease forwards";
-    //        document.getElementById('firstImageBackground2').style.webkitAnimationDelay = "0.6s";
 
-    //        document.getElementById('description2').style.animation = "slide-text2-1 0.3s ease forwards";
-    //        document.getElementById('description2').style.animationDelay = "0.6s";
-    //        document.getElementById('description2').style.webkitAnimation = "slide-text2-1 0.3s ease forwards";
-    //        document.getElementById('description2').style.webkitAnimationDelay = "0.6s";
 
-    //        document.getElementById('secondImageBackground2').style.animation = "slide2-2 0.3s ease forwards";
-    //        document.getElementById('secondImageBackground2').style.animationDelay = "0.7s";
-    //        document.getElementById('secondImageBackground2').style.webkitAnimation = "slide2-2 0.3s ease forwards";
-    //        document.getElementById('secondImageBackground2').style.webkitAnimationDelay = "0.7s";
-    //}
-    //var loadedImg = false;
-    //$(window).scroll(function () {
-    //    console.log(scrollY);
-    //    if (scrollY >= 400 && scrollY < 1600 && loadedImg == false) {
-    //        addAnimation();
-    //        loadedImg = true;
-    //    }
-    //    else if (scrollY >= 1000) {
-    //        console.log(scrollY);
-    //        document.getElementById('avatarBG').style.animation = "footerOpacity 0.3s ease forwards";
-    //        document.getElementById('avatarBG').style.animationDelay = "0.6s";
-    //        document.getElementById('avatarBG').style.webkitAnimation = "footerOpacity 0.3s ease forwards";
-    //        document.getElementById('avatarBG').style.webkitAnimationDelay = "0.6s";
-
-    //        document.getElementById('githubIcon').style.animation = "footerOpacity 0.3s ease forwards";
-    //        document.getElementById('githubIcon').style.animationDelay = "0.6s";
-    //        document.getElementById('githubIcon').style.webkitAnimation = "footerOpacity 0.3s ease forwards";
-    //        document.getElementById('githubIcon').style.webkitAnimationDelay = "0.6s";
-    //    } 
-        
-    
-    //});
-    //if (scrollY >= 400 && scrollY < 1600) {
-    //    addAnimation();
-    //    loadedImg = true;
-    //}
 
     //function textToSide(back, element) {
     //    if (back) {
@@ -181,7 +161,7 @@
     //        d2.style.maxWidth = "400px";
     //        d2.style.transform = "translate(100px, 0)";
     //        d2.style.transitionDuration = "0.5s";
-            
+
     //    }
     //}
     /*$('body').addClass('stop-scrolling');*/

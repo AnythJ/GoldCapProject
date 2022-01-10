@@ -321,7 +321,8 @@ namespace GoldCap.Models
 
         public IEnumerable<Income> GetIncome(string userLogin)
         {
-            return context.Incomes.Where(i => i.ExpenseManagerLogin == userLogin).AsEnumerable();
+            return context.Incomes.AsNoTracking().Where(i => i.ExpenseManagerLogin == userLogin).AsEnumerable();
+        
         }
 
         public Income UpdateIncome(Income incomeChanges)

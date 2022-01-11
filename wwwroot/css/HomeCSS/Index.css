@@ -76,12 +76,12 @@ nav.navbar {
 }
 
 #topNavbar {
-    margin: 0;
+    /*margin: 0;
     justify-content: right;
     background-color: var(--bg-secondary);
     width: 100%;
-    height: 3.125rem;
-    align-items: center;
+    height: 6vh;
+    align-items: center;*/
 }
 
 
@@ -106,17 +106,25 @@ body.prevent-animation * {
 
 
 .signInButton {
-    font-weight: bold;
+    font-weight: 600;
     transition: all 0.3s ease;
     background-color: transparent;
-    border-radius: 3.4375rem;
-    display: inline-block;
+    border-radius: 3vh;
+    display: flex;
     z-index: 0;
     position: relative;
     overflow: hidden;
+    height: 4.5vh;
+    width: 9vh;
+    line-height: 4.5vh;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5vh;
 }
 
-    .signInButton:hover {
+
+    /*.signInButton:hover {
         color: var(--bg-primary);
     }
 
@@ -124,7 +132,7 @@ body.prevent-animation * {
             width: 100%;
         }
 
-    .signInButton:after {
+    .signInButton::after {
         content: "";
         z-index: -1;
         position: absolute;
@@ -134,10 +142,10 @@ body.prevent-animation * {
         width: 0;
         height: 100%;
         background-color: var(--bg-third);
-    }
+        line-height: 4.5vh;
+    }*/
 
 a.startNow {
-    margin-top: 2rem;
     min-width: 9.375rem;
 }
 
@@ -212,12 +220,12 @@ a.startNow {
     .goldcapTitleXL {
         display: block;
         position: absolute;
-        font-size: calc(11rem + 3vw);
+        font-size: 12.5vw;
         top: 4vh;
         left: 2vw;
         opacity: 0.4;
         z-index: 2;
-        text-shadow: 0.4rem 0.4rem var(--bg-third);
+        text-shadow: 0.3vw 0.3vw var(--bg-third);
     }
 
     .dashboardImgXL {
@@ -235,7 +243,7 @@ a.startNow {
         width: 100%;
         height: 100%;
         border: 2px solid var(--bg-third);
-        animation: imgHoverOut 0.1s forwards;
+        animation: imgHoverOut 0.2s forwards;
     }
 
     .firstImg {
@@ -248,7 +256,7 @@ a.startNow {
     }
 
         .firstImg:hover #firstImageBackground {
-            animation: imgHoverIn 0.1s forwards;
+            animation: imgHoverIn 0.2s forwards;
         }
 
         .firstImg:hover {
@@ -260,7 +268,7 @@ a.startNow {
         height: 100%;
         border: 2px solid var(--bg-third);
         display: block;
-        animation: imgHoverOut 0.1s forwards;
+        animation: imgHoverOut 0.2s forwards;
     }
 
     .secondImg {
@@ -273,7 +281,7 @@ a.startNow {
     }
 
         .secondImg:hover #secondImageBackground {
-            animation: imgHoverIn 0.1s forwards;
+            animation: imgHoverIn 0.2s forwards;
         }
 
         .secondImg:hover {
@@ -285,32 +293,51 @@ a.startNow {
         height: 100%;
         border: 2px solid var(--bg-third);
         display: block;
-        animation: imgHoverOut 0.1s forwards;
+        animation: imgHoverOut 0.2s forwards;
     }
 
     .thirdImg {
-        position: absolute;
-        margin-left: 6vw;
-        margin-bottom: 20vh;
         z-index: 3;
-        width: 25%;
+        position: absolute;
+        width: 25vw;
         height: auto;
+        margin-bottom: 6vh;
     }
 
         .thirdImg:hover #thirdImageBackground {
-            animation: imgHoverIn 0.1s forwards;
+            animation: imgHoverIn 0.2s forwards;
         }
 
         .thirdImg:hover {
             z-index: 10;
         }
+
+    .categorylistImgXL {
+        border: 1px solid var(--bg-third);
+        aspect-ratio: 1/1;
+        width: 100%;
+        height: 100%;
+    }
+
+        .categorylistImgXL:hover {
+            opacity: 1;
+        }
+
+    .firstDescription {
+        font-size: 3.2vh;
+    }
 }
 
-
+p.signButtons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 2rem;
+}
+.signButtons > * {margin: 0 1rem;}
 
 
 @media only screen and (max-width: 810px) {
-
     .dashboardImgXL {
         opacity: 0.6;
         transition: opacity 0.3s ease;
@@ -328,9 +355,10 @@ a.startNow {
 
 
 .dashboardImgXL {
-    max-width: 100vw;
-    max-height: 35.2rem;
     border: 1px solid var(--bg-third);
+    aspect-ratio: 21/10;
+    width: 100%;
+    height: 100%;
 }
 
     .dashboardImgXL:hover {
@@ -415,14 +443,14 @@ a.startNow {
     }
 
     to {
-        transform: translate(-1.5625rem, 1.5625rem) scale(1.1);
+        transform: translate(-1vw, -1vw) scale(1.1);
         z-index: 10;
     }
 }
 
 @keyframes imgHoverOut {
     from {
-        transform: translate(-1.5625rem, 1.5625rem);
+        transform: translate(-1vw, -1vw) scale(1.1);
         z-index: 10;
     }
 

@@ -22,18 +22,15 @@
 </head>
 <body class="prevent-animation">
     <div class="main">
-        <nav class="navbar navbar-top sticky-top">
-            <div id="topNavbar" class="container-fluid">
-                <a asp-action="login" asp-controller="account" class="btn btn-outline-info signInButton">Sign in</a>
-            </div>
-        </nav>
-
         <section class="first-section">
             <p class="goldcapTitleXL">GoldCap</p>
             <div class="first-section-left">
                 <p class="goldcapTitle">GoldCap</p>
-                Make your own expenses history, manage them daily and check overall statistics. All by yourself.
-                <p><a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a></p>
+                <span class="firstDescription">Make your own expenses history, manage them daily and check overall statistics. All by yourself.</span>
+                <p class="signButtons">
+                    <a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a>
+                    <a asp-action="login" asp-controller="account" class="btn btn-outline-info signInButton">Sign in</a>
+                </p>
             </div>
             <div class="first-section-right">
                 <div class="ImageContainer firstImg">
@@ -56,7 +53,7 @@
                 <div class="ImageContainer thirdImg">
                     <div id="thirdImageBackground">
                         <div id="thirdImage">
-                            <img src="~/images/categoryList.png" alt="Cateogory list view" class="dashboardImgXL" />
+                            <img src="~/images/categoryList.png" alt="Cateogory list view" class="categorylistImgXL" />
                         </div>
                     </div>
 
@@ -66,23 +63,23 @@
 
         <section class="first-section">
             <div class="first-section-left">
-                    <div class="ImageContainer">
-                        <img src="~/images/list.png" alt="List view" class="dashboardImgXL" />
+                <div class="ImageContainer fourthImg">
+                    <img src="~/images/list.png" alt="List view" class="dashboardImgXL" />
 
-                        <p class="textToImage">You can add, edit or delete expense you want at any time, thanks to the complete list.</p>
-                    </div>
+                    <p class="textToImage">You can add, edit or delete expense you want at any time, thanks to the complete list.</p>
+                </div>
             </div>
             <div class="first-section-right">
-                    <div class="ImageContainer">
-                        <div class="features-left">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <p>Intuitive dashboard</p>
-                            <i class="fas fa-chart-line"></i>
-                            <p>Useful charts</p>
-                            <i class="far fa-calendar-alt"></i>
-                            <p>Recurring expenses</p>
-                        </div>
+                <div class="ImageContainer">
+                    <div class="features-left">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <p>Intuitive dashboard</p>
+                        <i class="fas fa-chart-line"></i>
+                        <p>Useful charts</p>
+                        <i class="far fa-calendar-alt"></i>
+                        <p>Recurring expenses</p>
                     </div>
+                </div>
             </div>
         </section>
 

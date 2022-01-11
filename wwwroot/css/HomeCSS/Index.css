@@ -29,6 +29,7 @@
     /*JS*/
     --piechart-border-color: #C9FBFF;
 }
+
 html {
     scroll-behavior: smooth;
 }
@@ -56,7 +57,6 @@ body {
 main {
     width: 100%;
     height: 300vh;
-    
 }
 
 nav.navbar {
@@ -94,7 +94,7 @@ body.prevent-animation * {
 }
 
 
-@media only screen and (min-width: 767px) {
+@media only screen and (min-width: 811px) {
     nav.navbar {
         display: flex;
     }
@@ -180,9 +180,10 @@ a.startNow {
 
 .goldcapTitleXL {
     display: none;
+    cursor: default;
 }
 
-@media only screen and (min-width: 767px) {
+@media only screen and (min-width: 811px) {
     nav.navbar {
         display: flex;
     }
@@ -212,11 +213,10 @@ a.startNow {
         display: block;
         position: absolute;
         font-size: calc(11rem + 3vw);
-        top: calc(2rem + 2vw);
-        bottom: 20vw;
-        left: 12vw;
-        opacity: 0.2;
-        z-index: 1;
+        top: 4vh;
+        left: 2vw;
+        opacity: 0.4;
+        z-index: 2;
         text-shadow: 0.4rem 0.4rem var(--bg-third);
     }
 
@@ -235,40 +235,57 @@ a.startNow {
         width: 100%;
         height: 100%;
         border: 2px solid var(--bg-third);
+        animation: imgHoverOut 0.1s forwards;
     }
 
     .firstImg {
         margin-right: 4vw;
-        margin-top: 16vh;
+        margin-top: calc(4vw + 4vh);
         z-index: 5;
         position: absolute;
         width: 45vw;
         height: auto;
     }
 
+        .firstImg:hover #firstImageBackground {
+            animation: imgHoverIn 0.1s forwards;
+        }
+
+        .firstImg:hover {
+            z-index: 10;
+        }
+
     #secondImageBackground {
         width: 100%;
         height: 100%;
         border: 2px solid var(--bg-third);
         display: block;
+        animation: imgHoverOut 0.1s forwards;
     }
 
     .secondImg {
-        /*margin-right: 1vw;
-        margin-top: 5vh;*/
         z-index: 4;
         position: absolute;
         width: 45vw;
         height: auto;
-        margin-top: 6vh;
-        margin-left: 2vw;
+        margin-top: 2vh;
+        margin-left: 1vw;
     }
+
+        .secondImg:hover #secondImageBackground {
+            animation: imgHoverIn 0.1s forwards;
+        }
+
+        .secondImg:hover {
+            z-index: 10;
+        }
 
     #thirdImageBackground {
         width: 100%;
         height: 100%;
         border: 2px solid var(--bg-third);
         display: block;
+        animation: imgHoverOut 0.1s forwards;
     }
 
     .thirdImg {
@@ -280,13 +297,19 @@ a.startNow {
         height: auto;
     }
 
-   
+        .thirdImg:hover #thirdImageBackground {
+            animation: imgHoverIn 0.1s forwards;
+        }
+
+        .thirdImg:hover {
+            z-index: 10;
+        }
 }
 
 
 
 
-@media only screen and (max-width: 766px) {
+@media only screen and (max-width: 810px) {
 
     .dashboardImgXL {
         opacity: 0.6;
@@ -305,19 +328,22 @@ a.startNow {
 
 
 .dashboardImgXL {
-    max-width: 110vw;
+    max-width: 100vw;
     max-height: 35.2rem;
     border: 1px solid var(--bg-third);
 }
-.dashboardImgXL:hover {
-    opacity: 1;
-}
+
+    .dashboardImgXL:hover {
+        opacity: 1;
+    }
+
 .ImageContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
 .textToImage {
     font-size: calc(1.5rem + .3vw);
     margin: 10vh 5vw;
@@ -334,10 +360,12 @@ a.startNow {
     align-items: center;
     justify-content: center;
 }
+
     .features-left i {
         font-size: 16vh;
         margin-bottom: 1vh;
     }
+
     .features-left p {
         font-size: 3.5vh;
         margin-bottom: 5vh;
@@ -351,24 +379,26 @@ a.startNow {
     height: 20vh;
 }
 
-.footer-home p {
-    margin: 0;
-    
-}
+    .footer-home p {
+        margin: 0;
+    }
+
     .footer-home.socialLinks {
         display: flex;
     }
-    .socialLinks a {
-        margin: 0 calc(0.2rem + 0.1vw);
-    }
-    .socialLinks a:hover i{
+
+.socialLinks a {
+    margin: 0 calc(0.2rem + 0.1vw);
+}
+
+    .socialLinks a:hover i {
         color: var(--text-primary);
     }
 
-    .socialLinks i {
-        font-size: calc(2.5rem + 0.1vw);
-        transition: color 0.2s;
-    }
+.socialLinks i {
+    font-size: calc(2.5rem + 0.1vw);
+    transition: color 0.2s;
+}
 
 .authorText {
     display: flex;
@@ -385,8 +415,7 @@ a.startNow {
     }
 
     to {
-        transform: translate(-1.5625rem, 1.5625rem);
-        border: 2px solid var(--bg-third);
+        transform: translate(-1.5625rem, 1.5625rem) scale(1.1);
         z-index: 10;
     }
 }
@@ -394,7 +423,6 @@ a.startNow {
 @keyframes imgHoverOut {
     from {
         transform: translate(-1.5625rem, 1.5625rem);
-        border: 2px solid var(--bg-third);
         z-index: 10;
     }
 
@@ -402,4 +430,3 @@ a.startNow {
         transform: translate(0, 0);
     }
 }
-

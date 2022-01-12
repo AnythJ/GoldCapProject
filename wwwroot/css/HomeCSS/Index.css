@@ -347,7 +347,7 @@ a.startNow {
         min-width: 80vh;
     }*/
     .ImageContainer.fourthImg {
-        justify-content: space-around;
+        justify-content: space-evenly;
         align-items: center;
         height: 100%;
     }
@@ -359,7 +359,9 @@ a.startNow {
     .imageSlider {
         width: 85vw;
         height: auto;
-        border: 1px solid var(--bg-third);
+        max-height: 85vh;
+        aspect-ratio: 21/10;
+        border: 0.1vw solid var(--bg-third);
     }
     .features-left {
         flex-direction: row !important;
@@ -369,8 +371,34 @@ a.startNow {
     .footer-home {
         background-color: var(--bg-secondary);
     }
+    
+    .textToImage {
+        font-size: 2.5vh;
+    }
 
+    .sliderItemsCheckboxes {
+        display: flex;
+        width: 100%;
+        align-content: center;
+        justify-content: center;
+    }
 
+    .sliderItemBlop {
+        border: 0.2vw solid var(--text-third);
+        background-color: var(--text-third);
+        border-radius: 50%;
+        width: 2vw;
+        height: 2vw;
+        margin: 0 0.5vw;
+        transition: 0.2s;
+    }
+        .sliderItemBlop:last-child {
+            background-color: transparent;
+        }
+        .sliderItemBlop:hover {
+            background-color: var(--bg-third);
+            cursor: pointer;
+        }
 }
 
 
@@ -437,6 +465,7 @@ p.signButtons {
 
     .textToImage {
         margin: 10vh 5vw;
+        font-size: calc(1.5rem + .3vw);
     }
 
     .ImageContainer.fourthImg {
@@ -480,7 +509,6 @@ p.signButtons {
 
 
 .textToImage {
-    font-size: calc(1.5rem + .3vw);
     text-align: center;
     word-wrap: break-word;
     width: 80vw;
@@ -516,6 +544,7 @@ p.signButtons {
     justify-content: space-around;
     width: 100vw;
     height: 20vh;
+    font-size: 2.5vh;
 }
 
     .footer-home p {
@@ -535,7 +564,8 @@ p.signButtons {
     }
 
 .socialLinks i {
-    font-size: calc(2.5rem + 0.1vw);
+    /*font-size: calc(2.5rem + 0.1vw);*/
+    font-size: 4.5vh;
     transition: color 0.2s;
 }
 

@@ -149,23 +149,42 @@ namespace GoldCap.Controllers
                                     {
                                         Expense expense = CreateExpenseFromRecurring(item, i);
                                         expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
-                                        for (DateTime time = item.Date.Value; time <= DateTime.Now; time = time.AddDays(7 * (int)item.HowOften))
-                                        {
-                                            nextDate4 = nextDate4.AddDays(7 * (int)item.HowOften);
-                                        }
+                                        //for (DateTime time = item.Date.Value; time <= DateTime.Now; time = time.AddDays(7 * (int)item.HowOften))
+                                        //{
+                                        //    nextDate4 = nextDate4.AddDays(7 * (int)item.HowOften);
+                                        //}
+                                        nextDate4 = expense.Date.Value;
                                         list.Add(expense);
                                         k = 1;
                                     }
                                     else if (wkdays[j] == "True")
                                     {
-                                        Expense expense = CreateExpenseFromRecurring(item, i);
-                                        expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
-                                        expense.Date = i.AddDays(j);
-                                        list.Add(expense);
+                                        if(i.AddDays(j) <= DateTime.Now)
+                                        {
+                                            Expense expense = CreateExpenseFromRecurring(item, i);
+                                            expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
+                                            expense.Date = i.AddDays(j);
+                                            list.Add(expense);
+                                            nextDate4 = expense.Date.Value;
+                                        }
+                                        
                                     }
                                 }
                             }
-                            item.Date = nextDate4;
+
+                            int xd = 3;
+                            nextDate4 = nextDate4.AddDays(1);
+                            DateTime x = nextDate4;
+                            for (int j = 0; j < 7; j++)
+                            {
+                                int diff = Convert.ToInt32(nextDate4.DayOfWeek + j);
+                                if (diff > 6) diff = Math.Abs(7 - diff);
+                                if (wkdays[diff] == "True")
+                                {
+                                    x = nextDate4;
+                                }
+                            }
+                            item.Date = x;
                             _expenseRepository.UpdateRecurring(item);
                             break;
                         default:

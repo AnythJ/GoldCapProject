@@ -189,15 +189,19 @@ a.startNow {
 
     .first-section {
         flex-direction: row;
+        height: 100vh;
     }
 
     .first-section-left {
         flex: 1;
+        height: 100%;
     }
 
     .first-section-right {
         background-color: transparent;
         flex: 1;
+        margin: 0 5vw;
+        height: 100%;
     }
 
     .goldcapTitle {
@@ -218,7 +222,6 @@ a.startNow {
 
     .dashboardImgXL {
         width: 100%;
-        margin: 0.5rem;
         opacity: 1;
         border: 1px solid var(--bg-third);
     }
@@ -227,18 +230,47 @@ a.startNow {
         display: none;
     }
 
-    .first-section-right {
-        margin: 0 5vw;
-    }
 
     #firstImageBackground {
-       border: 2px solid var(--bg-third);
-       width: 100%;
-       margin-right: 1vw;
-       margin-top: 5vh;
+        width: 100%;
+        height: 100%;
+        border: 2px solid var(--bg-third);
     }
 
-    
+    .firstImg {
+        margin-right: 1vw;
+        margin-top: 5vh;
+        z-index: 5;
+        position: absolute;
+    }
+
+    #secondImageBackground {
+        width: 100%;
+        height: 100%;
+        border: 2px solid var(--bg-third);
+    }
+
+    .secondImg {
+        /*margin-right: 1vw;
+        margin-top: 5vh;*/
+        z-index: 4;
+        position: absolute;
+    }
+
+    #thirdImageBackground {
+        width: 100%;
+        height: 100%;
+        border: 2px solid var(--bg-third);
+    }
+
+    .thirdImg {
+        position: absolute;
+        margin-left: 1vw;
+        margin-bottom: 5vh;
+        z-index: 3;
+        width: 25%;
+    }
+
 }
 
 
@@ -260,7 +292,7 @@ a.startNow {
 .dashboardImgXL:hover {
     opacity: 1;
 }
-.firstImageContainer {
+.ImageContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -325,74 +357,7 @@ a.startNow {
 }
 
 
-#secondImageBackground {
-    border: 3px solid;
-    border-color: var(--bg-third);
-    margin: -12.5rem -125rem 0 0;
-    z-index: 3;
-    position: absolute;
-    background-color: var(--bg-primary);
-    -webkit-animation: slide2 0.3s ease forwards;
-    -webkit-animation-delay: 0.7s;
-    animation: slide2 0.3s ease forwards;
-    animation-delay: 0.7s;
-}
 
-@keyframes slide2 {
-    to {
-        margin: -12.5rem 3.125rem 0 0;
-    }
-}
-
-#secondImageBackground:hover #secondImage {
-    -webkit-animation: imgHoverIn 0.2s ease forwards;
-}
-
-#secondImageBackground:hover {
-    z-index: 10;
-}
-
-#secondImage {
-    border: 2px solid var(--bg-third);
-    -webkit-animation: imgHoverOut 0.2s ease forwards;
-    position: relative;
-    z-index: 4;
-}
-
-#thirdImageBackground {
-    border: 3px solid;
-    border-color: var(--bg-third);
-    margin: -6.25rem -125rem 0 0;
-    z-index: 1;
-    position: absolute;
-    background-color: var(--bg-primary);
-    ;
-    -webkit-animation: slide3 0.3s ease forwards;
-    -webkit-animation-delay: 0.6s;
-    animation: slide3 0.3s ease forwards;
-    animation-delay: 0.6s;
-}
-
-@keyframes slide3 {
-    to {
-        margin: -6.25rem 3.125rem 0 0;
-    }
-}
-
-#thirdImageBackground:hover #thirdImage {
-    -webkit-animation: imgHoverIn 0.2s ease forwards;
-}
-
-#thirdImageBackground:hover {
-    z-index: 10;
-}
-
-#thirdImage {
-    border: 2px solid var(--bg-third);
-    -webkit-animation: imgHoverOut 0.2s ease forwards;
-    z-index: 2;
-    position: relative;
-}
 
 @keyframes imgHoverIn {
     from {

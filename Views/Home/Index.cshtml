@@ -36,33 +36,44 @@
                 <p><a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a></p>
             </div>
             <div class="first-section-right">
-                <div id="firstImageBackground">
-                    <div class="firstImageContainer">
-                        <div id="firstImageBackground">
-                            <div id="firstImage">
-                                <img src="~/images/dashboard.png" alt="Dashboard view" class="dashboardImgXL" />
-                            </div>
+                <div class="ImageContainer firstImg">
+                    <div id="firstImageBackground">
+                        <div id="firstImage">
+                            <img src="~/images/dashboard.png" alt="Dashboard view" class="dashboardImgXL" />
                         </div>
-                        
-                        <p class="textToImage imgFirstText">Everything you need to know about your spendings in the intuitive dashboard panel.</p>
                     </div>
+
+                    <p class="textToImage imgFirstText">Everything you need to know about your spendings in the intuitive dashboard panel.</p>
+                </div>
+                <div class="ImageContainer secondImg">
+                    <div id="secondImageBackground">
+                        <div id="secondtImage">
+                            <img src="~/images/list.png" alt="List view" class="dashboardImgXL" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="ImageContainer thirdImg">
+                    <div id="thirdImageBackground">
+                        <div id="thirdImage">
+                            <img src="~/images/categoryList.png" alt="Cateogory list view" class="dashboardImgXL" />
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
 
         <section class="first-section">
             <div class="first-section-left">
-                <div id="firstImageBackground">
-                    <div class="firstImageContainer">
+                    <div class="ImageContainer">
                         <img src="~/images/list.png" alt="List view" class="dashboardImgXL" />
 
                         <p class="textToImage">You can add, edit or delete expense you want at any time, thanks to the complete list.</p>
                     </div>
-                </div>
             </div>
             <div class="first-section-right">
-                <div id="firstImageBackground">
-                    <div class="firstImageContainer">
+                    <div class="ImageContainer">
                         <div class="features-left">
                             <i class="fas fa-tachometer-alt"></i>
                             <p>Intuitive dashboard</p>
@@ -72,7 +83,6 @@
                             <p>Recurring expenses</p>
                         </div>
                     </div>
-                </div>
             </div>
         </section>
 

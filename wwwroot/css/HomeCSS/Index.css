@@ -340,8 +340,26 @@ a.startNow {
         flex: 1;
         height: 100%;
     }
+    /*.ImageContainer.fourthImg {
+        margin: 5vw;
+        height: auto;
+        max-width: 170vh;
+        min-width: 80vh;
+    }*/
     .ImageContainer.fourthImg {
-        margin: 0 5vw;
+        justify-content: space-around;
+        align-items: center;
+        height: 100%;
+    }
+    .imageInSLider {
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+    }
+    .imageSlider {
+        width: 85vw;
+        height: auto;
+        border: 1px solid var(--bg-third);
     }
     .features-left {
         flex-direction: row !important;
@@ -352,9 +370,10 @@ a.startNow {
         background-color: var(--bg-secondary);
     }
 
-   
 
 }
+
+
 
 .second-section {
     display: flex;
@@ -420,7 +439,22 @@ p.signButtons {
         margin: 10vh 5vw;
     }
 
+    .ImageContainer.fourthImg {
+        align-items: center;
+        height: 100%;
+    }
 
+    .imageInSLider {
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+    }
+
+    .imageSlider {
+        width: 100vw;
+        height: auto;
+        border: 1px solid var(--bg-third);
+    }
 }
 
 

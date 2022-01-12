@@ -115,16 +115,17 @@ body.prevent-animation * {
     position: relative;
     overflow: hidden;
     height: 4.5vh;
-    width: 9vh;
+    width: 6vw;
     line-height: 4.5vh;
     text-align: center;
     align-items: center;
     justify-content: center;
-    font-size: 1.5vh;
+    font-size: 1.6vh;
+    min-width: 6rem;
 }
 
 
-    /*.signInButton:hover {
+    .signInButton:hover {
         color: var(--bg-primary);
     }
 
@@ -143,10 +144,10 @@ body.prevent-animation * {
         height: 100%;
         background-color: var(--bg-third);
         line-height: 4.5vh;
-    }*/
+    }
 
 a.startNow {
-    min-width: 9.375rem;
+    
 }
 
 .goldcapTitle {
@@ -183,7 +184,7 @@ a.startNow {
     justify-content: center;
     height: 50%;
     font-size: calc(1.5rem + .3vw);
-    background-color: var(--bg-secondary)
+    background-color: var(--bg-secondary);
 }
 
 .goldcapTitleXL {
@@ -228,11 +229,7 @@ a.startNow {
         text-shadow: 0.3vw 0.3vw var(--bg-third);
     }
 
-    .dashboardImgXL {
-        width: 100%;
-        opacity: 1;
-        border: 1px solid var(--bg-third);
-    }
+   
 
     .imgFirstText {
         display: none;
@@ -326,6 +323,67 @@ a.startNow {
     .firstDescription {
         font-size: 3.2vh;
     }
+
+    .second-section {
+        flex-direction: row;
+        height: 100vh;
+    }
+
+    .second-section-left {
+        flex: 1;
+        height: 100%;
+        background-color: var(--bg-secondary);
+    }
+
+    .second-section-right {
+        background-color: var(--bg-primary);
+        flex: 1;
+        height: 100%;
+    }
+    .ImageContainer.fourthImg {
+        margin: 0 5vw;
+    }
+    .features-left {
+        flex-direction: row !important;
+    }
+    .singleFeature i { margin: 0 6vw;}
+
+    .footer-home {
+        background-color: var(--bg-secondary);
+    }
+
+   
+
+}
+
+.second-section {
+    display: flex;
+    height: 200vh;
+    flex-direction: column;
+}
+
+.second-section-left {
+    display: flex;
+    z-index: 2;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    max-height: 50%;
+    font-size: calc(1.5rem + .3vw);
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.second-section-right {
+    display: flex;
+    flex: 1;
+    z-index: 2;
+    align-items: center;
+    justify-content: center;
+    /*height: 50%;*/
+    font-size: calc(1.5rem + .3vw);
 }
 
 p.signButtons {
@@ -335,6 +393,8 @@ p.signButtons {
     margin-top: 2rem;
 }
 .signButtons > * {margin: 0 1rem;}
+
+
 
 
 @media only screen and (max-width: 810px) {
@@ -351,6 +411,16 @@ p.signButtons {
     #thirdImageBackground {
         display: none;
     }
+
+    .second-section-right {
+        background-color: var(--bg-secondary);
+    }
+
+    .textToImage {
+        margin: 10vh 5vw;
+    }
+
+
 }
 
 
@@ -359,6 +429,7 @@ p.signButtons {
     aspect-ratio: 21/10;
     width: 100%;
     height: 100%;
+    opacity: 1;
 }
 
     .dashboardImgXL:hover {
@@ -372,9 +443,10 @@ p.signButtons {
     align-items: center;
 }
 
+
+
 .textToImage {
     font-size: calc(1.5rem + .3vw);
-    margin: 10vh 5vw;
     text-align: center;
     word-wrap: break-word;
     width: 80vw;
@@ -398,7 +470,12 @@ p.signButtons {
         font-size: 3.5vh;
         margin-bottom: 5vh;
     }
-
+.singleFeature {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .footer-home {
     display: flex;
     align-items: center;

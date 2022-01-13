@@ -65,10 +65,10 @@
             <div class="second-section-left">
                 <div class="ImageContainer fourthImg">
                     <div class="imageSlider">
-                        <img src="~/images/list.png" alt="List view" class="imageInSLider" id="sliderItem"/>
+                        <img src="~/images/list.png" alt="List view" class="imageInSLider" id="sliderItem" />
                     </div>
                     <div class="sliderItemsCheckboxes">
-                        <div class="sliderItemBlop" onclick="changeSliderItem(this)" id="dashboard"></div>
+                        <div class="sliderItemBlop active" onclick="changeSliderItem(this)" id="dashboard"></div>
                         <div class="sliderItemBlop" onclick="changeSliderItem(this)" id="list"></div>
                     </div>
                     <p class="textToImage">You can add, edit or delete expense you want at any time, thanks to the complete list.</p>
@@ -145,21 +145,38 @@
     //    //}
     //});
 
-    function changeSliderItem (element) {
-        //HERE LOGIC
+    function changeSliderItem(element) {
+        if (element.id == "dashboard") {
+            document.getElementById("sliderItem").src = "/images/dashboard.png";
+            document.getElementsByClassName("sliderItemBlop")[0].classList.add("active");
+            document.getElementsByClassName("sliderItemBlop")[1].classList.remove("active");
+        }
+        else if (element.id == "list") {
+            document.getElementById("sliderItem").src = "/images/list.png";
+            document.getElementsByClassName("sliderItemBlop")[1].classList.add("active");
+            document.getElementsByClassName("sliderItemBlop")[0].classList.remove("active");
+        }
     }
 
-    window.onresize = function () {
+    function changeImg() {
         var reswidth = window.innerWidth;
         if (reswidth > 810) {
-            document.getElementById("sliderItem").src = "/images/dashboard.png";
-            console.log(reswidth);
+            if (document.getElementsByClassName("sliderItemBlop")[0].classList.contains("active")) {
+                document.getElementById("sliderItem").src = "/images/dashboard.png";
+            }
         }
-        else
-        {
-            document.getElementById("sliderItem").src = "/images/list.png";
-            console.log(reswidth);
+        else {
+            if (document.getElementsByClassName("sliderItemBlop")[0].classList.contains("active")) {
+                document.getElementById("sliderItem").src = "/images/list.png";
+            }
         }
+    }
+    $(document).ready(function () {
+        changeImg();
+    })
+
+    window.onresize = function () {
+        changeImg();
     }
 
     //function changeTextToCharacters() {

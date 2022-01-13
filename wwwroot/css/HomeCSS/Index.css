@@ -88,9 +88,9 @@ nav.navbar {
 
 
 body.prevent-animation * {
-    animation-duration: 0s !important;
+    /*animation-duration: 0s !important;
     -webkit-animation-duration: 0s !important;
-    transition: background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
+    transition: background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;*/
 }
 
 
@@ -354,8 +354,19 @@ a.startNow {
     .imageInSLider {
         width: 100%;
         height: 100%;
-        opacity: 1;
     }
+
+    @keyframes fade {
+        25% {
+            opacity: 0.4;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    
+
+
     .imageSlider {
         width: 85vw;
         height: auto;
@@ -385,7 +396,6 @@ a.startNow {
 
     .sliderItemBlop {
         border: 0.2vw solid var(--text-third);
-        background-color: var(--text-third);
         border-radius: 50%;
         width: 2vw;
         height: 2vw;
@@ -398,6 +408,9 @@ a.startNow {
         .sliderItemBlop:hover {
             background-color: var(--bg-third);
             cursor: pointer;
+        }
+        .sliderItemBlop.active {
+            background-color: var(--text-third);
         }
 }
 

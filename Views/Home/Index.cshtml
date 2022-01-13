@@ -72,7 +72,7 @@
                         <div class="sliderItemBlop active" onclick="changeSliderItem(this)" id="dashboard"></div>
                         <div class="sliderItemBlop" onclick="changeSliderItem(this)" id="list"></div>
                     </div>
-                    <p class="textToImage">You can add, edit or delete expense you want at any time, thanks to the complete list.</p>
+                    <p class="textToImage" id="textUnderSlider">Everything you need to know about your spendings in the intuitive dashboard panel.</p>
                 </div>
             </div>
             <div class="second-section-right">
@@ -153,6 +153,8 @@
             document.getElementById("sliderItem2").classList.add("hidden");
             document.getElementsByClassName("sliderItemBlop")[0].classList.add("active");
             document.getElementsByClassName("sliderItemBlop")[1].classList.remove("active");
+            document.getElementById("textUnderSlider").innerText = "Everything you need to know about your spendings in the intuitive dashboard panel.";
+
         }
         else if (element.id == "list") {
             /*document.getElementById("sliderItem").src = "/images/list.png";*/
@@ -160,6 +162,7 @@
             document.getElementsByClassName("sliderItemBlop")[0].classList.remove("active");
             document.getElementById("sliderItem1").classList.add("hidden");
             document.getElementById("sliderItem2").classList.remove("hidden");
+            document.getElementById("textUnderSlider").innerText = "You can add, edit or delete expense you want at any time, thanks to the complete list.";
         }
     }
 
@@ -169,6 +172,8 @@
             if (document.getElementsByClassName("sliderItemBlop")[0].classList.contains("active")) {
                 document.getElementById("sliderItem1").classList.remove("hidden");
                 document.getElementById("sliderItem2").classList.add("hidden");
+                document.getElementById("textUnderSlider").innerText = "Everything you need to know about your spendings in the intuitive dashboard panel.";
+
             }
         }
         else {
@@ -176,6 +181,8 @@
                 document.getElementById("sliderItem2").classList.remove("hidden");
                 document.getElementById("sliderItem1").classList.add("hidden");
             }
+
+            document.getElementById("textUnderSlider").innerText = "You can add, edit or delete expense you want at any time, thanks to the complete list.";
         }
     }
     $(document).ready(function () {

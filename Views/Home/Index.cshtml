@@ -65,7 +65,8 @@
             <div class="second-section-left">
                 <div class="ImageContainer fourthImg">
                     <div class="imageSlider">
-                        <img src="~/images/list.png" alt="List view" class="imageInSLider" id="sliderItem" />
+                        <img src="~/images/dashboard.png" alt="Dashboard view" class="imageInSLider" id="sliderItem1" />
+                        <img src="~/images/list.png" alt="List view" class="imageInSLider hidden" id="sliderItem2" />
                     </div>
                     <div class="sliderItemsCheckboxes">
                         <div class="sliderItemBlop active" onclick="changeSliderItem(this)" id="dashboard"></div>
@@ -147,14 +148,18 @@
 
     function changeSliderItem(element) {
         if (element.id == "dashboard") {
-            document.getElementById("sliderItem").src = "/images/dashboard.png";
+            /*document.getElementById("sliderItem").src = "/images/dashboard.png";*/
+            document.getElementById("sliderItem1").classList.remove("hidden");
+            document.getElementById("sliderItem2").classList.add("hidden");
             document.getElementsByClassName("sliderItemBlop")[0].classList.add("active");
             document.getElementsByClassName("sliderItemBlop")[1].classList.remove("active");
         }
         else if (element.id == "list") {
-            document.getElementById("sliderItem").src = "/images/list.png";
+            /*document.getElementById("sliderItem").src = "/images/list.png";*/
             document.getElementsByClassName("sliderItemBlop")[1].classList.add("active");
             document.getElementsByClassName("sliderItemBlop")[0].classList.remove("active");
+            document.getElementById("sliderItem1").classList.add("hidden");
+            document.getElementById("sliderItem2").classList.remove("hidden");
         }
     }
 
@@ -162,12 +167,14 @@
         var reswidth = window.innerWidth;
         if (reswidth > 810) {
             if (document.getElementsByClassName("sliderItemBlop")[0].classList.contains("active")) {
-                document.getElementById("sliderItem").src = "/images/dashboard.png";
+                document.getElementById("sliderItem1").classList.remove("hidden");
+                document.getElementById("sliderItem2").classList.add("hidden");
             }
         }
         else {
             if (document.getElementsByClassName("sliderItemBlop")[0].classList.contains("active")) {
-                document.getElementById("sliderItem").src = "/images/list.png";
+                document.getElementById("sliderItem2").classList.remove("hidden");
+                document.getElementById("sliderItem1").classList.add("hidden");
             }
         }
     }

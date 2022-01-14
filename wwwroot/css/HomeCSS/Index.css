@@ -250,6 +250,8 @@ a.startNow {
         position: absolute;
         width: 45vw;
         height: auto;
+        transform: translateX(100vw);
+        animation: slideImg 0.5s ease-in-out forwards;
     }
 
         .firstImg:hover #firstImageBackground {
@@ -275,6 +277,13 @@ a.startNow {
         height: auto;
         margin-top: 2vh;
         margin-left: 1vw;
+        transform: translateX(100vw);
+        animation: slideImg 0.6s ease-in-out forwards;
+    }
+    @keyframes slideImg {
+        to {
+            transform: translateX(0);
+        }
     }
 
         .secondImg:hover #secondImageBackground {
@@ -299,6 +308,8 @@ a.startNow {
         width: 25vw;
         height: auto;
         margin-bottom: 6vh;
+        transform: translateX(100vw);
+        animation: slideImg 0.7s ease-in-out forwards;
     }
 
         .thirdImg:hover #thirdImageBackground {
@@ -437,10 +448,11 @@ a.startNow {
         width: 9vw;
         transform: rotate(-45deg);
         height: 200%;
-        margin-left: 80vw;
+        margin-left: 140vw;
         margin-top: -55vh;
         opacity: 0.8;
         position: absolute;
+        animation: slide 0.6s ease-in-out forwards;
     }
 
     .stripe-2 {
@@ -449,10 +461,11 @@ a.startNow {
         width: 9vw;
         transform: rotate(-45deg);
         height: 200%;
-        margin-left: 80vw;
+        margin-left: 140vw;
         margin-top: -45vh;
         opacity: 0.4;
         position: absolute;
+        animation: slide 0.4s ease-in-out forwards;
     }
 
     .stripe-3 {
@@ -461,10 +474,11 @@ a.startNow {
         width: 9vw;
         transform: rotate(-45deg);
         height: 200%;
-        margin-left: 80vw;
+        margin-left: 140vw;
         margin-top: -65vh;
         opacity: 0.4;
         position: absolute;
+        animation: slide 0.7s ease-in-out forwards;
     }
 
     .stripe-4 {
@@ -473,7 +487,7 @@ a.startNow {
         width: 9vw;
         transform: rotate(-45deg);
         height: 200%;
-        margin-left: 80vw;
+        margin-left: 140vw;
         margin-top: -55vh;
         opacity: 0.6;
         position: absolute;
@@ -505,6 +519,12 @@ a.startNow {
         min-width: 6rem;
     }
 
+    
+    @keyframes slide {
+        to {
+            transform: translateX(-60vw) rotate(-45deg);
+        }
+    }
     /*#endregion */
 }
 

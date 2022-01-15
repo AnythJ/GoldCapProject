@@ -229,7 +229,16 @@ a.startNow {
         text-shadow: 0.3vw 0.3vw var(--bg-secondary);
     }
 
-
+    .goldcapTitleXL, .firstDescription, .signButtons {
+        transform: translateX(-70vw);
+        animation: slideFromLeft 0.4s ease-in-out forwards;
+    }
+    @keyframes slideFromLeft{
+        to {
+            transform: translateX(0);
+        }
+    }
+    
 
     .imgFirstText {
         display: none;
@@ -250,10 +259,8 @@ a.startNow {
         position: absolute;
         width: 45vw;
         height: auto;
-        transform: translateX(100vw);
-        animation: slideImg 0.5s ease-in-out forwards;
+        
     }
-
         .firstImg:hover #firstImageBackground {
             animation: imgHoverIn 0.2s forwards;
         }
@@ -261,6 +268,16 @@ a.startNow {
         .firstImg:hover {
             z-index: 10;
         }
+    .ImageContainer {
+        opacity: 0.2;
+        animation: slideImg 0.5s ease-in-out forwards;
+    }
+
+    @keyframes slideImg {
+        to {
+            opacity: 1;
+        }
+    }
 
     #secondImageBackground {
         width: 100%;
@@ -277,14 +294,8 @@ a.startNow {
         height: auto;
         margin-top: 2vh;
         margin-left: 1vw;
-        transform: translateX(100vw);
-        animation: slideImg 0.6s ease-in-out forwards;
     }
-    @keyframes slideImg {
-        to {
-            transform: translateX(0);
-        }
-    }
+    
 
         .secondImg:hover #secondImageBackground {
             animation: imgHoverIn 0.2s forwards;
@@ -308,8 +319,6 @@ a.startNow {
         width: 25vw;
         height: auto;
         margin-bottom: 6vh;
-        transform: translateX(100vw);
-        animation: slideImg 0.7s ease-in-out forwards;
     }
 
         .thirdImg:hover #thirdImageBackground {
@@ -351,12 +360,7 @@ a.startNow {
         flex: 1;
         height: 100%;
     }
-    /*.ImageContainer.fourthImg {
-        margin: 5vw;
-        height: auto;
-        max-width: 170vh;
-        min-width: 80vh;
-    }*/
+
     .ImageContainer.fourthImg {
         justify-content: space-evenly;
         align-items: center;
@@ -397,6 +401,9 @@ a.startNow {
     .footer-home {
         background-color: var(--bg-secondary);
     }
+        .footer-home a:hover {
+            cursor: pointer;
+        }
 
     .textToImage {
         font-size: 2.5vh;
@@ -446,9 +453,9 @@ a.startNow {
         background-color: var(--bg-third);
         z-index: 1;
         width: 9vw;
-        transform: rotate(-45deg);
+        transform: translateX(60vw) rotate(-45deg);
         height: 200%;
-        margin-left: 140vw;
+        margin-left: 80vw;
         margin-top: -55vh;
         opacity: 0.8;
         position: absolute;
@@ -459,9 +466,9 @@ a.startNow {
         background-color: var(--bg-secondary);
         z-index: 0;
         width: 9vw;
-        transform: rotate(-45deg);
+        transform: translateX(60vw) rotate(-45deg);
         height: 200%;
-        margin-left: 140vw;
+        margin-left: 80vw;
         margin-top: -45vh;
         opacity: 0.4;
         position: absolute;
@@ -472,9 +479,9 @@ a.startNow {
         background-color: var(--bg-secondary);
         z-index: 0;
         width: 9vw;
-        transform: rotate(-45deg);
+        transform: translateX(60vw) rotate(-45deg);
         height: 200%;
-        margin-left: 140vw;
+        margin-left: 80vw;
         margin-top: -65vh;
         opacity: 0.4;
         position: absolute;
@@ -485,9 +492,9 @@ a.startNow {
         background-color: var(--bg-primary);
         z-index: 0;
         width: 9vw;
-        transform: rotate(-45deg);
+        transform: translateX(60vw) rotate(-45deg);
         height: 200%;
-        margin-left: 140vw;
+        margin-left: 80vw;
         margin-top: -55vh;
         opacity: 0.6;
         position: absolute;
@@ -497,35 +504,39 @@ a.startNow {
         background-color: var(--bg-secondary);
         z-index: 0;
         width: 6.5vw;
-        transform: rotate(-45deg);
+        transform: translateX(-60vw) rotate(-45deg);
         height: 200%;
         margin-left: 1vw;
         margin-top: -45vh;
         opacity: 0.4;
         position: absolute;
         min-width: 6rem;
+        animation: slide 0.5s ease-in-out forwards;
     }
 
     .stripe-6 {
         background-color: var(--bg-secondary);
         z-index: 0;
         width: 6.5vw;
-        transform: rotate(-45deg);
+        transform: translateX(-60vw) rotate(-45deg);
         height: 200%;
         margin-left: 18vw;
         margin-top: -50vh;
         opacity: 0.4;
         position: absolute;
         min-width: 6rem;
+        animation: slide 0.4s ease-in-out forwards;
     }
 
-    
+
     @keyframes slide {
         to {
-            transform: translateX(-60vw) rotate(-45deg);
+            transform: translateX(0) rotate(-45deg);
         }
     }
+    
     /*#endregion */
+
 }
 
 /*#region BackgroundStripes */
@@ -533,16 +544,13 @@ a.startNow {
 .stripes {
     display: flex;
     position: absolute;
-    z-index: 0;
+    z-index: 1;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
 }
 
 
-/*.svg1 {
-    position: absolute;
-}*/
 
 
 

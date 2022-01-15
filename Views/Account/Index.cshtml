@@ -4,75 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <style>
-        .mainForm {
-            max-width: 31.25rem;
-            min-width: 15.625rem;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-            z-index: 6;
-            padding-top: 15%;
-        }
-
-        .loginForm {
-            position: relative;
-            z-index: 5;
-            margin: 0 auto;
-            text-align: center;
-            border: 3px solid var(--bg-third);
-            border-radius: 5px;
-            padding: 5% 20%;
-            background-color: var(--bg-primary);
-        }
-
-        h1 {
-            font-size: 3.4375rem;
-            font-weight: bold;
-            color: var(--text-secondary);
-        }
-        a {
-            min-width: 11.25rem;
-        }
-
-        .signInButton {
-            font-weight: bold;
-            transition: all 0.3s ease;
-            background-color: transparent;
-            border-radius: 5px;
-            display: inline-block;
-            z-index: 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-            .signInButton:hover {
-                color: var(--bg-primary);
-            }
-
-                .signInButton:hover:after {
-                    width: 100%;
-                }
-
-            .signInButton:after {
-                content: "";
-                z-index: -1;
-                position: absolute;
-                transition: all 0.3s ease;
-                left: 0;
-                top: 0;
-                width: 0;
-                height: 100%;
-                background-color: var(--bg-third);
-            }
-        .loginButton {
-            margin-top: 1.25rem;
-        }
     </style>
+
+    <link href="~/css/Account/Index.css" rel="stylesheet" />
     <title></title>
 </head>
 <body>
     <div class="mainForm">
-        <div class="loginForm">
             <h1>GoldCap</h1>
             <p class="loginButton">
                 <a class="btn btn-outline-info signInButton" asp-controller="account" asp-action="login">Login in</a>
@@ -83,7 +21,6 @@
             <p>
                 <a class="btn btn-outline-info signInButton" asp-controller="account" asp-action="loginGuest">Login in as guest</a>
             </p>
-        </div>
         </div>
 </body>
 </html>

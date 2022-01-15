@@ -4,92 +4,26 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/LayoutCSS/site.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="~/css/Account/Layout.css" rel="stylesheet" />
     @*<link rel="shortcut icon" href="#">*@
     @*<link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />*@
     @RenderSection("Styles", required: false)
     <link href="~/css/LayoutCSS/Layout.css" rel="stylesheet" />
     <style>
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-secondary);
-            overflow: hidden;
-        }
-        .main {
-            margin: 0 auto;
-            width: 100%;
-            height: 100%;
-            align-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        .section-stripes {
-            position: absolute;
-            z-index: 1;
-        }
-        .background-stripe-1 {
-            width: 12.5rem;
-            height: 220vh;
-            position: absolute;
-            z-index: 2;
-            background-color: var(--text-primary);
-            transform: translate(15.625rem, -37.5rem) rotate(-45deg);
-            opacity: 0.4;
-        }
-        .background-stripe-2 {
-            width: 12.5rem;
-            height: 220vh;
-            position: absolute;
-            z-index: 2;
-            background-color: var(--bg-fourth);
-            transform: translate(6.25rem, -37.5rem) rotate(-45deg);
-            opacity: 0.4;
-        }
-        .background-stripe-3 {
-            width: 12.5rem;
-            height: 220vh;
-            position: absolute;
-            z-index: 2;
-            background-color: var(--bg-fourth);
-            transform: translate(28.125rem, -37.5rem) rotate(-45deg);
-            opacity: 0.4;
-        }
-        .background-stripe-4 {
-            width: 9.375rem;
-            height: 220vh;
-            position: absolute;
-            z-index: 2;
-            background-color: var(--bg-third);
-            transform: translate(75rem, -37.5rem) rotate(-45deg);
-            opacity: 1;
-        }
-        .background-stripe-5 {
-            width: 9.375rem;
-            height: 220vh;
-            position: absolute;
-            z-index: 2;
-            background-color: var(--bg-fourth);
-            transform: translate(81.25rem, -37.5rem) rotate(-45deg);
-            opacity: 0.4;
-        }
+        
+
     </style>
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div class="section-stripes">
-        <div class="background-stripe-1"></div>
-        <div class="background-stripe-2"></div>
-        <div class="background-stripe-3"></div>
-        <div class="background-stripe-5"></div>
-        <div class="background-stripe-4"></div>
-    </div>
-    
     <div class="main">
 
         @RenderBody()

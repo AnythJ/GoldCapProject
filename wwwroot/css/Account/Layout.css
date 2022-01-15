@@ -1,0 +1,48 @@
+﻿:root {
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    --bg-primary: #212529;
+    --bg-secondary: #2D3339;
+    --bg-third: #0DCAF0;
+    --bg-fourth: hsl(210, 11%, 18%);
+    --text-primary: #434D56;
+    --text-secondary: #9ba6b0;
+    --bg-navbar: #2d3339;
+    /**/
+    --smallerCircle-color: #FFC759;
+    --hr-primary: #5a6672;
+    --scrollbar-primary: #0790ab;
+    --smallerCircle-color-secondary: #DFF8EB;
+    --smallerCircle-color-third: #68a4fd;
+    --list-bg: #6C757D;
+    --list-hover: #5f666d;
+    --list-thead: #474d52;
+    --list-btn-bg: #17A2B8;
+    --list-btn-bg-hover: #138496;
+    --text-third: white;
+    --btn-succes: #1B998B;
+    --btn-succes-hover: #136c62;
+    --btn-info: #87BCDE;
+    --btn-info-hover: #5fa7d3;
+    --btn-danger: #DF2935;
+    --btn-danger-hover: #c81e29;
+    /*JS*/
+    --piechart-border-color: #C9FBFF;
+}
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
+    margin: 0;
+    padding: 0;
+    overflow: hidden scroll;
+    scroll-behavior: smooth;
+}
+
+.main {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

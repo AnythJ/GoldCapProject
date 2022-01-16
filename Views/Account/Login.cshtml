@@ -5,56 +5,9 @@
 }
 
 <style>
-    .mainForm {
-        max-width: 31.25rem;
-        min-width: 15.625rem;
-        margin: 0 auto;
-        text-align: center;
-        position: relative;
-        z-index: 6;
-        padding-top: 15%;
-    }
-    .loginForm {
-        position: relative;
-        z-index: 5;
-        margin: 0 auto;
-        text-align: center;
-        border: 3px solid var(--bg-third);
-        border-radius: 5px;
-        padding: 5% 20%;
-        background-color: var(--bg-primary);
-    }
-    h1 {
-        font-size: 3.4375rem;
-        font-weight: bold;
-        color: var(--text-secondary);
-    }
-    input.form-control, input.form-control:-webkit-autofill, input.form-control:-webkit-autofill:hover, input.form-control:-webkit-autofill:active {
-        background-color: var(--bg-secondary);
-        color: var(--text-secondary);
-        border-color: var(--bg-primary);
-        border-radius: 5px;
-        -webkit-box-shadow: 0 0 0 12.5rem var(--bg-secondary) inset;
-        -webkit-text-fill-color: var(--text-secondary);
-    }
-        input.form-control:active, input.form-control:focus, input.form-contro:hover, input.form-control:-webkit-autofill:focus {
-            background-color: var(--bg-secondary);
-            color: var(--text-secondary);
-            border-color: var(--bg-third);
-            border-radius: 5px;
-            -webkit-box-shadow: 0 0 0px 12.5rem var(--bg-secondary) inset;
-            -webkit-text-fill-color: var(--text-secondary);
-        }
-
-
-
-    .form-group {
-        margin: 0.3125rem 0;
-    }
-
 </style>
+<link href="~/css/Account/Login.css" rel="stylesheet" />
 <div class="mainForm">
-    <div class="loginForm">
         <h1>GoldCap</h1>
         <form method="post">
             <div class="form-group">
@@ -75,9 +28,11 @@
                     </label>
                 </div>
             </div>
-            <button type="submit" class="btn btn-outline-info">Login</button>
-            <a class="btn btn-outline-info" asp-action="register" asp-controller="account">Register</a>
+            <div class="accountButtons">
+                <button type="submit" class="btn btn-outline-info signInButton">Login</button>
+                <a class="btn btn-outline-info signInButton" asp-action="register" asp-controller="account">Register</a>
+            </div>
+            
             <div asp-validation-summary="All" class="text-info"></div>
         </form>
-    </div>
 </div>

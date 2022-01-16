@@ -1,0 +1,169 @@
+﻿.signInButton {
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background-color: transparent;
+    border-radius: 3vh;
+    border-width: 0.1vw;
+    display: flex;
+    z-index: 0;
+    position: relative;
+    overflow: hidden;
+    height: 5.5vh;
+    width: 45vw;
+    line-height: 2.5vh;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6vh;
+    min-width: 6rem;
+}
+
+
+    .signInButton:hover {
+        color: var(--bg-primary);
+    }
+
+        .signInButton:hover:after {
+            width: 100%;
+        }
+
+    .signInButton::after {
+        content: "";
+        z-index: -1;
+        position: absolute;
+        transition: all 0.3s ease;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 100%;
+        background-color: var(--bg-third);
+        line-height: 5.5vh;
+    }
+
+h1 {
+    font-size: 18vw;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: font-size 0.2s;
+    margin-bottom: 5vh;
+}
+
+.mainForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90vw;
+    height: 90vh;
+    border: 0.2vw solid var(--bg-third);
+    border-radius: 2%;
+    transition: width 0.2s, height 0.2s;
+}
+
+
+
+@media only screen and (min-width: 811px) {
+    .mainForm {
+        min-width: 25rem;
+        width: 30vw;
+        min-height: 25rem;
+        height: 70vh;
+    }
+
+    h1 {
+        font-size: clamp(5rem, 6vw, 6vw);
+    }
+
+    .signInButton {
+        width: 40%;
+        min-width: 8rem;
+        min-height: 2rem;
+        margin: 0 0.2vw;
+        font-size: clamp(1rem, 1.6vh, 1.6vh);
+    }
+
+    .form-control {
+        width: 18vw;
+        min-width: 15.6rem;
+        margin-bottom: 1vh;
+        height: 5.5vh;
+        min-height: 2rem;
+    }
+
+    span {
+        font-size: 4vh;
+    }
+}
+
+@media only screen and (max-width: 810px)
+{
+    .form-control {
+        width: 45vw;
+        min-width: 16.6rem;
+        margin-bottom: 1vh;
+        height: 4vh;
+        min-height: 2rem;
+    }
+}
+.signInButton {
+    width: 40%;
+    min-width: 8rem;
+    min-height: 2rem;
+    margin: 0 0.2vw;
+    font-size: clamp(1rem, 1.6vh, 1.6vh);
+}
+
+span {
+    font-size: clamp(1rem, 1.6vh, 1.6vh);
+}
+
+input.form-control, input.form-control:-webkit-autofill, input.form-control:-webkit-autofill:hover, input.form-control:-webkit-autofill:active {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border-color: var(--bg-primary);
+    border-radius: 0.3rem;
+    -webkit-box-shadow: 0 0 0px 12.5rem var(--bg-secondary) inset;
+    -webkit-text-fill-color: var(--text-secondary);
+}
+
+    input.form-control:active, input.form-control:focus, input.form-contro:hover, input.form-control:-webkit-autofill:focus {
+        background-color: var(--bg-secondary);
+        color: var(--text-secondary);
+        border-color: var(--bg-third);
+        border-radius: 0.3rem;
+        -webkit-box-shadow: 0 0 0px 12.5rem var(--bg-secondary) inset;
+        -webkit-text-fill-color: var(--text-secondary);
+    }
+
+.registerForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    width: 100%;
+    text-align: center;
+    font-size: clamp(1rem, 1.6vh, 1.6vh);
+}
+
+.accountButtons {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1vh;
+
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+/*.accountButtons a, .accountButtons button {
+    margin: 0 2vw;
+    width: 2vw;
+}*/

@@ -58,6 +58,7 @@ h1 {
     border: 0.2vw solid var(--bg-third);
     border-radius: 2%;
     transition: width 0.2s, height 0.2s;
+    gap: 5vh;
 }
 
 
@@ -88,6 +89,7 @@ h1 {
         margin-bottom: 1vh;
         height: 5.5vh;
         min-height: 2rem;
+        font-size: clamp(1rem, 1.6vh, 1.6vh);
     }
 
     span {
@@ -117,11 +119,11 @@ span {
     font-size: clamp(1rem, 1.6vh, 1.6vh);
 }
 
-input.form-control, input.form-control:-webkit-autofill, input.form-control:-webkit-autofill:hover, input.form-control:-webkit-autofill:active {
+input.form-control, input.form-control:-webkit-autofill, input.form-control:-webkit-autofill:hover, input.form-control:-webkit-autofill:active {  
     background-color: var(--bg-secondary);
     color: var(--text-secondary);
     border-color: var(--bg-primary);
-    border-radius: 0.3rem;
+    border-radius: 0.5vw;
     -webkit-box-shadow: 0 0 0px 12.5rem var(--bg-secondary) inset;
     -webkit-text-fill-color: var(--text-secondary);
 }
@@ -130,7 +132,7 @@ input.form-control, input.form-control:-webkit-autofill, input.form-control:-web
         background-color: var(--bg-secondary);
         color: var(--text-secondary);
         border-color: var(--bg-third);
-        border-radius: 0.3rem;
+        border-radius: 0.5vw;
         -webkit-box-shadow: 0 0 0px 12.5rem var(--bg-secondary) inset;
         -webkit-text-fill-color: var(--text-secondary);
     }
@@ -142,10 +144,12 @@ input.form-control, input.form-control:-webkit-autofill, input.form-control:-web
     align-items: center;
 }
 
-label {
-    width: 100%;
+.form-group label {
     text-align: center;
     font-size: clamp(1rem, 1.6vh, 1.6vh);
+}
+.form-group:not(:last-child) {
+    width: 100%;
 }
 
 .accountButtons {
@@ -162,7 +166,30 @@ label {
     align-items: center;
     justify-content: center;
 }
-/*.accountButtons a, .accountButtons button {
-    margin: 0 2vw;
-    width: 2vw;
-}*/
+.form-check {
+    width: 100%;
+    padding-left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+label.remememberMeLabel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 4vw;
+    gap: calc(0.2rem + .3vw);
+}
+.form-check-input {
+    margin: 0 !important; /*bootstrap somehow has negative left margin*/
+}
+input.form-check-input {
+    background-color: var(--text-secondary);
+}
+
+    input.form-check-input:hover, input.form-check-input:checked {
+        background-color: var(--bg-third);
+        color: var(--text-secondary);
+    }
+

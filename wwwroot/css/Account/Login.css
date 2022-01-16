@@ -45,7 +45,6 @@ h1 {
     font-weight: 500;
     color: var(--text-secondary);
     transition: font-size 0.2s;
-    margin-bottom: 5vh;
 }
 
 .mainForm {
@@ -59,6 +58,8 @@ h1 {
     border-radius: 2%;
     transition: width 0.2s, height 0.2s;
     gap: 5vh;
+    background-color: var(--bg-primary);
+    z-index: 10;
 }
 
 

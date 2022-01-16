@@ -58,6 +58,8 @@ h1 {
     border: 0.2vw solid var(--bg-third);
     border-radius: 2%;
     transition: width 0.2s, height 0.2s;
+    background-color: var(--bg-primary);
+    z-index: 10;
 }
 
 

@@ -48,6 +48,7 @@ h1 {
     transition: font-size 0.2s;
     margin-bottom: 5vh;
 }
+
 .mainForm {
     display: flex;
     flex-direction: column;
@@ -58,6 +59,8 @@ h1 {
     border: 0.2vw solid var(--bg-third);
     border-radius: 2%;
     transition: width 0.2s, height 0.2s;
+    background-color: var(--bg-primary);
+    z-index: 10;
 }
 
 
@@ -69,10 +72,12 @@ h1 {
         min-height: 25rem;
         height: 50vh;
     }
+
     h1 {
         font-size: 6vw;
         font-size: clamp(5rem, 6vw, 6vw);
     }
+
     .signInButton {
         width: 14vw;
         min-width: 12rem;

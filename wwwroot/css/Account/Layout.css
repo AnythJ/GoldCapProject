@@ -50,3 +50,101 @@ body {
     justify-content: center;
 }
 
+
+.stripes {
+    display: flex;
+    position: absolute;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+@media only screen and (min-width: 811px)
+{
+    .stripe-1 {
+        background-color: var(--bg-third);
+        z-index: 1;
+        width: 9vw;
+        transform: translateX(60vw) rotate(-45deg);
+        height: 200%;
+        margin-left: 80vw;
+        margin-top: -55vh;
+        opacity: 0.8;
+        position: absolute;
+        animation: slide 0.6s ease-in-out forwards;
+    }
+
+    .stripe-2 {
+        background-color: var(--bg-secondary);
+        z-index: 0;
+        width: 9vw;
+        transform: translateX(60vw) rotate(-45deg);
+        height: 200%;
+        margin-left: 80vw;
+        margin-top: -45vh;
+        opacity: 0.4;
+        position: absolute;
+        animation: slide 0.4s ease-in-out forwards;
+    }
+
+    .stripe-3 {
+        background-color: var(--bg-secondary);
+        z-index: 0;
+        width: 9vw;
+        transform: translateX(60vw) rotate(-45deg);
+        height: 200%;
+        margin-left: 80vw;
+        margin-top: -65vh;
+        opacity: 0.4;
+        position: absolute;
+        animation: slide 0.7s ease-in-out forwards;
+    }
+
+    .stripe-4 {
+        background-color: var(--bg-primary);
+        z-index: 0;
+        width: 9vw;
+        transform: translateX(60vw) rotate(-45deg);
+        height: 200%;
+        margin-left: 80vw;
+        margin-top: -55vh;
+        opacity: 0.6;
+        position: absolute;
+    }
+
+    .stripe-5 {
+        background-color: var(--bg-secondary);
+        z-index: 0;
+        width: 6.5vw;
+        transform: translateX(-60vw) rotate(-45deg);
+        height: 200%;
+        margin-left: 1vw;
+        margin-top: -45vh;
+        opacity: 0.4;
+        position: absolute;
+        min-width: 6rem;
+        animation: slide 0.5s ease-in-out forwards;
+    }
+
+    .stripe-6 {
+        background-color: var(--bg-secondary);
+        z-index: 0;
+        width: 6.5vw;
+        transform: translateX(-60vw) rotate(-45deg);
+        height: 200%;
+        margin-left: 18vw;
+        margin-top: -50vh;
+        opacity: 0.4;
+        position: absolute;
+        min-width: 6rem;
+        animation: slide 0.4s ease-in-out forwards;
+    }
+
+
+    @keyframes slide {
+        to {
+            transform: translateX(0) rotate(-45deg);
+        }
+    }
+}

@@ -35,7 +35,7 @@
 {
     .navbar-side {
         height: 100% ;
-        width: 11.5vw ;
+        width: 11.5vw;
         min-width: 14rem;
         flex-direction: column;
         top: 0;
@@ -51,10 +51,10 @@
     }
     .link-text {
         display: inline;
-        font-size: calc(2vh + 0.1vw);
+        font-size: clamp(1rem, 2vh, 4vh);
     }
     .nav-side-link i {
-        font-size: 3vh;
+        font-size: clamp(1.5rem, 4vh, 7vh);
         margin-right: 2vh;
     }
     .nav-side-link {
@@ -67,17 +67,152 @@
         text-align: center;
         width: 100%;
         letter-spacing: 0.5ch;
+        min-height: 5.2rem;
     }
     .goldcapLogo-text {
         display: inline;
-        font-size: 3.5vh;
+        font-size: clamp(1.5rem, 3vh, 4vh);
     }
-
     .nav-side-item:last-child {
         margin-top: auto;
     }
-    
-}
+
+
+    /*#region TOP NAVBAR */
+
+    .navbar-top {
+        position: fixed;
+        background-color: var(--bg-secondary);
+        padding: 0;
+        top: 0;
+        transition: width 0.2s ease, margin 0.2s ease, display 0.2s ease;
+        height: 7vh;
+        width: 88.5vw;
+        max-width: calc(100vw - 14rem);
+        margin-left: clamp(14rem, 11.5vw, 11.5vw);
+        min-height: 3.3rem;
+        align-items: center;
+        display: flex;
+    }
+    .navbar-top-items {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+    }
+    #collapseBtn {
+        flex: 1;
+        height: 100%;
+    }
+    #collapseBtn:hover i{
+        color: var(--text-primary);
+        cursor: pointer;
+    }
+
+    #periodButtons {
+        flex: 1;
+        display: none;
+        text-align: right;
+        justify-content: end;
+        align-items: center;
+    }
+
+    .avatarSection {
+        flex: 1;
+        display: flex;
+        text-align: right;
+        justify-content: end;
+        margin-right: 1rem;
+        align-items: center;
+    }
+    /*#region AVATAR DROPDOWN */
+
+    .color-themes-btn {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .colorTheme-item {
+        margin-top: auto;
+        cursor: default;
+    }
+
+    .dropdown-menu {
+        background-color: var(--bg-secondary);
+    }
+
+    .dropdown-item {
+        color: var(--text-secondary);
+    }
+
+    .dropdown-menu.dropdown-item:hover, .dropdown-menu .dropdown-item:active, .dropdown-menu .dropdown-item:hover {
+        background-color: var(--bg-primary);
+        color: var(--text-secondary);
+    }
+
+    .dropdown-item.colorTheme-item:hover, .dropdown-item.colorTheme-item:active, .dropdown-item.colorTheme-item:focus {
+        background-color: var(--bg-secondary);
+    }
+
+    .dropdown-item.dropdown-item-email:hover, .dropdown-item.dropdown-item-email:active, .dropdown-item.dropdown-item-email:focus {
+        background-color: var(--bg-secondary);
+    }
+
+    .dropdown-item-email {
+        cursor: default;
+    }
+
+
+    .ct-circle {
+        border: 3px solid var(--text-primary);
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+        cursor: pointer;
+    }
+
+    .ct-first {
+        background-color: #212529;
+    }
+
+    .ct-second {
+        background-color: #6a040f;
+    }
+
+    .ct-third {
+        background-color: white;
+    }
+    div .dropdown {
+        border: 3px solid var(--bg-third);
+        border-radius: 50%;
+        margin-left: 1.25rem;
+        width: 2.8125rem;
+        height: 2.8125rem;
+    }
+
+    .dropdownAvatar, .dropdown-toggle:hover, .dropdown-toggle:active, .dropdown-toggle:active, .dropdown-toggle:focus {
+        width: 100%;
+        height: 100%;
+        color: transparent;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        box-shadow: none;
+    }
+
+    .logoutButton {
+        color: var(--btn-danger);
+        outline: none;
+        border: none;
+        background-color: transparent;
+        margin-left: 0;
+        padding-left: 0;
+        font-weight: 600;
+        /*#endregion */
+        /*#endregion */
+    }
 @media only screen and (max-width: 810px) {
     .navbar-side {
         height: 12vh;
@@ -101,12 +236,19 @@
     .goldcapLogo {
         display: none;
     }
+    .nav-side-link i {
+        font-size: 2rem;
+    }
 
     .goldcapLogo-text {
         display: none;
     }
 
+    .navbar-top {
+        display: none;
+    }
 }
+
 body {
     color: var(--text-third);
     background-color: var(--bg-primary);
@@ -213,28 +355,16 @@ main {
         display: none;
     }
 
-.navbar-top {
-    position: fixed;
-    background-color: var(--bg-secondary);
-    margin: 0 0 0 14rem;
-    padding: 0;
-    top: 0;
-    width: calc(100% - 14rem);
-    height: 4rem;
-    transition: width 0.2s ease, margin 0.2s ease, display 0.2s ease;
-    z-index: 10;
-    display: none;
-}
 
 
 
-#collapseSideNavbar {
-    /*display: none;*/
-    font-size: 3rem;
-    margin-left: 0.5rem;
-    transition: all 0.2s ease;
-    color: var(--text-secondary);
-}
+
+    #collapseSideNavbar {
+        font-size: clamp(3rem, 5vh, 7vh);
+        margin-left: 0.5rem;
+        transition: all 0.2s ease;
+        color: var(--text-secondary);
+    }
 
 .btn-outline-info {
     color: var(--bg-third);

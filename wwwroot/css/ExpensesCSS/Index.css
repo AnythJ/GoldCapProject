@@ -1,0 +1,17 @@
+﻿html {
+    overflow: hidden;
+}
+
+.modal-backdrop {
+    z-index: -1;
+}
+
+
+.sortMenuHidden {
+    display: none;
+}
+
+.sortMenuDIsplayed {
+    display: block;
+}
+

@@ -31,7 +31,82 @@
 }
 
 
+@media only screen and (min-width: 811px)
+{
+    .navbar-side {
+        height: 100% ;
+        width: 11.5vw ;
+        min-width: 14rem;
+        flex-direction: column;
+        top: 0;
+    }
+    .nav-side-item {
+        width: 100%;
+        height: 11vh;
+        min-height: 5.2rem;
+    }
+    .navbar-nav-side {
+        flex-direction: column;
+        align-items: center;
+    }
+    .link-text {
+        display: inline;
+        font-size: calc(2vh + 0.1vw);
+    }
+    .nav-side-link i {
+        font-size: 3vh;
+        margin-right: 2vh;
+    }
+    .nav-side-link {
+        padding: 0 2vh;
+    }
+    .goldcapLogo {
+        display: flex;
+        align-items: center;
+        height: 11vh;
+        text-align: center;
+        width: 100%;
+        letter-spacing: 0.5ch;
+    }
+    .goldcapLogo-text {
+        display: inline;
+        font-size: 3.5vh;
+    }
 
+    .nav-side-item:last-child {
+        margin-top: auto;
+    }
+    
+}
+@media only screen and (max-width: 810px) {
+    .navbar-side {
+        height: 12vh;
+        bottom: 0;
+        flex-direction: row;
+        width: 100%;
+    }
+    .nav-side-item {
+        width: 100%;
+        height: 100%;
+    }
+    .navbar-nav-side {
+        flex-direction: row;
+    }
+    .link-text {
+        display: none;
+    }
+    .nav-side-link {
+        justify-content: center;
+    }
+    .goldcapLogo {
+        display: none;
+    }
+
+    .goldcapLogo-text {
+        display: none;
+    }
+
+}
 body {
     color: var(--text-third);
     background-color: var(--bg-primary);
@@ -42,21 +117,20 @@ body {
 }
 
 main {
-    margin-left: 14rem;
-    padding: 0.2rem;
-    transition: margin 0.2s ease;
     background-color: var(--bg-primary);
+    margin: 0;
+    margin-bottom: 12vh;
 }
 
 .navbar-side {
     position: fixed;
     display: flex;
-    flex-direction: column;
     background-color: var(--bg-secondary);
     margin: 0;
     padding: 0;
     transition: width 0.2s ease;
     z-index: 3;
+    align-items: center;
 }
 
 
@@ -66,16 +140,16 @@ main {
     text-decoration: none;
     padding: 0;
     display: flex;
-    flex-direction: column;
     margin: 0;
     align-items: center;
     height: 100%;
+    width: 100%;
 }
 
 .nav-side-link {
     color: var(--text-third);
     font-weight: 600;
-    height: 5rem;
+    height: 100%;
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -89,40 +163,27 @@ main {
         color: var(--bg-primary);
     }
 
-.nav-side-item {
-    width: 100%;
-}
 
-    .nav-side-item:last-child {
-        margin-top: auto;
-    }
+
+    
 
 .link-text {
     text-decoration: none;
-    margin-left: 1rem;
 }
 
-.nav-side-link i {
-    font-size: 2rem;
-    min-width: 2rem;
-    margin: 0 1.5rem;
-}
+
 
 .goldcapLogo {
     text-align: center;
-    font-size: 1.5rem;
     font-weight: bold;
     width: 100%;
     color: var(--bg-third);
     background-color: var(--bg-secondary);
-    letter-spacing: 0.2ch;
 }
 
 .goldcapLogo-text {
     text-align: center;
-    display: none;
     transition: 0.6s;
-    margin: 0 2.5rem;
     width: 100%;
     color: var(--bg-third);
 }
@@ -132,7 +193,7 @@ main {
 
 .nav-side-link-logo {
     color: var(--bg-third);
-    height: 5rem;
+    height: 100%;
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -149,9 +210,6 @@ main {
 
     .nav-side-link-logo i {
         color: var(--bg-third);
-        font-size: 2rem;
-        min-width: 2rem;
-        margin: 0 1.5rem;
         display: none;
     }
 
@@ -165,6 +223,7 @@ main {
     height: 4rem;
     transition: width 0.2s ease, margin 0.2s ease, display 0.2s ease;
     z-index: 10;
+    display: none;
 }
 
 

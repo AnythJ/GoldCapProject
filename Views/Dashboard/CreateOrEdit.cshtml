@@ -110,6 +110,7 @@
 </script>
 <div class="row" id="createRecurring">
     <div class="col-md-12">
+        <input type="hidden" asp-for="Id" />
         <form asp-action="CreateOrEdit" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPostDashboard(this, '#tableInModal');" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />

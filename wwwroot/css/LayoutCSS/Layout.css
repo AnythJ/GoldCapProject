@@ -71,7 +71,13 @@ main.mainRender {
     .link-text {
         display: inline;
         font-size: clamp(1rem, 2vh, 4vh);
-        transition: all 0.3s;
+        opacity: 0;
+        animation: showLinks 0.5s ease forwards;
+    }
+    @keyframes showLinks {
+        to {
+            opacity: 1;
+        }
     }
 
     .nav-side-link i {
@@ -80,7 +86,7 @@ main.mainRender {
     }
 
     .nav-side-link {
-        padding: 0 2vh;
+        padding-left: clamp(2.5rem, 3vh, 1.5vw);
     }
 
     .goldcapLogo {
@@ -291,10 +297,10 @@ main.mainRender {
 
 @media only screen and (max-width: 810px) {
     .navbar-side {
-        height: 12vh;
+        height: 12vh !important;
         bottom: 0;
         flex-direction: row;
-        width: 100%;
+        width: 100% !important;
     }
     .nav-side-item {
         width: 100%;
@@ -304,10 +310,10 @@ main.mainRender {
         flex-direction: row;
     }
     .link-text {
-        display: none;
+        display: none !important;
     }
     .nav-side-link {
-        justify-content: center;
+        justify-content: center !important;
     }
     .goldcapLogo {
         display: none;

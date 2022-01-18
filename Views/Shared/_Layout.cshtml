@@ -375,8 +375,8 @@
         }
 
         function collapseSideNavbar() {
-            var sideNavbarSize = document.getElementsByClassName("navbar-side")[0].offsetWidth;
-            if (sideNavbarSize > 80) {
+            console.log(document.getElementById("logo-icon").style.display);
+            if (document.getElementById("logo-icon").style.display == "none" || document.getElementById("logo-icon").style.display == "") {
                 document.getElementById("logo-icon").style.display = "block";
                 document.getElementsByClassName("navbar-side")[0].style.width = "5.2vw";
                 document.getElementsByClassName("navbar-side")[0].style.minWidth = "5rem";
@@ -394,9 +394,6 @@
                 var links = document.getElementsByClassName("link-text");
                 var navLinks = document.getElementsByClassName("nav-side-link");
                 var icons = document.getElementsByClassName("menuIcon");
-                console.log(links.length);
-                console.log(navLinks.length);
-                console.log(icons.length);
                 for (var i = 0; i < links.length; i++) {
                     links[i].style.display = "none";
                     icons[i].style.marginRight = "0";
@@ -429,9 +426,6 @@
                 var links = document.getElementsByClassName("link-text");
                 var navLinks = document.getElementsByClassName("nav-side-link");
                 var icons = document.getElementsByClassName("menuIcon");
-                console.log(links.length);
-                console.log(navLinks.length);
-                console.log(icons.length);
                 for (var i = 0; i < links.length; i++) {
                     links[i].style.display = "inline";
                     if (i != 0) icons[i].style.marginRight = "2vh";

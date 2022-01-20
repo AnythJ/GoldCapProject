@@ -30,316 +30,11 @@
     --piechart-border-color: #C9FBFF;
 }
 
-main.mainRender {
-    display: block;
-    width: 100vw;
-    height: 88vh;
-    margin-bottom: 12vh;
-}
-@media only screen and (min-width: 811px) {
-    main.mainRender {
-        display: block;
-        width: 88.5vw;
-        max-width: calc(100vw - 14rem);
-        margin-left: clamp(14rem, 11.5vw, 11.5vw);
-        height: 93vh;
-        max-height: calc(100vh - 3.3rem);
-        margin-top: clamp(3.3rem, 7vh, 7vh);
-    }
-    .navbar-side {
-        height: 100%;
-        width: 11.5vw;
-        min-width: 14rem;
-        flex-direction: column;
-        top: 0;
-    }
-    #logo-icon {
-        display: none;
-        font-size: clamp(1.5rem, 4vh, 7vh);
-    }
-    .nav-side-item {
-        width: 100%;
-        height: 11vh;
-        min-height: 5.2rem;
-    }
 
-    .navbar-nav-side {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .link-text {
-        display: inline;
-        font-size: clamp(1rem, 2vh, 4vh);
-        opacity: 0;
-        animation: showLinks 0.5s ease forwards;
-    }
-    @keyframes showLinks {
-        to {
-            opacity: 1;
-        }
-    }
-
-    .nav-side-link i {
-        font-size: clamp(1.5rem, 4vh, 7vh);
-        margin-right: 2vh;
-    }
-
-    .nav-side-link {
-        padding-left: clamp(2.5rem, 3vh, 1.5vw);
-    }
-
-    .goldcapLogo {
-        display: flex;
-        align-items: center;
-        height: 11vh;
-        text-align: center;
-        width: 100%;
-        letter-spacing: 0.5ch;
-        min-height: 5.2rem;
-        justify-content: center;
-    }
-
-    .goldcapLogo-text {
-        display: inline;
-        font-size: clamp(1.5rem, 3vh, 4vh);
-    }
-
-    .nav-side-item:last-child {
-        margin-top: auto;
-    }
-
-
-    /*#region TOP NAVBAR */
-
-    .navbar-top {
-        position: fixed;
-        background-color: var(--bg-secondary);
-        padding: 0;
-        top: 0;
-        transition: width 0.2s ease, margin 0.2s ease, display 0.2s ease;
-        height: 7vh;
-        width: 88.5vw;
-        max-width: calc(100vw - 14rem);
-        margin-left: clamp(14rem, 11.5vw, 11.5vw);
-        min-height: 3.3rem;
-        align-items: center;
-        display: flex;
-    }
-
-    .navbar-top-items {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    #collapseBtn {
-        flex: 1;
-        height: 100%;
-    }
-
-        #collapseBtn i:hover {
-            color: var(--text-primary);
-            cursor: pointer;
-        }
-
-    #periodButtons {
-        flex: 1;
-        display: none;
-        text-align: right;
-        justify-content: end;
-        align-items: center;
-    }
-
-    .avatarSection {
-        flex: 1;
-        display: flex;
-        text-align: right;
-        justify-content: end;
-        margin-right: 1rem;
-        align-items: center;
-    }
-    /*#region AVATAR DROPDOWN */
-
-    .color-themes-btn {
-        width: 100%;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-    }
-
-    .colorTheme-item {
-        margin-top: auto;
-        cursor: default;
-    }
-
-    .dropdown-menu {
-        background-color: var(--bg-secondary);
-    }
-
-    .dropdown-item {
-        color: var(--text-secondary);
-    }
-
-    .dropdown-menu.dropdown-item:hover, .dropdown-menu .dropdown-item:active, .dropdown-menu .dropdown-item:hover {
-        background-color: var(--bg-primary);
-        color: var(--text-secondary);
-    }
-
-    .dropdown-item.colorTheme-item:hover, .dropdown-item.colorTheme-item:active, .dropdown-item.colorTheme-item:focus {
-        background-color: var(--bg-secondary);
-    }
-
-    .dropdown-item.dropdown-item-email:hover, .dropdown-item.dropdown-item-email:active, .dropdown-item.dropdown-item-email:focus {
-        background-color: var(--bg-secondary);
-    }
-
-    .dropdown-item-email {
-        cursor: default;
-    }
-
-
-    .ct-circle {
-        border: 3px solid var(--text-primary);
-        border-radius: 50%;
-        width: 2.5rem;
-        height: 2.5rem;
-        cursor: pointer;
-    }
-
-    .ct-first {
-        background-color: #212529;
-    }
-
-    .ct-second {
-        background-color: #6a040f;
-    }
-
-    .ct-third {
-        background-color: white;
-    }
-
-    div .dropdown {
-        border: 3px solid var(--bg-third);
-        border-radius: 50%;
-        margin-left: 1.25rem;
-        width: 2.8125rem;
-        height: 2.8125rem;
-    }
-
-    .dropdownAvatar, .dropdown-toggle:hover, .dropdown-toggle:active, .dropdown-toggle:active, .dropdown-toggle:focus {
-        width: 100%;
-        height: 100%;
-        color: transparent;
-        background-color: transparent;
-        border: none;
-        outline: none;
-        box-shadow: none;
-    }
-
-    .logoutButton {
-        color: var(--btn-danger);
-        outline: none;
-        border: none;
-        background-color: transparent;
-        margin-left: 0;
-        padding-left: 0;
-        font-weight: 600;
-        /*#endregion */
-        /*#endregion */
-    }
-}
-
-.loadingBackground {
-    background-color: var(--bg-primary);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 14rem;
-    margin-top: 4rem;
-    z-index: 20;
-    height: calc(100vh - 4rem);
-}
-.loadingSpinner {
-    background-color: var(--bg-primary);
-    margin: 0;
-    padding: 0;
-    width: 6.25rem;
-    height: 6.25rem;
-    border: 0.8rem solid var(--bg-secondary);
-    border-radius: 50%;
-    border-top-color: var(--bg-third);
-    animation: spin 1s cubic-bezier(.58,.1,0,.97) infinite;
-}
-.hidden {
-    animation: fadeOut 0.3s linear forwards;
-    opacity: 1;
-}
-@keyframes fadeOut {
-    50% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0.2;
-    }
-}
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@media only screen and (max-width: 810px) {
-    .navbar-side {
-        height: 12vh !important;
-        bottom: 0;
-        flex-direction: row;
-        width: 100% !important;
-    }
-    .nav-side-item {
-        width: 100%;
-        height: 100%;
-    }
-    .navbar-nav-side {
-        flex-direction: row;
-    }
-    .link-text {
-        display: none !important;
-    }
-    .nav-side-link {
-        justify-content: center !important;
-    }
-    .goldcapLogo {
-        display: none;
-    }
-    .nav-side-link i {
-        font-size: 2rem;
-    }
-
-    .goldcapLogo-text {
-        display: none;
-    }
-
-    .navbar-top {
-        display: none;
-    }
-
-    .loadingBackground {
-        margin-left: 0;
-        margin-top: 0;
-        margin-bottom: 5rem;
-    }
-}
 
 body {
     color: var(--text-third);
-    background-color: var(--bg-primary) !important;
+    background-color: var(--bg-primary);
     margin: 0;
     padding: 0;
     width: 100vw;
@@ -347,32 +42,21 @@ body {
 }
 
 main {
+    margin-left: 14rem;
+    padding: 0.2rem;
+    transition: margin 0.2s ease;
     background-color: var(--bg-primary);
-    display: none;
-    opacity: 0;
-    animation: fadeIn 0.3s linear forwards;
-}
-
-@keyframes fadeIn {
-    50% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-        display: block;
-    }
 }
 
 .navbar-side {
     position: fixed;
     display: flex;
+    flex-direction: column;
     background-color: var(--bg-secondary);
     margin: 0;
     padding: 0;
-    transition: all 0.3s ease;
+    transition: width 0.2s ease;
     z-index: 3;
-    align-items: center;
 }
 
 
@@ -382,16 +66,16 @@ main {
     text-decoration: none;
     padding: 0;
     display: flex;
+    flex-direction: column;
     margin: 0;
     align-items: center;
     height: 100%;
-    width: 100%;
 }
 
 .nav-side-link {
     color: var(--text-third);
     font-weight: 600;
-    height: 100%;
+    height: 5rem;
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -405,27 +89,40 @@ main {
         color: var(--bg-primary);
     }
 
+.nav-side-item {
+    width: 100%;
+}
 
-
-    
+    .nav-side-item:last-child {
+        margin-top: auto;
+    }
 
 .link-text {
     text-decoration: none;
+    margin-left: 1rem;
 }
 
-
+.nav-side-link i {
+    font-size: 2rem;
+    min-width: 2rem;
+    margin: 0 1.5rem;
+}
 
 .goldcapLogo {
     text-align: center;
+    font-size: 1.5rem;
     font-weight: bold;
     width: 100%;
     color: var(--bg-third);
     background-color: var(--bg-secondary);
+    letter-spacing: 0.2ch;
 }
 
 .goldcapLogo-text {
     text-align: center;
+    display: none;
     transition: 0.6s;
+    margin: 0 2.5rem;
     width: 100%;
     color: var(--bg-third);
 }
@@ -435,14 +132,13 @@ main {
 
 .nav-side-link-logo {
     color: var(--bg-third);
-    height: 100%;
+    height: 5rem;
     display: flex;
     align-items: center;
     text-decoration: none;
     width: 100%;
     filter: grayscale(20%) opacity(0.6);
     transition: 0.6s;
-    justify-content: center;
 }
 
     .nav-side-link-logo:hover {
@@ -453,19 +149,33 @@ main {
 
     .nav-side-link-logo i {
         color: var(--bg-third);
+        font-size: 2rem;
+        min-width: 2rem;
+        margin: 0 1.5rem;
         display: none;
     }
 
+.navbar-top {
+    position: fixed;
+    background-color: var(--bg-secondary);
+    margin: 0 0 0 14rem;
+    padding: 0;
+    top: 0;
+    width: calc(100% - 14rem);
+    height: 4rem;
+    transition: width 0.2s ease, margin 0.2s ease, display 0.2s ease;
+    z-index: 10;
+}
 
 
 
-
-    #collapseSideNavbar {
-        font-size: clamp(3rem, 5vh, 7vh);
-        margin-left: 0.5rem;
-        transition: all 0.2s ease;
-        color: var(--text-secondary);
-    }
+#collapseSideNavbar {
+    /*display: none;*/
+    font-size: 3rem;
+    margin-left: 0.5rem;
+    transition: all 0.2s ease;
+    color: var(--text-secondary);
+}
 
 .btn-outline-info {
     color: var(--bg-third);

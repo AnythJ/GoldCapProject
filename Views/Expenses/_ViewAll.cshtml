@@ -3,7 +3,439 @@
 
 
 <style>
-    
+    html {
+        overflow: hidden;
+    }
+
+    .modal-backdrop {
+        z-index: -1;
+    }
+
+    .wholeList {
+        height: 100%;
+        display: flex;
+    }
+
+    .sortMenuHidden {
+        display: none;
+    }
+
+    .sortMenuDIsplayed {
+        display: block;
+    }
+
+    #listCol {
+        margin: 0.3rem;
+        border: 3px solid var(--text-primary);
+        border-radius: 5px;
+        height: 100%;
+        padding: 0;
+        flex: 4;
+        min-width: 29.5rem;
+    }
+
+        #listCol::-webkit-scrollbar {
+            display: block;
+            width: 3px;
+            background-color: var(--text-primary);
+        }
+
+        #listCol::-webkit-scrollbar-track-piece:start {
+            margin-top: 2.9375rem;
+            scrollbar-track-color: red;
+        }
+
+        #listCol::-webkit-scrollbar-thumb {
+            background-color: var(--scrollbar-primary);
+        }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    @@media only screen and (max-width: 1091px) {
+        .navbar-side {
+            width: 100vw !important;
+            height: 5rem !important;
+            bottom: 0 !important;
+        }
+
+        .navbar-nav-side {
+            flex-direction: row;
+        }
+
+        .nav-side-link {
+            justify-content: center;
+        }
+
+        main {
+            margin: 0 !important;
+            margin-bottom: 5rem !important;
+        }
+
+        .goldcapLogo {
+            display: none;
+        }
+
+        .link-text {
+            display: none !important;
+        }
+
+        .wholeList {
+            padding-bottom: 1rem;
+        }
+
+        .navbar-top {
+            display: none;
+        }
+    }
+
+    @@media only screen and (min-width: 1092px) {
+        /*#region Basic */
+        .navbar-side {
+            width: 14rem;
+            height: 100vh;
+            top: 0;
+        }
+
+        .goldcapLogo-text {
+            display: inline;
+        }
+
+        .navbar-side:hover {
+            width: 14rem !important;
+        }
+
+            .navbar-side:hover .link-text {
+                display: inline !important;
+            }
+
+            .navbar-side:hover .goldcapLogo i {
+                display: none !important;
+            }
+
+            .navbar-side:hover ~ .navbar-top {
+                z-index: -1;
+            }
+
+        .navbar-top {
+            display: flex;
+        }
+
+        main {
+            margin-top: 4rem;
+        }
+        /*#endregion */
+    }
+
+    @@media only screen and (max-width: 769px) {
+        .sortMenu {
+            display: none;
+        }
+
+        #sortCollapseButton {
+            clip-path: polygon(0 0, 0% 100%, 26% 50%);
+            width: 8rem;
+            height: 6rem;
+            background-color: var(--bg-primary);
+            position: absolute;
+            z-index: 4;
+            bottom: 0;
+            margin-bottom: 8rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            #sortCollapseButton:hover #sortCollapseButtonInside {
+                background-color: var(--bg-third);
+            }
+
+        .sortCollapseActive {
+            background-color: var(--bg-third);
+        }
+
+        .sortCollapseNotActive {
+            background-color: var(--bg-fourth);
+        }
+
+        #sortCollapseButtonInside {
+            clip-path: polygon(0 0, 0% 100%, 26% 50%);
+            width: 80%;
+            height: 80%;
+            transition: background-color 0.3s ease;
+        }
+    }
+
+    @@media only screen and (max-width: 955px) {
+        .descriptionTd, .descriptionTh {
+            display: none;
+        }
+    }
+
+    @@media only screen and (max-width: 480px) {
+        .date_column {
+            display: none;
+        }
+
+        #listCol {
+            min-width: 12.5rem;
+        }
+    }
+
+    .sortMenuCollapsed {
+        flex: 1;
+        width: 100%;
+        margin: 0.3rem;
+        border: 3px solid var(--text-primary);
+        border-radius: 5px;
+        height: 100%;
+        padding: 0;
+        margin-left: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        display: block;
+        z-index: 3;
+    }
+
+    .sortMenu {
+        flex: 1;
+        min-width: 17rem;
+        margin: 0.3rem;
+        border: 3px solid var(--text-primary);
+        border-radius: 5px;
+        height: 100%;
+        padding: 0;
+        margin-left: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+        .sortMenu::-webkit-scrollbar {
+            display: block;
+            width: 0.1875rem;
+            background-color: var(--text-primary);
+        }
+
+        .sortMenu::-webkit-scrollbar-track-piece:start {
+            margin-top: 3rem;
+            scrollbar-track-color: red;
+        }
+
+        .sortMenu::-webkit-scrollbar-thumb {
+            background-color: var(--scrollbar-primary);
+        }
+    /*#region Header */
+    p.sort-header {
+        background-color: var(--text-primary);
+        color: var(--text-secondary);
+        font-size: 1rem;
+        margin: 0;
+        white-space: nowrap;
+        line-height: 3rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+        p.sort-header input.btn-sort {
+            font-weight: normal;
+            height: 50%;
+            margin: auto 0.3rem auto 0;
+        }
+
+        p.sort-header a.refresh-button {
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-secondary);
+            margin-left: 0.5rem;
+        }
+
+            p.sort-header a.refresh-button:hover {
+                color: var(--bg-third);
+            }
+    /*#endregion */
+    .sort-paragraph {
+        margin: 0.3rem 1rem 1rem 1rem;
+    }
+
+    input[type=text] {
+        border: 1px solid var(--text-primary);
+        border-radius: 0.5rem;
+        background-color: var(--text-primary);
+        text-align: center;
+        outline: none;
+        color: var(--text-secondary);
+    }
+
+        input[type=text]:focus {
+            border-color: var(--bg-third);
+        }
+    /*#region Description */
+    #descriptionLabel {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        color: var(--text-secondary);
+    }
+
+    #descriptionLabel {
+        text-align: center;
+    }
+    /*#endregion */
+    /*#region Price */
+    .price-section {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #priceFromField, #priceToField {
+        border: 1px solid var(--text-primary);
+        border-radius: 0.5rem;
+        background-color: var(--text-primary);
+        text-align: center;
+        outline: none;
+        color: var(--text-secondary);
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        flex: 4;
+        min-width: 2rem;
+        margin-right: 0;
+    }
+
+    .currency {
+        flex: 1;
+        min-width: 0.1rem;
+        border: 1px solid var(--text-primary);
+        border-radius: 0.5rem;
+        background-color: var(--text-primary);
+        outline: none;
+        color: var(--text-secondary);
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: 1px solid var(--text-secondary);
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
+
+        .currency:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    /*#endregion */
+    .section-name {
+        color: var(--text-secondary);
+    }
+    /*#region Category */
+    #categoryList {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    input.form-check-input {
+        background-color: var(--text-secondary);
+    }
+
+        input.form-check-input:hover, input.form-check-input:checked {
+            background-color: var(--bg-third);
+            color: var(--text-secondary);
+        }
+
+    #showMore {
+        padding-left: 1rem;
+        font-size: 0.75rem;
+        margin-top: 0;
+        cursor: pointer;
+    }
+
+        #showMore:hover {
+            color: #657381;
+        }
+
+    #showArrow {
+        cursor: pointer;
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+        margin-left: 0.25rem;
+    }
+
+    label.section-name {
+        width: 100%;
+        text-align: center;
+    }
+    /*#endregion */
+    /*#region Date */
+    .date-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    input[type=datetime-local] {
+        border: 1px solid var(--text-primary);
+        border-radius: 0.5rem;
+        background-color: var(--text-primary);
+        text-align: center;
+        outline: none;
+        color: var(--text-secondary);
+        margin-top: 0.5rem;
+    }
+
+        input[type=datetime-local]:not(:first-child) {
+            margin-top: 1rem;
+        }
+
+        input[type=datetime-local]:focus {
+            border-color: var(--bg-third);
+        }
+
+    .sticky-top {
+        z-index: 20;
+    }
+
+    .btn-succes-color {
+        color: var(--bg-primary);
+        border-color: var(--btn-succes);
+        background-color: var(--btn-succes);
+        outline-color: var(--btn-succes);
+    }
+
+        .btn-succes-color:hover {
+            background-color: var(--btn-succes-hover);
+            color: var(--text-third);
+        }
+
+    .btn-info-color {
+        color: var(--bg-primary);
+        border-color: var(--btn-info);
+        background-color: var(--btn-info);
+        outline-color: var(--btn-info);
+    }
+
+        .btn-info-color:hover {
+            background-color: var(--btn-info-hover);
+            color: var(--text-third);
+        }
+
+    .btn-danger-color {
+        color: var(--bg-primary);
+        border-color: var(--btn-danger);
+        background-color: var(--btn-danger);
+        outline-color: var(--btn-danger);
+    }
+
+        .btn-danger-color:hover {
+            background-color: var(--btn-danger-hover);
+            color: var(--text-third);
+        }
 </style>
 
 
@@ -123,12 +555,9 @@
             document.getElementById('showMore').textContent = "Show Less";
             showMore();
         }
-
         if ('@Model.SortMenu' == null || '@Model.SortMenu' == '') {
                 sessionStorage.setItem("filtered", "false");
             }
-
-
     });
     function showMore() {
         var x = $('#showMore').text();
@@ -157,7 +586,6 @@
         if (sessionStorage.getItem("filtered") == "true") {
             url = url + "&filtered=True";
         }
-
         var sortOrder;
         if (url.indexOf("sortOrder=Date") != -1) sortOrder = 'Date';
         if (url.indexOf("sortOrder=date_desc") != -1) sortOrder = 'date_desc';
@@ -165,9 +593,7 @@
         if (url.indexOf("sortOrder=amount_desc") != -1) sortOrder = 'amount_desc';
         if (url.indexOf("sortOrder=Category") != -1) sortOrder = 'Category';
         if (url.indexOf("sortOrder=category_desc") != -1) sortOrder = 'category_desc';
-
         sessionStorage.setItem("sortOrder", sortOrder);
-
         try {
             $.ajax({
                 type: 'POST',
@@ -227,7 +653,6 @@
                         btnClass: 'btn-danger',
                         action: function () {
                             if (sessionStorage.getItem("sortOrder") != null) url = url + "?&sortOrder=" + sessionStorage.getItem("sortOrder");
-
                             var sortForm = document.getElementById('sortMenuForm');
                             $.ajax({
                                 type: 'POST',
@@ -253,19 +678,15 @@
                     }
                 }
             });
-
         } catch (ex) {
             console.log(ex)
         }
-
         //prevent default form submit event
         return false;
-
     }
     $(document).ready(function () {
         sessionStorage.setItem("sortMenuActive", "false");
     });
-
     $(window).resize(function () {
         if ($(window).width() >= 770) {
             document.getElementById("sortMenu").classList.remove("sortMenuCollapsed");
@@ -275,7 +696,6 @@
             sessionStorage.setItem("sortMenuActive", "false");
         }
     });
-
     function sortCollapseFunction() {
         var sortParagraphs = document.getElementsByClassName("sort-paragraph");
         var sortHeader = document.getElementsByClassName("sort-header")[0];
@@ -292,7 +712,6 @@
             //Array.prototype.forEach.call(sortParagraphs, function (item) {
             //    item.style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
             //});
-
             sessionStorage.setItem("sortMenuActive", "true");
         }
         else {
@@ -301,7 +720,6 @@
             sortMenu.classList.remove("sortMenuCollapsed");
             document.getElementById("listCol").style.display = "block";
             sessionStorage.setItem("sortMenuActive", "false");
-
         }
     };
 </script>

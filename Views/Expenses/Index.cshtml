@@ -10,14 +10,14 @@
         font-family: 'Roboto', sans-serif;
     }
 </style>
-<link href="~/css/ExpensesCSS/Index.css" rel="stylesheet" />
+
 <link href="~/css/ExpensesCSS/table.css" rel="stylesheet" />
 
-    <link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
+<link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
 
 <head>
     <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
-<div id="view-all">
-    @*@await Html.PartialAsync("_ViewAll", Model)*@
+<div id="view-all" style="height: calc(100vh - 5rem); width: 100%;margin:0;padding:0;">
+    @await Html.PartialAsync("_ViewAll", Model)
 </div>

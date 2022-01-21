@@ -44,6 +44,7 @@ body {
 main {
     margin-left: 14rem;
     padding: 0.2rem;
+    height: calc(100vh - 4rem);
     transition: margin 0.2s ease;
     background-color: var(--bg-primary);
 }

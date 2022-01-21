@@ -42,6 +42,7 @@ div .u-statCircle, div .c-statCircle, div.p-statCircle {
     overflow-y: auto;
     overflow-x: hidden;
     height: 100%;
+    width: 100%;
 }
 
     .mainBody::-webkit-scrollbar {
@@ -57,13 +58,38 @@ div .u-statCircle, div .c-statCircle, div.p-statCircle {
     .mainBody::-webkit-scrollbar-thumb {
         background-color: var(--scrollbar-primary);
     }
+
+.mainDiv-div {
+    width: 100%;
+    height: 100%;
+}
 /*#region First row */
+@media only screen and (min-width: 769px) {
+    div .row-first {
+        min-height: 7rem;
+    }
+    .statPill {
+        min-width: 15.625rem;
+        margin: 0.3rem 0.3rem;
+    }
+}
+@media only screen and (max-width: 768px) {
+    div.row-first {
+        margin: 0.3rem;
+    }
+    .statPill {
+        margin: 0.3rem;
+    }
+
+}
 
 div.row-first {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
+
+
 
 .statPill {
     border: 3px solid var(--text-primary);
@@ -73,8 +99,8 @@ div.row-first {
     display: flex;
     align-content: center;
     justify-content: space-evenly;
-    margin: 0.3rem;
     flex: 1;
+    font-size: clamp(1rem, 1.5vh, 3vh);
 }
 
     .statPill:last-child {
@@ -88,6 +114,10 @@ div.row-first {
 }
 
 .pill-right {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
     margin: 0.2rem 0;
 }
@@ -95,17 +125,18 @@ div.row-first {
 .pill-recurring {
     display: flex;
     align-items: center;
+    justify-content: space-around;
     flex-direction: column;
     width: 100%;
 }
 
 .pill-date-span {
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: clamp(1.2rem, 1.5vh, 3vh);
 }
 
 p.pillAmount {
-    font-size: 2.2rem;
+    font-size: clamp(2.2rem, 2vh, 3vh);
     font-weight: bold;
     text-align: center;
     margin-bottom: 0;
@@ -129,9 +160,10 @@ p.pillAmount {
 
 .row-second {
     display: flex;
-    justify-content: stretch;
+    /*justify-content: stretch;*/
     margin: 0.3rem;
     align-items: center;
+
 }
 
 #container {
@@ -139,7 +171,8 @@ p.pillAmount {
     border-radius: 5px;
     width: 100%;
     padding: 0;
-    height: 22.5rem;
+    min-height: 22.5rem;
+    height: 40vh;
 }
 
 #container-pie {
@@ -148,7 +181,7 @@ p.pillAmount {
     border-radius: 5px;
     width: 100%;
     padding: 0;
-    height: 22.5rem;
+    height: 40vh;
 }
 
 #areafigure {
@@ -163,13 +196,13 @@ p.pillAmount {
     width: 100% !important;
 }
 
-@@media only screen and (max-width: 1392px) {
+@media only screen and (max-width: 1392px) {
     .mainBody {
         overflow-y: auto;
     }
 }
 
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 1268px) {
     .row-second {
         flex-direction: column;
     }
@@ -317,6 +350,8 @@ p.pillAmount {
     #collapseSideNavbar {
         display: inline-block;
     }
+
+    
 }
 
 @media only screen and (max-width: 464px) {
@@ -335,4 +370,9 @@ p.pillAmount {
 
 #btnRecurring {
     width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1.2rem, 1.5vh, 3vh);
 }

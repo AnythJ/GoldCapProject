@@ -7,7 +7,8 @@
     border-right: none;
     overflow-x: auto;
     overflow-y: scroll;
-    height: 23.75rem;
+    min-height: 22.5rem;
+    height: clamp(22.5rem, 38vh, 45vh);
     min-width: 30.625rem;
 }
 

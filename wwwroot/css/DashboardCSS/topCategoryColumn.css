@@ -6,7 +6,8 @@
     border-radius: 5px;
     border-right: 1px solid transparent;
     overflow-x: hidden;
-    height: 23.75rem;
+    min-height: 22.5rem;
+    height: clamp(22.5rem, 38vh, 45vh);
     overflow-y: scroll;
     min-width: 14.6875rem;
 }

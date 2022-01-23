@@ -1,9 +1,10 @@
 ﻿.u-statCircle {
-    height: 9.375rem;
-    width: 9.375rem;
+    height: 9.375em;
+    width: 9.375em;
     position: relative;
-    border-radius: 100%;
+    border-radius: 50%;
     margin: 0 auto;
+    font-size: 1em;
 }
 
     .u-statCircle .circle {
@@ -12,45 +13,48 @@
         height: 100%;
         width: 100%;
         border-radius: 100%;
-        padding: 0;
-        margin:0;
+        background-color: transparent;
+        font-size: 1em;
     }
 
     .u-statCircle .bar {
         position: absolute;
         height: 100%;
         width: 100%;
-        -webkit-border-radius: 100%;
+        -webkit-border-radius: 50%;
         background-color: transparent;
-        clip: rect(0px, 9.375rem, 9.375rem, 4.6875rem);
+        clip: rect(0px, 9.375em, 9.375em, 4.6875em);
+        font-size: 1em;
     }
 
     .u-statCircle .smallerCircle {
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 8.125rem;
-        height: 8.125rem;
-        margin: -4.0625rem 0 0 -4.0625rem;
+        width: 8.125em;
+        height: 8.125em;
+        margin: -4.0625em 0 0 -4.0625em;
         background-color: var(--bg-secondary);
         z-index: 10;
         -webkit-border-radius: 100%;
         border: 1px solid var(--smallerCircle-color-third);
-        padding-top: 0.625rem;
+        font-size: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .u-statCircle .circle .bar .progress {
         position: absolute;
-        height: 100%;
-        width: 100%;
-        -webkit-border-radius: 100%;
-        clip: rect(0px, 4.6875rem, 12.5rem, 0px);
         background-color: var(--bg-third);
         z-index: 3;
+        font-size: 1em;
+        width: 4.6875em;
+        height: 9.375em;
     }
 
     .u-statCircle .smallerCircle p, u-statCircle .smallerCircle p small {
-        font-size: 0.875rem;
+        font-size: 0.875em;
         margin: 0 auto;
     }
 
@@ -58,12 +62,18 @@
 .circle .u-left .progress {
     z-index: 4;
     animation: u-left 0.3s linear both;
+    border-bottom-left-radius: 9.375em;
+    border-top-left-radius: 9.375em;
+    transform-origin: right center;
 }
 
 
 .circle .u-right .progress {
     animation: u-right 0.3s linear both;
     animation-delay: 0.3s;
+    border-bottom-left-radius: 9.375em;
+    border-top-left-radius: 9.375em;
+    transform-origin: right center;
 }
 
 .circle .u-right {
@@ -78,7 +88,7 @@
 }
 
     .u-statCircle .smallerCircle p.boldHeader {
-        font-size: 1.25rem;
+        font-size: 1.25em;
         font-weight: bold;
     }
 

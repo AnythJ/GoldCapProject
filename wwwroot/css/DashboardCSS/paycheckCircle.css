@@ -1,9 +1,10 @@
 ﻿.p-statCircle {
-    height: 12.5rem;
-    width: 12.5rem;
+    height: 12.5em;
+    width: 12.5em;
     position: relative;
     border-radius: 50%;
     margin: 0 auto;
+    font-size: 1em;
 }
 
     .p-statCircle .circle {
@@ -13,6 +14,7 @@
         width: 100%;
         border-radius: 50%;
         background-color: transparent;
+        font-size: 1em;
     }
 
     .p-statCircle .bar {
@@ -21,34 +23,37 @@
         width: 100%;
         -webkit-border-radius: 50%;
         background-color: transparent;
-        clip: rect(0px, 12.5rem, 12.5rem, 6.25rem);
+        clip: rect(0px, 12.5em, 12.5em, 6.25em);
+        font-size: 1em;
     }
 
     .p-statCircle .smallerCircle {
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 10.8125rem;
-        height: 10.8125rem;
-        margin: -5.41875rem 0 0 -5.41875rem;
+        width: 10.8125em;
+        height: 10.8125em;
+        margin: -5.41875em 0 0 -5.41875em;
         background-color: var(--bg-secondary);
         z-index: 10;
         -webkit-border-radius: 50%;
         border: 1px solid var(--smallerCircle-color-secondary);
-        padding-top: 0.625rem;
+        font-size: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .p-statCircle .circle .bar .progress {
         position: absolute;
-        height: 100%;
-        width: 100%;
-        -webkit-border-radius: 50%;
-        clip: rect(0px, 6.25rem, 16.66875rem, 0px);
         background-color: var(--smallerCircle-color-secondary);
         z-index: 3;
+        font-size: 1em;
+        width: 6.25em;
+        height: 12.5em;
     }
     .p-statCircle .smallerCircle p, .p-statCircle .smallerCircle p small {
-        font-size: 1.16875rem;
+        font-size: 1.16875em;
         margin: 0 auto;
     }
 
@@ -57,12 +62,18 @@
 .circle .p-left .progress {
     z-index: 4;
     animation: u-left 0.3s linear both;
+    border-bottom-left-radius: 12.5em;
+    border-top-left-radius: 12.5em;
+    transform-origin: right center;
 }
 
 
 .circle .p-right .progress {
     animation: u-right 0.3s linear both;
     animation-delay: 0.3s;
+    border-bottom-right-radius: 12.5em;
+    border-top-right-radius: 12.5em;
+    transform-origin: left center;
 }
 
 .circle .p-right {
@@ -77,7 +88,7 @@
 }
 
     .p-statCircle .smallerCircle p.boldHeader {
-        font-size: 1.66875rem;
+        font-size: 1.66875em;
         font-weight: bold;
     }
 

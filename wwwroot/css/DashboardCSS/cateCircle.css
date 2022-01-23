@@ -1,10 +1,10 @@
 ﻿.c-statCircle {
-    height: 9.375rem;
-    width: 9.375rem;
+    height: 9.375em;
+    width: 9.375em;
     position: relative;
-    border-radius: 100%;
+    border-radius: 50%;
     margin: 0 auto;
-    margin-top: 1.25rem;
+    font-size: 1em;
 }
 
     .c-statCircle .circle {
@@ -14,58 +14,69 @@
         width: 100%;
         border-radius: 100%;
         background-color: transparent;
+        font-size: 1em;
     }
 
     .c-statCircle .bar {
         position: absolute;
         height: 100%;
         width: 100%;
-        -webkit-border-radius: 100%;
+        -webkit-border-radius: 50%;
         background-color: transparent;
-        clip: rect(0px, 9.375rem, 9.375rem, 4.6875rem);
+        clip: rect(0px, 9.375em, 9.375em, 4.6875em);
+        font-size: 1em;
     }
 
     .c-statCircle .smallerCircle {
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 8.125rem;
-        height: 8.125rem;
-        margin: -4.0625rem 0 0 -4.0625rem;
+        width: 8.125em;
+        height: 8.125em;
+        margin: -4.0625em 0 0 -4.0625em;
         background-color: var(--bg-secondary);
         z-index: 10;
         -webkit-border-radius: 100%;
-        border: 1px solid var(--smallerCircle-color);
-        padding-top: 0.625rem;
+        border: 1px solid var(--smallerCircle-color-third);
+        font-size: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .c-statCircle .circle .bar .progress {
         position: absolute;
-        height: 100%;
-        width: 100%;
-        -webkit-border-radius: 100%;
-        clip: rect(0px, 4.6875rem, 12.5rem, 0px);
         background-color: var(--smallerCircle-color);
         z-index: 3;
+        font-size: 1em;
+        width: 4.6875em;
+        height: 9.375em;
     }
-.c-statCircle .smallerCircle p, .c-statCircle .smallerCircle p small {
-    font-size: 0.875rem;
-    margin: 0 auto;
-}
+
+    .c-statCircle .smallerCircle p, .c-statCircle .smallerCircle p small {
+        font-size: 0.875em;
+        margin: 0 auto;
+    }
 
 
 .circle .c-left .progress {
     z-index: 4;
-    animation: c-left 0.3s linear both;
+    animation: u-left 0.3s linear both;
+    border-bottom-left-radius: 9.375em;
+    border-top-left-radius: 9.375em;
+    transform-origin: right center;
 }
 
 
 .circle .c-right .progress {
-    animation: c-right 0.3s linear both;
+    animation: u-right 0.3s linear both;
     animation-delay: 0.3s;
+    border-bottom-left-radius: 9.375em;
+    border-top-left-radius: 9.375em;
+    transform-origin: right center;
 }
 
-.circle .c-right{
+.circle .c-right {
     z-index: 3;
 }
 
@@ -77,7 +88,7 @@
 }
 
     .c-statCircle .smallerCircle p.boldHeader {
-        font-size: 1.25rem;
+        font-size: 1.25em;
         font-weight: bold;
     }
 
@@ -87,5 +98,3 @@ hr {
     z-index: inherit;
     opacity: 1;
 }
-
-

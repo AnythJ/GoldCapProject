@@ -14,12 +14,11 @@
 }
 
 .mainDiv {
-    overflow: hidden;
+    overflow: auto;
     display: flex;
     flex-direction: column;
     margin: 0;
     padding: 0;
-    height: 100%;
 }
 
 div .u-statCircle, div .c-statCircle, div.p-statCircle {
@@ -41,7 +40,7 @@ div .u-statCircle, div .c-statCircle, div.p-statCircle {
 .mainBody {
     overflow-y: auto;
     overflow-x: hidden;
-    height: auto !important;
+    height: 100%;
     width: 100%;
 }
 
@@ -341,7 +340,7 @@ p.pillAmount {
         }
 
         .navbar-side:hover ~ .navbar-top {
-            z-index: -1;
+            z-index: 2;
         }
 
         .navbar-side:hover .color-themes-btn {

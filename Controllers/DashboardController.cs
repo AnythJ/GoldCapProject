@@ -61,10 +61,13 @@ namespace GoldCap.Controllers
         
         public IActionResult Index(int period = 30)
         {
+            var lastmonthFirstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-1);
+            var lastmonthLastDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddDays(-1);
             var thisMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderByDescending(d => d.Date);
-            var lastMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period * 2) && m.Date <= DateTime.Now.AddDays(-period));
+            var lastMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= lastmonthFirstDay && m.Date <= lastmonthLastDay);
             var topCategories = _expenseRepository.GetCategoryRatios(period).Where(c => c.CategoryPercentage > 0);
             var topCategory = _expenseRepository.GetCategoryRatios(period) != null ? _expenseRepository.GetCategoryRatios(period).FirstOrDefault() : null;
+            
 
             #region MonthlyAddition
             var userIncomes = _expenseRepository.GetIncome(User.FindFirstValue(ClaimTypes.Name)).ToList();

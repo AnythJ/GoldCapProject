@@ -5,6 +5,7 @@
     border-radius: 50%;
     margin: 0 auto;
     font-size: 1em;
+    background-color: var(--bg-secondary);
 }
 
     .p-statCircle .circle {

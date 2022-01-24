@@ -5,6 +5,7 @@
     border-radius: 50%;
     margin: 0 auto;
     font-size: 1em;
+    background-color: var(--bg-secondary);
 }
 
     .c-statCircle .circle {
@@ -37,7 +38,7 @@
         background-color: var(--bg-secondary);
         z-index: 10;
         -webkit-border-radius: 100%;
-        border: 1px solid var(--smallerCircle-color-third);
+        border: 1px solid var(--smallerCircle-color);
         font-size: 1em;
         display: flex;
         flex-direction: column;

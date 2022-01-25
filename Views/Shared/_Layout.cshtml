@@ -244,7 +244,7 @@
             </li>
 
             <li class="nav-side-item">
-                <a asp-action="account" asp-controller="logout" class="nav-side-link">
+                <a asp-action="logout" asp-controller="account" class="nav-side-link">
                     <i class="fas fa-sign-out-alt"></i>
                     <span class="link-text fa-primary">Logout</span>
                 </a>
@@ -268,7 +268,7 @@
                     </a>
 
                     <ul id="dropdownMenuList" class="dropdown-menu dropdown-menu-end dropdown-menu-sm-end" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">My Profile</a></li>
+                        <li><a class="dropdown-item" asp-action="myprofile" asp-controller="account">My Profile</a></li>
                         <li><a class="dropdown-item" href="#">Notifications</a></li>
                         <li class="color-theme-li">
                             <a class="dropdown-item colorTheme-item" href="#">Color themes</a>

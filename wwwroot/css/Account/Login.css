@@ -90,7 +90,7 @@ h1 {
         margin-bottom: 1vh;
         height: 5.5vh;
         min-height: 2rem;
-        font-size: clamp(1rem, 1.6vh, 1.6vh);
+        /*font-size: clamp(1rem, 1.6vh, 1.6vh);*/
     }
 
     span {
@@ -120,7 +120,7 @@ span {
     font-size: clamp(1rem, 1.6vh, 1.6vh);
 }
 
-input.form-control, input.form-control:-webkit-autofill, input.form-control:-webkit-autofill:hover, input.form-control:-webkit-autofill:active {  
+input.form-control, input.form-control:-webkit-autofill, input.form-control:-webkit-autofill:hover, input.form-control:-webkit-autofill:active {
     background-color: var(--bg-secondary);
     color: var(--text-secondary);
     border-color: var(--bg-primary);

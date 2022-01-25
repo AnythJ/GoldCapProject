@@ -110,5 +110,11 @@ namespace GoldCap.Controllers
 
             return RedirectToAction("index", "account");
         }
+
+
+        public IActionResult MyProfile()
+        {
+            return View("UserSettings");
+        }
     }
 }

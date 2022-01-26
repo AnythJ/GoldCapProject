@@ -1,0 +1,42 @@
+﻿
+.general-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 50vh;
+    gap: 2vh;
+}
+.general-split {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+}
+.general-section-side {
+    display: flex;
+    height: 100%;
+    background-color: var(--text-primary);
+    width: 50%;
+    margin: 0.25rem;
+    min-width: 20rem;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1vh;
+}
+.mainRender {
+    height: 100%;
+    padding: 1vh;
+}
+.profile-img-circle {
+    border: 0.1rem solid var(--bg-third);
+    border-radius: 50%;
+    width: 15vw;
+    height: 15vw;
+}
+.change-img-button {
+    width: 8vw;
+    height: 2vw;
+}

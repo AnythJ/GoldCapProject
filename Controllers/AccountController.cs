@@ -114,7 +114,7 @@ namespace GoldCap.Controllers
 
         public IActionResult MyProfile()
         {
-            return View("UserSettings");
+            return View("UserSettings", "Shared");
         }
     }
 }

@@ -1,13 +1,33 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@inject SignInManager<ApplicationUser> signInManager;
+
 @{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles {
+    <link href="~/css/UserSettingsCSS/UserSettings.css" rel="stylesheet" />
+    <link href="~/css/DashboardCSS/Index.css" rel="stylesheet" />
+} 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
 </head>
 <body>
-    <div>HI</div>
+    <div class="general-section">
+        <div class="general-split">
+            <div class="general-section-side">
+                <div class="profile-img-circle">
+
+                </div>
+                <button class="change-img-button">
+
+                </button>
+            </div>
+            <div class="general-section-side">
+
+            </div>
+        </div>
+    </div>
 </body>
 </html>

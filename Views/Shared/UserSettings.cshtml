@@ -17,17 +17,58 @@
     <div class="mainDiv">
         <div class="general-section">
             <div class="general-split">
-                <div class="general-section-side">
+                <div class="general-section-side-left">
                     <div class="profile-img-circle">
                         <a class="btn btn-sm uploadImg">Upload image</a>
                         <img src="~/images/avat.png" />
                     </div>
-                    @*<button class="change-img-button">
-
-                    </button>*@
                 </div>
-                <div class="general-section-side">
-
+                <div class="general-section-side-right">
+                    <div class="account-details">
+                        <section class="account-detail">
+                            <div class="account-label">
+                                <label>
+                                    Email
+                                </label>
+                                <a>
+                                    @User.Identity.Name
+                                </a>
+                            </div>
+                            <a class="profile-button">Change</a>
+                        </section>
+                        <section class="account-detail">
+                            <div class="account-label">
+                                <label>
+                                    Password
+                                </label>
+                                <a>
+                                    ************
+                                </a>
+                            </div>
+                            <a class="profile-button">Change</a>
+                        </section>
+                        <section class="account-detail">
+                            <div class="account-label">
+                                <label>
+                                    Country
+                                </label>
+                                <a>
+                                    Poland
+                                </a>
+                            </div>
+                            <a class="profile-button">Change</a>
+                        </section>
+                        <section class="account-detail">
+                            <div class="account-label">
+                                <label>
+                                    Creation Date
+                                </label>
+                                <a>
+                                    @DateTime.Now
+                                </a>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>

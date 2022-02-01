@@ -1,5 +1,5 @@
-﻿@inject SignInManager<ApplicationUser> signInManager;
-
+﻿@*@inject SignInManager<ApplicationUser> signInManager;*@
+@model ApplicationUser
 @{
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,11 +7,11 @@
 @section Styles {
     <link href="~/css/UserSettingsCSS/UserSettings.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/Index.css" rel="stylesheet" />
-} 
+}
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
 <body>
     <div class="mainDiv">
@@ -19,8 +19,11 @@
             <div class="general-split">
                 <div class="general-section-side-left">
                     <div class="profile-img-circle">
-                        <a class="btn btn-sm uploadImg">Upload image</a>
-                        <img src="~/images/avat.png" />
+                        <form asp-action="ProfilePicture" asp-controller="Account" method="post" enctype="multipart/form-data" id="imageForm">
+                            <input type="file" accept=".png,.jpg,.jpeg,.giv,.tif" name="file" id="file" hidden />
+                        </form>
+                        <a class="btn btn-sm uploadImg" id="uploadImage">Upload image</a>
+                            <img src="@ViewData["ProfileImageSrc"]" />
                     </div>
                 </div>
                 <div class="general-section-side-right">
@@ -73,6 +76,24 @@
             </div>
         </div>
     </div>
-    
+
 </body>
 </html>
+
+<script>
+    //$(function () {
+    //    $("#profilePicture").on('click', function(e) {
+    //        e.preventDefault();
+    //        $("#profilePictureHidden:hidden").trigger('click');
+    //    });
+    //});
+    $(function () {
+        $("#uploadImage").on('click', function (e) {
+            e.preventDefault();
+            $("#file:hidden").trigger('click');
+        });
+    });
+    document.getElementById("file").onchange = function () {
+        document.getElementById("imageForm").submit();
+    }
+</script>

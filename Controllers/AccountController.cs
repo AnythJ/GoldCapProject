@@ -1,11 +1,14 @@
 ﻿using GoldCap.Models;
 using GoldCap.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace GoldCap.Controllers
@@ -103,18 +106,52 @@ namespace GoldCap.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
 
-            return RedirectToAction("index", "account");
+            return RedirectToAction("Index", "Account");
+        }
+
+        [HttpPost]
+        [ActionName("Logout")]
+        public async Task<IActionResult> LogoutPost()
+        {
+            await signInManager.SignOutAsync();
+
+            return RedirectToAction("Index", "Account");
         }
 
 
-        public IActionResult MyProfile()
+        public async Task<IActionResult> MyProfile()
         {
-            return View("UserSettings", "Shared");
+            ApplicationUser user = await userManager.GetUserAsync(User);
+            if(user.ProfilePicture != null)
+            {
+                var base64 = Convert.ToBase64String(user.ProfilePicture);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                ViewData["ProfileImageSrc"] = imgSrc;
+            }
+            
+            return View("UserSettings", new ApplicationUser { });
+        }
+
+
+        [HttpPost]
+        [ActionName("ProfilePicture")]
+        public async Task<IActionResult> ProfilePicturePost(IFormFile file)
+        {
+            ApplicationUser user = await userManager.GetUserAsync(User);
+
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+                user.ProfilePicture = memoryStream.ToArray();
+            }
+            await userManager.UpdateAsync(user);
+
+            return RedirectToAction("MyProfile");
         }
     }
 }

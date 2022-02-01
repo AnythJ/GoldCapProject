@@ -73,6 +73,6 @@ namespace GoldCap
             }
         }
 
-        
+       
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,5 +13,7 @@ namespace GoldCap.Models
     {
         [Key][Column(Order = 1)]
         public int ExpenseManagerId { get; set; }
+
+        public byte[] ProfilePicture { get; set; }
     }
 }

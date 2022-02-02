@@ -268,9 +268,12 @@ p.pillAmount {
 
 .incomeCircle {
     flex: 1;
+    height: 100%;
     z-index: 1;
-    margin: 0.3rem;
     font-size: clamp(1.2rem, 2.2vh, 2.2vh);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 @media only screen and (max-width: 768px) {

@@ -21,6 +21,12 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
 <body class="prevent-animation">
+    <div class="color-themes-btn">
+        <div class="ct-circle ct-first" onclick="changeColorTheme('first')"></div>
+        <div class="ct-circle ct-second" onclick="changeColorTheme('second')"></div>
+        <div class="ct-circle ct-third" onclick="changeColorTheme('third')"></div>
+    </div>
+
     <div class="stripes">
         <div id="stripe1" class="stripe stripe-1"></div>
         <div id="stripe2" class="stripe stripe-2"></div>
@@ -31,6 +37,7 @@
         <div id="stripe7" class="stripe stripe-7"></div>
         <div id="stripe8" class="stripe stripe-8"></div>
     </div>
+
     <div class="main">
         <section class="first-section">
             <p class="goldcapTitleXL">GoldCap</p>
@@ -38,8 +45,8 @@
                 <p class="goldcapTitle">GoldCap</p>
                 <span class="firstDescription">Make your own expenses history, manage them daily and check overall statistics. All by yourself.</span>
                 <p class="signButtons">
-                    <a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a>
-                    <a asp-action="login" asp-controller="account" class="btn btn-outline-info signInButton">Sign in</a>
+                    <a asp-action="register" asp-controller="account" class="btn signInButton startNow">Start Now</a>
+                    <a asp-action="login" asp-controller="account" class="btn signInButton">Sign in</a>
                 </p>
             </div>
             <div class="first-section-right">
@@ -141,7 +148,59 @@
         document.body.className = "";
     }, 500);
 
-    
+    function changeColorTheme(color) {
+        if (color == 'first') {
+            document.documentElement.style.setProperty('--bg-primary', '#212529');
+            document.documentElement.style.setProperty('--bg-secondary', '#2D3339');
+            document.documentElement.style.setProperty('--bg-third', '#0DCAF0');
+            document.documentElement.style.setProperty('--text-primary', '#434D56');
+            document.documentElement.style.setProperty('--text-secondary', '#9ba6b0');
+            document.documentElement.style.setProperty('--text-third', 'white');
+            document.documentElement.style.setProperty('--piechart-border-color', '#9ba6b0');
+            document.documentElement.style.setProperty('--scrollbar-primary', '#0790ab');
+            document.documentElement.style.setProperty('--btn-succes', '#1B998B');
+            document.documentElement.style.setProperty('--btn-succes-hover', '#136c62');
+            document.documentElement.style.setProperty('--btn-info', '#87BCDE');
+            document.documentElement.style.setProperty('--btn-info-hover', '#5fa7d3');
+            document.documentElement.style.setProperty('--btn-danger', '#DF2935');
+            document.documentElement.style.setProperty('--btn-danger-hover', '#c81e29');
+            sessionStorage.setItem("colorTheme", "first");
+        }
+        if (color == 'second') {
+            document.documentElement.style.setProperty('--bg-primary', '#03071e');
+            document.documentElement.style.setProperty('--bg-secondary', '#370617');
+            document.documentElement.style.setProperty('--bg-third', '#dc2f02');
+            document.documentElement.style.setProperty('--text-primary', '#6a040f');
+            document.documentElement.style.setProperty('--text-secondary', '#faa307');
+            document.documentElement.style.setProperty('--text-third', '#faa307');
+            document.documentElement.style.setProperty('--piechart-border-color', '#faa307');
+            document.documentElement.style.setProperty('--scrollbar-primary', '#dc2f02');
+            document.documentElement.style.setProperty('--btn-succes', '#82D173');
+            document.documentElement.style.setProperty('--btn-succes-hover', '#65c752');
+            document.documentElement.style.setProperty('--btn-info', '#7EBDC2');
+            document.documentElement.style.setProperty('--btn-info-hover', '#63b0b6');
+            document.documentElement.style.setProperty('--btn-danger', '#EF6461');
+            document.documentElement.style.setProperty('--btn-danger-hover', '#ed4845');
+            sessionStorage.setItem("colorTheme", "second");
+        }
+        if (color == 'third') {
+            document.documentElement.style.setProperty('--bg-primary', '#84a59d');
+            document.documentElement.style.setProperty('--bg-secondary', '#f28482');
+            document.documentElement.style.setProperty('--bg-third', '#713E5A');
+            document.documentElement.style.setProperty('--text-primary', '#f5a4a3');
+            document.documentElement.style.setProperty('--text-secondary', '#39393A');
+            document.documentElement.style.setProperty('--text-third', '#39393A');
+            document.documentElement.style.setProperty('--piechart-border-color', '#39393A');
+            document.documentElement.style.setProperty('--scrollbar-primary', '#713E5A');
+            document.documentElement.style.setProperty('--btn-succes', '#82D173');
+            document.documentElement.style.setProperty('--btn-succes-hover', '#65c752');
+            document.documentElement.style.setProperty('--btn-info', '#7EBDC2');
+            document.documentElement.style.setProperty('--btn-info-hover', '#63b0b6');
+            document.documentElement.style.setProperty('--btn-danger', '#EF6461');
+            document.documentElement.style.setProperty('--btn-danger-hover', '#ed4845');
+            sessionStorage.setItem("colorTheme", "third");
+        }
+    }
 
     //function addAnimation() {
     //    document.getElementsByClassName('textToImage')[0].style.animation = "slideUp-1 0.3s ease forwards";

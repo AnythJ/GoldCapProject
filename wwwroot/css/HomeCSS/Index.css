@@ -122,6 +122,9 @@ body.prevent-animation * {
     justify-content: center;
     font-size: 1.6vh;
     min-width: 6rem;
+    background-color: transparent;
+    border-color: var(--bg-third);
+    color: var(--bg-third);
 }
 
 
@@ -762,4 +765,35 @@ p.signButtons {
     to {
         transform: translate(0, 0);
     }
+}
+
+
+
+
+.ct-circle {
+    border: 3px solid var(--text-primary);
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+}
+
+.ct-first {
+    background-color: #212529;
+}
+
+.ct-second {
+    background-color: #6a040f;
+}
+
+.ct-third {
+    background-color: white;
+}
+
+.color-themes-btn {
+    display: flex;
+    position: absolute;
+    top: 1%;
+    right: 1%;
+    z-index: 20;
 }

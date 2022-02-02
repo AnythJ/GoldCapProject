@@ -37,7 +37,7 @@
         margin: -5.41875em 0 0 -5.41875em;
         background-color: var(--bg-secondary);
         z-index: 10;
-        -webkit-border-radius: 50%;
+        -webkit-border-radius: 100%;
         border: 1px solid var(--smallerCircle-color-secondary);
         font-size: 1em;
         display: flex;

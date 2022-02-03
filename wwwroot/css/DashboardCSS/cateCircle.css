@@ -62,7 +62,7 @@
 
 .circle .c-left .progress {
     z-index: 4;
-    animation: u-left 0.3s linear both;
+    animation: c-left 0.3s linear both;
     border-bottom-left-radius: 9.375em;
     border-top-left-radius: 9.375em;
     transform-origin: right center;
@@ -70,7 +70,7 @@
 
 
 .circle .c-right .progress {
-    animation: u-right 0.3s linear both;
+    animation: c-right 0.3s linear both;
     animation-delay: 0.3s;
     border-bottom-left-radius: 9.375em;
     border-top-left-radius: 9.375em;

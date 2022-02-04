@@ -387,4 +387,10 @@ p.pillAmount {
     align-items: center;
     justify-content: center;
     font-size: clamp(1.2rem, 1.5vh, 3vh);
+    background-color: var(--bg-secondary);
+    border-color: var(--text-primary);
+    color: var(--text-secondary);
 }
+    #btnRecurring:hover {
+        background-color: var(--bg-third);
+    }

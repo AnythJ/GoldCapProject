@@ -8,7 +8,7 @@
     --text-primary: #434D56;
     --text-secondary: #9ba6b0;
     --bg-navbar: #2d3339;
-    /**/
+    
     --smallerCircle-color: #FFC759;
     --hr-primary: #5a6672;
     --scrollbar-primary: #0790ab;
@@ -26,9 +26,11 @@
     --btn-info-hover: #5fa7d3;
     --btn-danger: #DF2935;
     --btn-danger-hover: #c81e29;
-    /*JS*/
+    
     --piechart-border-color: #C9FBFF;
 }
+
+
 
 
 

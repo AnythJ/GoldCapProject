@@ -148,6 +148,11 @@
         document.body.className = "";
     }, 500);
 
+    $(document).ready(function () {
+        var colorTheme = sessionStorage.getItem("colorTheme");
+        changeColorTheme(colorTheme);
+    });
+
     function changeColorTheme(color) {
         if (color == 'first') {
             document.documentElement.style.setProperty('--bg-primary', '#212529');
@@ -184,19 +189,19 @@
             sessionStorage.setItem("colorTheme", "second");
         }
         if (color == 'third') {
-            document.documentElement.style.setProperty('--bg-primary', '#84a59d');
-            document.documentElement.style.setProperty('--bg-secondary', '#f28482');
-            document.documentElement.style.setProperty('--bg-third', '#713E5A');
-            document.documentElement.style.setProperty('--text-primary', '#f5a4a3');
-            document.documentElement.style.setProperty('--text-secondary', '#39393A');
-            document.documentElement.style.setProperty('--text-third', '#39393A');
-            document.documentElement.style.setProperty('--piechart-border-color', '#39393A');
-            document.documentElement.style.setProperty('--scrollbar-primary', '#713E5A');
+            document.documentElement.style.setProperty('--bg-primary', '#2F3C7E');
+            document.documentElement.style.setProperty('--bg-secondary', '#3e50a8');
+            document.documentElement.style.setProperty('--bg-third', '#CF4D6F');
+            document.documentElement.style.setProperty('--text-primary', '#6290C8');
+            document.documentElement.style.setProperty('--text-secondary', '#FBEAEB');
+            document.documentElement.style.setProperty('--text-third', 'white');
+            document.documentElement.style.setProperty('--piechart-border-color', '#2F3C7E');
+            document.documentElement.style.setProperty('--scrollbar-primary', '#CF4D6F');
             document.documentElement.style.setProperty('--btn-succes', '#82D173');
             document.documentElement.style.setProperty('--btn-succes-hover', '#65c752');
-            document.documentElement.style.setProperty('--btn-info', '#7EBDC2');
+            document.documentElement.style.setProperty('--btn-info', '#5998C5');
             document.documentElement.style.setProperty('--btn-info-hover', '#63b0b6');
-            document.documentElement.style.setProperty('--btn-danger', '#EF6461');
+            document.documentElement.style.setProperty('--btn-danger', '#CA3C25');
             document.documentElement.style.setProperty('--btn-danger-hover', '#ed4845');
             sessionStorage.setItem("colorTheme", "third");
         }

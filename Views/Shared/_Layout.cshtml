@@ -32,8 +32,11 @@
             display: none;
             text-align: right;
             justify-content: end;
-            margin-right: 1rem;
             align-items: center;
+        }
+
+        #dropdownAvatar {
+            margin-right: 1rem;
         }
 
         .navbar-top-items {
@@ -262,36 +265,37 @@
                 @Html.ActionLink("Month", "Index", "Dashboard", new { period = 30 }, new { @class = "btn btn-outline-info", @id = "btnMonth", @onclick = "stayActive(this.id)" })
                 @Html.ActionLink("Year", "Index", "Dashboard", new { period = 365 }, new { @class = "btn btn-outline-info", @id = "btnYear", @onclick = "stayActive(this.id)" })
 
-                <div id="dropdownAvatar" class="dropdown">
-                    <a class="btn btn-secondary dropdown-toggle dropdownAvatar" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
 
-                    </a>
 
-                    <ul id="dropdownMenuList" class="dropdown-menu dropdown-menu-end dropdown-menu-sm-end" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" asp-action="myprofile" asp-controller="account">My Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Notifications</a></li>
-                        <li class="color-theme-li">
-                            <a class="dropdown-item colorTheme-item" href="#">Color themes</a>
-                            <div class="color-themes-btn">
-                                <div class="ct-circle ct-first" onclick="changeColorTheme('first')"></div>
-                                <div class="ct-circle ct-second" onclick="changeColorTheme('second')"></div>
-                                <div class="ct-circle ct-third" onclick="changeColorTheme('third')"></div>
-                            </div>
-                        </li>
+            </div>
+            <div id="dropdownAvatar" class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle dropdownAvatar" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
 
-                        <li><a class="dropdown-item dropdown-item-email">@User.Identity.Name</a></li>
-                        <li>
-                            <div class="dropdown-item">
-                                <form method="post" asp-action="logout" asp-controller="account">
-                                    <button class="logoutButton" type="submit">
-                                        Logout
-                                    </button>
-                                </form>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                </a>
 
+                <ul id="dropdownMenuList" class="dropdown-menu dropdown-menu-end dropdown-menu-sm-end" aria-labelledby="dropdownMenuLink">
+                    <li><a class="dropdown-item" asp-action="myprofile" asp-controller="account">My Profile</a></li>
+                    <li><a class="dropdown-item" href="#">Notifications</a></li>
+                    <li class="color-theme-li">
+                        <a class="dropdown-item colorTheme-item" href="#">Color themes</a>
+                        <div class="color-themes-btn">
+                            <div class="ct-circle ct-first" onclick="changeColorTheme('first')"></div>
+                            <div class="ct-circle ct-second" onclick="changeColorTheme('second')"></div>
+                            <div class="ct-circle ct-third" onclick="changeColorTheme('third')"></div>
+                        </div>
+                    </li>
+
+                    <li><a class="dropdown-item dropdown-item-email">@User.Identity.Name</a></li>
+                    <li>
+                        <div class="dropdown-item">
+                            <form method="post" asp-action="logout" asp-controller="account">
+                                <button class="logoutButton" type="submit">
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
             </div>
 
         </div>
@@ -374,7 +378,6 @@
                 document.getElementsByTagName("main")[0].style.marginLeft = "5rem";
                 document.getElementById("collapseSideNavbar").style.transform = "rotate(180deg)";
                 document.getElementsByClassName("navbar-top")[0].style.width = "calc(100% - 5rem)";
-                document.getElementsByClassName("color-themes-btn")[0].style.flexDirection = "column";
                 sessionStorage.setItem("sideNavbarCollapsed", true);
                 var links = document.getElementsByClassName("link-text");
                 for (var i = 0; i < links.length; i++) {
@@ -392,7 +395,6 @@
                 document.getElementsByTagName("main")[0].style.marginLeft = "14rem";
                 document.getElementById("collapseSideNavbar").style.transform = "rotate(0deg)";
                 document.getElementsByClassName("navbar-top")[0].style.width = "calc(100% - 14rem)";
-                document.getElementsByClassName("color-themes-btn")[0].style.flexDirection = "row";
                 var links = document.getElementsByClassName("link-text");
                 for (var i = 0; i < links.length; i++) {
                     links[i].style.display = "inline";
@@ -420,6 +422,7 @@
                 document.documentElement.style.setProperty('--btn-info-hover', '#5fa7d3');
                 document.documentElement.style.setProperty('--btn-danger', '#DF2935');
                 document.documentElement.style.setProperty('--btn-danger-hover', '#c81e29');
+                document.documentElement.style.setProperty('--btn-danger-color', '#212529');
                 sessionStorage.setItem("colorTheme", "first");
             }
             if (color == 'second') {
@@ -437,6 +440,7 @@
                 document.documentElement.style.setProperty('--btn-info-hover', '#63b0b6');
                 document.documentElement.style.setProperty('--btn-danger', '#EF6461');
                 document.documentElement.style.setProperty('--btn-danger-hover', '#ed4845');
+                document.documentElement.style.setProperty('--btn-danger-color', 'white');
                 sessionStorage.setItem("colorTheme", "second");
             }
             if (color == 'third') {
@@ -454,6 +458,7 @@
                 document.documentElement.style.setProperty('--btn-info-hover', '#63b0b6');
                 document.documentElement.style.setProperty('--btn-danger', '#CA3C25');
                 document.documentElement.style.setProperty('--btn-danger-hover', '#ed4845');
+                document.documentElement.style.setProperty('--btn-danger-color', 'white');
                 sessionStorage.setItem("colorTheme", "third");
             }
         }

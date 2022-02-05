@@ -148,3 +148,9 @@ body {
         }
     }
 }
+
+
+
+.validation-info {
+    color: var(--bg-third);
+}

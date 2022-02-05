@@ -42,6 +42,12 @@
         padding: 0.625rem 0 0.625rem 0;
         min-height: calc(0.3*);
     }
+    td.description {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 15ch;
+    }
 
 </style>
 <script type="text/javascript">
@@ -74,7 +80,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Amount)
                     </td>
-                    <td class="description">
+                    <td class="description" data-toggle="tooltip" data-placement="bottom" title="@item.Description">
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td style="width:220px;padding-left:20px;">
@@ -92,5 +98,6 @@
     </table>
 </div>
 
-
+<script>
+</script>
 @*<script>$.ajaxPrefilter(function (options, originalOptions, jqXHR) { options.async = true; });</script>*@

@@ -13,12 +13,12 @@
             <div class="form-group">
                 <label asp-for="Email"></label>
                 <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-info"></span>
+                <span asp-validation-for="Email" class="validation-info"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password"></label>
                 <input asp-for="Password" class="form-control" autocomplete="on"/>
-                <span asp-validation-for="Password" class="text-info"></span>
+                <span asp-validation-for="Password" class="validation-info"></span>
             </div>
             <div class="form-group">
                 <div class="form-check">
@@ -32,8 +32,6 @@
                 <button type="submit" class="btn btn-outline-info signInButton">Login</button>
                 <a class="btn btn-outline-info signInButton" asp-action="register" asp-controller="account">Register</a>
             </div>
-            
-            <div asp-validation-summary="All" class="text-info"></div>
         </form>
 </div>
 

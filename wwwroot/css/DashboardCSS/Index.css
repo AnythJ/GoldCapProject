@@ -131,6 +131,7 @@ div.row-first {
     justify-content: space-around;
     flex-direction: column;
     width: 100%;
+    min-height: 3rem;
 }
 
 .pill-date-span {
@@ -393,4 +394,5 @@ p.pillAmount {
 }
     #btnRecurring:hover {
         background-color: var(--bg-third);
+        color: var(--bg-primary);
     }

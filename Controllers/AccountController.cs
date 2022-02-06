@@ -153,5 +153,30 @@ namespace GoldCap.Controllers
 
             return RedirectToAction("MyProfile");
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> LoginGuest(string returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await signInManager.PasswordSignInAsync("guestTest@gm.com", "123456zZ!", false, false);
+
+                if (result.Succeeded)
+                {
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
+                    return RedirectToAction("index", "dashboard");
+                }
+
+                ModelState.AddModelError(string.Empty, "Something went wrong, please try again");
+
+            }
+
+            return View();
+        }
+
     }
 }

@@ -98,9 +98,10 @@ namespace GoldCap.Controllers
                 }
 
 
-                if (period == 365)
-                    totalIncome *= 12;
+                
             }
+            if (period == 365)
+                totalIncome *= 12;
 
             var allRecurring = _expenseRepository.GetAllRecurring().ToList();
             

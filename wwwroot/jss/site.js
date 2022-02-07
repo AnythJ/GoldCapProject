@@ -349,3 +349,25 @@ jQueryAjaxPostSort = (form, url) => {
     }
 }
 
+
+
+function showMore() {
+    var x = $('#showMore').text();
+    var listLen = document.getElementById('categoryList').getElementsByTagName("li").length;
+    if (x == 'Show More') {
+        $('#categoryList li:hidden').slice(0, listLen).show();
+        $('#showMore').innerHtml == 'Show Less';
+        document.getElementById('showMore').innerHTML = 'Show Less';
+        document.getElementById('showArrow').classList.remove('fa-chevron-down');
+        document.getElementById('showArrow').classList.add('fa-chevron-up');
+        sessionStorage.setItem('showButton', 'Show More');
+    }
+    else if (x == 'Show Less') {
+        $('#categoryList li').slice(7, listLen).hide();
+        $('#showMore').innerHtml == 'Show More';
+        document.getElementById('showMore').innerHTML = 'Show More';
+        document.getElementById('showArrow').classList.add('fa-chevron-down');
+        document.getElementById('showArrow').classList.remove('fa-chevron-up');
+        sessionStorage.setItem('showButton', 'Show Less');
+    }
+};

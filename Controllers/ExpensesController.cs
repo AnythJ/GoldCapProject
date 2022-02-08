@@ -49,15 +49,15 @@ namespace GoldCap.Controllers
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
 
             if (id == 0)
-                return View(new Expense());
+                return View(new Expense()); //After using create button, pass new model so the form will be empty
             else
             {
-                var expenseModel = _expenseRepository.GetExpense(id);
-                if (expenseModel == null)
+                var expenseModel = _expenseRepository.GetExpense(id); 
+                if (expenseModel == null) //If there is no record with passed id
                 {
-                    return NotFound();
+                    return NotFound(); 
                 }
-                return View(expenseModel);
+                return View(expenseModel); //Return form with correct object
             }
         }
 
@@ -87,9 +87,9 @@ namespace GoldCap.Controllers
                 }
 
 
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin)) });
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin)) }); //If form is valid, close modal and show list
             }
-            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) });
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) }); //If form is invalid return the same object in form
         }
 
         [HttpPost, ActionName("Delete")]
@@ -104,10 +104,10 @@ namespace GoldCap.Controllers
                 SortMenu = viewModel.SortMenu
             };
 
-            return Sort(sortOrder, newViewModel, true);
+            return Sort(sortOrder, newViewModel, true); //After deleting, sort list like it was before
         }
 
-        public IActionResult DeleteAll()
+        public IActionResult DeleteAll() //Currently not used
         {
             _expenseRepository.DeleteAllExpenses();
 
@@ -115,7 +115,7 @@ namespace GoldCap.Controllers
         }
 
 
-        public JsonResult Sort(string sortOrder, ExpensesListViewModel viewModel, bool filtered = false,  bool refresh = false)
+        public JsonResult Sort(string sortOrder, ExpensesListViewModel viewModel, bool filtered = false,  bool refresh = false) //Parameters for: sorting order, viewmodel, filtered(if the sort menu was used), refresh(if refresh button was used)
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
             bool isSortEmpty = true;
@@ -125,7 +125,7 @@ namespace GoldCap.Controllers
 
             if(filtered)
             {
-                if (viewModel.SortMenu != null && !refresh)
+                if (viewModel.SortMenu != null && !refresh) //Sort by every parameter that was selected in sort menu
                 {
                     model = _expenseRepository.GetAllExpenses();
                     if (viewModel.SortMenu.DateFrom != null)
@@ -159,7 +159,7 @@ namespace GoldCap.Controllers
                     }
                         
 
-                    if (viewModel.SortMenu.ChosenCategories.Contains(true))
+                    if (viewModel.SortMenu.ChosenCategories.Contains(true)) //Categories list with ticked checkboxes
                     {
                         var cateList = _expenseRepository.GetCategoryList().Select(e => e.Name).OrderBy(c => c).ToList();
                         List<string> categoriesList = new List<string>();
@@ -172,7 +172,7 @@ namespace GoldCap.Controllers
                                 categoriesList.Add(cateList[i]);
                             }
                         }
-                        model = model.Where(e => categoriesList.Contains(e.Category));
+                        model = model.Where(e => categoriesList.Contains(e.Category)); //Select expenses where categories match the categoriesList content
                         isSortEmpty = false;
                     }
                 }
@@ -183,7 +183,7 @@ namespace GoldCap.Controllers
             ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 
-            switch (sortOrder)
+            switch (sortOrder) //Sort based on sortOrder from column headers
             {
                 case "Date":
                     model = model.OrderBy(d => d.Date);
@@ -207,11 +207,8 @@ namespace GoldCap.Controllers
                     model = model.OrderByDescending(d => d.Date);
                     break;
             }
-            ExpensesListViewModel expVM = new ExpensesListViewModel()
-            {
-                CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList(),
-                Expenses = model
-            };
+            
+
             ExpensesListViewModel newViewModel = viewModel;
             newViewModel.CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList();
             newViewModel.Expenses = model;

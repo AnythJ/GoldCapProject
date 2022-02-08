@@ -127,7 +127,7 @@ namespace GoldCap.Controllers
         public async Task<IActionResult> MyProfile()
         {
             ApplicationUser user = await userManager.GetUserAsync(User);
-            if(user.ProfilePicture != null)
+            if(user.ProfilePicture != null) //Convert image to display
             {
                 var base64 = Convert.ToBase64String(user.ProfilePicture);
                 var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
@@ -140,7 +140,7 @@ namespace GoldCap.Controllers
 
         [HttpPost]
         [ActionName("ProfilePicture")]
-        public async Task<IActionResult> ProfilePicturePost(IFormFile file)
+        public async Task<IActionResult> ProfilePicturePost(IFormFile file) //Change user profile picture
         {
             ApplicationUser user = await userManager.GetUserAsync(User);
 

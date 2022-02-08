@@ -45,7 +45,7 @@ namespace GoldCap.Controllers
             }
             else
             {
-                CategoryListViewModel invalidModel = new CategoryListViewModel()
+                CategoryListViewModel invalidModel = new CategoryListViewModel() //If category name is incorrect, there has to be new viewModel created, since viewmodel is passed to view
                 {
                     Category = category,
                     Categories = _expenseRepository.GetAllCategories()
@@ -86,7 +86,7 @@ namespace GoldCap.Controllers
                 Category = new Category(),
                 Categories = model
             };
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", viewModel) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", viewModel) }); //Return view as partial with json
         }
     }
 }

@@ -56,3 +56,15 @@ table {
     text-align: right;
     padding-right: 1.875rem;
 }
+
+@media only screen and (max-width: 955px) {
+    .descriptionTd, .descriptionTh {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 356px) {
+    .categoryTd, .categoryTh {
+        display: none;
+    }
+}

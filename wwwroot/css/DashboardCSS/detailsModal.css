@@ -1,0 +1,45 @@
+﻿.modal-title {
+    font-weight: bold;
+}
+
+.btn-close {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
+.modal-body, .modal-header, .modal-title, .modal-footer {
+    /*font-family: Arial;*/
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
+}
+
+.modal-content, modal-dialog {
+    border: 3px solid var(--text-primary);
+    border-radius: 5px;
+}
+
+.modal-header {
+    border: none;
+    border-bottom: 3px solid var(--text-primary);
+    border-radius: 0;
+}
+
+input[type=text]:disabled, input[type=datetime-local]:disabled, select:disabled {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border-color: var(--bg-third);
+    border-radius: 5px;
+}
+
+textarea:disabled {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-secondary) !important;
+    resize: none;
+    max-width: 135ch;
+    border: 0.5px solid var(--bg-third);
+    border-radius: 5px;
+}
+
+.listButton {
+    text-align: right;
+}

@@ -12,14 +12,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
     <link href="~/css/Account/Layout.css" rel="stylesheet" />
     @*<link rel="shortcut icon" href="#">*@
-    @*<link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />*@
     @RenderSection("Styles", required: false)
     <link href="~/css/LayoutCSS/Layout.css" rel="stylesheet" />
     <style>
-        
-
     </style>
     <title>@ViewBag.Title</title>
 </head>
@@ -35,7 +33,6 @@
         <div id="stripe8" class="stripe stripe-8"></div>
     </div>
     <div class="main">
-
         @RenderBody()
     </div>
 
@@ -44,11 +41,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validate/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-    @*<script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script> ADDED 09.08*@
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/jss/site.js" asp-append-version="true"></script>
     <script src="~/jss/notify.min.js"></script>
-    @*<script src="~/lib/font-awesome/js/all.js"></script>*@
     @if (IsSectionDefined("Scripts"))
     {
         @RenderSection("Scripts", required: false)
@@ -61,60 +56,4 @@
         var colorTheme = sessionStorage.getItem("colorTheme");
         changeColorTheme(colorTheme);
     });
-
-    function changeColorTheme(color) {
-        if (color == 'first') {
-            console.log('1');
-            document.documentElement.style.setProperty('--bg-primary', '#212529');
-            document.documentElement.style.setProperty('--bg-secondary', '#2D3339');
-            document.documentElement.style.setProperty('--bg-third', '#0DCAF0');
-            document.documentElement.style.setProperty('--text-primary', '#434D56');
-            document.documentElement.style.setProperty('--text-secondary', '#9ba6b0');
-            document.documentElement.style.setProperty('--text-third', 'white');
-            document.documentElement.style.setProperty('--piechart-border-color', '#9ba6b0');
-            document.documentElement.style.setProperty('--scrollbar-primary', '#0790ab');
-            document.documentElement.style.setProperty('--btn-succes', '#1B998B');
-            document.documentElement.style.setProperty('--btn-succes-hover', '#136c62');
-            document.documentElement.style.setProperty('--btn-info', '#87BCDE');
-            document.documentElement.style.setProperty('--btn-info-hover', '#5fa7d3');
-            document.documentElement.style.setProperty('--btn-danger', '#DF2935');
-            document.documentElement.style.setProperty('--btn-danger-hover', '#c81e29');
-            sessionStorage.setItem("colorTheme", "first");
-        }
-        if (color == 'second') {
-            console.log('1');
-            document.documentElement.style.setProperty('--bg-primary', '#03071e');
-            document.documentElement.style.setProperty('--bg-secondary', '#370617');
-            document.documentElement.style.setProperty('--bg-third', '#dc2f02');
-            document.documentElement.style.setProperty('--text-primary', '#6a040f');
-            document.documentElement.style.setProperty('--text-secondary', '#faa307');
-            document.documentElement.style.setProperty('--text-third', '#faa307');
-            document.documentElement.style.setProperty('--piechart-border-color', '#faa307');
-            document.documentElement.style.setProperty('--scrollbar-primary', '#dc2f02');
-            document.documentElement.style.setProperty('--btn-succes', '#82D173');
-            document.documentElement.style.setProperty('--btn-succes-hover', '#65c752');
-            document.documentElement.style.setProperty('--btn-info', '#7EBDC2');
-            document.documentElement.style.setProperty('--btn-info-hover', '#63b0b6');
-            document.documentElement.style.setProperty('--btn-danger', '#EF6461');
-            document.documentElement.style.setProperty('--btn-danger-hover', '#ed4845');
-            sessionStorage.setItem("colorTheme", "second");
-        }
-        if (color == 'third') {
-            document.documentElement.style.setProperty('--bg-primary', '#2F3C7E');
-            document.documentElement.style.setProperty('--bg-secondary', '#3e50a8');
-            document.documentElement.style.setProperty('--bg-third', '#CF4D6F');
-            document.documentElement.style.setProperty('--text-primary', '#6290C8');
-            document.documentElement.style.setProperty('--text-secondary', '#FBEAEB');
-            document.documentElement.style.setProperty('--text-third', 'white');
-            document.documentElement.style.setProperty('--piechart-border-color', '#2F3C7E');
-            document.documentElement.style.setProperty('--scrollbar-primary', '#CF4D6F');
-            document.documentElement.style.setProperty('--btn-succes', '#82D173');
-            document.documentElement.style.setProperty('--btn-succes-hover', '#65c752');
-            document.documentElement.style.setProperty('--btn-info', '#5998C5');
-            document.documentElement.style.setProperty('--btn-info-hover', '#63b0b6');
-            document.documentElement.style.setProperty('--btn-danger', '#CA3C25');
-            document.documentElement.style.setProperty('--btn-danger-hover', '#ed4845');
-            sessionStorage.setItem("colorTheme", "third");
-        }
-    }
 </script>

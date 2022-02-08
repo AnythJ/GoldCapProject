@@ -176,6 +176,10 @@ main {
     margin-left: 0.5rem;
     transition: all 0.2s ease;
     color: var(--text-secondary);
+    cursor: pointer;
+}
+#collapseSideNavbar:hover {
+    color: var(--bg-primary);
 }
 
 .btn-outline-info {

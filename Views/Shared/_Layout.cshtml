@@ -79,7 +79,7 @@
 
                 <ul id="dropdownMenuList" class="dropdown-menu dropdown-menu-end dropdown-menu-sm-end" aria-labelledby="dropdownMenuLink">
                     <li><a class="dropdown-item" asp-action="myprofile" asp-controller="account">My Profile</a></li>
-                    <li><a class="dropdown-item" href="#">Notifications</a></li>
+                    <li><a class="dropdown-item" href="#" id="notificationLink">Notifications</a></li>
                     <li class="color-theme-li">
                         <a class="dropdown-item colorTheme-item" href="#">Color themes</a>
                         <div class="color-themes-btn">
@@ -112,6 +112,10 @@
     <main class="mainRender">
         @RenderBody()
     </main>
+    
+    <div id="notificationsListBox">
+
+    </div>
 
     <div class="modal" tabindex="-1" role="dialog" id="form-modal">
         <div class="modal-dialog" id="modalDialog">
@@ -161,6 +165,14 @@
         $("#dropdownAvatar").on('click', '#dropdownMenuList li', function (e) {
             e.stopPropagation();
         });
+
+
+
+        document.getElementById("notificationLink").onclick = function () {
+            var container = document.getElementById('notificationsListBox');
+            container.style.margin = "0";
+        }
+
     </script>
     @if (IsSectionDefined("Scripts"))
     {

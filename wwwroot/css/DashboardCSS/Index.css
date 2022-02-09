@@ -334,7 +334,7 @@ p.pillAmount {
         display: inline;
     }
 
-    .navbar-side:hover {
+    /*.navbar-side:hover {
         width: 14rem !important;
     }
 
@@ -352,7 +352,7 @@ p.pillAmount {
 
         .navbar-side:hover .color-themes-btn {
             flex-direction: row !important;
-        }
+        }*/
 
     .navbar-top {
         display: flex;

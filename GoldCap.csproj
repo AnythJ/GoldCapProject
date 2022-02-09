@@ -11,10 +11,10 @@
     <None Include="Views\Dashboard\_DetailsModal.cshtml" />
     <None Include="Views\Dashboard\_ViewAll.cshtml" />
     <None Include="wwwroot\jss\AboutJS\areaChart.js" />
-    <None Include="wwwroot\jss\lineChart.js" />
+    <None Include="wwwroot\jss\DashboardJS\lineChart.js" />
     <None Include="wwwroot\jss\notify.js" />
     <None Include="wwwroot\jss\notify.min.js" />
-    <None Include="wwwroot\jss\pieChart.js" />
+    <None Include="wwwroot\jss\DashboardJS\pieChart.js" />
     <None Include="wwwroot\jss\site.js" />
   </ItemGroup>
 
@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\AboutCSS\" />
+    <Folder Include="wwwroot\jss\HomeJS\" />
   </ItemGroup>
 
 </Project>

@@ -13,6 +13,7 @@ namespace GoldCap.ViewModels
         public List<StatCircle> CirclesStats { get; set; }
         public List<StatPill> PillsStats { get; set; }
         public int Period { get; set; }
+        public List<Expense> NotificationList { get; set; }
 
 
     }

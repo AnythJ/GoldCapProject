@@ -431,22 +431,3 @@ div .dropdown {
 }
 
 
-
-
-
-#notificationsListBox {
-    border: 3px solid white;
-    width: 25rem;
-    height: 18rem;
-    background-color: blue;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 -30vw 0 0;
-    transition: all 0.5s ease-in-out;
-    position: absolute;
-    right: 0.7rem;
-    bottom: 0.5rem;
-    z-index: 20;
-}

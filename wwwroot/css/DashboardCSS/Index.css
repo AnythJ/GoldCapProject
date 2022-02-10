@@ -366,7 +366,46 @@ p.pillAmount {
         display: inline-block;
     }
 
-    
+
+    #notificationsListBox {
+        border: 3px solid var(--text-secondary);
+        width: 25rem;
+        height: 18rem;
+        background-color: var(--bg-secondary);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0 -30vw 0 0;
+        transition: all 0.5s ease-in-out;
+        position: absolute;
+        right: 0.7rem;
+        bottom: 0.5rem;
+        z-index: 20;
+        padding: 0;
+    }
+    .notificationTable {
+        height: 100%;
+        margin: 0;
+    }
+    .notification-header {
+        height: 1.5rem;
+        width: 100%;
+        padding: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        
+    }
+    #notificationBtn {
+        width: 1.5rem;
+        height: 1.5rem;
+        background-color: red;
+        transition: all 0.3s;
+    }
+    #notificationBtn:hover {
+        background-color: white;
+    }
 }
 
 @media only screen and (max-width: 464px) {
@@ -398,3 +437,11 @@ p.pillAmount {
         background-color: var(--bg-third);
         color: var(--bg-primary);
     }
+
+
+
+
+
+
+
+

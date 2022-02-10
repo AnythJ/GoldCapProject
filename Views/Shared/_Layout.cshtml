@@ -113,9 +113,7 @@
         @RenderBody()
     </main>
     
-    <div id="notificationsListBox">
-
-    </div>
+    
 
     <div class="modal" tabindex="-1" role="dialog" id="form-modal">
         <div class="modal-dialog" id="modalDialog">
@@ -165,14 +163,6 @@
         $("#dropdownAvatar").on('click', '#dropdownMenuList li', function (e) {
             e.stopPropagation();
         });
-
-
-
-        document.getElementById("notificationLink").onclick = function () {
-            var container = document.getElementById('notificationsListBox');
-            container.style.margin = "0";
-        }
-
     </script>
     @if (IsSectionDefined("Scripts"))
     {

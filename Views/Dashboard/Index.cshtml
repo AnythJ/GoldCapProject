@@ -113,152 +113,176 @@
 </head>
 
 <body class="mainBody">
-        <div class="row-first">
-            <div class="statPill">
-                <div class="pill-left">
-                    <span>Highest expense</span>
-                    <p class="pillAmount">@Model.PillsStats[0].AmountInt$</>
-                </div>
-                <div class="pill-right">
-                    <p>@Model.PillsStats[0].Category</p>
-                    <p>@Model.PillsStats[0].DatetimeString</p>
-                    <p>@Model.PillsStats[0].Percentage% of @Model.CirclesStats[0].SumLast30Days$</p>
-                </div>
+    <div class="row-first">
+        <div class="statPill">
+            <div class="pill-left">
+                <span>Highest expense</span>
+                <p class="pillAmount">@Model.PillsStats[0].AmountInt$</>
             </div>
-            <div class="statPill">
-                <div class="pill-left">
-                    <span>Last expense</span>
-                    <p class="pillAmount">@Model.PillsStats[1].AmountInt$</p>
-                </div>
-                <div class="pill-right">
-                    <p>@Model.PillsStats[1].Category</p>
-                    <p>@Model.PillsStats[1].DatetimeString</p>
-                    <input id="percentageArrowValue" type="hidden" value="@Model.PillsStats[1].Percentage" />
-                    <p style="text-align:center;"><i id="arrowUp" hidden class="fas fa-arrow-up"></i><i id="arrowDown" hidden class="fas fa-arrow-down"></i><span id="arrowPercentage"> @Model.PillsStats[1].Percentage% </span><span> average</span></p>
-                </div>
+            <div class="pill-right">
+                <p>@Model.PillsStats[0].Category</p>
+                <p>@Model.PillsStats[0].DatetimeString</p>
+                <p>@Model.PillsStats[0].Percentage% of @Model.CirclesStats[0].SumLast30Days$</p>
             </div>
-            <div class="statPill">
-                <div class="pill-left">
-                    <span>Lowest expense</span>
-                    <p class="pillAmount">@Model.PillsStats[2].AmountInt$</p>
-                </div>
-                <div class="pill-right">
-                    <p>@Model.PillsStats[2].Category</p>
-                    <p>@Model.PillsStats[2].DatetimeString</p>
-                    <p>@Model.PillsStats[2].Percentage% of @Model.CirclesStats[0].SumLast30Days$</p>
-                </div>
+        </div>
+        <div class="statPill">
+            <div class="pill-left">
+                <span>Last expense</span>
+                <p class="pillAmount">@Model.PillsStats[1].AmountInt$</p>
             </div>
-            <div class="statPill">
-                <div class="pill-recurring">
-                    <p class="pill-date-span">@DateTime.Now.AddDays(-Model.Period).ToString("dd MMM yyy") -  @DateTime.Now.ToString("dd MMM yyy")</p>
-                    <a id="btnRecurring" onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)',
+            <div class="pill-right">
+                <p>@Model.PillsStats[1].Category</p>
+                <p>@Model.PillsStats[1].DatetimeString</p>
+                <input id="percentageArrowValue" type="hidden" value="@Model.PillsStats[1].Percentage" />
+                <p style="text-align:center;"><i id="arrowUp" hidden class="fas fa-arrow-up"></i><i id="arrowDown" hidden class="fas fa-arrow-down"></i><span id="arrowPercentage"> @Model.PillsStats[1].Percentage% </span><span> average</span></p>
+            </div>
+        </div>
+        <div class="statPill">
+            <div class="pill-left">
+                <span>Lowest expense</span>
+                <p class="pillAmount">@Model.PillsStats[2].AmountInt$</p>
+            </div>
+            <div class="pill-right">
+                <p>@Model.PillsStats[2].Category</p>
+                <p>@Model.PillsStats[2].DatetimeString</p>
+                <p>@Model.PillsStats[2].Percentage% of @Model.CirclesStats[0].SumLast30Days$</p>
+            </div>
+        </div>
+        <div class="statPill">
+            <div class="pill-recurring">
+                <p class="pill-date-span">@DateTime.Now.AddDays(-Model.Period).ToString("dd MMM yyy") -  @DateTime.Now.ToString("dd MMM yyy")</p>
+                <a id="btnRecurring" onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)',
                                                 'Recurring payments')" class="btn btn-outline-info">Recurring payments</a>
-                </div>
             </div>
-
         </div>
 
-        <div class="row-second">
-            <figure id="areafigure" class="highcharts-figure">
-                <div id="container"></div>
-            </figure>
-            <figure id="pieFigure" class="highcharts-figure">
-                <div id="container-pie"></div>
-            </figure>
+    </div>
+
+    <div class="row-second">
+        <figure id="areafigure" class="highcharts-figure">
+            <div id="container"></div>
+        </figure>
+        <figure id="pieFigure" class="highcharts-figure">
+            <div id="container-pie"></div>
+        </figure>
+    </div>
+
+    <div class="third-row">
+        <div class="tableColumn table-responsive" id="view-all">
+            @await Html.PartialAsync("_ViewAll", Model.Expenses)
+        </div>
+        <div class="stackedCircles">
+            <div class="u-statCircle">
+                <div class="smallerCircle">
+                    <p id="amountP" class="boldHeader" onmouseover="showPercentage()" data-toggle="tooltip" data-placement="top" title="@Model.CirclesStats[0].TooltipPercentage%">@Model.CirclesStats[0].SumLast30Days$</p>
+                    <p>of @Model.CirclesStats[0].SumBeforeLast30Days$</p>
+                    <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
+                    <p><small>@Model.CirclesStats[0].UnderMonthAmount$ @Model.CirclesStats[0].AdditionalString</small></p>
+                    <p><small>last @Model.CirclesStats[0].PeriodName</small></p>
+                </div>
+                <div class="circle">
+                    <div class="bar u-left">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="bar u-right">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="c-statCircle">
+                <div class="smallerCircle">
+                    <p class="boldHeader">@Model.CirclesStats[1].TopCategoryPercentage%</p>
+                    <p>@Model.CirclesStats[1].TopCategoryName</p>
+                    <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
+                    <p><small>@Model.CirclesStats[1].TopCategoryAmount$ of</small></p>
+                    <p><small>@Model.CirclesStats[1].SumLast30Days$</small></p>
+                </div>
+                <div class="circle">
+                    <div class="bar c-left">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="bar c-right">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="third-row">
-            <div class="tableColumn table-responsive" id="view-all">
-                @await Html.PartialAsync("_ViewAll", Model.Expenses)
-            </div>
-            <div class="stackedCircles">
-                <div class="u-statCircle">
-                    <div class="smallerCircle">
-                        <p id="amountP" class="boldHeader" onmouseover="showPercentage()" data-toggle="tooltip" data-placement="top" title="@Model.CirclesStats[0].TooltipPercentage%">@Model.CirclesStats[0].SumLast30Days$</p>
-                        <p>of @Model.CirclesStats[0].SumBeforeLast30Days$</p>
-                        <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                        <p><small>@Model.CirclesStats[0].UnderMonthAmount$ @Model.CirclesStats[0].AdditionalString</small></p>
-                        <p><small>last @Model.CirclesStats[0].PeriodName</small></p>
-                    </div>
-                    <div class="circle">
-                        <div class="bar u-left">
-                            <div class="progress"></div>
-                        </div>
-                        <div class="bar u-right">
-                            <div class="progress"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="c-statCircle">
-                    <div class="smallerCircle">
-                        <p class="boldHeader">@Model.CirclesStats[1].TopCategoryPercentage%</p>
-                        <p>@Model.CirclesStats[1].TopCategoryName</p>
-                        <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                        <p><small>@Model.CirclesStats[1].TopCategoryAmount$ of</small></p>
-                        <p><small>@Model.CirclesStats[1].SumLast30Days$</small></p>
-                    </div>
-                    <div class="circle">
-                        <div class="bar c-left">
-                            <div class="progress"></div>
-                        </div>
-                        <div class="bar c-right">
-                            <div class="progress"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="topCategoryColumn table-responsive">
-                <table class="table table-hover">
-                    <thead class="sticky-top">
-                        <tr>
-                            <td id="tableRowId">Categories by amount</td>
-                            <td class="percentageCol">%</td>
+        <div class="topCategoryColumn table-responsive">
+            <table class="table table-hover">
+                <thead class="sticky-top">
+                    <tr>
+                        <td id="tableRowId">Categories by amount</td>
+                        <td class="percentageCol">%</td>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    @foreach (var item in Model.Categories)
+                    {
+                        <tr class="trClass">
+                            <td>
+                                @item.CategoryName
+                            </td>
+                            <td class="percentageCol">
+                                @String.Format("{0:0.00}", item.CategoryPercentage)
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        @foreach (var item in Model.Categories)
-                        {
-                            <tr class="trClass">
-                                <td>
-                                    @item.CategoryName
-                                </td>
-                                <td class="percentageCol">
-                                    @String.Format("{0:0.00}", item.CategoryPercentage)
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div class="incomeCircle">
-                <div class="p-statCircle">
-                    <div class="smallerCircle">
-                        <p class="boldHeader">@Model.CirclesStats[2].SumLast30Days$</p>
-                        <p>
-                            of <a id="paycheckAmount">@Model.CirclesStats[2].TotalIncome$</a>
-                            <input id="paycheckInputField" type="text" hidden style="width:50px;height:18px;" />
-                            <a onclick="showInPopup('@Url.Action("IncomeList","Dashboard",new { id = 0},Context.Request.Scheme)','Income list')"><i class="fas fa-pen"></i></a>
-                        </p>
-                        <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
-                        <p><small>@Model.CirclesStats[2].IncomePercentage% of your</small></p>
-                        <p><small>income</small></p>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="incomeCircle">
+            <div class="p-statCircle">
+                <div class="smallerCircle">
+                    <p class="boldHeader">@Model.CirclesStats[2].SumLast30Days$</p>
+                    <p>
+                        of <a id="paycheckAmount">@Model.CirclesStats[2].TotalIncome$</a>
+                        <input id="paycheckInputField" type="text" hidden style="width:50px;height:18px;" />
+                        <a onclick="showInPopup('@Url.Action("IncomeList","Dashboard",new { id = 0},Context.Request.Scheme)','Income list')"><i class="fas fa-pen"></i></a>
+                    </p>
+                    <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
+                    <p><small>@Model.CirclesStats[2].IncomePercentage% of your</small></p>
+                    <p><small>income</small></p>
+                </div>
+                <div class="circle">
+                    <div class="bar p-left">
+                        <div class="progress"></div>
                     </div>
-                    <div class="circle">
-                        <div class="bar p-left">
-                            <div class="progress"></div>
-                        </div>
-                        <div class="bar p-right">
-                            <div class="progress"></div>
-                        </div>
+                    <div class="bar p-right">
+                        <div class="progress"></div>
                     </div>
                 </div>
             </div>
-
         </div>
 
+    </div>
 
+    <div id="notificationsListBox" class="table-responsive">
+        <p class="notification-header">
+            <a>Incoming payments</a>
+            <a id="notificationBtn"></a>
+        </p>
+        <table class="table notificationTable">
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model.NotificationList)
+            {
+                <tr>
+                    <td>@item.Amount</td>
+                    <td>@item.Category</td>
+                    <td>@item.Date</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
 
 </body>
 </html>
@@ -335,6 +359,24 @@
             document.getElementById('paycheckInputField').hidden = true;
         }
     }
+
+    function notificationBoxSlide() {
+        var container = document.getElementById('notificationsListBox');
+        var containerStyle = container.CurrentStyle || window.getComputedStyle(container);
+        console.log(containerStyle.margin);
+        if (containerStyle.margin == "0px") {
+            container.style.margin = "0 -30vw 0 0";
+        }
+        else container.style.margin = "0px";
+    }
+
+    document.getElementById("notificationLink").onclick = function () {
+        notificationBoxSlide();
+    }
+    document.getElementById("notificationBtn").onclick = function () {
+        notificationBoxSlide();
+    }
+
 </script>
 
 @section Scripts{

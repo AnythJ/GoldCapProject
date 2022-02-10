@@ -425,13 +425,23 @@ namespace GoldCap.Controllers
             pillsStats.Add(secondPill);
             pillsStats.Add(thirdPill);
             #endregion
+            int k = 0;
+            List<Expense> notificationList = new List<Expense>();
+            var expensesFromThisPeriodForNotifications = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now).OrderByDescending(d => d.Date);
+            foreach (var item in expensesFromThisPeriodForNotifications)
+            {
+                if (k == 4) break;
 
+                notificationList.Add(item);
+                k++;
+            }
             DashboardViewModel dashboardViewModel = new DashboardViewModel()
             {
                 PillsStats = pillsStats,
                 Expenses = expensesFromThisPeriod,
                 CirclesStats = circleStats,
-                Period = period
+                Period = period,
+                NotificationList = notificationList
             };
 
 

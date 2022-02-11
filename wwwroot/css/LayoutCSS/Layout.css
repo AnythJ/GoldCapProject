@@ -253,7 +253,7 @@ main {
     color: var(--text-secondary);
 }
 
-.dropdown-menu.dropdown-item:hover, .dropdown-menu .dropdown-item:active, .dropdown-menu .dropdown-item:hover {
+.dropdown-menu.dropdown-item:hover, .dropdown-menu .dropdown-item:active, .dropdown-menu .dropdown-item:hover, .dropdown-item:focus {
     background-color: var(--bg-primary);
     color: var(--text-secondary);
 }

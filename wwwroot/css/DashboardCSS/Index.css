@@ -378,7 +378,7 @@ p.pillAmount {
         align-items: center;
         margin: 0 -30vw 0 0;
         transition: all 0.5s ease-in-out;
-        position: absolute;
+        position: fixed;
         right: 0.7rem;
         bottom: 0.5rem;
         z-index: 20;
@@ -389,23 +389,25 @@ p.pillAmount {
         margin: 0;
     }
     .notification-header {
-        height: 1.5rem;
         width: 100%;
-        padding: 0.5rem;
+        height: 2.5rem;
+        margin: 0;
+        padding: 0 0.5rem;
         display: flex;
         justify-content: space-between;
-        align-content: center;
-        
+        align-items: center;
     }
     #notificationBtn {
         width: 1.5rem;
-        height: 1.5rem;
-        background-color: red;
+        line-height: 1.5rem;
+        font-size: 1.5rem;
         transition: all 0.3s;
     }
     #notificationBtn:hover {
-        background-color: white;
+        color: var(--text-primary);
+        cursor: pointer;
     }
+    
 }
 
 @media only screen and (max-width: 464px) {
@@ -414,13 +416,6 @@ p.pillAmount {
     }
 }
 
-
-/*@@media only screen and (max-width: 436px) {*/
-/*.pill-left {
-            flex: 0;
-            display: none;
-        }*/
-/*}*/
 
 #btnRecurring {
     width: 100%;

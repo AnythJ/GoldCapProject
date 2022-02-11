@@ -259,10 +259,10 @@
     </div>
 
     <div id="notificationsListBox" class="table-responsive">
-        <p class="notification-header">
+        <div class="notification-header">
             <a>Incoming payments</a>
-            <a id="notificationBtn"></a>
-        </p>
+            <a id="notificationBtn"><i class="fas fa-angle-double-right"></i></a>
+        </div>
         <table class="table notificationTable">
             <thead>
                 <tr>
@@ -272,14 +272,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(var item in Model.NotificationList)
-            {
-                <tr>
-                    <td>@item.Amount</td>
-                    <td>@item.Category</td>
-                    <td>@item.Date</td>
-                </tr>
-            }
+                @foreach (var item in Model.NotificationList)
+                {
+                    <tr>
+                        <td>@item.Amount</td>
+                        <td>@item.Category</td>
+                        <td>@item.Date</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
@@ -363,7 +363,6 @@
     function notificationBoxSlide() {
         var container = document.getElementById('notificationsListBox');
         var containerStyle = container.CurrentStyle || window.getComputedStyle(container);
-        console.log(containerStyle.margin);
         if (containerStyle.margin == "0px") {
             container.style.margin = "0 -30vw 0 0";
         }
@@ -373,6 +372,7 @@
     document.getElementById("notificationLink").onclick = function () {
         notificationBoxSlide();
     }
+
     document.getElementById("notificationBtn").onclick = function () {
         notificationBoxSlide();
     }

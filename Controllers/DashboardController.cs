@@ -425,14 +425,17 @@ namespace GoldCap.Controllers
             pillsStats.Add(secondPill);
             pillsStats.Add(thirdPill);
             #endregion
+
+            #region NotificationsBoxData
             int k = 0;
             List<Expense> notificationList = new List<Expense>();
-            var expensesFromThisPeriodForNotifications = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now).OrderByDescending(d => d.Date);
-            foreach (var item in expensesFromThisPeriodForNotifications)
+            List<ExpenseRecurring> firstFiveIncomingExpenses = allRecurringExpenses.OrderBy(e => e.Date).Take(3).ToList();
+            foreach (var item in firstFiveIncomingExpenses)
             {
                 if (k == 4) break;
 
-                notificationList.Add(item);
+                Expense newExpense = CreateExpenseFromRecurring(item, item.Date.Value);
+                notificationList.Add(newExpense);
                 k++;
             }
             DashboardViewModel dashboardViewModel = new DashboardViewModel()
@@ -442,7 +445,8 @@ namespace GoldCap.Controllers
                 CirclesStats = circleStats,
                 Period = period,
                 NotificationList = notificationList
-            };
+            }; 
+            #endregion
 
 
             if (categoriesWithAbove0Ratio != null)

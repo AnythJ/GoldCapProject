@@ -27,14 +27,43 @@ namespace GoldCap.Controllers
             this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
         }
 
+        public static Expense CreateExpenseFromRecurring(ExpenseRecurring item, DateTime date)
+        {
+            Expense expense = new Expense()
+            {
+                Amount = item.Amount,
+                Category = item.Category,
+                Description = item.Description,
+                Status = ((StatusName)item.Status).ToString(),
+                Date = date,
+                StatusId = item.Id
+            };
+
+            return expense;
+        }
+
         public IActionResult Index()
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
+
+            int k = 0;
+            List<Expense> notificationList = new List<Expense>();
+            List<ExpenseRecurring> firstFiveIncomingExpenses = _expenseRepository.GetAllRecurring().ToList().OrderBy(e => e.Date).Take(3).ToList();
+            foreach (var item in firstFiveIncomingExpenses)
+            {
+                if (k == 4) break;
+
+                Expense newExpense = CreateExpenseFromRecurring(item, item.Date.Value);
+                notificationList.Add(newExpense);
+                k++;
+            }
+
             ExpensesListViewModel viewModel = new ExpensesListViewModel()
             {
                 Expenses = _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date),
                 CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList(),
-                SortMenu = null
+                SortMenu = null,
+                NotificationList = notificationList
             };
 
             return View(viewModel);

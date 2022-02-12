@@ -12,4 +12,50 @@
 </head>
 <div id="view-all" style="height: calc(100vh - 5rem); width: 100%;margin:0;padding:0;">
     @await Html.PartialAsync("_ViewAll", Model)
+    <div id="notificationsListBox" class="table-responsive">
+        <div class="notification-header">
+            <a>Incoming payments</a>
+            <a id="notificationBtn"><i class="fas fa-angle-double-right"></i></a>
+        </div>
+        <table class="table notificationTable">
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.NotificationList)
+                {
+                    <tr>
+                        <td>@item.Amount</td>
+                        <td>@item.Category</td>
+                        <td>@item.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
+
+
+
+<script>
+    function notificationBoxSlide() {
+        var container = document.getElementById('notificationsListBox');
+        var containerStyle = container.CurrentStyle || window.getComputedStyle(container);
+        if (containerStyle.margin == "0px") {
+            container.style.margin = "0 -30vw 0 0";
+        }
+        else container.style.margin = "0px";
+    }
+
+    document.getElementById("notificationLink").onclick = function () {
+        notificationBoxSlide();
+    }
+
+    document.getElementById("notificationBtn").onclick = function () {
+        notificationBoxSlide();
+    }
+</script>

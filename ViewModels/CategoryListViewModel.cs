@@ -10,5 +10,6 @@ namespace GoldCap.ViewModels
     {
         public Category Category { get; set; }
         public IEnumerable<Category> Categories { get; set; }
+        public List<Expense> NotificationList { get; set; }
     }
 }

@@ -14,5 +14,6 @@ namespace GoldCap.ViewModels
         public IEnumerable<Expense> Expenses { get; set; }
         public List<Category> CategoriesList { get; set; }
         public SortMenu SortMenu { get; set; }
+        public List<Expense> NotificationList { get; set; }
     }
 }

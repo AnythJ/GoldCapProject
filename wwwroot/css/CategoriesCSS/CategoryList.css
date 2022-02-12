@@ -148,6 +148,51 @@
     .tip-pill p {
         margin: 0 1rem;
     }
+
+    #notificationsListBox {
+        border: 3px solid var(--text-secondary);
+        width: 25rem;
+        height: 18rem;
+        background-color: var(--bg-secondary);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0 -30vw 0 0;
+        transition: all 0.5s ease-in-out;
+        position: fixed;
+        right: 0.7rem;
+        bottom: 0.5rem;
+        z-index: 20;
+        padding: 0;
+    }
+
+    .notificationTable {
+        height: 100%;
+        margin: 0;
+    }
+
+    .notification-header {
+        width: 100%;
+        height: 2.5rem;
+        margin: 0;
+        padding: 0 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #notificationBtn {
+        width: 1.5rem;
+        line-height: 1.5rem;
+        font-size: 1.5rem;
+        transition: all 0.3s;
+    }
+
+        #notificationBtn:hover {
+            color: var(--text-primary);
+            cursor: pointer;
+        }
 }
 
 @media only screen and (max-width: 480px) {
@@ -192,3 +237,6 @@ input[type=text] {
     font-size: 0.75rem;
     color: var(--bg-third);
 }
+
+
+

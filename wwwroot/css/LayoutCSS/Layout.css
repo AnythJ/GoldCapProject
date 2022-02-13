@@ -310,6 +310,7 @@ main {
     height: calc(100vh - 4rem);
 }
 
+
 @keyframes fadeOut {
     50% {
         opacity: 1;
@@ -341,6 +342,23 @@ main {
     border-radius: 50%;
     border-top-color: var(--bg-third);
     animation: spin 1s cubic-bezier(.58,.1,0,.97) infinite;
+}
+
+.modalLoadingSpinner {
+    background-color: var(--bg-primary);
+    margin: 0;
+    padding: 0;
+    width: 3.25rem;
+    height: 3.25rem;
+    border: 0.4rem solid var(--bg-secondary);
+    border-radius: 50%;
+    border-top-color: var(--bg-third);
+    animation: spin 1s cubic-bezier(.58,.1,0,.97) infinite;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    z-index: 20;
+    display: none;
 }
 
 .hidden {

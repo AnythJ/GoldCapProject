@@ -1,13 +1,23 @@
 ﻿/*/*const { concat } = require("core-js/library/js/array");*/
 
 showInPopup = (url, title) => {
+    var el = document.getElementsByClassName("modalLoadingSpinner")[0];
+    el.style.display = "block";
     $.ajax({
         type: "GET",
         url: url,
         success: function (res) {
+            
             $("#form-modal .modal-body").html(res);
             $("#form-modal .modal-title").html(title);
-            $("#form-modal").modal('show');
+
+            el.classList.add("hidden");
+            el.addEventListener("animationend", (event) => {
+                if (event.type === "animationend") {
+                    el.style.display = "none";
+                    $("#form-modal").modal('show');
+                }
+            }, false);
         }
     })
 };
@@ -475,6 +485,8 @@ function showPage() {
         }
     }, false);
 }
+
+
 
 
 

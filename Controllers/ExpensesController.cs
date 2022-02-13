@@ -27,20 +27,6 @@ namespace GoldCap.Controllers
             this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
         }
 
-        public static Expense CreateExpenseFromRecurring(ExpenseRecurring item, DateTime date)
-        {
-            Expense expense = new Expense()
-            {
-                Amount = item.Amount,
-                Category = item.Category,
-                Description = item.Description,
-                Status = ((StatusName)item.Status).ToString(),
-                Date = date,
-                StatusId = item.Id
-            };
-
-            return expense;
-        }
 
         public IActionResult Index()
         {
@@ -53,7 +39,7 @@ namespace GoldCap.Controllers
             {
                 if (k == 4) break;
 
-                Expense newExpense = CreateExpenseFromRecurring(item, item.Date.Value);
+                Expense newExpense = Helper.CreateExpenseFromRecurring(item, item.Date.Value);
                 notificationList.Add(newExpense);
                 k++;
             }

@@ -73,6 +73,22 @@ namespace GoldCap
             }
         }
 
-       
+
+        public static Expense CreateExpenseFromRecurring(ExpenseRecurring item, DateTime date)
+        {
+            Expense expense = new Expense()
+            {
+                Amount = item.Amount,
+                Category = item.Category,
+                Description = item.Description,
+                Status = ((StatusName)item.Status).ToString(),
+                Date = date,
+                StatusId = item.Id
+            };
+
+            return expense;
+        }
+
+
     }
 }

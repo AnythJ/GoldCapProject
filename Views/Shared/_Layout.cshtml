@@ -18,7 +18,6 @@
     @RenderSection("Styles", required: false)
 
     <style>
-        
     </style>
     <title>@ViewBag.Title</title>
 </head>
@@ -109,13 +108,18 @@
 
         </div>
     </div>
+
+    <div class="modalLoadingSpinner">
+
+    </div>
+
     <main class="mainRender">
         @RenderBody()
     </main>
-    
-    
 
-    <div class="modal" tabindex="-1" role="dialog" id="form-modal">
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="form-modal">
         <div class="modal-dialog" id="modalDialog">
             <div class="modal-content">
                 <div class="modal-header text-center">
@@ -156,6 +160,7 @@
                 changeColorTheme('third');
             }
             if (sessionStorage.getItem("sideNavbarCollapsed") == "true") collapseSideNavbar();
+
             showPage();
         });
 

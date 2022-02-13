@@ -376,7 +376,7 @@ p.pillAmount {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin: 0 -30vw 0 0;
+        margin: 0 -100vw 0 0;
         transition: all 0.5s ease-in-out;
         position: fixed;
         right: 0.7rem;

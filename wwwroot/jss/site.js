@@ -7,7 +7,7 @@ showInPopup = (url, title) => {
         type: "GET",
         url: url,
         success: function (res) {
-            
+
             $("#form-modal .modal-body").html(res);
             $("#form-modal .modal-title").html(title);
 
@@ -80,7 +80,7 @@ jQueryAjaxDelete = form => {
 
 // HERE TO CHANGE, IT CAN BE IN ONE FUNCTION
 
-    
+
 
 jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
     try {
@@ -148,14 +148,14 @@ jQueryAjaxDeleteDashboard = form => { //SEEMS LIKE WORKING FOR NOW
                 }
             }
         });
-        
+
     } catch (ex) {
         console.log(ex)
     }
 
     //prevent default form submit event
     return false;
-    
+
 }
 
 jQueryAjaxDeleteIncome = form => { //SEEMS LIKE WORKING FOR NOW
@@ -241,7 +241,7 @@ jQueryAjaxPostDashboard = (form, tableId) => {
                 if (document.getElementById('recurringSelect') != null && document.getElementById('recurringSelect').value == 4) {
                     document.getElementById('customStatus').style.visibility = "visible";
                 }
-                
+
             },
             error: function (err) {
                 console.log(err)
@@ -257,24 +257,24 @@ jQueryAjaxPostDashboard = (form, tableId) => {
 JqueryAjaxSort = (url, title, refresh) => {
     if (refresh == true) sessionStorage.setItem("filtered", "false");
 
-        var activeElement = document.getElementById('active');
-        if (activeElement != null && refresh != true)
-            activeElement = activeElement.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
-        else activeElement = null;
-        var x = $('#idForSort').val();
-        $.ajax({
-            type: "GET",
-            data: {
-                'id': $('#idForSort').val(),
-                'categoryName': activeElement,
-                'period': getParameterByName("period")
-            },
-            url: url,
-            success: function (res) {
-                $('#view-all').html(res.html);
-                $('#idForSort').val(x);
-            }
-        })
+    var activeElement = document.getElementById('active');
+    if (activeElement != null && refresh != true)
+        activeElement = activeElement.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
+    else activeElement = null;
+    var x = $('#idForSort').val();
+    $.ajax({
+        type: "GET",
+        data: {
+            'id': $('#idForSort').val(),
+            'categoryName': activeElement,
+            'period': getParameterByName("period")
+        },
+        url: url,
+        success: function (res) {
+            $('#view-all').html(res.html);
+            $('#idForSort').val(x);
+        }
+    })
 };
 
 
@@ -369,16 +369,22 @@ function showMore() {
         $('#categoryList li:hidden').slice(0, listLen).show();
         $('#showMore').innerHtml == 'Show Less';
         document.getElementById('showMore').innerHTML = 'Show Less';
-        document.getElementById('showArrow').classList.remove('fa-chevron-down');
-        document.getElementById('showArrow').classList.add('fa-chevron-up');
+        if (document.getElementById('showArrow')) {
+            document.getElementById('showArrow').classList.remove('fa-chevron-down');
+            document.getElementById('showArrow').classList.add('fa-chevron-up');
+        }
+
         sessionStorage.setItem('showButton', 'Show More');
     }
     else if (x == 'Show Less') {
         $('#categoryList li').slice(7, listLen).hide();
         $('#showMore').innerHtml == 'Show More';
+        if (document.getElementById('showArrow')) {
+            document.getElementById('showArrow').classList.add('fa-chevron-down');
+            document.getElementById('showArrow').classList.remove('fa-chevron-up');
+        }
         document.getElementById('showMore').innerHTML = 'Show More';
-        document.getElementById('showArrow').classList.add('fa-chevron-down');
-        document.getElementById('showArrow').classList.remove('fa-chevron-up');
+
         sessionStorage.setItem('showButton', 'Show Less');
     }
 };
@@ -452,8 +458,7 @@ function collapseSideNavbar() {
             links[i].style.display = "none";
         }
         if (window.location.href.toUpperCase().indexOf("/DASHBOARD") != -1) {
-            showLineChart();
-            showPieChart();
+            showCharts();
         }
     }
     else {
@@ -468,8 +473,7 @@ function collapseSideNavbar() {
             links[i].style.display = "inline";
         }
         if (window.location.href.toUpperCase().indexOf("/DASHBOARD") != -1) {
-            showLineChart();
-            showPieChart();
+            showCharts();
         }
         sessionStorage.setItem("sideNavbarCollapsed", false);
     }

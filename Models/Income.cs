@@ -23,11 +23,9 @@ namespace GoldCap.Models
 
         [Required(ErrorMessage = "Invalid")]
         [DisplayName("First Paycheck Date")]
-        [Column(TypeName = "smalldatetime")]
         [Range(typeof(DateTime), "1/1/2000", "1/1/2040", ErrorMessage = "Invalid date")]
         public DateTime? Date { get; set; }
 
-        [Column(TypeName = "smalldatetime")]
         [Range(typeof(DateTime), "1/1/2000", "1/1/2040", ErrorMessage = "Invalid date")]
         public DateTime? FirstPaycheckDate { get; set; }
         public string ExpenseManagerLogin { get; set; }

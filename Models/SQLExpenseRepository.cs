@@ -111,7 +111,7 @@ namespace GoldCap.Models
 
             for (int i = 0; i <= period; i++)
             {
-                var exp = context.Expenses.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-period + i).Day &&
+                IEnumerable<Expense> exp = context.Expenses.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-period + i).Day &&
                 e.Date.Value.Month == DateTime.Now.AddDays(-period + i).Month && e.Date.Value.Year == DateTime.Now.AddDays(-period + i).Year) && e.ExpenseManagerLogin == userLogin).AsEnumerable();
 
                 _30daysModel model = new _30daysModel()
@@ -204,7 +204,7 @@ namespace GoldCap.Models
                 var exp = context.Expenses.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-period + i).Day &&
                 e.Date.Value.Month == DateTime.Now.AddDays(-period + i).Month && e.Date.Value.Year == DateTime.Now.AddDays(-period + i).Year) && e.ExpenseManagerLogin == userLogin).AsEnumerable();
 
-                
+
                 var cate = context.Expenses.Where(e => e.Date.Value.Day == DateTime.Today.AddDays(-period + i).Day
                 && e.Date.Value.Month == DateTime.Today.AddDays(-period + i).Month && e.Date.Value.Year == DateTime.Today.AddDays(-period + i).Year && e.ExpenseManagerLogin == userLogin).Select(e => e.Category).ToList<string>();
                 List<string> noRepeats = cate.Distinct().ToList();
@@ -322,7 +322,7 @@ namespace GoldCap.Models
         public IEnumerable<Income> GetIncome(string userLogin)
         {
             return context.Incomes.AsNoTracking().Where(i => i.ExpenseManagerLogin == userLogin).AsEnumerable();
-        
+
         }
 
         public Income UpdateIncome(Income incomeChanges)

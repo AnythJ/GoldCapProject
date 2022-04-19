@@ -214,6 +214,7 @@ input[type=number] {
         width: 80%;
         height: 80%;
         transition: background-color 0.3s ease;
+        background-color: var(--bg-secondary);
     }
 }
 
@@ -444,7 +445,7 @@ input[type=datetime-local] {
 }
 
 .btn-succes-color {
-    color: var(--btn-danger-color);
+    color: var(--btn-succes-color);
     border-color: var(--btn-succes);
     background-color: var(--btn-succes);
     outline-color: var(--btn-succes);
@@ -455,7 +456,7 @@ input[type=datetime-local] {
     }
 
 .btn-info-color {
-    color: var(--btn-danger-color);
+    color: var(--btn-info-color);
     border-color: var(--btn-info);
     background-color: var(--btn-info);
     outline-color: var(--btn-info);

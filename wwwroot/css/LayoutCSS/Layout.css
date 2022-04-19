@@ -21,11 +21,13 @@
     --text-third: white;
     --btn-succes: #1B998B;
     --btn-succes-hover: #136c62;
+    --btn-succes-color: #020202;
     --btn-info: #87BCDE;
     --btn-info-hover: #5fa7d3;
+    --btn-info-color: #020202;
     --btn-danger: #DF2935;
     --btn-danger-hover: #c81e29;
-    --btn-danger-color: #212529;
+    --btn-danger-color: white;
     --piechart-border-color: #C9FBFF;
 }
 

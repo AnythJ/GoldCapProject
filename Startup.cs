@@ -29,8 +29,39 @@ namespace GoldCap
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextPool<AppDbContext>(
-                options => options.UseSqlServer(_config.GetConnectionString("ExpenseDBConnection")));
+            var serverVersion = new MySqlServerVersion(new Version(5, 6, 50));
+
+            services.AddDbContextPool<AppDbContext>(x =>
+            {
+
+                var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                string connStr;
+
+                if (env == "Development")
+                {
+                    connStr = _config.GetConnectionString("ExpenseDBConnection");
+                }
+                else
+                {
+                    var connUrl = Environment.GetEnvironmentVariable("CLEARDB_DATABASE_URL");
+
+                    connUrl = connUrl.Replace("mysql://", string.Empty);
+                    var userPassSide = connUrl.Split("@")[0];
+                    var hostSide = connUrl.Split("@")[1];
+
+                    var connUser = userPassSide.Split(":")[0];
+                    var connPass = userPassSide.Split(":")[1];
+                    var connHost = hostSide.Split("/")[0];
+                    var connDb = hostSide.Split("/")[1].Split("?")[0];
+
+
+                    connStr = $"server={connHost};Uid={connUser};Pwd={connPass};Database={connDb};SSL Mode=None";
+                }
+
+                x.UseMySql(connStr, serverVersion);
+
+            });
+
 
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 

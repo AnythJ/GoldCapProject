@@ -126,7 +126,9 @@ body.prevent-animation * {
     border-color: var(--bg-third);
     color: var(--bg-third);
 }
-
+.signInButton:focus {
+    outline: none;
+}
 
     .signInButton:hover {
         color: var(--bg-primary);

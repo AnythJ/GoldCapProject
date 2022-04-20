@@ -45,7 +45,6 @@ h1 {
     font-weight: 500;
     color: var(--text-secondary);
     transition: font-size 0.2s;
-    margin-bottom: 5vh;
 }
 
 .mainForm {

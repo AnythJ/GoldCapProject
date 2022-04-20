@@ -18,7 +18,7 @@
     min-width: 6rem;
     margin-bottom: 1vh;
 }
-
+  
 
     .signInButton:hover {
         color: var(--bg-primary);

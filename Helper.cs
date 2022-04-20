@@ -78,7 +78,7 @@ namespace GoldCap
         {
             Expense expense = new Expense()
             {
-                Amount = item.Amount,
+                Amount = decimal.Round(item.Amount.Value, 2),
                 Category = item.Category,
                 Description = item.Description,
                 Status = ((StatusName)item.Status).ToString(),

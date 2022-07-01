@@ -451,3 +451,13 @@ div .dropdown {
 }
 
 
+.text-info {
+    color: var(--text-secondary) !important;
+}
+
+@media only screen and (max-width: 768px)
+{
+    #notificationsListBox {
+        display: none !important;
+    }
+}

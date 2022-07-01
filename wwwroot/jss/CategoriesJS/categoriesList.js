@@ -1,44 +1,21 @@
-﻿ListSort = (url, refresh) => {
+﻿ListSortCategories = (url, refresh) => {
     try {
-        $.ajax({
-            type: 'POST',
-            url: url,
-            contentType: false,
-            processData: false,
-            success: function (res) {
-                $('#view-all').html(res.html);
-            },
-            error: function (err) {
-                console.log(err)
+        var request = new XMLHttpRequest();
+        request.open('GET', url, true);
+
+        request.onload = function () {
+            if (this.status >= 200 && this.status < 400) {
+                var resp = JSON.parse(this.response);
+                document.getElementById("view-all").innerHTML = resp.html;
             }
-        })
-        return false;
+        };
+
+        request.onerror = function (err) {
+            console.log(err)
+        };
+
+        request.send();
     } catch (ex) {
         console.log(ex)
     }
 };
-
-jQueryAjaxDeleteSort = (url) => {
-    if (confirm('Are you sure to delete this record ?')) {
-        var sortForm = document.getElementById('sortMenuForm');
-        try {
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: new FormData(sortForm),
-                contentType: false,
-                processData: false,
-                success: function (res) {
-                    $('#view-all').html(res.html);
-                },
-                error: function (err) {
-                    console.log(err)
-                }
-            })
-        } catch (ex) {
-            console.log(ex)
-        }
-    }
-    //prevent default form submit event
-    return false;
-}

@@ -51,11 +51,14 @@ namespace GoldCap.Controllers
         {
             var lastmonthFirstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-1);
             var lastmonthLastDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddDays(-1);
-            var expensesFromLastMonth = _expenseRepository.GetAllExpenses().Where(m => m.Date >= lastmonthFirstDay && m.Date <= lastmonthLastDay);
+            var totalExpensesForUser = _expenseRepository.GetAllExpenses();
+            var totalCategoriesRatio = _expenseRepository.GetCategoryRatios(period);
 
-            var expensesFromThisPeriod = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderByDescending(d => d.Date);
-            var categoriesWithAbove0Ratio = _expenseRepository.GetCategoryRatios(period).Where(c => c.CategoryPercentage > 0);
-            var topCategory = _expenseRepository.GetCategoryRatios(period) != null ? _expenseRepository.GetCategoryRatios(period).FirstOrDefault() : null;
+            var expensesFromLastMonth = totalExpensesForUser.Where(m => m.Date >= lastmonthFirstDay && m.Date <= lastmonthLastDay);
+
+            var expensesFromThisPeriod = totalExpensesForUser.Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderByDescending(d => d.Date);
+            var categoriesWithAbove0Ratio = totalCategoriesRatio.Where(c => c.CategoryPercentage > 0);
+            var topCategory = totalCategoriesRatio != null ? totalCategoriesRatio.FirstOrDefault() : null;
 
 
             #region MonthlyIncomeAddition
@@ -366,12 +369,12 @@ namespace GoldCap.Controllers
             #region StatPills
             List<StatPill> pillsStats = new List<StatPill>();
             #region FirstPill
-            var highestExpense = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderByDescending(d => d.Amount).FirstOrDefault();
+            var highestExpense = totalExpensesForUser.Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderByDescending(d => d.Amount).FirstOrDefault();
 
             StatPill firstPill = new StatPill();
             if (highestExpense != null)
             {
-                firstPill.AmountInt = (int)highestExpense.Amount;
+                firstPill.AmountDecimal = highestExpense.Amount > 100 ? Math.Round((decimal)highestExpense.Amount, 0) : Math.Round((decimal)highestExpense.Amount, 1);
                 firstPill.Category = highestExpense.Category;
                 firstPill.Date = highestExpense.Date;
                 firstPill.Percentage = (sumExpensesLastPeriod != 0) ? Decimal.Round((Convert.ToDecimal(highestExpense.Amount) / sumExpensesLastPeriod) * 100, 1) : 0;
@@ -387,7 +390,7 @@ namespace GoldCap.Controllers
             StatPill secondPill = new StatPill();
             if (lastExpense != null)
             {
-                secondPill.AmountInt = (int)lastExpense.Amount;
+                secondPill.AmountDecimal = lastExpense.Amount > 100 ? Math.Round((decimal)lastExpense.Amount, 0) : Math.Round((decimal)lastExpense.Amount, 1);
                 secondPill.Category = lastExpense.Category;
                 secondPill.DatetimeString = lastExpense.Date.Value.DayOfWeek + ", " + lastExpense.Date.Value.Day + " " + lastExpense.Date.Value.ToString("MMMM", CultureInfo.InvariantCulture);
                 secondPill.Percentage = Decimal.Round((aboveOrBelow - 1) * 100, 1);
@@ -395,11 +398,11 @@ namespace GoldCap.Controllers
             #endregion
 
             #region ThirdPill
-            var lowestExpense = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderBy(d => d.Amount).FirstOrDefault();
+            var lowestExpense = totalExpensesForUser.Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderBy(d => d.Amount).FirstOrDefault();
             StatPill thirdPill = new StatPill();
             if (lowestExpense != null)
             {
-                thirdPill.AmountInt = (int)lowestExpense.Amount;
+                thirdPill.AmountDecimal = lowestExpense.Amount > 100 ? Math.Round((decimal)lowestExpense.Amount, 0) : Math.Round((decimal)lowestExpense.Amount, 1);
                 thirdPill.Category = lowestExpense.Category;
                 thirdPill.Date = lowestExpense.Date;
                 thirdPill.Percentage = (sumExpensesLastPeriod != 0) ? Decimal.Round((Convert.ToDecimal(lowestExpense.Amount) / sumExpensesLastPeriod) * 100, 1) : 0;
@@ -768,7 +771,7 @@ namespace GoldCap.Controllers
             DashboardDataModel data = new DashboardDataModel()
             {
                 ListLast30 = _expenseRepository.GetSumDayExpense30(period),
-                CategoryRatios = _expenseRepository.GetCategoryRatios(period),
+                CategoryRatios = ctg,
                 CategoryCount = _expenseRepository.GetAllCategories().Count(),
                 TooltipList = _expenseRepository.GetTooltipList(period),
                 ExpensesList = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderBy(e => e.Date).AsEnumerable()

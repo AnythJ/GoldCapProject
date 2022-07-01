@@ -1,8 +1,9 @@
-﻿ListSort = (url, title, refresh) => {
+﻿ExpenseListSort = (url, title, refresh) => {
     var form = document.getElementById('sortMenuForm');
     if (sessionStorage.getItem("filtered") == "true") {
         url = url + "&filtered=True";
     }
+
     var sortOrder;
     if (url.indexOf("sortOrder=Date") != -1) sortOrder = 'Date';
     if (url.indexOf("sortOrder=date_desc") != -1) sortOrder = 'date_desc';
@@ -30,7 +31,7 @@
         console.log(ex)
     }
 };
-PostSort = form => {
+PostSortMenu = form => {
     try {
         $.ajax({
             type: 'POST',
@@ -52,7 +53,7 @@ PostSort = form => {
         console.log(ex)
     }
 }
-jQueryAjaxDeleteSort = (url) => {
+AjaxDeleteSort = (url) => {
     try {
         $.confirm({
             title: 'Delete Expense',
@@ -116,9 +117,6 @@ function sortCollapseFunction() {
         document.getElementById("listCol").style.display = "none";
         document.getElementById("sortCollapseButtonInside").classList.remove("sortCollapseNotActive");
         document.getElementById("sortCollapseButtonInside").classList.add("sortCollapseActive");
-        //Array.prototype.forEach.call(sortParagraphs, function (item) {
-        //    item.style.fontSize = "clamp(2rem, 2.5rem, 3rem)";
-        //});
         sessionStorage.setItem("sortMenuActive", "true");
     }
     else {
@@ -129,3 +127,86 @@ function sortCollapseFunction() {
         sessionStorage.setItem("sortMenuActive", "false");
     }
 };
+
+
+function showMore() {
+    var x = $('#showMore').text();
+    var listLen = document.getElementById('categoryList').getElementsByTagName("li").length;
+    if (x == 'Show More') {
+        $('#categoryList li:hidden').slice(0, listLen).show();
+        $('#showMore').innerHtml == 'Show Less';
+        document.getElementById('showMore').innerHTML = 'Show Less';
+        if (document.getElementById('showArrow')) {
+            document.getElementById('showArrow').classList.remove('fa-chevron-down');
+            document.getElementById('showArrow').classList.add('fa-chevron-up');
+        }
+
+        sessionStorage.setItem('showButton', 'Show More');
+    }
+    else if (x == 'Show Less') {
+        $('#categoryList li').slice(7, listLen).hide();
+        $('#showMore').innerHtml == 'Show More';
+        if (document.getElementById('showArrow')) {
+            document.getElementById('showArrow').classList.add('fa-chevron-down');
+            document.getElementById('showArrow').classList.remove('fa-chevron-up');
+        }
+        document.getElementById('showMore').innerHTML = 'Show More';
+
+        sessionStorage.setItem('showButton', 'Show Less');
+    }
+};
+
+AjaxPostExpense = (form, url) => {
+
+    if (sessionStorage.getItem("filtered") == "true") {
+        url = url + "&filtered=True";
+    }
+
+    if (sessionStorage.getItem("sortOrder") != null) url = url + "?&sortOrder=" + sessionStorage.getItem("sortOrder");
+
+
+    try {
+        $.ajax({
+            type: 'POST',
+            url: form.action,
+            data: new FormData(form),
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                if (res.isValid) {
+                    var formSort = document.getElementById('sortMenuForm');
+                    try {
+                        $.ajax({
+                            type: 'POST',
+                            url: url,
+                            data: new FormData(formSort),
+                            contentType: false,
+                            processData: false,
+                            success: function (res) {
+                                $('#view-all').html(res.html);
+                                $('#form-modal .modal-body').html('');
+                                $('#form-modal .modal-title').html('');
+                                $('#form-modal').modal('hide');
+                            },
+                            error: function (err) {
+                                console.log(err)
+                            }
+                        })
+                        return false;
+                    } catch (ex) {
+                        console.log(ex)
+                    }
+                }
+                else
+                    $('#form-modal .modal-body').html(res.html);
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+        //to prevent default form submit event
+        return false;
+    } catch (ex) {
+        console.log(ex)
+    }
+}

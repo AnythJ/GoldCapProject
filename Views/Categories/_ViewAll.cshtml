@@ -13,7 +13,7 @@
                 <thead class="sticky-top">
                     <tr class="align-text-top">
                         <th>
-                            <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort", "Categories", new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)}, Context.Request.Scheme)','Sort')">Category</a>
+                            <a style="cursor:pointer;" onclick="ListSortCategories('@Url.Action("Sort", "Categories", new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)}, Context.Request.Scheme)','Sort')">Category</a>
                         </th>
                         <th>
                             <form id="createform" asp-action="Create" asp-route-id="@Model.Category.Id">
@@ -50,9 +50,5 @@
 
 
 <script>
-
 </script>
 
-@section Scripts {
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-}

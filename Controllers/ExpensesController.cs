@@ -104,7 +104,7 @@ namespace GoldCap.Controllers
 
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin)) }); //If form is valid, close modal and show list
             }
-            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) }); //If form is invalid return the same object in form
+            else return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) }); //If form is invalid return the same object in form
         }
 
         [HttpPost, ActionName("Delete")]

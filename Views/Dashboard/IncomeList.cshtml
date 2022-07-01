@@ -87,7 +87,7 @@
                         @Html.DisplayFor(modelItem => item.Date)
                     </td>
                     <td align="right" style="padding-right:30px;width:220px;">
-                        <form asp-controller="dashboard" asp-action="DeleteIncome" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDeleteIncome(this)" class="d-inline">
+                        <form asp-controller="dashboard" asp-action="DeleteIncome" asp-route-id="@item.Id" onsubmit="return AjaxDeleteIncome(this)" class="d-inline">
                             <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
                         </form>
 

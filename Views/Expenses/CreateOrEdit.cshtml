@@ -24,7 +24,7 @@
         color: var(--text-secondary);
     }
 
-    .modal-content, modal-dialog {
+    .modal-content {
         border: 3px solid var(--text-primary);
         border-radius: 5px;
     }
@@ -42,10 +42,12 @@
         border-radius: 5px;
         margin: 0;
     }
+
     input[type=datetime-local] {
         margin: 0;
         width: 100%;
     }
+
     .description-textarea, .description-textarea:focus {
         background-color: var(--bg-secondary);
         color: var(--text-secondary);
@@ -81,11 +83,10 @@
             font-weight: normal;
         }
 
-    
 </style>
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="CreateOrEdit" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPostSort(this, '@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.CategorySortParm == null ? "Date" : ViewBag.CategorySortParm)},Context.Request.Scheme)','Sort');" autocomplete="off">
+        <form asp-action="CreateOrEdit" asp-route-id="@Model.Id" onsubmit="return AjaxPostExpense(this, '@Url.Action("Sort","Expenses",Context.Request.Scheme)','Sort');" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -125,14 +126,14 @@
 
 @if (Model.Id == 0)
 {
-    <script>
-        $("#amountinput").val("");
-
-        
+    <script type="text/javascript">
+        document.getElementById("amountinput").value = '';
     </script>
 }
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

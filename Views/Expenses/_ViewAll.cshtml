@@ -3,7 +3,7 @@
 
 
 <style>
-    
+
 </style>
 <link href="~/css/ExpensesCSS/expenseListViewAll.css" rel="stylesheet" />
 <script src="~/jss/ExpensesJS/expensesList.js"></script>
@@ -11,7 +11,6 @@
 <body class="">
     <a id="sortCollapseButton" onclick="sortCollapseFunction()">
         <div id="sortCollapseButtonInside" class="sortCollapseNotActive">
-
         </div>
     </a>
     <div class="wholeList">
@@ -20,18 +19,18 @@
                 <thead class="sticky-top">
                     <tr class="align-text-top">
                         <th>
-                            <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort", "Expenses", new { sortOrder = (ViewBag.AmountSortParm == null ? "Amount" : ViewBag.AmountSortParm)}, Context.Request.Scheme)','Sort')">Amount</a>
+                            <a style="cursor:pointer;" onclick="ExpenseListSort('@Url.Action("Sort", "Expenses", new { sortOrder = (ViewBag.AmountSortParm == null ? "Amount" : ViewBag.AmountSortParm)}, Context.Request.Scheme)','Sort')">Amount</a>
                         </th>
                         <th>
-                            <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)},Context.Request.Scheme)','Sort')">Category</a>
+                            <a style="cursor:pointer;" onclick="ExpenseListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)},Context.Request.Scheme)','Sort')">Category</a>
                         </th>
                         <th class="descriptionTh">
                             Description
                         </th>
                         <th class="date_column">
-                            <a style="cursor:pointer;" onclick="ListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
+                            <a style="cursor:pointer;" onclick="ExpenseListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
                         </th>
-                        <th class="button_column">
+                        <th class="button_column">  
                             <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-succes-color btn-sm">New expense</a>
                         </th>
                     </tr>
@@ -54,10 +53,7 @@
                             </td>
                             <td class="button_column">
                                 <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')" class="btn btn-info-color btn-sm">Edit</a>
-                                @*<form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDeleteSort(this)" class="d-inline">
-                                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
-                                    </form>*@
-                                <a class="btn btn-danger-color btn-sm" onclick="jQueryAjaxDeleteSort('@Url.Action("Delete","Expenses",new { id = item.Id},Context.Request.Scheme)')">Delete</a>
+                                <a class="btn btn-danger-color btn-sm" onclick="AjaxDeleteSort('@Url.Action("Delete","Expenses",new { id = item.Id},Context.Request.Scheme)')">Delete</a>
                             </td>
                         </tr>
                     }
@@ -66,9 +62,9 @@
         </div>
 
         <div id="sortMenu" class="sortMenu">
-            <form id="sortMenuForm" asp-action="Sort" onsubmit="return PostSort(this);" autocomplete="off">
+            <form id="sortMenuForm" asp-action="Sort" onsubmit="return PostSortMenu(this);" autocomplete="off">
                 <p class="sort-header sticky-top">
-                    <a class="refresh-button" onclick="JqueryAjaxSort('@Url.Action("Sort", "Expenses", new { sortOrder = "default", refresh = true}, Context.Request.Scheme)','Sort', true)">
+                    <a class="refresh-button" onclick="AjaxSort('@Url.Action("Sort", "Expenses", new { sortOrder = "default", refresh = true}, Context.Request.Scheme)','Sort', true)">
                         <i class="fas fa-sync-alt"></i>
                     </a>
                     <span>Sort options</span>
@@ -96,10 +92,14 @@
                     </ul>
                     @if (Model.CategoriesList.Count() > 7)
                     {
-                        <span id="showMore" onclick="showMore()">Show More</span><i onclick="showMore()" id="showArrow" class="fas fa-chevron-down"></i>
+                        <span id="showMore" onclick="showMore()">Show More</span>
+
+                        <i onclick="showMore()" id="showArrow" class="fas fa-chevron-down"></i>
                     }
                     else
-                    { <span id="showMore"></span>}
+                    {
+                        <span id="showMore"></span>
+                    }
                 </div>
                 <div class="sort-paragraph">
                     <label class="section-name">Date</label>
@@ -128,8 +128,8 @@
                 sessionStorage.setItem("filtered", "false");
             }
     });
-    
-    
+
+
     $(document).ready(function () {
         sessionStorage.setItem("sortMenuActive", "false");
     });
@@ -142,9 +142,9 @@
             sessionStorage.setItem("sortMenuActive", "false");
         }
     });
-    
+
 </script>
 
 @section Scripts {
-    <script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
 }

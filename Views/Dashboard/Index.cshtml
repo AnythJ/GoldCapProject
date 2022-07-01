@@ -107,6 +107,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="shortcut icon" href="#">
+    <script src="~/jss/DashboardJS/dashboard.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/series-label.js"></script>
@@ -119,7 +120,7 @@
         <div class="statPill">
             <div class="pill-left">
                 <span>Highest expense</span>
-                <p class="pillAmount">@Model.PillsStats[0].AmountInt$</>
+                <p class="pillAmount">@Model.PillsStats[0].AmountDecimal$</>
             </div>
             <div class="pill-right">
                 <p>@Model.PillsStats[0].Category</p>
@@ -130,7 +131,7 @@
         <div class="statPill">
             <div class="pill-left">
                 <span>Last expense</span>
-                <p class="pillAmount">@Model.PillsStats[1].AmountInt$</p>
+                <p class="pillAmount">@Model.PillsStats[1].AmountDecimal$</p>
             </div>
             <div class="pill-right">
                 <p>@Model.PillsStats[1].Category</p>
@@ -142,7 +143,7 @@
         <div class="statPill">
             <div class="pill-left">
                 <span>Lowest expense</span>
-                <p class="pillAmount">@Model.PillsStats[2].AmountInt$</p>
+                <p class="pillAmount">@Model.PillsStats[2].AmountDecimal$</p>
             </div>
             <div class="pill-right">
                 <p>@Model.PillsStats[2].Category</p>

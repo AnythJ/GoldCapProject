@@ -62,7 +62,7 @@
 
             }), // initiate/load data for tooltips
 
-            $(function () {
+            (function () {
                 var chart = Highcharts.chart('container', {
                     chart: {
                         type: 'area',
@@ -193,7 +193,7 @@
                     }
 
                 });
-            });
+            })();
 
 
         var cateData = [];

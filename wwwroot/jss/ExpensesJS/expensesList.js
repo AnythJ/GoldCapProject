@@ -32,10 +32,14 @@
     }
 };
 PostSortMenu = form => {
+    let url = form.action;
+    if (sessionStorage.getItem("sortOrder") != null) url = url + "?&sortOrder=" + sessionStorage.getItem("sortOrder");
+
+    console.log(url);
     try {
         $.ajax({
             type: 'POST',
-            url: form.action + "?&filtered=True",
+            url: url + "&filtered=True",
             data: new FormData(form),
             contentType: false,
             processData: false,
@@ -183,10 +187,10 @@ AjaxPostExpense = (form, url) => {
                             contentType: false,
                             processData: false,
                             success: function (res) {
-                                $('#view-all').html(res.html);
                                 $('#form-modal .modal-body').html('');
                                 $('#form-modal .modal-title').html('');
                                 $('#form-modal').modal('hide');
+                                $('#sortMenuForm').submit();
                             },
                             error: function (err) {
                                 console.log(err)

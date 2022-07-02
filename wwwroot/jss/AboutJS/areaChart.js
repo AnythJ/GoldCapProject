@@ -51,7 +51,7 @@
 
 
 
-            $(function () {
+            (function () {
                 var areaChart = Highcharts.chart('container-area', {
                     chart: {
                         type: 'area'
@@ -102,7 +102,7 @@
                         data: lineAmounts
                     }]
                 });
-            });
+            })();
         
     });
     

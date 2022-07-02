@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\About\" />
     <Folder Include="wwwroot\css\AboutCSS\" />
     <Folder Include="wwwroot\jss\HomeJS\" />
   </ItemGroup>

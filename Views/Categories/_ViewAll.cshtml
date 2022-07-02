@@ -19,7 +19,7 @@
                             <form id="createform" asp-action="Create" asp-route-id="@Model.Category.Id">
                                 <input type="hidden" asp-for="Category.Id" />
                                 <span class="categoryValidation" asp-validation-for="Category.Name"></span>
-                                <input class="categoryName" asp-for="Category.Name" />
+                                <input required class="categoryName" asp-for="Category.Name" />
                                 <input id="submitBtn-category" type="submit" value="Add" class="btn btn-success btn-sm" />
                             </form>
                         </th>

@@ -313,11 +313,11 @@
 
 
     function showPercentage() {
-        $('#amountP').tooltip('show');
+        document.getElementById("amountP").tooltip('show');
     }
 
-    $(document).ready(function () {
-        var arrowPercentage = $('#percentageArrowValue').val();
+    (function () {
+        var arrowPercentage = document.getElementById("percentageArrowValue").value;
         if (parseFloat(arrowPercentage) > 0) {
             document.getElementById('arrowDown').setAttribute("hidden", "");
             document.getElementById('arrowUp').removeAttribute("hidden");
@@ -328,13 +328,14 @@
             document.getElementById('arrowDown').removeAttribute("hidden");
             document.getElementById('arrowPercentage').style.color = 'lawngreen';
         }
-    });
+    })();
 
 
     function stayActive(id) {
         document.getElementById(id).classList.add("active");
     }
-    $(document).ready(function () {
+
+    (function () {
         var period = getParameterByName("period");
         switch (parseFloat(period)) {
             case 7:
@@ -350,7 +351,7 @@
                 document.getElementById('btnMonth').classList.add("active");
         }
 
-    });
+    })();
 
     function EditPaycheck() {
         var amountField = document.getElementById('paycheckAmount');

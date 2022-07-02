@@ -115,7 +115,7 @@
 
 
 <script>
-    $(document).ready(function () {
+    (function () {
         if (sessionStorage.getItem('showButton') != null) {
             document.getElementById('showMore').textContent = sessionStorage.getItem('showButton');
             showMore();
@@ -127,12 +127,13 @@
         if ('@Model.SortMenu' == null || '@Model.SortMenu' == '') {
                 sessionStorage.setItem("filtered", "false");
             }
-    });
+    })();
 
 
-    $(document).ready(function () {
+    (function () {
         sessionStorage.setItem("sortMenuActive", "false");
-    });
+    })();
+
     $(window).resize(function () {
         if ($(window).width() >= 770) {
             document.getElementById("sortMenu").classList.remove("sortMenuCollapsed");

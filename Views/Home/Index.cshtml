@@ -17,7 +17,7 @@
     <link href="~/css/HomeCSS/Index.css" rel="stylesheet" />
     <style>
     </style>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
+
     <title>@ViewBag.Title</title>
 </head>
 <body class="prevent-animation">
@@ -148,10 +148,10 @@
         document.body.className = "";
     }, 500);
 
-    $(document).ready(function () {
+    (function () {
         var colorTheme = sessionStorage.getItem("colorTheme");
         changeColorTheme(colorTheme);
-    });
+    })();
 
     function changeColorTheme(color) {
         if (color == 'first') {
@@ -259,9 +259,9 @@
             document.getElementById("textUnderSlider").innerText = "You can add, edit or delete expense you want at any time, thanks to the complete list.";
         }
     }
-    $(document).ready(function () {
+    (function () {
         changeImg();
-    })
+    })();
 
     window.onresize = function () {
         changeImg();

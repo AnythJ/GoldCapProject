@@ -81,12 +81,13 @@
 </html>
 
 <script>
-    $(function () {
+    (function () {
         $("#uploadImage").on('click', function (e) {
             e.preventDefault();
             $("#file:hidden").trigger('click');
         });
-    });
+    })();
+
     document.getElementById("file").onchange = function () {
         document.getElementById("imageForm").submit();
     }

@@ -39,8 +39,6 @@
     <footer>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/jss/site.js" asp-append-version="true"></script>
     <script src="~/jss/notify.min.js"></script>
@@ -52,8 +50,8 @@
 </html>
 
 <script>
-    $(document).ready(function () {
+    (function () {
         var colorTheme = sessionStorage.getItem("colorTheme");
         changeColorTheme(colorTheme);
-    });
+    })();
 </script>

@@ -62,10 +62,23 @@ namespace GoldCap.Controllers
             }
             else
             {
+                int k = 0;
+                List<Expense> notificationList = new List<Expense>();
+                List<ExpenseRecurring> firstFiveIncomingExpenses = _expenseRepository.GetAllRecurring().ToList().OrderBy(e => e.Date).Take(3).ToList();
+                foreach (var item in firstFiveIncomingExpenses)
+                {
+                    if (k == 4) break;
+
+                    Expense newExpense = Helper.CreateExpenseFromRecurring(item, item.Date.Value);
+                    notificationList.Add(newExpense);
+                    k++;
+                }
+
                 CategoryListViewModel invalidModel = new CategoryListViewModel() //If category name is incorrect, there has to be new viewModel created, since viewmodel is passed to view
                 {
                     Category = category,
-                    Categories = _expenseRepository.GetAllCategories()
+                    Categories = _expenseRepository.GetAllCategories(),
+                    NotificationList = notificationList
                 };
                 return View("index", invalidModel);
             }

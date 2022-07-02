@@ -72,6 +72,7 @@ namespace GoldCap.Controllers
                 {
                     return NotFound(); 
                 }
+
                 return View(expenseModel); //Return form with correct object
             }
         }
@@ -84,12 +85,6 @@ namespace GoldCap.Controllers
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
             expense.ExpenseManagerLogin = userLogin;
 
-            ExpensesListViewModel viewModel = new ExpensesListViewModel()
-            {
-                Expenses = _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date),
-                CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList()
-            };
-
             if (ModelState.IsValid)
             {
                 if (id == 0)
@@ -101,7 +96,7 @@ namespace GoldCap.Controllers
                     _expenseRepository.Update(expense);
                 }
 
-
+                
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin)) }); //If form is valid, close modal and show list
             }
             else return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) }); //If form is invalid return the same object in form

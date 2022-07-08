@@ -12,52 +12,75 @@
     if (url.indexOf("sortOrder=Category") != -1) sortOrder = 'Category';
     if (url.indexOf("sortOrder=category_desc") != -1) sortOrder = 'category_desc';
     sessionStorage.setItem("sortOrder", sortOrder);
-    try {
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: new FormData(form),
-            contentType: false,
-            processData: false,
-            success: function (res) {
-                $('#view-all').html(res.html);
-            },
-            error: function (err) {
-                console.log(err)
-            }
-        })
-        return false;
-    } catch (ex) {
-        console.log(ex)
-    }
-};
-PostSortMenu = form => {
-    let url = form.action;
-    if (sessionStorage.getItem("sortOrder") != null) url = url + "?&sortOrder=" + sessionStorage.getItem("sortOrder");
 
-    console.log(url);
-    try {
-        $.ajax({
-            type: 'POST',
-            url: url + "&filtered=True",
-            data: new FormData(form),
-            contentType: false,
-            processData: false,
-            success: function (res) {
-                $('#view-all').html(res.html);
-                sessionStorage.setItem("filtered", "true");
-            },
-            error: function (err) {
-                console.log(err)
-            }
-        })
-        //to prevent default form submit event
-        return false;
-    } catch (ex) {
-        console.log(ex)
+    var request = new XMLHttpRequest();
+    request.open('POST', url, true);
+
+    request.onload = function () {
+        if (this.status >= 200 && this.status < 400) {
+            var resp = JSON.parse(this.response);
+            document.getElementById("view-all").innerHTML = resp.html;
+
+        } else {
+            alert("Something went wrong, refresh and try again");
+        }
+    };
+
+    request.onerror = function (err) {
+        console.log(err)
+    };
+
+    request.send(new FormData(form));
+};
+
+function PostSortMenu() {
+    var form = document.getElementById("sortMenuForm");
+    let url = form.action;
+
+    if (sessionStorage.getItem("sortOrder") != null) {
+        url = url + "?&sortOrder=" + sessionStorage.getItem("sortOrder");
+
+        url = url + "&filtered=True";
     }
+    else url = url + "?&filtered=True";
+
+    var request = new XMLHttpRequest();
+    request.open('POST', url, true);
+
+    request.onload = function () {
+        if (this.status >= 200 && this.status < 400) {
+            var resp = JSON.parse(this.response);
+            document.getElementById("view-all").innerHTML = resp.html;
+            sessionStorage.setItem("filtered", "true");
+
+        } else {
+            alert("Something went wrong, refresh and try again");
+        }
+    };
+
+    request.onerror = function (err) {
+        console.log(err)
+    };
+
+    request.send(new FormData(form));
 }
-AjaxDeleteSort = (url) => {
+
+DeleteSort = (url) => {
+    if (sessionStorage.getItem("sortOrder") != null) {
+        url = url + "?&sortOrder=" + sessionStorage.getItem("sortOrder");
+
+        if (sessionStorage.getItem("filtered") == "true") {
+            url = url + "&filtered=True";
+        }
+    }
+    else {
+        if (sessionStorage.getItem("filtered") == "true") {
+            url = url + "?&filtered=True";
+        }
+    }
+
+    
+
     try {
         $.confirm({
             title: 'Delete Expense',
@@ -74,25 +97,29 @@ AjaxDeleteSort = (url) => {
                     text: 'Confirm',
                     btnClass: 'btn-danger',
                     action: function () {
-                        if (sessionStorage.getItem("sortOrder") != null) url = url + "?&sortOrder=" + sessionStorage.getItem("sortOrder");
                         var sortForm = document.getElementById('sortMenuForm');
-                        $.ajax({
-                            type: 'POST',
-                            url: url,
-                            data: new FormData(sortForm),
-                            contentType: false,
-                            processData: false,
-                            success: function (res) {
-                                $('#view-all').html(res.html);
+                        var request = new XMLHttpRequest();
+                        console.log(url);
+                        request.open('POST', url, true);
+                        request.onload = function () {
+                            if (this.status >= 200 && this.status < 400) {
+                                var resp = JSON.parse(this.response);
+                                document.getElementById("view-all").innerHTML = resp.html;
                                 $.notify(
                                     "Expense deleted",
                                     { globalPosition: "top left", clickToHide: true, autoHide: false, className: 'info' }
                                 );
-                            },
-                            error: function (err) {
-                                console.log(err)
+
+                            } else {
+                                alert("Something went wrong, refresh and try again");
                             }
-                        })
+                        };
+
+                        request.onerror = function (err) {
+                            console.log(err)
+                        };
+
+                        request.send(new FormData(sortForm));
                     }
                 },
                 close: function () {
@@ -105,7 +132,7 @@ AjaxDeleteSort = (url) => {
     }
     //prevent default form submit event
     return false;
-}
+};
 
 
 function sortCollapseFunction() {
@@ -160,57 +187,51 @@ function showMore() {
     }
 };
 
-AjaxPostExpense = (form, url) => {
 
-    if (sessionStorage.getItem("filtered") == "true") {
-        url = url + "&filtered=True";
+function PostExpense() {
+
+    var form = document.getElementById("createExpenseForm");
+    let url = form.action;
+
+    if (sessionStorage.getItem("sortOrder") != null) {
+        url = url + "?&sortOrder=" + sessionStorage.getItem("sortOrder");
+
+        if (sessionStorage.getItem("filtered") == "true") {
+            url = url + "&filtered=True";
+        }
+    }
+    else {
+        if (sessionStorage.getItem("filtered") == "true") {
+            url = url + "?&filtered=True";
+        }
     }
 
-    if (sessionStorage.getItem("sortOrder") != null) url = url + "?&sortOrder=" + sessionStorage.getItem("sortOrder");
 
-
-    try {
-        $.ajax({
-            type: 'POST',
-            url: form.action,
-            data: new FormData(form),
-            contentType: false,
-            processData: false,
-            success: function (res) {
-                if (res.isValid) {
-                    var formSort = document.getElementById('sortMenuForm');
-                    try {
-                        $.ajax({
-                            type: 'POST',
-                            url: url,
-                            data: new FormData(formSort),
-                            contentType: false,
-                            processData: false,
-                            success: function (res) {
-                                $('#form-modal .modal-body').html('');
-                                $('#form-modal .modal-title').html('');
-                                $('#form-modal').modal('hide');
-                                $('#sortMenuForm').submit();
-                            },
-                            error: function (err) {
-                                console.log(err)
-                            }
-                        })
-                        return false;
-                    } catch (ex) {
-                        console.log(ex)
-                    }
-                }
-                else
-                    $('#form-modal .modal-body').html(res.html);
-            },
-            error: function (err) {
-                console.log(err)
+    var request = new XMLHttpRequest();
+    
+    request.open('POST', url, true);
+    request.onload = function () {
+        if (this.status >= 200 && this.status < 400) {
+            var resp = JSON.parse(this.response);
+            if (resp.isValid) {
+                var formModal = document.getElementById("form-modal");
+                formModal.getElementsByClassName("modal-body")[0].innerHTML = '';
+                formModal.getElementsByClassName("modal-title")[0].innerHTML = '';
+                document.getElementById("modalCloseButton").click();
+                PostSortMenu();
             }
-        })
-        //to prevent default form submit event
-        return false;
-    } catch (ex) {
-        console.log(ex)
-    }
+            else document.getElementById("form-modal").getElementsByClassName("modal-body")[0].innerHTML = resp.html;
+                
+        } else {
+            alert("Something went wrong, refresh and try again");
+        }
+    };
+
+    request.onerror = function (err) {
+        console.log(err)
+    };
+
+    request.send(new FormData(form));
 }
+
+

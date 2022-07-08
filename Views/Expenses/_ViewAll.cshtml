@@ -53,7 +53,7 @@
                             </td>
                             <td class="button_column">
                                 <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')" class="btn btn-info-color btn-sm">Edit</a>
-                                <a class="btn btn-danger-color btn-sm" onclick="AjaxDeleteSort('@Url.Action("Delete","Expenses",new { id = item.Id},Context.Request.Scheme)')">Delete</a>
+                                <a class="btn btn-danger-color btn-sm" onclick="DeleteSort('@Url.Action("Delete","Expenses",new { id = item.Id},Context.Request.Scheme)')">Delete</a>
                             </td>
                         </tr>
                     }
@@ -62,13 +62,13 @@
         </div>
 
         <div id="sortMenu" class="sortMenu">
-            <form id="sortMenuForm" asp-action="Sort" onsubmit="return PostSortMenu(this);" autocomplete="off">
+            <form id="sortMenuForm" asp-action="Sort" autocomplete="off">
                 <p class="sort-header sticky-top">
                     <a class="refresh-button" onclick="AjaxSort('@Url.Action("Sort", "Expenses", new { sortOrder = "default", refresh = true}, Context.Request.Scheme)','Sort', true)">
                         <i class="fas fa-sync-alt"></i>
                     </a>
                     <span>Sort options</span>
-                    <input type="submit" value="Search" class="btn btn-outline-info btn-sm btn-sort" />
+                    <input type="button" onclick="PostSortMenu()" value="Search" class="btn btn-outline-info btn-sm btn-sort" />
                 </p>
                 <p class="sort-paragraph">
                     <label id="descriptionLabel">Description<input id="descriptionField" type="text" placeholder="search" asp-for="SortMenu.DescriptionSearch" /></label>

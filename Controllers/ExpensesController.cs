@@ -80,7 +80,7 @@ namespace GoldCap.Controllers
         // POST: Expenses/CreateOrEdit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date,ExpenseManagerLogin")] Expense expense)
+        public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date,ExpenseManagerLogin")] Expense expense, string sortOrder, bool filtered = false)
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
             expense.ExpenseManagerLogin = userLogin;
@@ -104,7 +104,7 @@ namespace GoldCap.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(string sortOrder, int id, ExpensesListViewModel viewModel)
+        public IActionResult Delete(int id, string sortOrder, ExpensesListViewModel viewModel, bool filtered = false)
         {
             _expenseRepository.Delete(id);
             ExpensesListViewModel newViewModel = new ExpensesListViewModel()
@@ -114,7 +114,7 @@ namespace GoldCap.Controllers
                 SortMenu = viewModel.SortMenu
             };
 
-            return Sort(sortOrder, newViewModel, true); //After deleting, sort list like it was before
+            return Sort(sortOrder, newViewModel, filtered, false); //After deleting, sort list like it was before
         }
 
         public IActionResult DeleteAll() //Currently not used

@@ -452,6 +452,10 @@ namespace GoldCap.Controllers
         {
             var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period));
 
+            var withPercentage = categoryName.Split(' ');
+            withPercentage = withPercentage.Take(withPercentage.Count() - 1).ToArray();
+            categoryName = String.Join(' ', withPercentage).Trim();
+
             if (id > 0 && sortOrder != "default")
             {
                 var expense = _expenseRepository.GetExpense(id);
@@ -459,7 +463,7 @@ namespace GoldCap.Controllers
             }
             else if (categoryName != null)
             {
-                model = _expenseRepository.GetAllExpenses().Where(e => e.Category == categoryName.Split(" ")[0] && e.Date >= DateTime.Today.AddDays(-period));
+                model = _expenseRepository.GetAllExpenses().Where(e => e.Category == categoryName && e.Date >= DateTime.Today.AddDays(-period));
             }
 
 

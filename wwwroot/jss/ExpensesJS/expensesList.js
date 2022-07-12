@@ -79,57 +79,52 @@ DeleteSort = (url) => {
         }
     }
 
-    
+    $.confirm({
+        title: 'Delete Expense',
+        content: 'Are you sure you want to delete this expense?',
+        type: 'light',
+        theme: 'dark',
+        icon: 'fa fa-warning',
+        animateFromElement: false,
+        offsetBottom: 600,
+        typeAnimated: true,
+        draggable: true,
+        buttons: {
+            confirm: {
+                text: 'Confirm',
+                btnClass: 'btn-danger',
+                action: function () {
+                    var sortForm = document.getElementById('sortMenuForm');
+                    var request = new XMLHttpRequest();
+                    console.log(url);
+                    request.open('POST', url, true);
+                    request.onload = function () {
+                        if (this.status >= 200 && this.status < 400) {
+                            var resp = JSON.parse(this.response);
+                            document.getElementById("view-all").innerHTML = resp.html;
+                            $.notify(
+                                "Expense deleted",
+                                { globalPosition: "top left", clickToHide: true, autoHide: false, className: 'info' }
+                            );
 
-    try {
-        $.confirm({
-            title: 'Delete Expense',
-            content: 'Are you sure you want to delete this expense?',
-            type: 'light',
-            theme: 'dark',
-            icon: 'fa fa-warning',
-            animateFromElement: false,
-            offsetBottom: 600,
-            typeAnimated: true,
-            draggable: true,
-            buttons: {
-                confirm: {
-                    text: 'Confirm',
-                    btnClass: 'btn-danger',
-                    action: function () {
-                        var sortForm = document.getElementById('sortMenuForm');
-                        var request = new XMLHttpRequest();
-                        console.log(url);
-                        request.open('POST', url, true);
-                        request.onload = function () {
-                            if (this.status >= 200 && this.status < 400) {
-                                var resp = JSON.parse(this.response);
-                                document.getElementById("view-all").innerHTML = resp.html;
-                                $.notify(
-                                    "Expense deleted",
-                                    { globalPosition: "top left", clickToHide: true, autoHide: false, className: 'info' }
-                                );
+                        } else {
+                            alert("Something went wrong, refresh and try again");
+                        }
+                    };
 
-                            } else {
-                                alert("Something went wrong, refresh and try again");
-                            }
-                        };
+                    request.onerror = function (err) {
+                        console.log(err)
+                    };
 
-                        request.onerror = function (err) {
-                            console.log(err)
-                        };
-
-                        request.send(new FormData(sortForm));
-                    }
-                },
-                close: function () {
-                    btnClass: 'btn'
+                    request.send(new FormData(sortForm));
                 }
+            },
+            close: function () {
+                btnClass: 'btn'
             }
-        });
-    } catch (ex) {
-        console.log(ex)
-    }
+        }
+    });
+
     //prevent default form submit event
     return false;
 };
@@ -161,12 +156,19 @@ function sortCollapseFunction() {
 
 
 function showMore() {
-    var x = $('#showMore').text();
+
+    var x = document.getElementById("showMore").textContent;
+    var categoryListLiTags = document.getElementById('categoryList').querySelectorAll("li");
+
     var listLen = document.getElementById('categoryList').getElementsByTagName("li").length;
+
     if (x == 'Show More') {
-        $('#categoryList li:hidden').slice(0, listLen).show();
-        $('#showMore').innerHtml == 'Show Less';
-        document.getElementById('showMore').innerHTML = 'Show Less';
+
+        Array.from(categoryListLiTags).slice(0, listLen).forEach(element => {
+            element.style.display = "block";
+        });
+
+        document.getElementById("showMore").innerHTML = 'Show Less';
         if (document.getElementById('showArrow')) {
             document.getElementById('showArrow').classList.remove('fa-chevron-down');
             document.getElementById('showArrow').classList.add('fa-chevron-up');
@@ -175,8 +177,11 @@ function showMore() {
         sessionStorage.setItem('showButton', 'Show More');
     }
     else if (x == 'Show Less') {
-        $('#categoryList li').slice(7, listLen).hide();
-        $('#showMore').innerHtml == 'Show More';
+        Array.from(categoryListLiTags).slice(7, listLen).forEach(element => {
+            element.style.display = "none";
+        });
+
+        document.getElementById("showMore").innerHTML = 'Show More';
         if (document.getElementById('showArrow')) {
             document.getElementById('showArrow').classList.add('fa-chevron-down');
             document.getElementById('showArrow').classList.remove('fa-chevron-up');
@@ -186,7 +191,6 @@ function showMore() {
         sessionStorage.setItem('showButton', 'Show Less');
     }
 };
-
 
 function PostExpense() {
 
@@ -208,20 +212,18 @@ function PostExpense() {
 
 
     var request = new XMLHttpRequest();
-    
+
     request.open('POST', url, true);
     request.onload = function () {
         if (this.status >= 200 && this.status < 400) {
             var resp = JSON.parse(this.response);
             if (resp.isValid) {
                 var formModal = document.getElementById("form-modal");
-                formModal.getElementsByClassName("modal-body")[0].innerHTML = '';
-                formModal.getElementsByClassName("modal-title")[0].innerHTML = '';
-                document.getElementById("modalCloseButton").click();
+                $('#form-modal').modal('hide');
                 PostSortMenu();
             }
             else document.getElementById("form-modal").getElementsByClassName("modal-body")[0].innerHTML = resp.html;
-                
+
         } else {
             alert("Something went wrong, refresh and try again");
         }
@@ -233,5 +235,6 @@ function PostExpense() {
 
     request.send(new FormData(form));
 }
+
 
 

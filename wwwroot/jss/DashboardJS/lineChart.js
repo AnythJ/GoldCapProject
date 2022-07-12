@@ -139,7 +139,7 @@
 
                     series: [{
                         color: 'var(--text-secondary)',
-                        name: '$',
+                        name: '',
                         data: lineAmounts
                     }],
 

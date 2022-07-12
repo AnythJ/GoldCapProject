@@ -134,7 +134,8 @@
         sessionStorage.setItem("sortMenuActive", "false");
     })();
 
-    $(window).resize(function () {
+    (function() {
+        window.addEventListener('resize', function(event) {
         if ($(window).width() >= 770) {
             document.getElementById("sortMenu").classList.remove("sortMenuCollapsed");
             document.getElementById("listCol").style.display = "block";
@@ -142,10 +143,11 @@
             document.getElementById("sortCollapseButtonInside").classList.remove("sortCollapseActive");
             sessionStorage.setItem("sortMenuActive", "false");
         }
-    });
+    }, true);
+    })();
 
 </script>
 
 @section Scripts {
-<script src="~/lib/jquery/dist/jquery.js"></script>
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
 }

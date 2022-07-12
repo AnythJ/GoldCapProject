@@ -64,7 +64,7 @@
         <div id="sortMenu" class="sortMenu">
             <form id="sortMenuForm" asp-action="Sort" autocomplete="off">
                 <p class="sort-header sticky-top">
-                    <a class="refresh-button" onclick="AjaxSort('@Url.Action("Sort", "Expenses", new { sortOrder = "default", refresh = true}, Context.Request.Scheme)','Sort', true)">
+                    <a class="refresh-button" onclick="ExpenseListSort('@Url.Action("Sort", "Expenses", new { sortOrder = "default", refresh = true}, Context.Request.Scheme)','Sort', true)">
                         <i class="fas fa-sync-alt"></i>
                     </a>
                     <span>Sort options</span>

@@ -1,15 +1,14 @@
-﻿/*/*const { concat } = require("core-js/library/js/array");*/
-
-showInPopup = (url, title) => {
+﻿showInPopup = (url, title) => {
     var el = document.getElementsByClassName("modalLoadingSpinner")[0];
     el.style.display = "block";
-    $.ajax({
-        type: "GET",
-        url: url,
-        success: function (res) {
+    var request = new XMLHttpRequest();
+    request.open('GET', url, true);
 
-            $("#form-modal .modal-body").html(res);
-            $("#form-modal .modal-title").html(title);
+    request.onload = function () {
+        if (this.status >= 200 && this.status < 400) {
+            var resp = this.response;
+            document.getElementById("form-modal").getElementsByClassName("modal-body")[0].innerHTML = resp;
+            document.getElementById("form-modal").getElementsByClassName("modal-title")[0].innerHTML = title;
 
             el.classList.add("hidden");
             el.addEventListener("animationend", (event) => {
@@ -19,49 +18,84 @@ showInPopup = (url, title) => {
                 }
             }, false);
         }
-    })
+    };
+
+    request.onerror = function (err) {
+        console.log(err)
+    };
+
+    request.send();
 };
 
 
-
-AjaxSort = (url, title, refresh) => {
+RequestSort = (url, title, refresh) => {
     if (refresh == true) sessionStorage.setItem("filtered", "false");
 
     var activeElement = document.getElementById('active');
     if (activeElement != null && refresh != true)
         activeElement = activeElement.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
     else activeElement = null;
-    var x = $('#idForSort').val();
-    $.ajax({
-        type: "GET",
-        data: {
-            'id': $('#idForSort').val(),
-            'categoryName': activeElement,
-            'period': getParameterByName("period")
-        },
-        url: url,
-        success: function (res) {
-            $('#view-all').html(res.html);
-            $('#idForSort').val(x);
+
+    var x = document.getElementById("idForSort").value;
+
+    
+
+    const params = new URLSearchParams({
+        "id": x,
+        "categoryName": activeElement,
+        "period": getParameterByName("period")
+    });
+
+    if (refresh) {
+        params.set("id", -1);
+    }
+
+    if (activeElement == null) params.delete("categoryName");
+
+    var request = new XMLHttpRequest();
+    request.open('POST', url, true);
+    
+    request.onload = function () {
+        if (this.status >= 200 && this.status < 400) {
+            var resp = JSON.parse(this.response);
+            document.getElementById("view-all").innerHTML = resp.html;
+            document.getElementById("idForSort").value = x;
         }
-    })
+    };
+
+    request.onerror = function (err) {
+        console.log(err)
+    };
+
+    request.send(params);
 };
 
 
 sendToList = (id, categoryName, period) => {
-    $.ajax({
-        type: "GET",
-        data: {
-            'id': id,
-            'categoryName': categoryName,
-            'period': period
-        },
-        url: '/Dashboard/TooltipSort',
-        success: function (res) {
-            $('#view-all').html(res.html);
-            $('#idForSort').val(id);
+    const params = new URLSearchParams({
+        "id": id,
+        "categoryName": categoryName,
+        "period": period
+    });
+
+    if (categoryName == null) params.delete("categoryName");
+
+    var request = new XMLHttpRequest();
+    request.open('POST', '/Dashboard/TooltipSort', true);
+
+    request.onload = function () {
+        if (this.status >= 200 && this.status < 400) {
+            var resp = JSON.parse(this.response);
+            document.getElementById("view-all").innerHTML = resp.html;
+            document.getElementById("idForSort").value = id;
         }
-    })
+    };
+
+    request.onerror = function (err) {
+        console.log(err)
+    };
+
+    request.send(params);
 };
 
 
@@ -148,7 +182,7 @@ function collapseSideNavbar() {
             links[i].style.display = "none";
         }
         if (window.location.href.toUpperCase().indexOf("/DASHBOARD") != -1) {
-            showCharts();
+            setTimeout(function () { reloadAreaChart(); }, 150);
         }
     }
     else {
@@ -163,7 +197,7 @@ function collapseSideNavbar() {
             links[i].style.display = "inline";
         }
         if (window.location.href.toUpperCase().indexOf("/DASHBOARD") != -1) {
-            showCharts();
+            setTimeout(function () { reloadAreaChart(); }, 150);
         }
         sessionStorage.setItem("sideNavbarCollapsed", false);
     }

@@ -63,4 +63,4 @@
 #*.RTF   diff=astextplain
 
 wwwroot/lib/jquery/src/* linguist-vendored
-wwwroot/lib/bootstrap/* linguist-vendored
+wwwroot/lib/bootstrap/scss/* linguist-vendored

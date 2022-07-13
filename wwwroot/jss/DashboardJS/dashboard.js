@@ -1,49 +1,46 @@
-﻿AjaxPostRecurringOrIncome = (form, tableId) => {
-    try {
-        $.ajax({
-            type: 'POST',
-            url: form.action,
-            data: new FormData(form),
-            contentType: false,
-            processData: false,
-            success: function (res) {
-                if (res.isValid) {
-                    $(tableId).html(res.html)
-                    $('#form-modal .modal-body').html('');
-                    $('#form-modal .modal-title').html('');
-                    $('#form-modal').modal('hide');
-                    if (tableId == '#tableInModalIncome') {
-                        showInPopup("/Dashboard/IncomeList", "Income list");
-                    }
-                    else {
-                        showInPopup("/Dashboard/RecurringPayments", "Recurring payments");
-                    }
+﻿function PostRecurringOrIncome(formId, tableId) {
+    var form = document.getElementById(formId);
 
-                    $.notify(
-                        "Refresh to see all changes",
-                        { globalPosition: "top left", clickToHide: true, autoHide: false, className: 'info' }
-                    );
+    var request = new XMLHttpRequest();
+
+    request.open('POST', form.action, true);
+    request.onload = function () {
+        if (this.status >= 200 && this.status < 400) {
+            var resp = JSON.parse(this.response);
+            if (resp.isValid) {
+                document.getElementById("form-modal").getElementsByClassName("modal-body")[0].innerHTML = '';
+                document.getElementById("form-modal").getElementsByClassName("modal-title")[0].innerHTML = '';
+                $('#form-modal').modal('hide');
+                if (tableId == 'tableInModalIncome') {
+                    showInPopup("/Dashboard/IncomeList", "Income list");
                 }
-                else
-                    $('#form-modal .modal-body').html(res.html);
-                if (document.getElementById('recurringSelect') != null && document.getElementById('recurringSelect').value == 4) {
-                    document.getElementById('customStatus').style.visibility = "visible";
+                else {
+                    showInPopup("/Dashboard/RecurringPayments", "Recurring payments");
                 }
 
-            },
-            error: function (err) {
-                console.log(err)
+                $.notify(
+                    "Refresh to see all changes",
+                    { globalPosition: "top left", clickToHide: true, autoHide: false, className: 'info' }
+                );
             }
-        })
-        //to prevent default form submit event
-        return false;
-    } catch (ex) {
-        console.log(ex)
-    }
+            else document.getElementById("form-modal").getElementsByClassName("modal-body")[0].innerHTML = resp.html;
+
+            if (document.getElementById('recurringSelect') != null && document.getElementById('recurringSelect').value == 4) {
+                document.getElementById('customStatus').style.visibility = "visible";
+            }
+        } else {
+            alert("Something went wrong, refresh and try again");
+        }
+    };
+
+    request.onerror = function (err) {
+        console.log(err)
+    };
+
+    request.send(new FormData(form));
 }
 
-AjaxDeleteIncome = form => {
-    try {
+DeleteIncome = form => {
         $.confirm({
             title: 'Delete Income',
             content: 'Are you sure you want to delete this income?',
@@ -59,23 +56,26 @@ AjaxDeleteIncome = form => {
                     text: 'Confirm',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.ajax({
-                            type: 'POST',
-                            url: form.action,
-                            data: new FormData(form),
-                            contentType: false,
-                            processData: false,
-                            success: function (res) {
-                                $('#tableInModalIncome').html(res.html);
+                        var request = new XMLHttpRequest();
+                        request.open('POST', form.action, true);
+                        request.onload = function () {
+                            if (this.status >= 200 && this.status < 400) {
+                                var resp = JSON.parse(this.response);
+                                document.getElementById("tableInModalIncome").innerHTML = resp.html;
                                 $.notify(
                                     "Refresh to see all changes",
                                     { globalPosition: "top left", clickToHide: true, autoHide: false, className: 'info' }
                                 );
-                            },
-                            error: function (err) {
-                                console.log(err)
+                            } else {
+                                alert("Something went wrong, refresh and try again");
                             }
-                        })
+                        };
+
+                        request.onerror = function (err) {
+                            console.log(err)
+                        };
+
+                        request.send(new FormData(form));
                     }
                 },
                 close: function () {
@@ -84,19 +84,13 @@ AjaxDeleteIncome = form => {
             }
         });
 
-    } catch (ex) {
-        console.log(ex)
-    }
-
     //prevent default form submit event
     return false;
-
 }
 
 
 
-AjaxDeleteRecurring = form => {
-    try {
+DeleteRecurring = form => {
         $.confirm({
             title: 'Delete Expense',
             content: 'Are you sure you want to delete this expense?',
@@ -112,23 +106,26 @@ AjaxDeleteRecurring = form => {
                     text: 'Confirm',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.ajax({
-                            type: 'POST',
-                            url: form.action,
-                            data: new FormData(form),
-                            contentType: false,
-                            processData: false,
-                            success: function (res) {
-                                $('#tableInModal').html(res.html);
+                        var request = new XMLHttpRequest();
+                        request.open('POST', form.action, true);
+                        request.onload = function () {
+                            if (this.status >= 200 && this.status < 400) {
+                                var resp = JSON.parse(this.response);
+                                document.getElementById("tableInModal").innerHTML = resp.html;
                                 $.notify(
                                     "Refresh to see all changes",
                                     { globalPosition: "top left", clickToHide: true, autoHide: false, className: 'info' }
                                 );
-                            },
-                            error: function (err) {
-                                console.log(err)
+                            } else {
+                                alert("Something went wrong, refresh and try again");
                             }
-                        })
+                        };
+
+                        request.onerror = function (err) {
+                            console.log(err)
+                        };
+
+                        request.send(new FormData(form));
                     }
                 },
                 confirmAll: {
@@ -137,23 +134,27 @@ AjaxDeleteRecurring = form => {
                     action: function () {
                         var formData = new FormData(form);
                         formData.append('oneOrAll', true);
-                        $.ajax({
-                            type: 'POST',
-                            url: form.action,
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            success: function (res) {
-                                $('#tableInModal').html(res.html);
+
+                        var request = new XMLHttpRequest();
+                        request.open('POST', form.action, true);
+                        request.onload = function () {
+                            if (this.status >= 200 && this.status < 400) {
+                                var resp = JSON.parse(this.response);
+                                document.getElementById("tableInModal").innerHTML = resp.html;
                                 $.notify(
                                     "Refresh to see all changes",
                                     { globalPosition: "top left", clickToHide: true, autoHide: false, className: 'info' }
                                 );
-                            },
-                            error: function (err) {
-                                console.log(err)
+                            } else {
+                                alert("Something went wrong, refresh and try again");
                             }
-                        })
+                        };
+
+                        request.onerror = function (err) {
+                            console.log(err)
+                        };
+
+                        request.send(formData);
                     }
                 },
                 close: function () {
@@ -161,10 +162,6 @@ AjaxDeleteRecurring = form => {
                 }
             }
         });
-
-    } catch (ex) {
-        console.log(ex)
-    }
 
     //prevent default form submit event
     return false;

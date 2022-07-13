@@ -57,9 +57,6 @@
         
 </style>
 <script type="text/javascript">
-    if (document.getElementById("tableInModal")) {
-        document.getElementById("modalDialog").classList.add("modal-lg");
-    }
 </script>
 <div class="table-responsive tableContainer" id="tableInModal">
     <table class="table table-hover">
@@ -99,7 +96,7 @@
                         @Html.DisplayFor(modelItem => item.Date)
                     </td>
                     <td align="right" style="padding-right:30px;width:220px;">
-                        <form asp-controller="dashboard" asp-action="Delete" asp-route-id="@item.Id" onsubmit="return AjaxDeleteRecurring(this)" class="d-inline">
+                        <form asp-controller="dashboard" asp-action="Delete" asp-route-id="@item.Id" onsubmit="return DeleteRecurring(this)" class="d-inline">
                             <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm" />
                         </form>
                         

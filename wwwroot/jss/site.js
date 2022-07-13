@@ -1,4 +1,8 @@
 ﻿showInPopup = (url, title) => {
+    if (title == "Recurring payments") document.getElementById("modalDialog").classList.add("modal-lg")
+    else document.getElementById("modalDialog").classList.remove("modal-lg");
+
+    
     var el = document.getElementsByClassName("modalLoadingSpinner")[0];
     el.style.display = "block";
     var request = new XMLHttpRequest();

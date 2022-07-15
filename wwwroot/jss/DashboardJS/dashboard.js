@@ -23,7 +23,9 @@
                     { globalPosition: "top left", clickToHide: true, autoHide: false, className: 'info' }
                 );
             }
-            else document.getElementById("form-modal").getElementsByClassName("modal-body")[0].innerHTML = resp.html;
+            else {
+                document.getElementById("form-modal").getElementsByClassName("modal-body")[0].innerHTML = resp.html;
+            }
 
             if (document.getElementById('recurringSelect') != null && document.getElementById('recurringSelect').value == 4) {
                 document.getElementById('customStatus').style.visibility = "visible";
@@ -166,4 +168,25 @@ DeleteRecurring = form => {
     //prevent default form submit event
     return false;
 
+}
+
+
+function customField() {
+    var x = document.getElementById('customStatus');
+    var y = document.getElementById('focusableInput');
+    var l = document.getElementById('statusDayCol');
+    if (document.getElementById('recurringSelect').value == 4) {
+        x.style.visibility = "visible";
+        l.style.visibility = "visible";
+        y.required = true;
+    }
+    else {
+        x.style.visibility = "hidden";
+        l.style.visibility = "hidden";
+        y.required = false;
+    }
+}
+
+function showStartDateTooltip() {
+    $('#startDate').tooltip('show');
 }

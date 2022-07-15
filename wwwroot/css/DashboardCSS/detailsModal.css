@@ -1,4 +1,5 @@
-﻿.modal-title {
+﻿
+.modal-title {
     font-weight: bold;
 }
 
@@ -8,38 +9,70 @@
 }
 
 .modal-body, .modal-header, .modal-title, .modal-footer {
-    /*font-family: Arial;*/
     background-color: var(--bg-primary);
-    color: var(--text-secondary);
+    color: var(--text-third);
 }
 
-.modal-content, modal-dialog {
-    border: 3px solid var(--text-primary);
-    border-radius: 5px;
+.modal-content {
+    border: 3px solid var(--bg-primary);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    border-radius: 0;
 }
 
 .modal-header {
     border: none;
-    border-bottom: 3px solid var(--text-primary);
+    border-bottom: 3px solid var(--bg-secondary);
     border-radius: 0;
 }
 
-input[type=text]:disabled, input[type=datetime-local]:disabled, select:disabled {
+input[type=text].modalInput:disabled, input[type=datetime-local].modalInput:disabled, select.modalInput:disabled {
     background-color: var(--bg-secondary);
     color: var(--text-secondary);
-    border-color: var(--bg-third);
-    border-radius: 5px;
+    border-color: transparent;
+    margin: 0;
+    border-radius: 0;
+    height: 3rem;
+    font-size: 1.2rem;
 }
 
-textarea:disabled {
-    background-color: var(--bg-secondary) !important;
-    color: var(--text-secondary) !important;
+input[type=datetime-local]:disabled {
+    margin: 0;
+    width: 100%;
+}
+
+.description-textarea:disabled {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
     resize: none;
     max-width: 135ch;
-    border: 0.5px solid var(--bg-third);
-    border-radius: 5px;
+    border: 0.5px solid transparent;
+    height: 7rem;
 }
 
-.listButton {
+
+.category-select {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+}
+
+  
+
+.form-footer {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
     text-align: right;
+    align-items: flex-end;
+    height: 3.5rem;
+}
+
+
+div.btn-submit .btn-outline-info {
+    font-weight: normal;
+}
+
+
+.control-label {
+    font-weight: bold;
+    margin: 0.1rem;
 }

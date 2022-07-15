@@ -1,9 +1,9 @@
-﻿.modal-backdrop {
-    z-index: -1;
+﻿.modal-title {
+    font-weight: bold;
 }
 
-.modal-title {
-    font-weight: bold;
+.form-control {
+    transition: all 0.2s ease;
 }
 
 .btn-close {
@@ -13,58 +13,92 @@
 
 .modal-body, .modal-header, .modal-title, .modal-footer {
     background-color: var(--bg-primary);
-    color: var(--text-secondary);
+    color: var(--text-third);
 }
 
-.modal-content, modal-dialog {
-    border: 3px solid var(--text-primary);
-    border-radius: 5px;
+.modal-content {
+    border: 3px solid var(--bg-primary);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    border-radius: 0;
 }
 
 .modal-header {
     border: none;
-    border-bottom: 3px solid var(--text-primary);
+    border-bottom: 3px solid var(--bg-secondary);
     border-radius: 0;
 }
 
-input[type=text].modalInput, input[type=text].modalInput:focus, input[type=datetime-local].modalInput, input[type=datetime-local].modalInput:focus, select.modalInput, select.modalInput:focus {
-    background-color: #2d3339;
-    color: #9ba6b0;
-    border-color: #0DCAF0;
-    border-radius: 5px;
-}
-
-.description-textarea, .description-textarea:focus {
-    background-color: var(--bg-secondary);
-    color: #9ba6b0;
-    resize: none;
-    max-width: 135ch;
-    border: 0.5px solid var(--bg-third);
-    border-radius: 5px;
-}
-
-.category-select, .category-select:focus {
+input[type=text].modalInput, input[type=datetime-local].modalInput, select.modalInput {
     background-color: var(--bg-secondary);
     color: var(--text-secondary);
-    border: 0.5px solid var(--bg-third);
-    border-radius: 5px;
+    border-color: transparent;
+    margin: 0;
+    border-radius: 0;
+    height: 3rem;
+    font-size: 1.2rem;
 }
 
-select.category-select::-webkit-scrollbar {
-    display: block;
-    width: 3px;
-    background-color: var(--text-primary);
+input[type=datetime-local] {
+    margin: 0;
+    width: 100%;
 }
+
+    input[type=text].modalInput:focus, input[type=datetime-local].modalInput:focus, .description-textarea:focus, input[type=datetime-local]:focus {
+        background-color: var(--text-primary);
+        border-color: var(--bg-third);
+        color: var(--text-secondary);
+        box-shadow: none;
+    }
+    input.modalInput:focus {
+        box-shadow: none;
+    }
+
+.description-textarea {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    resize: none;
+    max-width: 135ch;
+    border: 0.5px solid transparent;
+    height: 7rem;
+}
+    
+
+.category-select {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+}
+    .category-select:focus {
+        background-color: var(--bg-secondary);
+        color: var(--text-secondary);
+        border-color: var(--bg-third);
+    }
+
+    select.category-select::-webkit-scrollbar {
+        display: block;
+        width: 3px;
+        background-color: var(--text-primary);
+    }
 
 select.category-select::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-primary);
 }
 
-div.btn-submit {
+.form-footer {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
     text-align: right;
-    margin-top: 0.9375rem;
+    align-items: flex-end;
+    height: 3.5rem;
 }
+
 
     div.btn-submit .btn-outline-info {
         font-weight: normal;
     }
+
+
+.control-label {
+    font-weight: bold;
+    margin: 0.1rem;
+}

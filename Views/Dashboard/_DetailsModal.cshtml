@@ -18,7 +18,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label asp-for="Amount" class="control-label"></label>
-                        <input disabled asp-for="Amount" class="form-control" />
+                        <input disabled asp-for="Amount" class="form-control modalInput" />
                     </div>
                 </div>
             </div>
@@ -26,23 +26,23 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Category" class="control-label"></label>
-                        <input disabled asp-for="Category" class="form-control"/>
+                        <input disabled asp-for="Category" class="form-control modalInput"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Date" class="control-label"></label>
-                        <input disabled asp-for="Date" class="form-control" />
+                        <input disabled asp-for="Date" class="form-control modalInput" />
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea disabled asp-for="Description" class="form-control"></textarea>
+                <textarea disabled asp-for="Description" class="form-control description-textarea"></textarea>
             </div>
 
-            <div class="listButton">
-                <a class="btn btn-outline-info mt-4" asp-controller="Expenses" asp-action="Index">Go to full list</a>
+            <div class="form-group form-footer">
+                <a class="btn btn-outline-info" asp-controller="Expenses" asp-action="Index">Go to full list</a>
             </div>
         </form>
     </div>

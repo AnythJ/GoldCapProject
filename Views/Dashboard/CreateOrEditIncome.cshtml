@@ -6,57 +6,7 @@
 }
 
 <style>
-    .modal-title {
-        font-weight: bold;
-    }
-
-    .btn-close {
-        -webkit-filter: invert(100%);
-        filter: invert(100%);
-    }
-
-    .modal-body, .modal-header, .modal-title, .modal-footer {
-        /*font-family: Arial;*/
-        background-color: var(--bg-primary);
-        color: var(--text-secondary);
-    }
-
-    .modal-content, modal-dialog {
-        border: 3px solid var(--text-primary);
-        border-radius: 5px;
-    }
-
-    .modal-header {
-        border: none;
-        border-bottom: 3px solid var(--text-primary);
-        border-radius: 0;
-    }
-
-    input[type=text], input[type=text]:focus, input[type=datetime-local], input[type=datetime-local]:focus, select, select:focus {
-        background-color: var(--bg-secondary);
-        color: var(--text-secondary);
-        border-color: var(--bg-third);
-        border-radius: 5px;
-    }
-
-    .description-textarea, .description-textarea:focus {
-        background-color: var(--bg-secondary);
-        color: var(--text-secondary);
-        resize: none;
-        max-width: 135ch;
-        border: 0.5px solid var(--bg-third);
-        border-radius: 5px;
-    }
-
-
-    #submitRecurring {
-        text-align: right;
-        margin-top: 0.9375rem;
-    }
-
-    input.btn-outline-info {
-        font-weight: normal;
-    }
+    
 </style>
 
 <div class="row">
@@ -68,14 +18,14 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Amount" class="control-label"></label>
-                        <input id="amountinput" asp-for="Amount" class="form-control" />
+                        <input id="amountinput" asp-for="Amount" class="form-control modalInput" />
                         <span asp-validation-for="Amount"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Date" class="control-label"></label>
-                        <input id="dateinput" asp-for="Date" class="form-control" />
+                        <input id="dateinput" asp-for="Date" class="form-control modalInput" />
                         <span asp-validation-for="Date"></span>
                     </div>
                 </div>
@@ -86,7 +36,7 @@
                 <span asp-validation-for="Description"></span>
             </div>
 
-            <div id="submitRecurring" class="form-group">
+            <div id="submitRecurring" class="form-group form-footer">
                 <input type="button" onclick="PostRecurringOrIncome('createIncomeForm', 'tableInModalIncome')" value="Submit" class="btn btn-outline-info" />
             </div>
         </form>

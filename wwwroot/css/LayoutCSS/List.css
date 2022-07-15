@@ -3,7 +3,7 @@
     background-color: var(--list-bg);
 }
 .modal-backdrop {
-    z-index: -1;
+    
 }
 
 .modal-title {

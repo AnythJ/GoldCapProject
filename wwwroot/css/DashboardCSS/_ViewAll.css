@@ -12,11 +12,6 @@ i.fa-plus-square:hover {
     background-color: gray;
 }
 
-.modal-backdrop {
-    z-index: -1;
-    display: none;
-}
-
 table {
     border-collapse: separate;
     border-spacing: 0;

@@ -6,82 +6,7 @@
 }
 
 <style>
-    .modal-backdrop {
-        z-index: -1;
-    }
-
-    .modal-title {
-        font-weight: bold;
-    }
-
-    .btn-close {
-        -webkit-filter: invert(100%);
-        filter: invert(100%);
-    }
-
-    .modal-body, .modal-header, .modal-title, .modal-footer {
-        background-color: var(--bg-primary);
-        color: var(--text-secondary);
-    }
-
-    .modal-content {
-        border: 3px solid var(--text-primary);
-        border-radius: 5px;
-    }
-
-    .modal-header {
-        border: none;
-        border-bottom: 3px solid var(--text-primary);
-        border-radius: 0;
-    }
-
-    input[type=text].modalInput, input[type=text].modalInput:focus, input[type=datetime-local].modalInput, input[type=datetime-local].modalInput:focus, select.modalInput, select.modalInput:focus {
-        background-color: var(--bg-secondary);
-        color: var(--text-secondary);
-        border-color: var(--bg-third);
-        border-radius: 5px;
-        margin: 0;
-    }
-
-    input[type=datetime-local] {
-        margin: 0;
-        width: 100%;
-    }
-
-    .description-textarea, .description-textarea:focus {
-        background-color: var(--bg-secondary);
-        color: var(--text-secondary);
-        resize: none;
-        max-width: 135ch;
-        border: 0.5px solid var(--bg-third);
-        border-radius: 5px;
-    }
-
-    .category-select, .category-select:focus {
-        background-color: var(--bg-secondary);
-        color: var(--text-secondary);
-        border: 0.5px solid var(--bg-third);
-        border-radius: 5px;
-    }
-
-    select.category-select::-webkit-scrollbar {
-        display: block;
-        width: 3px;
-        background-color: var(--text-primary);
-    }
-
-    select.category-select::-webkit-scrollbar-thumb {
-        background-color: var(--scrollbar-primary);
-    }
-
-    div.btn-submit {
-        text-align: right;
-        margin-top: 0.9375rem;
-    }
-
-        div.btn-submit .btn-outline-info {
-            font-weight: normal;
-        }
+    
 
 </style>
 <div class="row">
@@ -115,8 +40,7 @@
                 <textarea asp-for="Description" class="form-control description-textarea"></textarea>
                 <span asp-validation-for="Description"></span>
             </div>
-
-            <div class="form-group btn-submit">
+            <div class="form-group form-footer">
                 <input type="button" onclick="PostExpense()" value="Submit" class="btn btn-outline-info" />
             </div>
         </form>

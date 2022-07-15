@@ -13,8 +13,7 @@ i.fa-plus-square:hover {
 }
 
 .modal-backdrop {
-    z-index: -1;
-    display: none;
+    
 }
 
 table {

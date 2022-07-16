@@ -15,5 +15,6 @@ namespace GoldCap.Models
         public int ExpenseManagerId { get; set; }
 
         public byte[] ProfilePicture { get; set; }
+        public DateTime? RegistrationDate { get; set; }
     }
 }

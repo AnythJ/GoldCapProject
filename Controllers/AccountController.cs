@@ -45,7 +45,8 @@ namespace GoldCap.Controllers
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
-                    Email = model.Email
+                    Email = model.Email,
+                    RegistrationDate = DateTime.Now
                 };
                 var result = await userManager.CreateAsync(user, model.Password);
 
@@ -134,7 +135,7 @@ namespace GoldCap.Controllers
                 ViewData["ProfileImageSrc"] = imgSrc;
             }
             
-            return View("UserSettings", new ApplicationUser { });
+            return View("UserSettings", new ApplicationUser { RegistrationDate = user.RegistrationDate});
         }
 
 

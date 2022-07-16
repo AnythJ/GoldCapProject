@@ -1,6 +1,5 @@
 ﻿function PostRecurringOrIncome(formId, tableId) {
     var form = document.getElementById(formId);
-
     var request = new XMLHttpRequest();
 
     request.open('POST', form.action, true);
@@ -25,10 +24,7 @@
             }
             else {
                 document.getElementById("form-modal").getElementsByClassName("modal-body")[0].innerHTML = resp.html;
-            }
-
-            if (document.getElementById('recurringSelect') != null && document.getElementById('recurringSelect').value == 4) {
-                document.getElementById('customStatus').style.visibility = "visible";
+                customField();
             }
         } else {
             alert("Something went wrong, refresh and try again");
@@ -172,18 +168,25 @@ DeleteRecurring = form => {
 
 
 function customField() {
-    var x = document.getElementById('customStatus');
-    var y = document.getElementById('focusableInput');
-    var l = document.getElementById('statusDayCol');
-    if (document.getElementById('recurringSelect').value == 4) {
-        x.style.visibility = "visible";
-        l.style.visibility = "visible";
-        y.required = true;
+    var customStatus = document.getElementById("customStatus");
+    var focusableInput = document.getElementById("focusableInput");
+    var statusDayCol = document.getElementById("statusDayCol");
+    var howOftenValidationSpan = document.getElementById("howOftenValidationSpan");
+    var weekdaysValidationSpan = document.getElementById("weekdaysValidationSpan");
+
+    if (document.getElementById("recurringSelect").value == 4) {
+        customStatus.style.visibility = "visible";
+        statusDayCol.style.visibility = "visible";
+        howOftenValidationSpan.style.visibility = "visible";
+        weekdaysValidationSpan.style.visibility = "visible";
+        focusableInput.required = true;
     }
     else {
-        x.style.visibility = "hidden";
-        l.style.visibility = "hidden";
-        y.required = false;
+        customStatus.style.visibility = "hidden";
+        statusDayCol.style.visibility = "hidden";
+        howOftenValidationSpan.style.visibility = "hidden";
+        weekdaysValidationSpan.style.visibility = "hidden";
+        focusableInput.required = false;
     }
 }
 

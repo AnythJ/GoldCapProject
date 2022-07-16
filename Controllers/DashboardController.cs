@@ -584,6 +584,10 @@ namespace GoldCap.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date,Status,HowOften,Weekdays")] ExpenseRecurringViewModel expenseVM)
         {
+            if (expenseVM.Status == 4 && expenseVM.HowOften == null) ModelState.AddModelError("HowOften", "Number needed");
+
+            if (expenseVM.Status == 4 &&  !expenseVM.Weekdays.Any(e => e == true)) ModelState.AddModelError("Weekdays", "Select at least one day");
+
             string weekdaysToModel = "";
             foreach (var item in expenseVM.Weekdays)
             {

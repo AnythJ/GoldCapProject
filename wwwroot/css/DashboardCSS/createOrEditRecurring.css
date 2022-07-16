@@ -1,83 +1,51 @@
-﻿.modal-title {
-    font-weight: bold;
-}
-
-.btn-close {
-    -webkit-filter: invert(100%);
-    filter: invert(100%);
-}
-
-.modal-body, .modal-header, .modal-title, .modal-footer {
-    /*font-family: Arial;*/
-    background-color: var(--bg-primary);
-    color: var(--text-secondary);
-}
-
-.modal-content, modal-dialog {
-    border: 3px solid var(--text-primary);
-    ;
-    border-radius: 5px;
-}
-
-.modal-header {
-    border: none;
-    border-bottom: 3px solid var(--text-primary);
-    ;
-    border-radius: 0;
-}
-
-input[type=text], input[type=text]:focus, input[type=datetime-local], input[type=datetime-local]:focus, select, select:focus {
-    background-color: var(--bg-secondary);
-    color: var(--text-secondary);
-    border-color: var(--bg-third);
-    border-radius: 5px;
-}
-
-.description-textarea, .description-textarea:focus {
-    background-color: var(--bg-secondary);
-    color: var(--text-secondary);
-    resize: none;
-    max-width: 135ch;
-    border: 0.5px solid var(--bg-third);
-    border-radius: 5px;
-}
-
-.category-select, .category-select:focus {
-    background-color: var(--bg-secondary);
-    color: var(--text-secondary);
-    border: 0.5px solid var(--bg-third);
-    border-radius: 5px;
-}
-
-.recurring-select, .recurring-select:focus {
-    background-color: var(--bg-secondary);
-    color: var(--text-secondary);
-    border: 0.5px solid var(--bg-third);
-    border-radius: 5px;
-}
-
-.every-weeks-control {
+﻿.every-weeks-control {
     background-color: transparent;
     color: var(--text-secondary);
     border: none;
-    margin-bottom: 5px;
+    text-align: center;
 }
 
     .every-weeks-control input[type=number] {
         background-color: var(--bg-secondary);
         color: var(--text-secondary);
+        border: none;
+        border: 0.5px solid transparent;
+        height: 2.5em;
+        width: 2.5em;
+        line-height: 2.5em;
+        text-align: center;
+        margin: 0 0.5em;
+        border-radius: 0;
+        transition: all 0.2s ease;
+    }
+
+#focusableInput:focus {
+    outline: none;
+    background-color: var(--text-primary);
+    border-color: var(--bg-third);
+    color: var(--text-secondary);
+    box-shadow: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+    #customStatus {
+        display: flex;
     }
 
 .weekdayCheckbox span {
     display: inline-block;
-    border-radius: 5px;
     background-color: var(--bg-secondary);
     color: var(--text-secondary);
-    width: 2em;
-    height: 2em;
+    width: 2.5em;
+    height: 2.5em;
     text-align: center;
     cursor: pointer;
-    padding-top: 0.3125rem;
+    padding-top: 0.5625rem;
 }
 
 .weekdayCheckbox :checked + span {
@@ -85,9 +53,6 @@ input[type=text], input[type=text]:focus, input[type=datetime-local], input[type
     color: var(--bg-secondary);
 }
 
-#customStatusDays {
-    visibility: hidden;
-}
 
 #submitRecurring {
     text-align: right;
@@ -96,4 +61,25 @@ input[type=text], input[type=text]:focus, input[type=datetime-local], input[type
 
 input.btn-outline-info {
     font-weight: normal;
+}
+
+.modalInput:focus {
+    box-shadow: none;
+}
+
+#customStatusDays {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 3rem;
+}
+
+.statusDayCol {
+    align-items: end !important;
+}
+
+.howOftenInputAndValidation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

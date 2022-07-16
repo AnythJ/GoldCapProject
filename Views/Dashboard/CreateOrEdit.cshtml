@@ -6,16 +6,15 @@
 }
 
 <style>
-    
+
 
 </style>
 
-<link href="~/css/DashboardCSS/createOrEditRecurring.css" rel="stylesheet" />
 <script type="text/javascript">
-(function() {
-    document.getElementById("modalDialog").classList.remove("modal-lg");
-    console.log('xd');
-})();
+    (function() {
+        document.getElementById("modalDialog").classList.remove("modal-lg");
+        console.log('xd');
+    })();
 </script>
 <div class="row" id="createRecurring">
     <div class="col-md-12">
@@ -25,21 +24,21 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Amount" class="control-label"></label>
-                <input id="amountinput" asp-for="Amount" class="form-control" />
+                <input id="amountinput" asp-for="Amount" class="form-control modalInput" />
                 <span asp-validation-for="Amount"></span>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Category" class="control-label"></label>
-                        <select asp-for="Category" class="form-control category-select" asp-items="@(new SelectList(ViewBag.CategoryList,"Name","Name"))"></select>
+                        <select asp-for="Category" class="form-control category-select modalInput" asp-items="@(new SelectList(ViewBag.CategoryList,"Name","Name"))"></select>
                         <span asp-validation-for="Category"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Date" class="control-label" id="startDate" onmouseover="showStartDateTooltip()" data-toggle="tooltip" data-placement="top" title="If you choose custom every > 1 week, better set Start Date on the first day you want to add this expense, otherwise first addition will be in chosen day after chosen number of weeks.">Start Date</label>
-                        <input asp-for="Date" class="form-control date-input" />
+                        <input asp-for="Date" class="form-control modalInput" />
                         <span asp-validation-for="Date"></span>
                     </div>
                 </div>
@@ -53,36 +52,43 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label asp-for="Status" class="control-label"></label>
-                        <select id="recurringSelect" class="form-control recurring-select" onchange="customField()" asp-for="Status" asp-items="Html.GetEnumSelectList<StatusName>()"></select>
+                        <select id="recurringSelect" class="form-control category-select modalInput" onchange="customField()" asp-for="Status" asp-items="Html.GetEnumSelectList<StatusName>()"></select>
                         <span asp-validation-for="Status"></span>
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <div id="customStatus" style="visibility:hidden;">
-                        <label class="control-label"></label>
-                        <div class="form-control every-weeks-control">
-                            <label>Every</label>
-                            <input id="focusableInput" type="number" min="1" max="999" style="width:2em;" asp-for="HowOften">
-                            <label style="margin: 0 5px 0 5px;">Weeks</label>
-                        </div>
+                <div id="statusDayCol" class="col-8 statusDayCol" style="visibility:hidden;">
+                    <label class="control-label">Days</label>
+                    <div id="customStatusDays">
+                        @for (int i = 0; i < 7; i++)
+                        {
+                            <label class="weekdayCheckbox">
+                                @Html.CheckBoxFor(item => item.Weekdays[i], new { @style = "display:none;" })
+                                <span>@ViewBag.Weekdays[i]</span>
+                            </label>
+                        }
                     </div>
+                    <span id="weekdaysValidationSpan" asp-validation-for="Weekdays"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-4"></div>
-                <div class="col-8" id="customStatusDays">
-                    @for (int i = 0; i < 7; i++)
-                    {
-                        <label class="weekdayCheckbox">
-                            @Html.CheckBoxFor(item => item.Weekdays[i], new { @style = "display:none;" })
-                            <span>@ViewBag.Weekdays[i]</span>
-                        </label>
-                    }
+                <div class="col-md-8">
+                    <div class="howOftenInputAndValidation">
+                        <div id="customStatus" style="visibility:hidden;">
+                        <label class="control-label"></label>
+                        <div class="form-control every-weeks-control">
+                            <label>Every</label>
+                            <input class="modalInput" id="focusableInput" min="1" max="999" oninput="validity.valid||(value='1');" asp-for="HowOften">
+                            <label>Weeks</label>
+                        </div>
+                    </div>
+                    <span id="howOftenValidationSpan" asp-validation-for="HowOften"></span>
+                    </div>
                 </div>
             </div>
 
             <div id="submitRecurring" class="form-group">
-                <input type="button" onclick="PostRecurringOrIncome('createRecurringExpenseForm', 'tableInModal')" value="Submit" class="btn btn-outline-info"/>
+                <input type="button" onclick="PostRecurringOrIncome('createRecurringExpenseForm', 'tableInModal')" value="Submit" class="btn btn-outline-info" />
             </div>
         </form>
     </div>
@@ -92,29 +98,11 @@
 {
     <script>
         $("#amountinput").val("");
-        function customField() {
-            var x = document.getElementById('customStatus');
-            var y = document.getElementById('focusableInput');
-            var z = document.getElementById('customStatusDays');
-            if (document.getElementById('recurringSelect').value == 4) {
-                x.style.visibility = "visible";
-                y.required = true;
-                z.style.visibility = "visible";
-            }
-            else {
-                x.style.visibility = "hidden";
-                y.required = false;
-                z.style.visibility = "hidden";
-            }
-        }
-        (function () {
+
+        (function() {
             customField();
         })();
-        
 
-        function showStartDateTooltip() {
-            $('#startDate').tooltip('show');
-        }
     </script>
 }
 
@@ -123,5 +111,7 @@
 
 @section Scripts {
 
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

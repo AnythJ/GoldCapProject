@@ -5,82 +5,50 @@
 }
 
 @section Styles {
-    <link href="~/css/LayoutCSS/List.css" rel="stylesheet" />
+    <link href="~/css/DashboardCSS/recurringList.css" rel="stylesheet" />
 }
-<style>
-    .modal-backdrop {
-        display: none;
-    }
-
-    .modal-title {
-        font-weight: bold;
-    }
-
-    .btn-close {
-        -webkit-filter: invert(100%);
-        filter: invert(100%);
-    }
-
-    .modal-body, .modal-header, .modal-title, .modal-footer {
-        /*font-family: Arial;*/
-        background-color: var(--bg-primary);
-        color: var(--text-secondary);
-    }
-
-    .modal-content, modal-dialog {
-        border: 3px solid var(--text-primary);
-        border-radius: 5px;
-    }
-
-    .modal-header {
-        border: none;
-        border-bottom: 3px solid var(--text-secondary);
-        border-radius: 0;
-    }
-    .modal-body {
-        padding: 0.625rem 0 0.625rem 0;
-        min-height: calc(0.3*);
-    }
-
-    .btn-succes-color {
-        color: var(--bg-primary);
+    <style>
+        .modal-body {
+            padding: 0.625rem 0 0.625rem 0 !important;
+        }
+        .btn-succes-color {
+        color: var(--bg-secondary);
         border-color: var(--btn-succes);
         background-color: var(--btn-succes);
         outline-color: var(--btn-succes);
+        font-weight: bold;
     }
 
         .btn-succes-color:hover {
             background-color: var(--btn-succes-hover);
             color: var(--text-third);
         }
-
-        
-</style>
-<script type="text/javascript">
-</script>
-<div class="table-responsive tableContainer" id="tableInModal">
-    <table class="table table-hover">
-        <thead class="sticky-top">
-            <tr class="align-text-top">
-                <th>
-                    @Html.DisplayNameFor(model => model.Amount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Category)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th style="padding-left:20px;">
-                    Next Payment
-                </th>
-                <th style="text-align:right; padding-right:30px;">
-                    <a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-succes-color btn-sm">New expense</a>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
+    </style>
+    <script type="text/javascript">
+    </script>
+    <div class="table-responsive tableContainer" id="tableInModal">
+        <table class="table table-hover">
+            <thead class="sticky-top">
+                <tr class="align-text-top">
+                    <th>
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Category)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th style="padding-left:20px;">
+                        Next Payment
+                    </th>
+                    <th style="text-align:right; padding-right:30px;">
+                        <a onclick="showInPopup('@Url.Action("CreateOrEdit","Dashboard",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-succes-color btn-sm">New expense</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
             {
                 <tr>
                     <td>
@@ -99,7 +67,7 @@
                         <form asp-controller="dashboard" asp-action="Delete" asp-route-id="@item.Id" onsubmit="return DeleteRecurring(this)" class="d-inline">
                             <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm" />
                         </form>
-                        
+
                     </td>
                 </tr>
             }

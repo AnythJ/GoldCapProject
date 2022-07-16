@@ -17,8 +17,6 @@
     font-size: 1.6vh;
     min-width: 6rem;
 }
-
-
     .signInButton:hover {
         color: var(--bg-primary);
     }

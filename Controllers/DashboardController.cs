@@ -63,136 +63,14 @@ namespace GoldCap.Controllers
 
             #region MonthlyIncomeAddition
             var userIncomes = _expenseRepository.GetIncome(User.FindFirstValue(ClaimTypes.Name)).ToList();
-            int totalIncome = 0;
-            foreach (var item in userIncomes)
-            {
-                if (item.FirstPaycheckDate.Value <= DateTime.Now)
-                {
-                    totalIncome += (int)item.Amount;
-                }
-
-                if (item is not null && item.Date.Value <= DateTime.Now)
-                {
-                    Income income = new Income()
-                    {
-                        Amount = item.Amount,
-                        Description = item.Description,
-                        Id = item.Id,
-                        ExpenseManagerLogin = item.ExpenseManagerLogin,
-                        FirstPaycheckDate = item.FirstPaycheckDate
-                    };
-                    DateTime nextIncomeDate = item.Date.Value;
-                    for (var i = item.Date.Value; i <= DateTime.Today.AddDays(1); i = i.AddMonths(1))
-                    {
-                        income.Date = i;
-                        nextIncomeDate = i.AddMonths(1);
-                    }
-
-                    item.Date = nextIncomeDate;
-                    _expenseRepository.UpdateIncome(income);
-                }
-
-
-
-            }
+            decimal totalIncome = DashboardHelper.GetAndUpdateIncomes(userIncomes, _expenseRepository, User.FindFirstValue(ClaimTypes.Name));
+            
             if (period == 365) totalIncome *= 12; //Handles if period == year, it doesn't cover week period, since it isn't really needed
 
             var allRecurringExpenses = _expenseRepository.GetAllRecurring().ToList();
 
-            foreach (var item in allRecurringExpenses)
-            {
-                if (item.Date.Value >= DateTime.Today.AddDays(-365) && item.Date.Value <= DateTime.Now)
-                {
-                    List<Expense> list = new List<Expense>();
-                    switch (item.Status) //Handles all 4 recurring statuses: weekly, monthly, yearly and custom, for first 3, it just adds amount of days
-                    {
-                        case 0:
-                            DateTime nextDate0 = item.Date.Value;
-                            for (var i = item.Date.Value; i <= DateTime.Now; i = i.AddDays(1))
-                            {
-                                Expense expense = Helper.CreateExpenseFromRecurring(item, i);
-                                expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
-                                list.Add(expense);
-                                nextDate0 = i.AddDays(1);
-                            }
-                            item.Date = nextDate0;
-                            _expenseRepository.UpdateRecurring(item);
-                            break;
-                        case 1:
-                            DateTime nextDate1 = item.Date.Value;
-                            for (var i = item.Date.Value; i <= DateTime.Now; i = i.AddDays(7))
-                            {
-                                Expense expense = Helper.CreateExpenseFromRecurring(item, i);
-                                expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
-                                list.Add(expense);
-                                nextDate1 = i.AddDays(7);
-                            }
-                            item.Date = nextDate1;
-                            _expenseRepository.UpdateRecurring(item);
-                            break;
-                        case 2:
-                            DateTime nextDate2 = item.Date.Value;
-                            for (var i = item.Date.Value; i <= DateTime.Now; i = i.AddMonths(1))
-                            {
-                                Expense expense = Helper.CreateExpenseFromRecurring(item, i);
-                                expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
-                                list.Add(expense);
-                                nextDate2 = i.AddMonths(1);
-                            }
-                            item.Date = nextDate2;
-                            _expenseRepository.UpdateRecurring(item);
-                            break;
-                        case 3:
-                            DateTime nextDate3 = item.Date.Value;
-                            for (var i = item.Date.Value; i <= DateTime.Now; i = i.AddYears(1))
-                            {
-                                Expense expense = Helper.CreateExpenseFromRecurring(item, i);
-                                expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
-                                list.Add(expense);
-                                nextDate3 = i.AddYears(1);
-                            }
-                            item.Date = nextDate3;
-                            _expenseRepository.UpdateRecurring(item);
-                            break;
-                        case 4:
-                            /// <summary>
-                            /// Iterates from the latest date to todays date checking if day of the week is true in wkdays, that was provided by user when creating
-                            /// </summary>
-                            DateTime nextDate4 = DateTime.Today;
-                            List<string> wkdays = item.WeekdaysInString.Split(',').ToList();
-                            for (var i = item.Date; i <= DateTime.Now.AddDays(7); i = i.Value.AddDays(1))
-                            {
+            DashboardHelper.UpdateRecurringExpensesOnIndex(allRecurringExpenses, _expenseRepository, User.FindFirstValue(ClaimTypes.Name));
 
-                                if (wkdays[Convert.ToInt32(i.Value.DayOfWeek)] == "True")
-                                {
-                                    if (i < DateTime.Now)
-                                    {
-                                        Expense expense = Helper.CreateExpenseFromRecurring(item, i.Value);
-                                        expense.ExpenseManagerLogin = User.FindFirstValue(ClaimTypes.Name);
-                                        expense.StatusId = item.Id;
-                                        list.Add(expense);
-                                        nextDate4 = expense.Date.Value;
-                                    }
-
-
-                                    if (i > DateTime.Now)
-                                    {
-                                        nextDate4 = i.Value;
-                                        break;
-                                    }
-                                }
-                            }
-
-                            item.Date = nextDate4;
-                            _expenseRepository.UpdateRecurring(item);
-                            break;
-                        default:
-                            break;
-                    }
-
-                    _expenseRepository.AddExpenses(list.AsEnumerable()); //Adds created expenses in period from start date to actual date as a list
-                }
-            }
             #endregion
 
             #region StatCircles
@@ -434,7 +312,7 @@ namespace GoldCap.Controllers
                 CirclesStats = circleStats,
                 Period = period,
                 NotificationList = notificationList
-            }; 
+            };
             #endregion
 
 
@@ -452,7 +330,7 @@ namespace GoldCap.Controllers
         {
             var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period));
 
-           
+
 
             if (id > 0 && sortOrder != "default")
             {
@@ -586,7 +464,7 @@ namespace GoldCap.Controllers
         {
             if (expenseVM.Status == 4 && expenseVM.HowOften == null) ModelState.AddModelError("HowOften", "Number needed");
 
-            if (expenseVM.Status == 4 &&  !expenseVM.Weekdays.Any(e => e == true)) ModelState.AddModelError("Weekdays", "Select at least one day");
+            if (expenseVM.Status == 4 && !expenseVM.Weekdays.Any(e => e == true)) ModelState.AddModelError("Weekdays", "Select at least one day");
 
             string weekdaysToModel = "";
             foreach (var item in expenseVM.Weekdays)
@@ -753,14 +631,32 @@ namespace GoldCap.Controllers
         // POST: Expenses/CreateOrEdit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEditIncome(int id, [Bind("Id,Amount,Description,Date")] Income income) //Creation of income, currently without editon possibility
+        public IActionResult CreateOrEditIncome(int id, [Bind("Id,Amount,Description,Date")] Income income) //Creation of income, currently without edit possibility
         {
             if (ModelState.IsValid)
             {
                 var userLogin = User.FindFirstValue(ClaimTypes.Name);
                 income.ExpenseManagerLogin = userLogin;
                 income.FirstPaycheckDate = income.Date;
-                int howManyMonthsToAdd = DateTime.Now.Year >= income.Date.Value.Year ? DateTime.Now.Month + 1 - income.Date.Value.Month : 0;
+                int howManyMonthsToAdd = 0;
+
+                if (income.Date.Value <= DateTime.Now)
+                {
+                    if (income.Date.Value.Month == DateTime.Now.Month)
+                    {
+                        if (income.Date.Value < DateTime.Now) howManyMonthsToAdd = 1;
+                        else howManyMonthsToAdd = 0;
+                    }
+                    else
+                    {
+                        howManyMonthsToAdd = DateTime.Now.Month - income.Date.Value.Month;
+
+                        if (income.Date.Value.Day < DateTime.Now.Day) howManyMonthsToAdd++;
+                    }
+
+                }
+
+
                 income.Date = income.Date.Value.AddMonths(howManyMonthsToAdd);
                 _expenseRepository.AddIncome(income);
 

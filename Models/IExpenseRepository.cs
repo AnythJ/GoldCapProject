@@ -27,7 +27,6 @@ namespace GoldCap.Models
         Category AddCategory(Category category);
         Category DeleteCategory(int id);
 
-        // NEW
         List<Category> GetCategoryList();
         List<CategoryChart> GetCategoryRatios(int period);
 

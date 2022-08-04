@@ -724,9 +724,18 @@ p.signButtons {
         display: flex;
     }
 
-.socialLinks a {
-    margin: 0 calc(0.2rem + 0.1vw);
-}
+    .footer-home a {
+        text-decoration: none;
+        color: var(--text-secondary);
+        transition: color 0.2s;
+    }
+            .footer-home a:hover {
+                color: var(--text-primary);
+            }
+
+        .socialLinks a {
+            margin: 0 calc(0.2rem + 0.1vw);
+        }
 
     .socialLinks a:hover i {
         color: var(--text-primary);

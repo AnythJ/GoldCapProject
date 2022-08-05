@@ -47,11 +47,11 @@ namespace GoldCap.Controllers
 
 
 
-        public IActionResult Index(int period = 30)
+        public async Task<IActionResult> Index(int period = 30)
         {
             var lastmonthFirstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-1);
             var lastmonthLastDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddDays(-1);
-            var totalExpensesForUser = _expenseRepository.GetAllExpenses();
+            var totalExpensesForUser = await _expenseRepository.GetAllExpensesAsync();
             var totalCategoriesRatio = _expenseRepository.GetCategoryRatios(period);
 
             var expensesFromLastMonth = totalExpensesForUser.Where(m => m.Date >= lastmonthFirstDay && m.Date <= lastmonthLastDay);
@@ -63,7 +63,7 @@ namespace GoldCap.Controllers
 
             #region MonthlyIncomeAddition
             var userIncomes = _expenseRepository.GetIncome(User.FindFirstValue(ClaimTypes.Name)).ToList();
-            decimal totalIncome = DashboardHelper.GetAndUpdateIncomes(userIncomes, _expenseRepository, User.FindFirstValue(ClaimTypes.Name));
+            decimal totalIncome = await DashboardHelper.GetAndUpdateIncomes(userIncomes, _expenseRepository, User.FindFirstValue(ClaimTypes.Name));
             
             if (period == 365) totalIncome *= 12; //Handles if period == year, it doesn't cover week period, since it isn't really needed
 
@@ -326,23 +326,24 @@ namespace GoldCap.Controllers
         }
 
 
-        public IActionResult Sort(string sortOrder, int id, string categoryName = null, int period = 30)
+        public async Task<IActionResult> Sort(string sortOrder, int id, string categoryName = null, int period = 30)
         {
-            var model = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period));
+            var expenses = await _expenseRepository.GetAllExpensesAsync();
+            var model = expenses.Where(m => m.Date >= DateTime.Now.AddDays(-period));
 
 
 
             if (id > 0 && sortOrder != "default")
             {
-                var expense = _expenseRepository.GetExpense(id);
-                model = _expenseRepository.GetAllExpenses().Where(e => e.Date.Value.DayOfYear == expense.Date.Value.DayOfYear && e.Date.Value.Year == expense.Date.Value.Year);
+                var expense = await _expenseRepository.GetExpenseAsync(id);
+                model = expenses.Where(e => e.Date.Value.DayOfYear == expense.Date.Value.DayOfYear && e.Date.Value.Year == expense.Date.Value.Year);
             }
             else if (categoryName != null)
             {
                 var withPercentage = categoryName.Split(' ');
                 withPercentage = withPercentage.Take(withPercentage.Count() - 1).ToArray();
                 categoryName = String.Join(' ', withPercentage).Trim();
-                model = _expenseRepository.GetAllExpenses().Where(e => e.Category == categoryName && e.Date >= DateTime.Today.AddDays(-period));
+                model = expenses.Where(e => e.Category == categoryName && e.Date >= DateTime.Today.AddDays(-period));
             }
 
 
@@ -379,9 +380,9 @@ namespace GoldCap.Controllers
 
         [HttpGet]
         [NoDirectAccess]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var expenseModel = _expenseRepository.GetExpense(id);
+            var expenseModel = await _expenseRepository.GetExpenseAsync(id);
             if (expenseModel == null)
             {
                 return NotFound();
@@ -392,26 +393,26 @@ namespace GoldCap.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, bool oneOrAll)
+        public async Task<IActionResult> Delete(int id, bool oneOrAll)
         {
-            var exp = _expenseRepository.GetRecurring(id);
+            var exp = await _expenseRepository.GetRecurringAsync(id);
             if (oneOrAll)
             {
-                _expenseRepository.DeleteExpenses(exp);
-                _expenseRepository.DeleteRecurring(id);
+                await _expenseRepository.DeleteExpensesAsync(exp);
+                await _expenseRepository.DeleteRecurringAsync(id);
             }
-            _expenseRepository.DeleteRecurring(id);
+            await _expenseRepository.DeleteRecurringAsync(id);
 
             return Json(new { html = Helper.RenderRazorViewToString(this, "RecurringPayments", _expenseRepository.GetAllRecurring()) });
         }
 
         [HttpPost, ActionName("DeleteIncome")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteIncome(int id)
+        public async Task<IActionResult> DeleteIncome(int id)
         {
             var userLogin = User.FindFirstValue(ClaimTypes.Name);
             var inc = _expenseRepository.GetIncome(userLogin).FirstOrDefault();
-            _expenseRepository.DeleteIncome(id);
+            await _expenseRepository.DeleteIncomeAsync(id);
 
             return Json(new { html = Helper.RenderRazorViewToString(this, "IncomeList", _expenseRepository.GetIncome(userLogin)) });
         }
@@ -460,7 +461,7 @@ namespace GoldCap.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date,Status,HowOften,Weekdays")] ExpenseRecurringViewModel expenseVM)
+        public async Task<IActionResult> CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date,Status,HowOften,Weekdays")] ExpenseRecurringViewModel expenseVM)
         {
             if (expenseVM.Status == 4 && expenseVM.HowOften == null) ModelState.AddModelError("HowOften", "Number needed");
 
@@ -488,16 +489,16 @@ namespace GoldCap.Controllers
 
             if (ModelState.IsValid)
             {
-                _expenseRepository.AddRecurring(expenseRecurring);
-                var lastAddedRecurring = _expenseRepository.UpdateRecurring(expenseRecurring);
-                _expenseRepository.UpdateRecurring(expenseRecurring);
+                await _expenseRepository.AddRecurringAsync(expenseRecurring);
+                var lastAddedRecurring = await _expenseRepository.UpdateRecurringAsync(expenseRecurring);
+                await _expenseRepository.UpdateRecurringAsync(expenseRecurring);
 
                 if (expenseRecurring.Date.Value <= DateTime.Today)
                 {
                     List<Expense> list = new List<Expense>();
                     var expDate = expenseRecurring.Date;
                     var recurringId = lastAddedRecurring.Id;
-                    switch (expenseRecurring.Status) //Adding expenses from recurring expenses if their date is before today's date, for first 3 it simply adds days depeing on status (weekly, monthly, yearly)
+                    switch (expenseRecurring.Status) //Adding expenses from recurring expenses if their date is before today's date, for first 3 it simply adds days depending on status (weekly, monthly, yearly)
                     {
                         case 0:
                             DateTime nextDate0 = DateTime.Today;
@@ -512,7 +513,7 @@ namespace GoldCap.Controllers
                                 expDate = expDate.Value.AddDays(1);
                             }
                             expenseRecurring.Date = nextDate0.AddDays(1);
-                            _expenseRepository.UpdateRecurring(expenseRecurring);
+                            await _expenseRepository.UpdateRecurringAsync(expenseRecurring);
                             break;
                         case 1:
                             DateTime nextDate1 = DateTime.Today;
@@ -527,7 +528,7 @@ namespace GoldCap.Controllers
                                 expDate = expDate.Value.AddDays(7);
                             }
                             expenseRecurring.Date = nextDate1.AddDays(7);
-                            _expenseRepository.UpdateRecurring(expenseRecurring);
+                            await _expenseRepository.UpdateRecurringAsync(expenseRecurring);
                             break;
                         case 2:
                             DateTime nextDate2 = DateTime.Today;
@@ -542,7 +543,7 @@ namespace GoldCap.Controllers
                                 expDate = expDate.Value.AddMonths(1);
                             }
                             expenseRecurring.Date = nextDate2.AddMonths(1);
-                            _expenseRepository.UpdateRecurring(expenseRecurring);
+                            await _expenseRepository.UpdateRecurringAsync(expenseRecurring);
                             break;
                         case 3:
                             DateTime nextDate3 = DateTime.Today;
@@ -557,7 +558,7 @@ namespace GoldCap.Controllers
                                 expDate = expDate.Value.AddYears(1);
                             }
                             expenseRecurring.Date = nextDate3.AddYears(1);
-                            _expenseRepository.UpdateRecurring(expenseRecurring);
+                            await _expenseRepository.UpdateRecurringAsync(expenseRecurring);
                             break;
                         case 4: //For custom status, it iterates from expense date, day by day and checks if day of the week is the same as chosen during creation
                             DateTime nextDate4 = DateTime.Today;
@@ -583,13 +584,13 @@ namespace GoldCap.Controllers
                                 }
                             }
                             expenseRecurring.Date = nextDate4;
-                            _expenseRepository.UpdateRecurring(expenseRecurring);
+                            await _expenseRepository.UpdateRecurringAsync(expenseRecurring);
                             break;
                         default:
                             break;
                     }
 
-                    _expenseRepository.AddExpenses(list.AsEnumerable());
+                    await _expenseRepository.AddExpensesAsync(list.AsEnumerable());
                 }
 
 
@@ -598,26 +599,27 @@ namespace GoldCap.Controllers
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expenseVM) });
         }
 
-        public IActionResult TooltipSort(int id, string categoryName, int period) //Sorting list after tooltip action in charts
+        public async Task<IActionResult> TooltipSort(int id, string categoryName, int period) //Sorting list after tooltip action in charts
         {
+            var expenses = await _expenseRepository.GetAllExpensesAsync();
             if (id >= 0)
             {
-                var expense = _expenseRepository.GetExpense(id);
-                var model = _expenseRepository.GetAllExpenses().Where(e => (e.Date.Value.Day == expense.Date.Value.Day
+                var expense = await _expenseRepository.GetExpenseAsync(id);
+                var model =expenses.Where(e => (e.Date.Value.Day == expense.Date.Value.Day
                            && e.Date.Value.Month == expense.Date.Value.Month));
 
                 return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", model) });
             }
             else if (categoryName == null)
             {
-                return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderByDescending(d => d.Date)) });
+                return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", expenses.Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderByDescending(d => d.Date)) });
             }
             else
             {
                 var withPercentage = categoryName.Split(' ');
                 withPercentage = withPercentage.Take(withPercentage.Count() - 1).ToArray();
                 string str = String.Join(' ', withPercentage).Trim();
-                return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period) && m.Category == str).OrderByDescending(d => d.Date)) });
+                return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", expenses.Where(m => m.Date >= DateTime.Now.AddDays(-period) && m.Category == str).OrderByDescending(d => d.Date)) });
             }
         }
 
@@ -631,7 +633,7 @@ namespace GoldCap.Controllers
         // POST: Expenses/CreateOrEdit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEditIncome(int id, [Bind("Id,Amount,Description,Date")] Income income) //Creation of income, currently without edit possibility
+        public async Task<IActionResult> CreateOrEditIncome(int id, [Bind("Id,Amount,Description,Date")] Income income) //Creation of income, currently without edit possibility
         {
             if (ModelState.IsValid)
             {
@@ -658,13 +660,13 @@ namespace GoldCap.Controllers
 
 
                 income.Date = income.Date.Value.AddMonths(howManyMonthsToAdd);
-                _expenseRepository.AddIncome(income);
-
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().OrderByDescending(e => e.Date)) });
+                await _expenseRepository.AddIncomeAsync(income);
+                var expenses = await _expenseRepository.GetAllExpensesAsync();
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", expenses.OrderByDescending(e => e.Date)) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEditIncome", income) });
         }
-        public JsonResult GetData(int period = 30)
+        public async Task<JsonResult> GetData(int period = 30)
         {
             List<string> newList = new List<string>();
             var ctg = _expenseRepository.GetCategoryRatios(period);
@@ -672,14 +674,14 @@ namespace GoldCap.Controllers
             {
                 newList.Add(item.CategoryPercentage.ToString());
             }
-
+            var expenses = await _expenseRepository.GetAllExpensesAsync();
             DashboardDataModel data = new DashboardDataModel()
             {
                 ListLast30 = _expenseRepository.GetSumDayExpense30(period),
                 CategoryRatios = ctg,
                 CategoryCount = _expenseRepository.GetAllCategories().Count(),
                 TooltipList = _expenseRepository.GetTooltipList(period),
-                ExpensesList = _expenseRepository.GetAllExpenses().Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderBy(e => e.Date).AsEnumerable()
+                ExpensesList = expenses.Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderBy(e => e.Date).AsEnumerable()
             };
 
             return Json(data);

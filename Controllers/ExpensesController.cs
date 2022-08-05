@@ -28,7 +28,7 @@ namespace GoldCap.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
 
@@ -43,10 +43,10 @@ namespace GoldCap.Controllers
                 notificationList.Add(newExpense);
                 k++;
             }
-
+            var expenses = await _expenseRepository.GetAllExpensesAsync();
             ExpensesListViewModel viewModel = new ExpensesListViewModel()
             {
-                Expenses = _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date),
+                Expenses =expenses.Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date),
                 CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList(),
                 SortMenu = null,
                 NotificationList = notificationList
@@ -59,7 +59,7 @@ namespace GoldCap.Controllers
         // GET: Expenses/CreateOrEdit/id
         [HttpGet]
         [NoDirectAccess]
-        public IActionResult CreateOrEdit(int id = 0)
+        public async Task<IActionResult> CreateOrEdit(int id = 0)
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
 
@@ -67,8 +67,8 @@ namespace GoldCap.Controllers
                 return View(new Expense()); //After using create button, pass new model so the form will be empty
             else
             {
-                var expenseModel = _expenseRepository.GetExpense(id); 
-                if (expenseModel == null) //If there is no record with passed id
+                var expenseModel = await _expenseRepository.GetExpenseAsync(id); 
+                if (expenseModel == null) 
                 {
                     return NotFound(); 
                 }
@@ -80,7 +80,7 @@ namespace GoldCap.Controllers
         // POST: Expenses/CreateOrEdit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date,ExpenseManagerLogin")] Expense expense, string sortOrder, bool filtered = false)
+        public async Task<IActionResult> CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date,ExpenseManagerLogin")] Expense expense, string sortOrder, bool filtered = false)
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
             expense.ExpenseManagerLogin = userLogin;
@@ -89,32 +89,33 @@ namespace GoldCap.Controllers
             {
                 if (id == 0)
                 {
-                    _expenseRepository.Add(expense);
+                    await _expenseRepository.AddAsync(expense);
                 }
                 else
                 {
-                    _expenseRepository.Update(expense);
+                    await _expenseRepository.UpdateAsync(expense);
                 }
 
-                
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _expenseRepository.GetAllExpenses().Where(e => e.ExpenseManagerLogin == userLogin)) }); //If form is valid, close modal and show list
+                var expenses = await _expenseRepository.GetAllExpensesAsync();
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", expenses.Where(e => e.ExpenseManagerLogin == userLogin)) }); //If form is valid, close modal and show list
             }
             else return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) }); //If form is invalid return the same object in form
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, string sortOrder, ExpensesListViewModel viewModel, bool filtered = false)
+        public async Task<IActionResult> Delete(int id, string sortOrder, ExpensesListViewModel viewModel, bool filtered = false)
         {
-            _expenseRepository.Delete(id);
+            await _expenseRepository.DeleteAsync(id);
+            var expenses = await _expenseRepository.GetAllExpensesAsync();
             ExpensesListViewModel newViewModel = new ExpensesListViewModel()
             {
-                Expenses = _expenseRepository.GetAllExpenses().OrderByDescending(e => e.Date),
+                Expenses = expenses.OrderByDescending(e => e.Date),
                 CategoriesList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name).ToList(),
                 SortMenu = viewModel.SortMenu
             };
 
-            return Sort(sortOrder, newViewModel, filtered, false); //After deleting, sort list like it was before
+            return await Sort(sortOrder, newViewModel, filtered, false); //After deleting, sort list like it was before
         }
 
         public IActionResult DeleteAll() //Currently not used
@@ -124,12 +125,19 @@ namespace GoldCap.Controllers
             return RedirectToAction("index", "expenses");
         }
 
-
-        public JsonResult Sort(string sortOrder, ExpensesListViewModel viewModel, bool filtered = false,  bool refresh = false) //Parameters for: sorting order, viewmodel, filtered(if the sort menu was used), refresh(if refresh button was used)
+        /// <summary>
+        /// Sorting by both: headers and sort menu
+        /// </summary>
+        /// <param name="sortOrder">Sort order from column headers</param>
+        /// <param name="viewModel"></param>
+        /// <param name="filtered">Parameter to check whether sort menu was used or not</param>
+        /// <param name="refresh">If refresh button was used</param>
+        /// <returns></returns>
+        public async Task<JsonResult> Sort(string sortOrder, ExpensesListViewModel viewModel, bool filtered = false,  bool refresh = false) 
         {
             ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
             bool isSortEmpty = true;
-            var model = _expenseRepository.GetAllExpenses();
+            var model = await _expenseRepository.GetAllExpensesAsync();
             if (viewModel.Expenses != null)
                 model = viewModel.Expenses;
 
@@ -137,7 +145,6 @@ namespace GoldCap.Controllers
             {
                 if (viewModel.SortMenu != null && !refresh) //Sort by every parameter that was selected in sort menu
                 {
-                    model = _expenseRepository.GetAllExpenses();
                     if (viewModel.SortMenu.DateFrom != null)
                     {
                         model = model.Where(e => e.Date >= viewModel.SortMenu.DateFrom);

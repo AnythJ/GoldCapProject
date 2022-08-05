@@ -26,49 +26,49 @@ namespace GoldCap.Models
         }
 
         // EXPENSES
-        public Expense GetExpense(int Id)
+        public async Task<Expense> GetExpenseAsync(int Id)
         {
-            return context.Expenses.Find(Id);
+            return await context.Expenses.FindAsync(Id);
         }
 
-        public IEnumerable<Expense> GetAllExpenses()
+        public async Task<IEnumerable<Expense>> GetAllExpensesAsync()
         {
-            return context.Expenses.Where(e => e.ExpenseManagerLogin == userLogin);
+            return await context.Expenses.Where(e => e.ExpenseManagerLogin == userLogin).ToListAsync();
         }
 
-        public Expense Add(Expense expense)
+        public async Task<Expense> AddAsync(Expense expense)
         {
-            context.Expenses.Add(expense);
-            context.SaveChanges();
+            await context.Expenses.AddAsync(expense);
+            await context.SaveChangesAsync();
 
             return expense;
         }
 
-        public Expense Delete(int id)
+        public async Task<Expense> DeleteAsync(int id)
         {
-            Expense expense = context.Expenses.Find(id);
+            Expense expense = await context.Expenses.FindAsync(id);
             if (expense != null)
             {
                 context.Expenses.Remove(expense);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             return expense;
         }
 
-        public Expense Update(Expense expenseChanges)
+        public async Task<Expense> UpdateAsync(Expense expenseChanges)
         {
             var expense = context.Expenses.Attach(expenseChanges);
             expense.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return expenseChanges;
         }
 
 
         // CATEGORIES
-        public Category GetCategory(int Id)
+        public async Task<Category> GetCategoryAsync(int Id)
         {
-            return context.Categories.Find(Id);
+            return await context.Categories.FindAsync(Id);
         }
 
         public IEnumerable<Category> GetAllCategories()
@@ -76,21 +76,21 @@ namespace GoldCap.Models
             return context.Categories.Where(e => e.ExpenseManagerLogin == userLogin);
         }
 
-        public Category AddCategory(Category category)
+        public async Task<Category> AddCategoryAsync(Category category)
         {
-            context.Categories.Add(category);
-            context.SaveChanges();
+            await context.Categories.AddAsync(category);
+            await context.SaveChangesAsync();
 
             return category;
         }
 
-        public Category DeleteCategory(int id)
+        public async Task<Category> DeleteCategoryAsync(int id)
         {
-            var category = context.Categories.Find(id);
+            var category = await context.Categories.FindAsync(id);
             if (category != null)
             {
                 context.Categories.Remove(category);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
 
             return category;
@@ -246,77 +246,77 @@ namespace GoldCap.Models
             return context.RecurringExpenses.Where(e => e.ExpenseManagerLogin == userLogin);
         }
 
-        public ExpenseRecurring DeleteRecurring(int id)
+        public async Task<ExpenseRecurring> DeleteRecurringAsync(int id)
         {
-            ExpenseRecurring expense = context.RecurringExpenses.Find(id);
+            ExpenseRecurring expense = await context.RecurringExpenses.FindAsync(id);
             if (expense != null)
             {
                 context.RecurringExpenses.Remove(expense);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             return expense;
         }
 
-        public ExpenseRecurring AddRecurring(ExpenseRecurring expense)
+        public async Task<ExpenseRecurring> AddRecurringAsync(ExpenseRecurring expense)
         {
-            context.RecurringExpenses.Add(expense);
-            context.SaveChanges();
+            await context.RecurringExpenses.AddAsync(expense);
+            await context.SaveChangesAsync();
 
             return expense;
         }
 
-        public ExpenseRecurring UpdateRecurring(ExpenseRecurring expenseChanges)
+        public async Task<ExpenseRecurring> UpdateRecurringAsync(ExpenseRecurring expenseChanges)
         {
             var expense = context.RecurringExpenses.Attach(expenseChanges);
             expense.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return expenseChanges;
         }
 
-        public ExpenseRecurring DeleteExpenses(ExpenseRecurring modelExpense)
+        public async Task<ExpenseRecurring> DeleteExpensesAsync(ExpenseRecurring modelExpense)
         {
             var list = context.Expenses.Where(e => e.StatusId == modelExpense.Id && e.ExpenseManagerLogin == userLogin);
 
             if (list != null)
             {
                 context.Expenses.RemoveRange(list);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             return modelExpense;
         }
 
-        public ExpenseRecurring GetRecurring(int Id)
+        public async Task<ExpenseRecurring> GetRecurringAsync(int Id)
         {
-            return context.RecurringExpenses.Find(Id);
+            return await context.RecurringExpenses.FindAsync(Id);
         }
 
-        public IEnumerable<Expense> AddExpenses(IEnumerable<Expense> expenses)
+        public async Task<IEnumerable<Expense>> AddExpensesAsync(IEnumerable<Expense> expenses)
         {
             if (expenses != null)
             {
-                context.Expenses.AddRange(expenses);
-                context.SaveChanges();
+                await context.Expenses.AddRangeAsync(expenses);
+                await context.SaveChangesAsync();
             }
 
             return expenses;
         }
 
-        public Income AddIncome(Income income)
+        public async Task<Income> AddIncomeAsync(Income income)
         {
-            context.Incomes.Add(income);
-            context.SaveChanges();
+            await context.Incomes.AddAsync(income);
+            await context.SaveChangesAsync();
 
             return income;
         }
 
-        public Income DeleteIncome(int id)
+        public async Task<Income> DeleteIncomeAsync(int id)
         {
-            Income income = context.Incomes.Find(id);
+            Income income = await context.Incomes.FindAsync(id);
             if (income != null)
             {
                 context.Incomes.Remove(income);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             return income;
         }
@@ -327,11 +327,11 @@ namespace GoldCap.Models
 
         }
 
-        public Income UpdateIncome(Income incomeChanges)
+        public async Task<Income> UpdateIncomeAsync(Income incomeChanges)
         {
             var income = context.Incomes.Attach(incomeChanges);
             income.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return incomeChanges;
         }

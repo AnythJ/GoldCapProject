@@ -9,23 +9,23 @@ namespace GoldCap.Models
     public interface IExpenseRepository
     {
         // Expense
-        Expense GetExpense(int Id);
-        IEnumerable<Expense> GetAllExpenses();
-        Expense Add(Expense expense);
-        Expense Update(Expense expenseChanges);
-        Expense Delete(int id);
+        Task<Expense> GetExpenseAsync(int Id);
+        Task<IEnumerable<Expense>> GetAllExpensesAsync();
+        Task<Expense> AddAsync(Expense expense);
+        Task<Expense> UpdateAsync(Expense expenseChanges);
+        Task<Expense> DeleteAsync(int id);
         List<_30daysModel> GetSumDayExpense30(int period);
         List<TooltipModel> GetTooltipList(int period);
-        IEnumerable<Expense> AddExpenses(IEnumerable<Expense> expenses);
+        Task<IEnumerable<Expense>> AddExpensesAsync(IEnumerable<Expense> expenses);
         IEnumerable<Expense> DeleteAllExpenses();
         
 
         // Category
 
-        Category GetCategory(int Id);
+        Task<Category> GetCategoryAsync(int Id);
         IEnumerable<Category> GetAllCategories();
-        Category AddCategory(Category category);
-        Category DeleteCategory(int id);
+        Task<Category> AddCategoryAsync(Category category);
+        Task<Category> DeleteCategoryAsync(int id);
 
         List<Category> GetCategoryList();
         List<CategoryChart> GetCategoryRatios(int period);
@@ -33,17 +33,17 @@ namespace GoldCap.Models
         // Recurring expense
 
         IEnumerable<ExpenseRecurring> GetAllRecurring();
-        ExpenseRecurring DeleteRecurring(int id);
-        ExpenseRecurring AddRecurring(ExpenseRecurring expense);
-        ExpenseRecurring UpdateRecurring(ExpenseRecurring expenseChanges);
-        ExpenseRecurring DeleteExpenses(ExpenseRecurring modelExpense);
-        ExpenseRecurring GetRecurring(int id);
+        Task<ExpenseRecurring> DeleteRecurringAsync(int id);
+        Task<ExpenseRecurring> AddRecurringAsync(ExpenseRecurring expense);
+        Task<ExpenseRecurring> UpdateRecurringAsync(ExpenseRecurring expenseChanges);
+        Task<ExpenseRecurring> DeleteExpensesAsync(ExpenseRecurring modelExpense);
+        Task<ExpenseRecurring> GetRecurringAsync(int id);
 
         // Income
-        Income AddIncome(Income income);
-        Income DeleteIncome(int id);
+        Task<Income> AddIncomeAsync(Income income);
+        Task<Income> DeleteIncomeAsync(int id);
         IEnumerable<Income> GetIncome(string userLogin);
-        Income UpdateIncome(Income incomeChanges);
+        Task<Income> UpdateIncomeAsync(Income incomeChanges);
 
 
 

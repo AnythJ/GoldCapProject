@@ -51,12 +51,12 @@ namespace GoldCap.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Category category)
+        public async Task<IActionResult> Create(Category category)
         {
             category.ExpenseManagerLogin = userLogin;
             if (ModelState.IsValid)
             {
-                _expenseRepository.AddCategory(category);
+                await _expenseRepository.AddCategoryAsync(category);
 
                 return RedirectToAction("index");
             }
@@ -86,9 +86,9 @@ namespace GoldCap.Controllers
         }
 
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _expenseRepository.DeleteCategory(id);
+            await _expenseRepository.DeleteCategoryAsync(id);
 
             return RedirectToAction("index");
         }

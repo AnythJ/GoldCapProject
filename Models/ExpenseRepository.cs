@@ -35,12 +35,12 @@ namespace GoldCap.Models
 
             var expenses = context.Expenses.Where(e => (e.Date.Value >= DateTime.Now.AddDays(-period)) && e.ExpenseManagerLogin == userLogin).AsEnumerable();
 
-            List<CategoryChart> newList = new List<CategoryChart>();
+            List<CategoryChart> newList = new();
 
 
             foreach (var item in categoryNames)
             {
-                CategoryChart newCat = new CategoryChart();
+                CategoryChart newCat = new();
                 newCat.CategoryName = item;
                 decimal first = (decimal)expenses.Where(c => c.Category == item).Sum(e => e.Amount);
                 decimal second = (decimal)expenses.Sum(e => e.Amount);
@@ -60,7 +60,7 @@ namespace GoldCap.Models
 
         public List<_30daysModel> GetSumDayExpense30(int period)
         {
-            List<_30daysModel> finalList = new List<_30daysModel>();
+            List<_30daysModel> finalList = new();
             List<Expense> totalExpensesForUser = context.Expenses.Where(e => e.ExpenseManagerLogin == userLogin).ToList<Expense>();
 
             for (int i = 0; i <= period; i++)
@@ -68,7 +68,7 @@ namespace GoldCap.Models
                 IEnumerable<Expense> exp = totalExpensesForUser.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-period + i).Day &&
                 e.Date.Value.Month == DateTime.Now.AddDays(-period + i).Month && e.Date.Value.Year == DateTime.Now.AddDays(-period + i).Year)).AsEnumerable();
 
-                _30daysModel model = new _30daysModel()
+                _30daysModel model = new()
                 {
                     Amount = 0,
                     TimeStamp = DateTime.Now.AddDays(-period + i).Day.ToString(),
@@ -106,11 +106,11 @@ namespace GoldCap.Models
                 && e.Date.Value.Month == DateTime.Today.AddDays(-period + i).Month && e.Date.Value.Year == DateTime.Today.AddDays(-period + i).Year).Select(e => e.Category).ToList<string>();
                 List<string> noRepeats = cate.Distinct().ToList();
 
-                List<List<decimal>> amountList = new List<List<decimal>>();
+                List<List<decimal>> amountList = new();
 
                 if (exp != null)
                 {
-                    List<decimal> smallerList = new List<decimal>();
+                    List<decimal> smallerList = new();
                     foreach (var item in noRepeats)
                     {
                         var amount = exp.Where(e => e.Category == item).Select(e => e.Amount);

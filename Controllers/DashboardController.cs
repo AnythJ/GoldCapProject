@@ -30,29 +30,6 @@ namespace GoldCap.Controllers
             _incomeRepository = incomeRepository;
         }
 
-        public static Tuple<Income, Income> CreateIncomeInPeriod(Income item)
-        {
-            Income income = new Income
-            {
-                Amount = item.Amount,
-                Description = item.Description,
-                Id = item.Id,
-                ExpenseManagerLogin = item.ExpenseManagerLogin,
-                FirstPaycheckDate = item.FirstPaycheckDate
-            };
-            DateTime nextIncomeDate = item.Date.Value;
-            for (var i = item.Date.Value; i <= DateTime.Today.AddDays(1); i = i.AddMonths(1))
-            {
-                income.Date = i;
-                nextIncomeDate = i.AddMonths(1);
-            }
-            item.Date = nextIncomeDate;
-
-            return Tuple.Create(item, income);
-        }
-
-
-
         public async Task<IActionResult> Index(int period = 30)
         {
             var lastmonthFirstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-1);
@@ -66,12 +43,11 @@ namespace GoldCap.Controllers
             var categoriesWithAbove0Ratio = totalCategoriesRatio.Where(c => c.CategoryPercentage > 0);
             var topCategory = totalCategoriesRatio != null ? totalCategoriesRatio.FirstOrDefault() : null;
 
-
             #region MonthlyIncomeAddition
             var userIncomes = _incomeRepository.GetAll(User.FindFirstValue(ClaimTypes.Name)).ToList();
             decimal totalIncome = await DashboardHelper.GetAndUpdateIncomes(userIncomes, _expenseRepository, _incomeRepository, User.FindFirstValue(ClaimTypes.Name));
             
-            if (period == 365) totalIncome *= 12; //Handles if period == year, it doesn't cover week period, since it isn't really needed
+            if (period == 365) totalIncome *= 12;
 
             var allRecurringExpenses = _recurringRepository.GetAll().ToList();
 
@@ -81,181 +57,39 @@ namespace GoldCap.Controllers
 
             #region StatCircles
 
-            #region LastPeriodCircle
             int sumExpenses = 0;
             foreach (var item in expensesFromThisPeriod) { sumExpenses += (int)item.Amount.Value; }
 
+            #region LastPeriodStatCircle
             int sumExpensesLastPeriod = 0;
-
             foreach (var item in expensesFromLastMonth) { sumExpensesLastPeriod += (int)item.Amount.Value; }
 
-            var underPeriod = sumExpensesLastPeriod - sumExpenses;
-            decimal percentage = 0;
-            if (sumExpensesLastPeriod != 0) percentage = (Convert.ToDecimal(sumExpenses) / sumExpensesLastPeriod) * 100;
-
-
-            #region UnderCircleTurnAnimationCalculations
-            int degrees = (int)(3.6 * (int)percentage);
-            var degreesStartRight = 0;
-            var degreesRight = 0;
-            var degreesLeft = 0;
-            if (degrees > 0 && degrees <= 180)
-            {
-                degreesStartRight = 0;
-                degreesRight = 0;
-                degreesLeft = degrees;
-            }
-            else
-            {
-                degreesStartRight = 180;
-                degreesRight = (degrees - 180) > 180 ? 180 : ((degrees - 180) == -180 ? 180 : (degrees - 180));
-                degreesLeft = 180;
-            }
+            StatCircle lastPeriodCircle = DashboardHelper.CreateLastPeriodStatCircle(sumExpenses, sumExpensesLastPeriod, period);
             #endregion
 
-            #region UnderCircleCreation
-            StatCircle underCircle = new StatCircle()
-            {
-                PercentageLeft = degreesLeft + "deg",
-                PercentageStartRight = degreesStartRight + "deg",
-                PercentageRight = degreesRight + "deg",
-
-                SumLast30Days = sumExpenses,
-                SumBeforeLast30Days = sumExpensesLastPeriod,
-                UnderMonthAmount = Math.Abs(underPeriod),
-                TooltipPercentage = Decimal.Round(percentage),
-                AdditionalString = underPeriod >= 0 ? "under" : "above"
-            };
-
-            switch (period)
-            {
-                case 7:
-                    underCircle.PeriodName = "week";
-                    break;
-                case 30:
-                    underCircle.PeriodName = "month";
-                    break;
-                case 365:
-                    underCircle.PeriodName = "year";
-                    break;
-                    #endregion
-            }
+            #region IncomeStatCircle
+            StatCircle incomeCircle = DashboardHelper.CreateIncomeStatCircle(totalIncome, sumExpenses);
             #endregion
 
-            #region IncomeCircle
-
-            decimal percentageIncome = totalIncome != 0 ? Decimal.Round((Convert.ToDecimal(sumExpenses) / totalIncome) * 100) : 0;
-
-
-            #region IncomeCircleTurnAnimationCalculations
-            int degreesIncome = (int)(3.6 * (int)percentageIncome);
-
-            var degreesStartRightIncome = 0;
-            var degreesRightIncome = 0;
-            var degreesLeftIncome = 0;
-
-            if (degreesIncome > 0 && degreesIncome <= 180)
-            {
-                degreesStartRightIncome = 0;
-                degreesRightIncome = 0;
-                degreesLeftIncome = degreesIncome;
-            }
-            else
-            {
-                degreesStartRightIncome = 180;
-                degreesRightIncome = (degreesIncome - 180) > 180 ? 180 : ((degreesIncome - 180) == -180 ? 180 : (degreesIncome - 180));
-                degreesLeftIncome = 180;
-            }
-
-            #endregion
-
-            #region IncomeCircleCreation
-            StatCircle incomeCircle = new StatCircle()
-            {
-                PercentageLeft = degreesLeftIncome + "deg",
-                PercentageStartRight = degreesStartRightIncome + "deg",
-                PercentageRight = degreesRightIncome + "deg",
-
-                TotalIncome = (int)totalIncome,
-                IncomePercentage = percentageIncome,
-                SumLast30Days = sumExpenses
-            };
-            #endregion
-            #endregion
-
-            #region CategoryCircle
+            #region CategoryStatCircle
             var topCate = topCategory != null ? expensesFromThisPeriod.Where(e => e.Category == topCategory.CategoryName).Sum(e => e.Amount) : 0;
-            decimal percentageCategory = sumExpenses != 0 ? Decimal.Round((Convert.ToDecimal(topCate) / sumExpenses) * 100) : 0;
-
-            #region CategoryCircleTurnAnimationCalculations
-            int degreesCategory = (int)(3.6 * (int)percentageCategory);
-
-            var degreesStartRightCategory = 0;
-            var degreesRightCategory = 0;
-            var degreesLeftCategory = 0;
-
-            if (degreesCategory > 0 && degreesCategory <= 180)
-            {
-                degreesStartRightCategory = 0;
-                degreesRightCategory = 0;
-                degreesLeftCategory = degreesCategory;
-            }
-            else
-            {
-                degreesStartRightCategory = 180;
-                degreesRightCategory = (degreesCategory - 180) > 180 ? 180 : ((degreesCategory - 180) == -180 ? 180 : (degreesCategory - 180));
-                degreesLeftCategory = 180;
-            }
+           
+            StatCircle cateCircle = DashboardHelper.CreateCategoryStatCircle(sumExpenses, topCate, topCategory);
             #endregion
 
-            #region CategoryCircleCreation
-            StatCircle cateCircle = new StatCircle()
-            {
-                PercentageLeft = degreesLeftCategory + "deg",
-                PercentageStartRight = degreesStartRightCategory + "deg",
-                PercentageRight = degreesRightCategory + "deg",
-
-                TopCategoryPercentage = percentageCategory,
-                TopCategoryName = topCategory != null ? topCategory.CategoryName : null,
-                TopCategoryAmount = Convert.ToInt32(topCate),
-                SumLast30Days = sumExpenses
-            };
-            #endregion
-
-            #endregion
-
-            #region AnimationSpeed
-            NumberFormatInfo dotFormat = new NumberFormatInfo();
-            dotFormat.NumberDecimalSeparator = ".";
-
-            double sum0 = degreesLeft + degreesRight;
-            double animationProportionUnder = sum0 != 0 ? degreesLeft / sum0 : 0.5;
-            underCircle.LeftSpeed = (animationProportionUnder * 0.5).ToString(dotFormat) + "s";
-            underCircle.RightSpeed = (0.5 - (animationProportionUnder * 0.5)).ToString(dotFormat) + "s";
-
-            double sum1 = degreesLeftCategory + degreesRightCategory;
-            double animationProportionCategory = sum1 != 0 ? degreesLeftCategory / sum1 : 0.5;
-            cateCircle.LeftSpeed = (animationProportionCategory * 0.5).ToString(dotFormat) + "s";
-            cateCircle.RightSpeed = (0.5 - (animationProportionCategory * 0.5)).ToString(dotFormat) + "s";
-
-            double sum2 = degreesLeftIncome + degreesRightIncome;
-            double animationProportionIncome = sum2 != 0 ? degreesLeftIncome / sum2 : 0.5;
-            incomeCircle.LeftSpeed = (animationProportionIncome * 0.5).ToString(dotFormat) + "s";
-            incomeCircle.RightSpeed = (0.5 - (animationProportionIncome * 0.5)).ToString(dotFormat) + "s";
-            #endregion
-
-            List<StatCircle> circleStats = new List<StatCircle>();
-            circleStats.Add(underCircle);
+            List<StatCircle> circleStats = new();
+            circleStats.Add(lastPeriodCircle);
             circleStats.Add(cateCircle);
             circleStats.Add(incomeCircle);
+
             #endregion
 
             #region StatPills
-            List<StatPill> pillsStats = new List<StatPill>();
+            List<StatPill> pillsStats = new();
             #region FirstPill
             var highestExpense = totalExpensesForUser.Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderByDescending(d => d.Amount).FirstOrDefault();
 
-            StatPill firstPill = new StatPill();
+            StatPill firstPill = new();
             if (highestExpense != null)
             {
                 firstPill.AmountDecimal = highestExpense.Amount > 100 ? Math.Round((decimal)highestExpense.Amount, 0) : Math.Round((decimal)highestExpense.Amount, 1);
@@ -271,7 +105,7 @@ namespace GoldCap.Controllers
             decimal averageAmount = expensesFromThisPeriod.Count() != 0 ? sumExpenses / expensesFromThisPeriod.Count() : 0;
             decimal aboveOrBelow = averageAmount != 0 ? (decimal)lastExpense.Amount / averageAmount : 0;
 
-            StatPill secondPill = new StatPill();
+            StatPill secondPill = new();
             if (lastExpense != null)
             {
                 secondPill.AmountDecimal = lastExpense.Amount > 100 ? Math.Round((decimal)lastExpense.Amount, 0) : Math.Round((decimal)lastExpense.Amount, 1);
@@ -283,7 +117,7 @@ namespace GoldCap.Controllers
 
             #region ThirdPill
             var lowestExpense = totalExpensesForUser.Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderBy(d => d.Amount).FirstOrDefault();
-            StatPill thirdPill = new StatPill();
+            StatPill thirdPill = new();
             if (lowestExpense != null)
             {
                 thirdPill.AmountDecimal = lowestExpense.Amount > 100 ? Math.Round((decimal)lowestExpense.Amount, 0) : Math.Round((decimal)lowestExpense.Amount, 1);
@@ -301,7 +135,7 @@ namespace GoldCap.Controllers
 
             #region NotificationsBoxData
             int k = 0;
-            List<Expense> notificationList = new List<Expense>();
+            List<Expense> notificationList = new();
             List<ExpenseRecurring> firstFiveIncomingExpenses = allRecurringExpenses.OrderBy(e => e.Date).Take(3).ToList();
             foreach (var item in firstFiveIncomingExpenses)
             {
@@ -311,7 +145,9 @@ namespace GoldCap.Controllers
                 notificationList.Add(newExpense);
                 k++;
             }
-            DashboardViewModel dashboardViewModel = new DashboardViewModel()
+            #endregion
+
+            DashboardViewModel dashboardViewModel = new()
             {
                 PillsStats = pillsStats,
                 Expenses = expensesFromThisPeriod,
@@ -319,14 +155,11 @@ namespace GoldCap.Controllers
                 Period = period,
                 NotificationList = notificationList
             };
-            #endregion
-
-
+            
             if (categoriesWithAbove0Ratio != null)
             {
                 dashboardViewModel.Categories = categoriesWithAbove0Ratio;
             }
-
 
             return View(dashboardViewModel);
         }
@@ -336,8 +169,6 @@ namespace GoldCap.Controllers
         {
             var expenses = await _expenseRepository.GetAllAsync();
             var model = expenses.Where(m => m.Date >= DateTime.Now.AddDays(-period));
-
-
 
             if (id > 0 && sortOrder != "default")
             {
@@ -458,7 +289,7 @@ namespace GoldCap.Controllers
             string[] weekdays = new string[7] { "Sn", "M", "T", "W", "Th", "F", "S" };
             ViewBag.Weekdays = weekdays;
 
-            ExpenseRecurringViewModel model = new ExpenseRecurringViewModel();
+            ExpenseRecurringViewModel model = new();
             model.Status = preStatus;
 
             return View(model);
@@ -481,7 +312,7 @@ namespace GoldCap.Controllers
             string[] weekdays = new string[7] { "Sn", "M", "T", "W", "Th", "F", "S" };
             ViewBag.Weekdays = weekdays;
             ViewBag.CategoryList = _categoryRepository.GetAll().ToList().OrderBy(c => c.Name);
-            ExpenseRecurring expenseRecurring = new ExpenseRecurring()
+            ExpenseRecurring expenseRecurring = new()
             {
                 Amount = expenseVM.Amount,
                 Category = expenseVM.Category,
@@ -501,7 +332,7 @@ namespace GoldCap.Controllers
 
                 if (expenseRecurring.Date.Value <= DateTime.Today)
                 {
-                    List<Expense> list = new List<Expense>();
+                    List<Expense> list = new();
                     var expDate = expenseRecurring.Date;
                     var recurringId = lastAddedRecurring.Id;
                     switch (expenseRecurring.Status) //Adding expenses from recurring expenses if their date is before today's date, for first 3 it simply adds days depending on status (weekly, monthly, yearly)
@@ -674,14 +505,14 @@ namespace GoldCap.Controllers
         }
         public async Task<JsonResult> GetData(int period = 30)
         {
-            List<string> newList = new List<string>();
+            List<string> newList = new();
             var ctg = _expenseRepository.GetCategoryRatios(period);
             foreach (var item in ctg)
             {
                 newList.Add(item.CategoryPercentage.ToString());
             }
             var expenses = await _expenseRepository.GetAllAsync();
-            DashboardDataModel data = new DashboardDataModel()
+            DashboardDataModel data = new()
             {
                 ListLast30 = _expenseRepository.GetSumDayExpense30(period),
                 CategoryRatios = ctg,

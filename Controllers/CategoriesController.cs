@@ -31,7 +31,7 @@ namespace GoldCap.Controllers
             var categoriesList = _categoryRepository.GetAll().ToList().Where(c => c.ExpenseManagerLogin == userLogin);
             
             int k = 0;
-            List<Expense> notificationList = new List<Expense>();
+            List<Expense> notificationList = new();
             List<ExpenseRecurring> firstFiveIncomingExpenses = _recurringRepository.GetAll().ToList().OrderBy(e => e.Date).Take(3).ToList();
             foreach (var item in firstFiveIncomingExpenses)
             {
@@ -43,7 +43,7 @@ namespace GoldCap.Controllers
             }
             
 
-            CategoryListViewModel viewModel = new CategoryListViewModel()
+            CategoryListViewModel viewModel = new()
             {
                 Category = new Category(),
                 Categories = categoriesList,
@@ -66,7 +66,7 @@ namespace GoldCap.Controllers
             else
             {
                 int k = 0;
-                List<Expense> notificationList = new List<Expense>();
+                List<Expense> notificationList = new();
                 List<ExpenseRecurring> firstFiveIncomingExpenses = _recurringRepository.GetAll().ToList().OrderBy(e => e.Date).Take(3).ToList();
                 foreach (var item in firstFiveIncomingExpenses)
                 {
@@ -77,7 +77,7 @@ namespace GoldCap.Controllers
                     k++;
                 }
 
-                CategoryListViewModel invalidModel = new CategoryListViewModel() //If category name is incorrect, there has to be new viewModel created, since viewmodel is passed to view
+                CategoryListViewModel invalidModel = new() //If category name is incorrect, there has to be new viewModel created, since viewmodel is passed to view
                 {
                     Category = category,
                     Categories = _categoryRepository.GetAll().ToList(),
@@ -114,7 +114,7 @@ namespace GoldCap.Controllers
                     break;
             }
 
-            CategoryListViewModel viewModel = new CategoryListViewModel()
+            CategoryListViewModel viewModel = new()
             {
                 Category = new Category(),
                 Categories = model

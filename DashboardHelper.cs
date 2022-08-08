@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace GoldCap
 {
     public static class DashboardHelper
     {
-        public static void UpdateRecurringExpensesOnIndex(List<ExpenseRecurring> allRecurringExpenses, IExpenseRepository _expenseRepository, string expenseManageLogin)
+        public static async void UpdateRecurringExpensesOnIndex(List<ExpenseRecurring> allRecurringExpenses, IExpenseRepository _expenseRepository, string expenseManageLogin)
         {
             foreach (var item in allRecurringExpenses)
             {
@@ -27,7 +28,7 @@ namespace GoldCap
                                 nextDate0 = i.AddDays(1);
                             }
                             item.Date = nextDate0;
-                            _expenseRepository.UpdateRecurring(item);
+                            await _expenseRepository.UpdateRecurringAsync(item);
                             break;
                         case 1:
                             DateTime nextDate1 = item.Date.Value;
@@ -39,7 +40,7 @@ namespace GoldCap
                                 nextDate1 = i.AddDays(7);
                             }
                             item.Date = nextDate1;
-                            _expenseRepository.UpdateRecurring(item);
+                            await _expenseRepository.UpdateRecurringAsync(item);
                             break;
                         case 2:
                             DateTime nextDate2 = item.Date.Value;
@@ -51,7 +52,7 @@ namespace GoldCap
                                 nextDate2 = i.AddMonths(1);
                             }
                             item.Date = nextDate2;
-                            _expenseRepository.UpdateRecurring(item);
+                            await _expenseRepository.UpdateRecurringAsync(item);
                             break;
                         case 3:
                             DateTime nextDate3 = item.Date.Value;
@@ -63,7 +64,7 @@ namespace GoldCap
                                 nextDate3 = i.AddYears(1);
                             }
                             item.Date = nextDate3;
-                            _expenseRepository.UpdateRecurring(item);
+                            await _expenseRepository.UpdateRecurringAsync(item);
                             break;
                         case 4:
                             /// <summary>
@@ -95,18 +96,18 @@ namespace GoldCap
                             }
 
                             item.Date = nextDate4;
-                            _expenseRepository.UpdateRecurring(item);
+                            await _expenseRepository.UpdateRecurringAsync(item);
                             break;
                         default:
                             break;
                     }
 
-                    _expenseRepository.AddExpenses(list.AsEnumerable()); //Adds created expenses in period from start date to actual date as a list
+                    await _expenseRepository.AddExpensesAsync(list.AsEnumerable()); //Adds created expenses in period from start date to actual date as a list
                 }
             }
         }
     
-        public static decimal GetAndUpdateIncomes(List<Income> userIncomes, IExpenseRepository _expenseRepository, string expenseManageLogin)
+        public static async Task<decimal> GetAndUpdateIncomes(List<Income> userIncomes, IExpenseRepository _expenseRepository, string expenseManageLogin)
         {
             decimal totalIncome = 0;
             foreach (var item in userIncomes)
@@ -134,7 +135,7 @@ namespace GoldCap
                     }
 
                     item.Date = nextIncomeDate;
-                    _expenseRepository.UpdateIncome(item);
+                    await _expenseRepository.UpdateIncomeAsync(item);
                 }
 
             }

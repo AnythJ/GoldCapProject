@@ -60,7 +60,7 @@
 //            throw new NotImplementedException();
 //        }
 
-//        public IEnumerable<Category> GetAllCategories()
+//        public IEnumerable<Category> GetAll()
 //        {
 //            throw new NotImplementedException();
 //        }
@@ -75,7 +75,7 @@
 //            throw new NotImplementedException();
 //        }
 
-//        public SelectList GetAllCategoriesToList()
+//        public SelectList GetAllToList()
 //        {
 //            throw new NotImplementedException();
 //        }

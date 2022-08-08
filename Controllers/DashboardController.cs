@@ -18,10 +18,16 @@ namespace GoldCap.Controllers
     public class DashboardController : Controller
     {
         private IExpenseRepository _expenseRepository;
+        private ICategoryRepository _categoryRepository;
+        private IRecurringRepository _recurringRepository;
+        private IIncomeRepository _incomeRepository;
 
-        public DashboardController(IExpenseRepository expenseRepository)
+        public DashboardController(IExpenseRepository expenseRepository, ICategoryRepository categoryRepository, IRecurringRepository recurringRepository, IIncomeRepository incomeRepository)
         {
             _expenseRepository = expenseRepository;
+            _categoryRepository = categoryRepository;
+            _recurringRepository = recurringRepository;
+            _incomeRepository = incomeRepository;
         }
 
         public static Tuple<Income, Income> CreateIncomeInPeriod(Income item)
@@ -51,7 +57,7 @@ namespace GoldCap.Controllers
         {
             var lastmonthFirstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-1);
             var lastmonthLastDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddDays(-1);
-            var totalExpensesForUser = await _expenseRepository.GetAllExpensesAsync();
+            var totalExpensesForUser = await _expenseRepository.GetAllAsync();
             var totalCategoriesRatio = _expenseRepository.GetCategoryRatios(period);
 
             var expensesFromLastMonth = totalExpensesForUser.Where(m => m.Date >= lastmonthFirstDay && m.Date <= lastmonthLastDay);
@@ -62,14 +68,14 @@ namespace GoldCap.Controllers
 
 
             #region MonthlyIncomeAddition
-            var userIncomes = _expenseRepository.GetIncome(User.FindFirstValue(ClaimTypes.Name)).ToList();
-            decimal totalIncome = await DashboardHelper.GetAndUpdateIncomes(userIncomes, _expenseRepository, User.FindFirstValue(ClaimTypes.Name));
+            var userIncomes = _incomeRepository.GetAll(User.FindFirstValue(ClaimTypes.Name)).ToList();
+            decimal totalIncome = await DashboardHelper.GetAndUpdateIncomes(userIncomes, _expenseRepository, _incomeRepository, User.FindFirstValue(ClaimTypes.Name));
             
             if (period == 365) totalIncome *= 12; //Handles if period == year, it doesn't cover week period, since it isn't really needed
 
-            var allRecurringExpenses = _expenseRepository.GetAllRecurring().ToList();
+            var allRecurringExpenses = _recurringRepository.GetAll().ToList();
 
-            DashboardHelper.UpdateRecurringExpensesOnIndex(allRecurringExpenses, _expenseRepository, User.FindFirstValue(ClaimTypes.Name));
+            DashboardHelper.UpdateRecurringExpensesOnIndex(allRecurringExpenses, _expenseRepository, _recurringRepository, _incomeRepository, User.FindFirstValue(ClaimTypes.Name));
 
             #endregion
 
@@ -328,14 +334,14 @@ namespace GoldCap.Controllers
 
         public async Task<IActionResult> Sort(string sortOrder, int id, string categoryName = null, int period = 30)
         {
-            var expenses = await _expenseRepository.GetAllExpensesAsync();
+            var expenses = await _expenseRepository.GetAllAsync();
             var model = expenses.Where(m => m.Date >= DateTime.Now.AddDays(-period));
 
 
 
             if (id > 0 && sortOrder != "default")
             {
-                var expense = await _expenseRepository.GetExpenseAsync(id);
+                var expense = await _expenseRepository.GetAsync(id);
                 model = expenses.Where(e => e.Date.Value.DayOfYear == expense.Date.Value.DayOfYear && e.Date.Value.Year == expense.Date.Value.Year);
             }
             else if (categoryName != null)
@@ -382,7 +388,7 @@ namespace GoldCap.Controllers
         [NoDirectAccess]
         public async Task<IActionResult> Details(int id)
         {
-            var expenseModel = await _expenseRepository.GetExpenseAsync(id);
+            var expenseModel = await _expenseRepository.GetAsync(id);
             if (expenseModel == null)
             {
                 return NotFound();
@@ -395,15 +401,15 @@ namespace GoldCap.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, bool oneOrAll)
         {
-            var exp = await _expenseRepository.GetRecurringAsync(id);
+            var exp = await _recurringRepository.GetAsync(id);
             if (oneOrAll)
             {
                 await _expenseRepository.DeleteExpensesAsync(exp);
-                await _expenseRepository.DeleteRecurringAsync(id);
+                await _recurringRepository.DeleteAsync(id);
             }
-            await _expenseRepository.DeleteRecurringAsync(id);
+            await _recurringRepository.DeleteAsync(id);
 
-            return Json(new { html = Helper.RenderRazorViewToString(this, "RecurringPayments", _expenseRepository.GetAllRecurring()) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "RecurringPayments", _recurringRepository.GetAll()) });
         }
 
         [HttpPost, ActionName("DeleteIncome")]
@@ -411,17 +417,17 @@ namespace GoldCap.Controllers
         public async Task<IActionResult> DeleteIncome(int id)
         {
             var userLogin = User.FindFirstValue(ClaimTypes.Name);
-            var inc = _expenseRepository.GetIncome(userLogin).FirstOrDefault();
-            await _expenseRepository.DeleteIncomeAsync(id);
+            var inc = _incomeRepository.GetAll(userLogin).FirstOrDefault();
+            await _incomeRepository.DeleteAsync(id);
 
-            return Json(new { html = Helper.RenderRazorViewToString(this, "IncomeList", _expenseRepository.GetIncome(userLogin)) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "IncomeList", _incomeRepository.GetAll(userLogin)) });
         }
 
         [HttpGet]
         [NoDirectAccess]
         public IActionResult RecurringPayments()
         {
-            var expenseModel = _expenseRepository.GetAllRecurring();
+            var expenseModel = _recurringRepository.GetAll();
             if (expenseModel == null)
             {
                 return NotFound();
@@ -435,7 +441,7 @@ namespace GoldCap.Controllers
         public IActionResult IncomeList()
         {
             var userLogin = User.FindFirstValue(ClaimTypes.Name);
-            var incomeModel = _expenseRepository.GetIncome(userLogin);
+            var incomeModel = _incomeRepository.GetAll(userLogin);
             if (incomeModel == null)
             {
                 return View("IncomeList");
@@ -448,7 +454,7 @@ namespace GoldCap.Controllers
         [NoDirectAccess]
         public IActionResult CreateOrEdit(int id = 0, int preStatus = 0)
         {
-            ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
+            ViewBag.CategoryList = _categoryRepository.GetAll().ToList().OrderBy(c => c.Name);
             string[] weekdays = new string[7] { "Sn", "M", "T", "W", "Th", "F", "S" };
             ViewBag.Weekdays = weekdays;
 
@@ -474,7 +480,7 @@ namespace GoldCap.Controllers
             }
             string[] weekdays = new string[7] { "Sn", "M", "T", "W", "Th", "F", "S" };
             ViewBag.Weekdays = weekdays;
-            ViewBag.CategoryList = _expenseRepository.GetCategoryList().OrderBy(c => c.Name);
+            ViewBag.CategoryList = _categoryRepository.GetAll().ToList().OrderBy(c => c.Name);
             ExpenseRecurring expenseRecurring = new ExpenseRecurring()
             {
                 Amount = expenseVM.Amount,
@@ -489,9 +495,9 @@ namespace GoldCap.Controllers
 
             if (ModelState.IsValid)
             {
-                await _expenseRepository.AddRecurringAsync(expenseRecurring);
-                var lastAddedRecurring = await _expenseRepository.UpdateRecurringAsync(expenseRecurring);
-                await _expenseRepository.UpdateRecurringAsync(expenseRecurring);
+                await _recurringRepository.AddAsync(expenseRecurring);
+                var lastAddedRecurring = await _recurringRepository.UpdateAsync(expenseRecurring);
+                await _recurringRepository.UpdateAsync(expenseRecurring);
 
                 if (expenseRecurring.Date.Value <= DateTime.Today)
                 {
@@ -513,7 +519,7 @@ namespace GoldCap.Controllers
                                 expDate = expDate.Value.AddDays(1);
                             }
                             expenseRecurring.Date = nextDate0.AddDays(1);
-                            await _expenseRepository.UpdateRecurringAsync(expenseRecurring);
+                            await _recurringRepository.UpdateAsync(expenseRecurring);
                             break;
                         case 1:
                             DateTime nextDate1 = DateTime.Today;
@@ -528,7 +534,7 @@ namespace GoldCap.Controllers
                                 expDate = expDate.Value.AddDays(7);
                             }
                             expenseRecurring.Date = nextDate1.AddDays(7);
-                            await _expenseRepository.UpdateRecurringAsync(expenseRecurring);
+                            await _recurringRepository.UpdateAsync(expenseRecurring);
                             break;
                         case 2:
                             DateTime nextDate2 = DateTime.Today;
@@ -543,7 +549,7 @@ namespace GoldCap.Controllers
                                 expDate = expDate.Value.AddMonths(1);
                             }
                             expenseRecurring.Date = nextDate2.AddMonths(1);
-                            await _expenseRepository.UpdateRecurringAsync(expenseRecurring);
+                            await _recurringRepository.UpdateAsync(expenseRecurring);
                             break;
                         case 3:
                             DateTime nextDate3 = DateTime.Today;
@@ -558,7 +564,7 @@ namespace GoldCap.Controllers
                                 expDate = expDate.Value.AddYears(1);
                             }
                             expenseRecurring.Date = nextDate3.AddYears(1);
-                            await _expenseRepository.UpdateRecurringAsync(expenseRecurring);
+                            await _recurringRepository.UpdateAsync(expenseRecurring);
                             break;
                         case 4: //For custom status, it iterates from expense date, day by day and checks if day of the week is the same as chosen during creation
                             DateTime nextDate4 = DateTime.Today;
@@ -584,27 +590,27 @@ namespace GoldCap.Controllers
                                 }
                             }
                             expenseRecurring.Date = nextDate4;
-                            await _expenseRepository.UpdateRecurringAsync(expenseRecurring);
+                            await _recurringRepository.UpdateAsync(expenseRecurring);
                             break;
                         default:
                             break;
                     }
 
-                    await _expenseRepository.AddExpensesAsync(list.AsEnumerable());
+                    await _expenseRepository.AddRangeAsync(list.AsEnumerable());
                 }
 
 
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "RecurringPayments", _expenseRepository.GetAllRecurring()) });
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "RecurringPayments", _recurringRepository.GetAll()) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expenseVM) });
         }
 
         public async Task<IActionResult> TooltipSort(int id, string categoryName, int period) //Sorting list after tooltip action in charts
         {
-            var expenses = await _expenseRepository.GetAllExpensesAsync();
+            var expenses = await _expenseRepository.GetAllAsync();
             if (id >= 0)
             {
-                var expense = await _expenseRepository.GetExpenseAsync(id);
+                var expense = await _expenseRepository.GetAsync(id);
                 var model =expenses.Where(e => (e.Date.Value.Day == expense.Date.Value.Day
                            && e.Date.Value.Month == expense.Date.Value.Month));
 
@@ -660,8 +666,8 @@ namespace GoldCap.Controllers
 
 
                 income.Date = income.Date.Value.AddMonths(howManyMonthsToAdd);
-                await _expenseRepository.AddIncomeAsync(income);
-                var expenses = await _expenseRepository.GetAllExpensesAsync();
+                await _incomeRepository.AddAsync(income);
+                var expenses = await _expenseRepository.GetAllAsync();
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", expenses.OrderByDescending(e => e.Date)) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEditIncome", income) });
@@ -674,12 +680,12 @@ namespace GoldCap.Controllers
             {
                 newList.Add(item.CategoryPercentage.ToString());
             }
-            var expenses = await _expenseRepository.GetAllExpensesAsync();
+            var expenses = await _expenseRepository.GetAllAsync();
             DashboardDataModel data = new DashboardDataModel()
             {
                 ListLast30 = _expenseRepository.GetSumDayExpense30(period),
                 CategoryRatios = ctg,
-                CategoryCount = _expenseRepository.GetAllCategories().Count(),
+                CategoryCount = _categoryRepository.GetAll().ToList().Count(),
                 TooltipList = _expenseRepository.GetTooltipList(period),
                 ExpensesList = expenses.Where(m => m.Date >= DateTime.Now.AddDays(-period)).OrderBy(e => e.Date).AsEnumerable()
             };

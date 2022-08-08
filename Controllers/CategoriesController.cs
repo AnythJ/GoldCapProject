@@ -13,23 +13,26 @@ namespace GoldCap.Controllers
     public class CategoriesController : Controller
     {
         private IExpenseRepository _expenseRepository;
-        private readonly IHttpContextAccessor httpContextAccessor;
+        private ICategoryRepository _categoryRepository;
+        private IRecurringRepository _recurringRepository;
         private readonly string userLogin;
 
-        public CategoriesController(IExpenseRepository expenseRepository, IHttpContextAccessor httpContextAccessor)
+        public CategoriesController(IExpenseRepository expenseRepository, ICategoryRepository categoryRepository, IHttpContextAccessor httpContextAccessor, IRecurringRepository recurringRepository)
         {
             _expenseRepository = expenseRepository;
+            _categoryRepository = categoryRepository;
+            _recurringRepository = recurringRepository;
             this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
         }
 
 
         public IActionResult Index()
         {
-            var categoriesList = _expenseRepository.GetAllCategories().Where(c => c.ExpenseManagerLogin == userLogin);
+            var categoriesList = _categoryRepository.GetAll().ToList().Where(c => c.ExpenseManagerLogin == userLogin);
             
             int k = 0;
             List<Expense> notificationList = new List<Expense>();
-            List<ExpenseRecurring> firstFiveIncomingExpenses = _expenseRepository.GetAllRecurring().ToList().OrderBy(e => e.Date).Take(3).ToList();
+            List<ExpenseRecurring> firstFiveIncomingExpenses = _recurringRepository.GetAll().ToList().OrderBy(e => e.Date).Take(3).ToList();
             foreach (var item in firstFiveIncomingExpenses)
             {
                 if (k == 4) break;
@@ -56,7 +59,7 @@ namespace GoldCap.Controllers
             category.ExpenseManagerLogin = userLogin;
             if (ModelState.IsValid)
             {
-                await _expenseRepository.AddCategoryAsync(category);
+                await _categoryRepository.AddAsync(category);
 
                 return RedirectToAction("index");
             }
@@ -64,7 +67,7 @@ namespace GoldCap.Controllers
             {
                 int k = 0;
                 List<Expense> notificationList = new List<Expense>();
-                List<ExpenseRecurring> firstFiveIncomingExpenses = _expenseRepository.GetAllRecurring().ToList().OrderBy(e => e.Date).Take(3).ToList();
+                List<ExpenseRecurring> firstFiveIncomingExpenses = _recurringRepository.GetAll().ToList().OrderBy(e => e.Date).Take(3).ToList();
                 foreach (var item in firstFiveIncomingExpenses)
                 {
                     if (k == 4) break;
@@ -77,7 +80,7 @@ namespace GoldCap.Controllers
                 CategoryListViewModel invalidModel = new CategoryListViewModel() //If category name is incorrect, there has to be new viewModel created, since viewmodel is passed to view
                 {
                     Category = category,
-                    Categories = _expenseRepository.GetAllCategories(),
+                    Categories = _categoryRepository.GetAll().ToList(),
                     NotificationList = notificationList
                 };
                 return View("index", invalidModel);
@@ -88,14 +91,14 @@ namespace GoldCap.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            await _expenseRepository.DeleteCategoryAsync(id);
+            await _categoryRepository.DeleteAsync(id);
 
             return RedirectToAction("index");
         }
 
         public JsonResult Sort(string sortOrder)
         {
-            var model = _expenseRepository.GetAllCategories().Where(c => c.ExpenseManagerLogin == userLogin);
+            var model = _categoryRepository.GetAll().ToList().Where(c => c.ExpenseManagerLogin == userLogin);
 
             ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
 

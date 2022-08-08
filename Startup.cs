@@ -71,7 +71,11 @@ namespace GoldCap
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
-            services.AddScoped<IExpenseRepository, SQLExpenseRepository>();
+            services.AddScoped(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
+            services.AddScoped<IExpenseRepository, ExpenseRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IRecurringRepository, RecurringRepository>();
+            services.AddScoped<IIncomeRepository, IncomeRepository>();
             services.AddHttpContextAccessor();
         }
 

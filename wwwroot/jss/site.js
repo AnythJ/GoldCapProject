@@ -218,7 +218,22 @@ function showPage() {
     }, false);
 }
 
-
+function notificationBoxSlide() {
+    var container = document.getElementById('notificationsListBox');
+    var containerStyle = container.CurrentStyle || window.getComputedStyle(container);
+    if (containerStyle.visibility == "hidden") {
+        container.style.transform = "translateX(0)";
+        container.style.visibility = "visible";
+        container.style.opacity = "1";
+        container.style.width = "25rem";
+    }
+    else {
+        container.style.transform = "translateX(100vw)";
+        container.style.visibility = "hidden";
+        container.style.opacity = "0";
+        container.style.width = "0rem";
+    }
+}
 
 
 

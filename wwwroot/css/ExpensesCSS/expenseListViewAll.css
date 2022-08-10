@@ -156,7 +156,7 @@ input[type=number] {
         }
 
     .sortCollapseActive {
-        background-color: var(--bg-third);
+        background-color: var(--bg-third) !important;
     }
 
     .sortCollapseNotActive {
@@ -307,6 +307,10 @@ input[type=text] {
     margin-right: 0;
 }
 
+    #priceFromField:focus, #priceToField:focus {
+        border: 1px solid var(--bg-third);
+    }
+    
 .currency {
     flex: 1;
     min-width: 0.1rem;
@@ -398,39 +402,7 @@ input[type=datetime-local] {
     z-index: 20;
 }
 
-.btn-succes-color {
-    color: var(--btn-succes-color);
-    border-color: var(--btn-succes);
-    background-color: var(--btn-succes);
-    outline-color: var(--btn-succes);
-}
-
-    .btn-succes-color:hover {
-        background-color: var(--btn-succes-hover);
-    }
-
-.btn-info-color {
-    color: var(--btn-info-color);
-    border-color: var(--btn-info);
-    background-color: var(--btn-info);
-    outline-color: var(--btn-info);
-}
-
-    .btn-info-color:hover {
-        background-color: var(--btn-info-hover);
-    }
-
-.btn-danger-color {
-    color: var(--btn-danger-color);
-    border-color: var(--btn-danger);
-    background-color: var(--btn-danger);
-    outline-color: var(--btn-danger);
-}
-
-    .btn-danger-color:hover {
-        background-color: var(--btn-danger-hover);
-    }
-
 ::placeholder {
     color: var(--text-secondary);
 }
+

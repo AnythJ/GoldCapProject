@@ -10,11 +10,13 @@ span {
 }
 
 
-/*xxx*/
-
 .table {
     color: var(--text-third);
     height: 100%;
+}
+
+.table .thead {
+    background-color: red;
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
@@ -41,6 +43,7 @@ table {
 thead.sticky-top {
     background-color: var(--list-thead);
 }
+
 
 .btn-info {
     background-color: var(--list-btn-bg);
@@ -80,9 +83,13 @@ thead.sticky-top {
 }
 
 .modal-body, .modal-header, .modal-title, .modal-footer {
-    font-family: Arial;
+    font-family: 'Roboto';
     background-color: var(--bg-primary);
     color: var(--text-secondary);
+}
+
+.modal-body {
+    padding: 0;
 }
 
 .modal-content, modal-dialog {

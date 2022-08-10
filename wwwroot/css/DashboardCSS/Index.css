@@ -1,5 +1,5 @@
 ﻿body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     background-color: var(--bg-primary);
     color: var(--text-secondary);
     overflow: hidden;
@@ -391,7 +391,9 @@ p.pillAmount {
         color: var(--bg-primary);
     }
 
-
+    .modal-content {
+        border: none !important;
+    }
 
 
 

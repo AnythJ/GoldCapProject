@@ -32,8 +32,8 @@ namespace GoldCap.Controllers
 
         public async Task<IActionResult> Index(int period = 30)
         {
-            var lastmonthFirstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-1);
-            var lastmonthLastDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddDays(-1);
+            DateTime lastmonthFirstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-1);
+            DateTime lastmonthLastDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddDays(-1);
             var totalExpensesForUser = await _expenseRepository.GetAllAsync();
             var totalCategoriesRatio = _expenseRepository.GetCategoryRatios(period);
 
@@ -43,7 +43,7 @@ namespace GoldCap.Controllers
             var categoriesWithAbove0Ratio = totalCategoriesRatio.Where(c => c.CategoryPercentage > 0);
             var topCategory = totalCategoriesRatio != null ? totalCategoriesRatio.FirstOrDefault() : null;
 
-            #region MonthlyIncomeAddition
+            #region Monthly income and expenses addition
             var userIncomes = _incomeRepository.GetAll(User.FindFirstValue(ClaimTypes.Name)).ToList();
             decimal totalIncome = await DashboardHelper.GetAndUpdateIncomes(userIncomes, _expenseRepository, _incomeRepository, User.FindFirstValue(ClaimTypes.Name));
             
@@ -335,7 +335,7 @@ namespace GoldCap.Controllers
                     List<Expense> list = new();
                     var expDate = expenseRecurring.Date;
                     var recurringId = lastAddedRecurring.Id;
-                    switch (expenseRecurring.Status) //Adding expenses from recurring expenses if their date is before today's date, for first 3 it simply adds days depending on status (weekly, monthly, yearly)
+                    switch (expenseRecurring.Status) //Adding expenses depending on which status was selected for recurring expense
                     {
                         case 0:
                             DateTime nextDate0 = DateTime.Today;
@@ -514,7 +514,7 @@ namespace GoldCap.Controllers
             var expenses = await _expenseRepository.GetAllAsync();
             DashboardDataModel data = new()
             {
-                ListLast30 = _expenseRepository.GetSumDayExpense30(period),
+                ListLast30 = _expenseRepository.GetSumOfExpensesInEachDayInLast30Days(period),
                 CategoryRatios = ctg,
                 CategoryCount = _categoryRepository.GetAll().ToList().Count(),
                 TooltipList = _expenseRepository.GetTooltipList(period),

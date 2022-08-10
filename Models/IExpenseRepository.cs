@@ -9,7 +9,7 @@ namespace GoldCap.Models
     public interface IExpenseRepository : IGeneralRepository<Expense>
     {
         Task<IEnumerable<Expense>> GetAllAsync();
-        List<_30daysModel> GetSumDayExpense30(int period);
+        List<LineChart30DaysModel> GetSumOfExpensesInEachDayInLast30Days(int period);
         List<TooltipModel> GetTooltipList(int period);
         List<CategoryChart> GetCategoryRatios(int period);
         Task<ExpenseRecurring> DeleteExpensesAsync(ExpenseRecurring modelExpense);

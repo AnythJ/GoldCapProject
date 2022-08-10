@@ -30,7 +30,7 @@
                             <a style="cursor:pointer;" onclick="ExpenseListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
                         </th>
                         <th class="button_column">  
-                            <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-succes-color btn-sm">New expense</a>
+                            <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-success btn-sm">New expense</a>
                         </th>
                     </tr>
                 </thead>
@@ -51,8 +51,8 @@
                                 @Html.DisplayFor(modelItem => item.Date)
                             </td>
                             <td class="button_column">
-                                <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')" class="btn btn-info-color btn-sm">Edit</a>
-                                <a class="btn btn-danger-color btn-sm" onclick="DeleteSort('@Url.Action("Delete","Expenses",new { id = item.Id},Context.Request.Scheme)')">Delete</a>
+                                <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')" class="btn btn-info btn-sm">Edit</a>
+                                <a class="btn btn-danger btn-sm" onclick="DeleteSort('@Url.Action("Delete","Expenses",new { id = item.Id},Context.Request.Scheme)')">Delete</a>
                             </td>
                         </tr>
                     }

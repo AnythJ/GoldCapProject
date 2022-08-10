@@ -58,17 +58,18 @@ namespace GoldCap.Models
             return newList.OrderByDescending(d => d.CategoryPercentage).ToList<CategoryChart>();
         }
 
-        public List<_30daysModel> GetSumDayExpense30(int period)
+        public List<LineChart30DaysModel> GetSumOfExpensesInEachDayInLast30Days(int period)
         {
-            List<_30daysModel> finalList = new();
+            List<LineChart30DaysModel> finalList = new();
             List<Expense> totalExpensesForUser = context.Expenses.Where(e => e.ExpenseManagerLogin == userLogin).ToList<Expense>();
 
             for (int i = 0; i <= period; i++)
             {
                 IEnumerable<Expense> exp = totalExpensesForUser.Where(e => (e.Date.Value.Day == DateTime.Now.AddDays(-period + i).Day &&
-                e.Date.Value.Month == DateTime.Now.AddDays(-period + i).Month && e.Date.Value.Year == DateTime.Now.AddDays(-period + i).Year)).AsEnumerable();
+                e.Date.Value.Month == DateTime.Now.AddDays(-period + i).Month && 
+                e.Date.Value.Year == DateTime.Now.AddDays(-period + i).Year)).AsEnumerable();
 
-                _30daysModel model = new()
+                LineChart30DaysModel model = new()
                 {
                     Amount = 0,
                     TimeStamp = DateTime.Now.AddDays(-period + i).Day.ToString(),

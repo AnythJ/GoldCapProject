@@ -35,12 +35,16 @@ table {
         z-index: 1;
     }
 
+    
+
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
     color: var(--text-third);
+    background-color: var(--bg-primary);
 }
 
 .table tr th, .table tr td {
     vertical-align: middle;
+    transition: color 0.15s, background-color 0.15s;
 }
 
 .table .button_column {

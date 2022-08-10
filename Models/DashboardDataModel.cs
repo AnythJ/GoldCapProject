@@ -7,7 +7,7 @@ namespace GoldCap.Models
 {
     public class DashboardDataModel
     {
-        public List<_30daysModel> ListLast30 { get; set; }
+        public List<LineChart30DaysModel> ListLast30 { get; set; }
         public List<CategoryChart> CategoryRatios { get; set; }
         public int CategoryCount { get; set; }
         public List<TooltipModel> TooltipList { get; set; }

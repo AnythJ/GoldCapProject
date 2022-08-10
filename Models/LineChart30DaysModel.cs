@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GoldCap.Models
 {
-    public class _30daysModel
+    public class LineChart30DaysModel
     {
         public decimal Amount { get; set; }
         public string TimeStamp { get; set; }

@@ -1,6 +1,6 @@
 ﻿
 function showPieChart(period) {
-    $.getJSON("Dashboard/GetData/?period=" + String(period), function (result) {
+    $.getJSON("Dashboard/GetData?period=" + String(period), function (result) {
         var cateData = [];
         var cateNames = [];
         $.each(result.categoryRatios, function (index, element) {

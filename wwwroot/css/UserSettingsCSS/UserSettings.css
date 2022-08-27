@@ -156,3 +156,11 @@
         max-width: 80%;
     }
 }
+
+.account-label .ct-circle {
+    border: 3px solid var(--text-secondary);
+}
+
+    .account-label .ct-circle:hover {
+        border: 3px solid var(--bg-third);
+    }

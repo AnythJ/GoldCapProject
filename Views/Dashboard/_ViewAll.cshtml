@@ -2,7 +2,7 @@
 
 
 <style>
-    
+
 
 </style>
 <link href="~/css/DashboardCSS/_ViewAll.css" rel="stylesheet" />
@@ -11,19 +11,19 @@
     <thead class="sticky-top">
         <tr>
             <th>
-                <a style="cursor:pointer;" onclick="RequestSort('@Url.Action("Sort", "Dashboard", new { sortOrder = (ViewBag.AmountSortParm == null ? "Amount" : ViewBag.AmountSortParm)}, Context.Request.Scheme)','Sort')">Amount</a>
+                <a style="cursor:pointer;" onclick="RequestSort('@($"/Dashboard/Sort?sortOrder={(ViewBag.AmountSortParm == null ? "Amount" : ViewBag.AmountSortParm)}")','Sort')">Amount</a>
             </th>
             <th class="categoryTh">
-                <a style="cursor:pointer;" onclick="RequestSort('@Url.Action("Sort","Dashboard",new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)},Context.Request.Scheme)','Sort')">Category</a>
+                <a style="cursor:pointer;" onclick="RequestSort('@($"/Dashboard/Sort?sortOrder={(ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)}")','Sort')">Category</a>
             </th>
             <th class="descriptionTh">
                 Description
             </th>
             <th>
-                <a style="cursor:pointer;" onclick="RequestSort('@Url.Action("Sort","Dashboard",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
+                <a style="cursor:pointer;" onclick="RequestSort('@($"/Dashboard/Sort?sortOrder={(ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)}")','Sort')">Date</a>
             </th>
             <th class="refresh_button">
-                <a style="cursor:pointer;" onclick="RequestSort('@Url.Action("Sort", "Dashboard", new { sortOrder = "default", id = -1}, Context.Request.Scheme)','Sort', true)">
+                <a style="cursor:pointer;" onclick="RequestSort('@($"/Dashboard/Sort?sortOrder=default&id=-1")','Sort', true)">
                     <i class="fas fa-sync-alt"></i>
                 </a>
             </th>
@@ -46,8 +46,8 @@
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td class="button_column">
-                    <a id="detailsButton" onclick="showInPopup('@Url.Action("Details","Dashboard",new { id = item.Id},Context.Request.Scheme)','Details')"
-                       class="btn btn-outline-info btn-sm">Details</a>
+                    <a id="detailsButton" onclick="showInPopup('/Dashboard/Details/@item.Id','Details')"
+                   class="btn btn-outline-info btn-sm">Details</a>
                 </td>
             </tr>
         }

@@ -1,10 +1,6 @@
 ﻿@model ExpensesListViewModel
 
 
-
-<style>
-
-</style>
 <script src="~/jss/ExpensesJS/expensesList.js"></script>
 
 <body class="">
@@ -18,19 +14,19 @@
                 <thead class="sticky-top">
                     <tr class="align-text-top">
                         <th>
-                            <a style="cursor:pointer;" onclick="ExpenseListSort('@Url.Action("Sort", "Expenses", new { sortOrder = (ViewBag.AmountSortParm == null ? "Amount" : ViewBag.AmountSortParm)}, Context.Request.Scheme)','Sort')">Amount</a>
+                            <a style="cursor:pointer;" onclick="ExpenseListSort('@($"/Expenses/Sort?sortOrder={(ViewBag.AmountSortParm == null ? "Amount" : ViewBag.AmountSortParm)}")','Sort')">Amount</a>
                         </th>
                         <th>
-                            <a style="cursor:pointer;" onclick="ExpenseListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)},Context.Request.Scheme)','Sort')">Category</a>
+                            <a style="cursor:pointer;" onclick="ExpenseListSort('@($"/Expenses/Sort?sortOrder={(ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)}")','Sort')">Category</a>
                         </th>
                         <th class="descriptionTh">
                             Description
                         </th>
                         <th class="date_column">
-                            <a style="cursor:pointer;" onclick="ExpenseListSort('@Url.Action("Sort","Expenses",new { sortOrder = (ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)},Context.Request.Scheme)','Sort')">Date</a>
+                            <a style="cursor:pointer;" onclick="ExpenseListSort('@($"/Expenses/Sort?sortOrder={(ViewBag.DateSortParm == null ? "Date" : ViewBag.DateSortParm)}")','Sort')">Date</a>
                         </th>
-                        <th class="button_column">  
-                            <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = 0},Context.Request.Scheme)','New expense')" class="btn btn-success btn-sm">New expense</a>
+                        <th class="button_column">
+                            <a onclick="showInPopup('Expenses/CreateOrEdit/0', 'New expense')" class="btn btn-success btn-sm">New expense</a>
                         </th>
                     </tr>
                 </thead>
@@ -51,8 +47,8 @@
                                 @Html.DisplayFor(modelItem => item.Date)
                             </td>
                             <td class="button_column">
-                                <a onclick="showInPopup('@Url.Action("CreateOrEdit","Expenses",new { id = item.Id},Context.Request.Scheme)','Update expense')" class="btn btn-info btn-sm">Edit</a>
-                                <a class="btn btn-danger btn-sm" onclick="DeleteSort('@Url.Action("Delete","Expenses",new { id = item.Id},Context.Request.Scheme)')">Delete</a>
+                                <a onclick="showInPopup('/Expenses/CreateOrEdit/@item.Id','Update expense')" class="btn btn-info btn-sm">Edit</a>
+                                <a class="btn btn-danger btn-sm" onclick="DeleteSort('/Expenses/Delete/@item.Id')">Delete</a>
                             </td>
                         </tr>
                     }
@@ -63,7 +59,7 @@
         <div id="sortMenu" class="sortMenu">
             <form id="sortMenuForm" asp-action="Sort" autocomplete="off">
                 <p class="sort-header sticky-top">
-                    <a class="refresh-button" onclick="ExpenseListSort('@Url.Action("Sort", "Expenses", new { sortOrder = "default", refresh = true}, Context.Request.Scheme)','Sort', true)">
+                    <a class="refresh-button" onclick="ExpenseListSort('@($"/Expenses/Sort?sortOrder=default&refresh=true")','Sort', true)">
                         <i class="fas fa-sync-alt"></i>
                     </a>
                     <span>Sort options</span>
@@ -73,9 +69,9 @@
                     <label id="descriptionLabel">Description<input id="descriptionField" type="text" placeholder="search" asp-for="SortMenu.DescriptionSearch" /></label>
                 </p>
                 <p class="sort-paragraph price-section">
-                    <input id="priceFromField" asp-for="SortMenu.PriceFrom" type="number" placeholder="from" /><input type="number" class="currency" placeholder="$" disabled />
+                    <input id="priceFromField" asp-for="SortMenu.PriceFrom" placeholder="from" /><input type="number" class="currency" placeholder="$" disabled />
                     <span class="priceLink"></span>
-                    <input id="priceToField" asp-for="SortMenu.PriceTo" type="number" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
+                    <input id="priceToField" asp-for="SortMenu.PriceTo" placeholder="to" /><input type="number" class="currency" placeholder="$" disabled />
                 </p>
                 <div class="sort-paragraph">
                     <label class="section-name">Categories</label>
@@ -114,7 +110,7 @@
 
 
 <script>
-    (function () {
+    (function() {
         if (sessionStorage.getItem('showButton') != null) {
             document.getElementById('showMore').textContent = sessionStorage.getItem('showButton');
             showMore();
@@ -124,29 +120,28 @@
             showMore();
         }
         if ('@Model.SortMenu' == null || '@Model.SortMenu' == '') {
-                sessionStorage.setItem("filtered", "false");
-            }
+            sessionStorage.setItem("filtered", "false");
+        }
     })();
 
 
-    (function () {
+    (function() {
         sessionStorage.setItem("sortMenuActive", "false");
     })();
 
     (function() {
         window.addEventListener('resize', function(event) {
-        if ($(window).width() >= 770) {
-            document.getElementById("sortMenu").classList.remove("sortMenuCollapsed");
-            document.getElementById("listCol").style.display = "block";
-            document.getElementById("sortCollapseButtonInside").classList.add("sortCollapseNotActive");
-            document.getElementById("sortCollapseButtonInside").classList.remove("sortCollapseActive");
-            sessionStorage.setItem("sortMenuActive", "false");
-        }
-    }, true);
+            if ($(window).width() >= 770) {
+                document.getElementById("sortMenu").classList.remove("sortMenuCollapsed");
+                document.getElementById("listCol").style.display = "block";
+                document.getElementById("sortCollapseButtonInside").classList.add("sortCollapseNotActive");
+                document.getElementById("sortCollapseButtonInside").classList.remove("sortCollapseActive");
+                sessionStorage.setItem("sortMenuActive", "false");
+            }
+        }, true);
     })();
-
 </script>
 
 @section Scripts {
-@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
-}
+    @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+    }

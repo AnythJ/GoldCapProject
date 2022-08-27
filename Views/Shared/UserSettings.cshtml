@@ -9,75 +9,87 @@
     <link href="~/css/DashboardCSS/Index.css" rel="stylesheet" />
 }
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-</head>
-<body>
-    <div class="mainDiv">
-        <div class="general-section">
-            <div class="general-split">
-                <div class="general-section-side-left">
-                    <div class="profile-img-circle">
-                        <form asp-action="ProfilePicture" asp-controller="Account" method="post" enctype="multipart/form-data" id="imageForm">
-                            <input type="file" accept=".png,.jpg,.jpeg,.giv,.tif" name="file" id="file" hidden />
-                        </form>
-                        <a class="btn btn-sm uploadImg" id="uploadImage">Upload image</a>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+    </head>
+    <body>
+        <div class="mainDiv">
+            <div class="general-section">
+                <div class="general-split">
+                    <div class="general-section-side-left">
+                        <div class="profile-img-circle">
+                            <form asp-action="ProfilePicture" asp-controller="Account" method="post" enctype="multipart/form-data" id="imageForm">
+                                <input type="file" accept=".png,.jpg,.jpeg,.giv,.tif" name="file" id="file" hidden />
+                            </form>
+                            <a class="btn btn-sm uploadImg" id="uploadImage">Upload image</a>
                             <img src="@ViewData["ProfileImageSrc"]" />
+                        </div>
                     </div>
-                </div>
-                <div class="general-section-side-right">
-                    <div class="account-details">
-                        <section class="account-detail">
-                            <div class="account-label">
-                                <label>
-                                    Email
-                                </label>
-                                <a>
-                                    @User.Identity.Name
-                                </a>
-                            </div>
-                            <a class="profile-button">Change</a>
-                        </section>
-                        <section class="account-detail">
-                            <div class="account-label">
-                                <label>
-                                    Password
-                                </label>
-                                <a>
-                                    ************
-                                </a>
-                            </div>
-                            <a class="profile-button">Change</a>
-                        </section>
-                        <section class="account-detail">
-                            <div class="account-label">
-                                <label>
-                                    Creation Date
-                                </label>
-                                <a>
-                                    @Model.RegistrationDate
-                                </a>
-                            </div>
-                        </section>
+                    <div class="general-section-side-right">
+                        <div class="account-details">
+                            <section class="account-detail">
+                                <div class="account-label">
+                                    <label>
+                                        Email
+                                    </label>
+                                    <a>
+                                        @User.Identity.Name
+                                    </a>
+                                </div>
+                                <a class="profile-button">Change</a>
+                            </section>
+                            <section class="account-detail">
+                                <div class="account-label">
+                                    <label>
+                                        Password
+                                    </label>
+                                    <a>
+                                        ************
+                                    </a>
+                                </div>
+                                <a class="profile-button">Change</a>
+                            </section>
+                            <section class="account-detail">
+                                <div class="account-label">
+                                    <label>
+                                        Creation Date
+                                    </label>
+                                    <a>
+                                        @Model.RegistrationDate
+                                    </a>
+                                </div>
+                            </section>
+                            <section class="account-detail">
+                                <div class="account-label">
+                                    <label>
+                                        Color theme
+                                    </label>
+                                    <div class="color-themes-btn">
+                                        <div class="ct-circle ct-first" onclick="changeColorTheme('first')"></div>
+                                        <div class="ct-circle ct-second" onclick="changeColorTheme('second')"></div>
+                                        <div class="ct-circle ct-third" onclick="changeColorTheme('third')"></div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-</body>
-</html>
+    </body>
+    </html>
 
-<script>
-    (function () {
-        $("#uploadImage").on('click', function (e) {
-            e.preventDefault();
-            $("#file:hidden").trigger('click');
-        });
-    })();
+    <script>
+        (function() {
+            $("#uploadImage").on('click', function(e) {
+                e.preventDefault();
+                $("#file:hidden").trigger('click');
+            });
+        })();
 
-    document.getElementById("file").onchange = function () {
-        document.getElementById("imageForm").submit();
-    }
-</script>
+        document.getElementById("file").onchange = function() {
+            document.getElementById("imageForm").submit();
+        }
+    </script>

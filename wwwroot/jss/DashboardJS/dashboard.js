@@ -1,5 +1,8 @@
 ﻿function PostRecurringOrIncome(formId, tableId) {
     var form = document.getElementById(formId);
+    if ((0.1).toLocaleString().indexOf(",") > 0)
+        document.getElementById("amountinput").value = document.getElementById("amountinput").value.replace(/,/g, '.');
+
     var request = new XMLHttpRequest();
 
     request.open('POST', form.action, true);
@@ -9,6 +12,7 @@
             if (resp.isValid) {
                 document.getElementById("form-modal").getElementsByClassName("modal-body")[0].innerHTML = '';
                 document.getElementById("form-modal").getElementsByClassName("modal-title")[0].innerHTML = '';
+
                 $('#form-modal').modal('hide');
                 if (tableId == 'tableInModalIncome') {
                     showInPopup("/Dashboard/IncomeList", "Income list");
@@ -24,7 +28,13 @@
             }
             else {
                 document.getElementById("form-modal").getElementsByClassName("modal-body")[0].innerHTML = resp.html;
-                customField();
+                if (formId === "createRecurringExpenseForm")
+                {
+                    FormEventListener("New recurring expense");
+                    customField();
+                }
+                else FormEventListener("New income");
+
             }
         } else {
             alert("Something went wrong, refresh and try again");

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GoldCap.Models
 {
-    public interface IExpenseRepository : IGeneralRepository<Expense>
+    public interface IExpenseRepository : IGenericRepository<Expense>
     {
         Task<IEnumerable<Expense>> GetAllAsync();
         List<LineChart30DaysModel> GetSumOfExpensesInEachDayInLast30Days(int period);
@@ -14,5 +14,7 @@ namespace GoldCap.Models
         List<CategoryChart> GetCategoryRatios(int period);
         Task<ExpenseRecurring> DeleteExpensesAsync(ExpenseRecurring modelExpense);
 
+        IEnumerable<Expense> GetAll();
+        void DeleteExpenses(ExpenseRecurring modelExpense);
     }
 }

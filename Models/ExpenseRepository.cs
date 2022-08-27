@@ -8,9 +8,25 @@ using System.Threading.Tasks;
 
 namespace GoldCap.Models
 {
-    public class ExpenseRepository : GeneralRepository<Expense>, IExpenseRepository
+    public class ExpenseRepository : GenericRepository<Expense>, IExpenseRepository
     {
         public ExpenseRepository(AppDbContext context, IHttpContextAccessor httpContextAccessor) : base(context, httpContextAccessor) { }
+
+        public void DeleteExpenses(ExpenseRecurring modelExpense)
+        {
+            var list = context.Expenses.Where(e => e.StatusId == modelExpense.Id && e.ExpenseManagerLogin == userLogin);
+
+            if (list != null)
+            {
+                context.Expenses.RemoveRange(list);
+                context.SaveChanges();
+            }
+        }
+
+        public IEnumerable<Expense> GetAll()
+        {
+            return context.Expenses.Where(e => e.ExpenseManagerLogin == userLogin);
+        }
 
         public async Task<ExpenseRecurring> DeleteExpensesAsync(ExpenseRecurring modelExpense)
         {

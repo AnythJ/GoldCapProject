@@ -808,3 +808,45 @@ p.signButtons {
     right: 1%;
     z-index: 20;
 }
+
+.warning {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    max-width: 30rem;
+    z-index: 30;
+    border: 3px solid var(--bg-third);
+    background-color: var(--bg-primary);
+    padding: 2rem;
+}
+
+.warning-message {
+    color: white;
+    text-align: center;
+}
+
+.closeWarningButton {
+    text-decoration: none;
+    color: var(--bg-third);
+    font-size: 2rem;
+    transition: color 0.3s;
+}
+
+.closeWarningButton:hover {
+    cursor: pointer;
+    color: var(--text-seconary);
+}
+
+@media only screen and (max-height: 235px)
+{
+    .warning {
+        font-size: 0.8rem;
+        top: 0;
+        left: 0;
+        height: 150px;
+    }
+}

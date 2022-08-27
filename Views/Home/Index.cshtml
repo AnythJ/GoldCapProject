@@ -6,10 +6,13 @@
     Layout = null;
 }
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+
+<html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="icon" href="~/images/icon.png" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200&display=swap" rel="stylesheet">
@@ -36,6 +39,15 @@
         <div id="stripe6" class="stripe stripe-6"></div>
         <div id="stripe7" class="stripe stripe-7"></div>
         <div id="stripe8" class="stripe stripe-8"></div>
+    </div>
+
+    <div id="warning" class="warning">
+        <span class="warning-message">
+            Demo version uses free database, which is quite limited and problems with connection may occur. If it happens, please check out a video presentation on github.
+        </span>
+        <span>
+            <a class="closeWarningButton" onclick="closeWarning()">Close</a>
+        </span>
     </div>
 
     <div class="main">
@@ -125,18 +137,18 @@
         </footer>
 
         @*<section class="first-section">
-                <div class="goldcapTitle">GoldCap</div>
-                <div class="first-section-left">
-                    Make your own expenses history, manage them daily and check overall statistics. All by yourself.
-                    <p><a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a></p>
-                </div>
-                <div class="first-section-right">
-                    Make your own expenses history, manage them daily and check overall statistics. All by yourself.
-                    <p><a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a></p>
+        <div class="goldcapTitle">GoldCap</div>
+        <div class="first-section-left">
+        Make your own expenses history, manage them daily and check overall statistics. All by yourself.
+        <p><a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a></p>
+        </div>
+        <div class="first-section-right">
+        Make your own expenses history, manage them daily and check overall statistics. All by yourself.
+        <p><a asp-action="register" asp-controller="account" class="btn btn-outline-info signInButton startNow">Start Now</a></p>
 
-                </div>
+        </div>
 
-            </section>*@
+        </section>*@
 
 
     </div>
@@ -144,11 +156,11 @@
 </body>
 </html>
 <script>
-    setTimeout(function () {
+    setTimeout(function() {
         document.body.className = "";
     }, 500);
 
-    (function () {
+    (function() {
         var colorTheme = sessionStorage.getItem("colorTheme");
         changeColorTheme(colorTheme);
     })();
@@ -207,6 +219,9 @@
         }
     }
 
+    function closeWarning() {
+        document.getElementById("warning").style.display = "none";
+    }
     //function addAnimation() {
     //    document.getElementsByClassName('textToImage')[0].style.animation = "slideUp-1 0.3s ease forwards";
     //    document.getElementsByClassName('textToImage')[0].style.animationDelay = "0.3s";
@@ -259,76 +274,76 @@
             document.getElementById("textUnderSlider").innerText = "You can add, edit or delete expense you want at any time, thanks to the complete list.";
         }
     }
-    (function () {
+    (function() {
         changeImg();
     })();
 
-    window.onresize = function () {
+    window.onresize = function() {
         changeImg();
     }
 
-    //function changeTextToCharacters() {
-    //    var sentences = $('.animatedLogoText');
+        //function changeTextToCharacters() {
+        //    var sentences = $('.animatedLogoText');
 
-    //    sentences.each(function () {
-    //        var txt = $(this);
-    //        var newHtml = '';
+        //    sentences.each(function () {
+        //        var txt = $(this);
+        //        var newHtml = '';
 
 
-    //        for (i = 0; i < txt.text().length; i++) {
-    //            var substring = txt.text().substr(i, 1);
+        //        for (i = 0; i < txt.text().length; i++) {
+        //            var substring = txt.text().substr(i, 1);
 
-    //            if (substring != " ") {
-    //                newHtml += '<span class="animatedLetter">' + substring + '</span>';
-    //            }
-    //            else {
-    //                newHtml += substring;
-    //            }
-    //        }
+        //            if (substring != " ") {
+        //                newHtml += '<span class="animatedLetter">' + substring + '</span>';
+        //            }
+        //            else {
+        //                newHtml += substring;
+        //            }
+        //        }
 
-    //        txt.html(newHtml);
-    //    });
-    //}
+        //        txt.html(newHtml);
+        //    });
+        //}
 
     /*changeTextToCharacters();*/
 
 
 
 
-    //function textToSide(back, element) {
-    //    if (back) {
-    //        var d2 = document.getElementById('description2');
-    //        d2.style.maxWidth = "";
-    //        d2.style.transform = "translate(0, 0)";
-    //        d2.style.transitionDuration = "0.5s";
-    //        d2.textContent = "Gain complete control on your finances and save important informations about specific expenses.";
-    //    }
-    //    else if (element.id == 'firstImageBackground2')
-    //    {
-    //        var d2 = document.getElementById('description2')
-    //        d2.style.maxWidth = "400px";
-    //        d2.style.transform = "translate(100px, 0)";
-    //        d2.style.transitionDuration = "0.5s";
-    //    }
-    //    else {
-    //        var d2 = document.getElementById('description2')
-    //        d2.textContent = "Monitor your spendings with intuitive dashboard.";
-    //        d2.style.maxWidth = "400px";
-    //        d2.style.transform = "translate(100px, 0)";
-    //        d2.style.transitionDuration = "0.5s";
+        //function textToSide(back, element) {
+        //    if (back) {
+        //        var d2 = document.getElementById('description2');
+        //        d2.style.maxWidth = "";
+        //        d2.style.transform = "translate(0, 0)";
+        //        d2.style.transitionDuration = "0.5s";
+        //        d2.textContent = "Gain complete control on your finances and save important informations about specific expenses.";
+        //    }
+        //    else if (element.id == 'firstImageBackground2')
+        //    {
+        //        var d2 = document.getElementById('description2')
+        //        d2.style.maxWidth = "400px";
+        //        d2.style.transform = "translate(100px, 0)";
+        //        d2.style.transitionDuration = "0.5s";
+        //    }
+        //    else {
+        //        var d2 = document.getElementById('description2')
+        //        d2.textContent = "Monitor your spendings with intuitive dashboard.";
+        //        d2.style.maxWidth = "400px";
+        //        d2.style.transform = "translate(100px, 0)";
+        //        d2.style.transitionDuration = "0.5s";
 
-    //    }
-    //}
-    //$('body').addClass('stop-scrolling');
-    //window.addEventListener('wheel', function (event) {
-    //    var vh = document.getElementById("firstSection").clientHeight;
-    //    console.log(vh);
-    //    if (event.deltaY > 0) {
-    //        window.scrollBy(0, vh/3);
-    //    }
-    //    else if (event.deltaY < 0) {
-    //        window.scrollBy(0, -vh/3);
-    //    }
-    //});
+        //    }
+        //}
+        //$('body').addClass('stop-scrolling');
+        //window.addEventListener('wheel', function (event) {
+        //    var vh = document.getElementById("firstSection").clientHeight;
+        //    console.log(vh);
+        //    if (event.deltaY > 0) {
+        //        window.scrollBy(0, vh/3);
+        //    }
+        //    else if (event.deltaY < 0) {
+        //        window.scrollBy(0, -vh/3);
+        //    }
+        //});
 
 </script>

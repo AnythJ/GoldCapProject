@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GoldCap.Models
 {
-    public class IncomeRepository : GeneralRepository<Income>, IIncomeRepository
+    public class IncomeRepository : GenericRepository<Income>, IIncomeRepository
     {
         public IncomeRepository(AppDbContext context, IHttpContextAccessor httpContextAccessor) : base(context, httpContextAccessor) { }
 

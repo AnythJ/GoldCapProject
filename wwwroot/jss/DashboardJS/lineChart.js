@@ -1,6 +1,6 @@
 ﻿function showCharts(period) {
     var request = new XMLHttpRequest();
-    request.open('GET', "Dashboard/GetData/?period=" + String(period), true);
+    request.open('GET', "Dashboard/GetData?period=" + String(period), true);
 
     request.onload = function () {
         if (this.status >= 200 && this.status < 400) {
@@ -350,7 +350,7 @@
 
 function reloadAreaChart(period) {
     var request = new XMLHttpRequest();
-    request.open('GET', "Dashboard/GetData/?period=" + String(period), true);
+    request.open('GET', "Dashboard/GetData?period=" + String(period), true);
 
     request.onload = function () {
         if (this.status >= 200 && this.status < 400) {

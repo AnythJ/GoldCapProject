@@ -11,10 +11,10 @@ namespace GoldCap.Models
         public string DescriptionSearch { get; set; }
 
         [Display(Prompt = "From")]
-        public int PriceFrom { get; set; }
+        public decimal PriceFrom { get; set; }
 
         [Display(Prompt = "To")]
-        public int PriceTo { get; set; }
+        public decimal PriceTo { get; set; }
 
         [Range(typeof(DateTime), "1/1/2000", "1/1/2040", ErrorMessage = "Invalid date")]
         public DateTime? DateFrom { get; set; }

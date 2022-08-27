@@ -1,14 +1,19 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "GoldCap - Not Found";
 }
 
 
-<link href="~/css/LayoutCSS/ErrorPage.css" rel="stylesheet" />
 
-<div class="mainDiv">
-    <h1>@ViewBag.ErrorStatusCode</h1>
-    <h2>Not Found</h2>
-</div>
+<html>
+<head>
+    <link href="~/css/LayoutCSS/ErrorPage.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="mainDiv">
+        <h1>@ViewBag.ErrorStatusCode</h1>
+        <h2>Not Found</h2>
+    </div>
+</body>
+</html>
 
 

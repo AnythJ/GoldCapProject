@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GoldCap.Models
 {
-    public class RecurringRepository : GeneralRepository<ExpenseRecurring>, IRecurringRepository
+    public class RecurringRepository : GenericRepository<ExpenseRecurring>, IRecurringRepository
     {
         public RecurringRepository(AppDbContext context, IHttpContextAccessor httpContextAccessor) : base(context, httpContextAccessor) { }
 

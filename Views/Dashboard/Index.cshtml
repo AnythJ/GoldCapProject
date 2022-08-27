@@ -105,7 +105,7 @@
     <link href="~/css/DashboardCSS/topCategoryColumn.css" rel="stylesheet" />
     <link href="~/css/ExpensesCSS/CreateOrEdit.css" rel="stylesheet" />
     <link href="~/css/DashboardCSS/createOrEditRecurring.css" rel="stylesheet" />
-    
+
     <link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
 }
 
@@ -161,7 +161,7 @@
             <div class="statPill">
                 <div class="pill-recurring">
                     <p class="pill-date-span">@DateTime.Now.AddDays(-Model.Period).ToString("dd MMM yyy") -  @DateTime.Now.ToString("dd MMM yyy")</p>
-                    <a id="btnRecurring" onclick="showInPopup('@Url.Action("RecurringPayments","Dashboard",new { id = 0},Context.Request.Scheme)',
+                    <a id="btnRecurring" onclick="showInPopup('/Dashboard/RecurringPayments',
                                                 'Recurring payments')" class="btn btn-outline-info">Recurring payments</a>
                 </div>
             </div>
@@ -249,7 +249,7 @@
                     <p>
                         of <a id="paycheckAmount">@Model.CirclesStats[2].TotalIncome$</a>
                         <input id="paycheckInputField" type="text" hidden style="width:50px;height:18px;" />
-                        <a onclick="showInPopup('@Url.Action("IncomeList","Dashboard",new { id = 0},Context.Request.Scheme)','Income list')"><i class="fas fa-pen"></i></a>
+                        <a onclick="showInPopup('/Dashboard/IncomeList','Income list')"><i class="fas fa-pen"></i></a>
                     </p>
                     <hr style="margin:5px 10% 5px 10%;padding:0;height:3px;" />
                     <p><small>@Model.CirclesStats[2].IncomePercentage% of your</small></p>
@@ -306,6 +306,7 @@
         if (!results[2]) return '';
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
+
     var period;
     if (getParameterByName('period') == null) {
         period = 30;
@@ -313,11 +314,9 @@
         period = parseFloat(getParameterByName('period'));
     }
 
-
     window.onload = function() {
         showCharts(period);
     }
-
 
     function showPercentage() {
         document.getElementById("amountP").tooltip('show');
@@ -372,7 +371,7 @@
         }
     }
 
-   
+
 
     document.getElementById("notificationLink").onclick = function() {
         notificationBoxSlide();

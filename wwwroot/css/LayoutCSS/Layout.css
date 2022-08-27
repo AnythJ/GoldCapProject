@@ -96,13 +96,17 @@ main {
     width: 100%;
 }
 
-    .nav-side-item:last-child {
-        margin-top: auto;
-    }
 
 .link-text {
     text-decoration: none;
     margin-left: 1rem;
+    opacity: 1;
+}
+
+@keyframes show-links {
+    to {
+        opacity: 1;
+    }
 }
 
 .nav-side-link i {
@@ -434,7 +438,7 @@ div .dropdown {
     transition: background-color 0.2s;
 }
 
-.fa-user {
+#dropdownIcon.fa-user {
     color: var(--text-secondary);
     width: 100%;
     height: 100%;

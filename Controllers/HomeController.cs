@@ -10,13 +10,6 @@ namespace GoldCap.Controllers
 {
     public class HomeController : Controller
     {
-        private IExpenseRepository _expenseRepository;
-
-        public HomeController(IExpenseRepository expenseRepository)
-        {
-            _expenseRepository = expenseRepository;
-        }
-
         [AllowAnonymous]
         public IActionResult Index()
         {

@@ -104,6 +104,7 @@ div.row-first {
     justify-content: space-evenly;
     flex: 1;
     font-size: clamp(1rem, 1.5vh, 3vh);
+    
 }
 
     .statPill:last-child {
@@ -269,6 +270,18 @@ p.pillAmount {
     margin: 0.3rem;
 }
 
+@media only screen and (max-width: 500px)
+{
+    .topCategoryColumn {
+        flex: unset;
+        width: 100%;
+    }
+
+    .stackedCircles {
+        flex-direction: row;
+    }
+}
+
 .incomeCircle {
     flex: 1;
     height: 100%;
@@ -293,6 +306,10 @@ p.pillAmount {
 
     .nav-side-link {
         justify-content: center;
+    }
+
+    .nav-side-item {
+        width: 20vw !important;
     }
 
     main {
@@ -332,6 +349,10 @@ p.pillAmount {
 
     .goldcapLogo-text {
         display: inline;
+    }
+
+    .nav-side-item:last-child {
+        margin-top: auto;
     }
 
     /*.navbar-side:hover {

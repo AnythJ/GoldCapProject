@@ -45,7 +45,9 @@ namespace GoldCap
                 if (filterContext.HttpContext.Request.GetTypedHeaders().Referer == null ||
          filterContext.HttpContext.Request.GetTypedHeaders().Host.Host.ToString() != filterContext.HttpContext.Request.GetTypedHeaders().Referer.Host.ToString())
                 {
-                    filterContext.HttpContext.Response.Redirect("/");
+                    var controllerName = ((ControllerBase)filterContext.Controller).ControllerContext.ActionDescriptor.ControllerName;
+                    
+                    filterContext.HttpContext.Response.Redirect($"/{controllerName}");
                 }
             }
         }
@@ -89,6 +91,22 @@ namespace GoldCap
             return expense;
         }
 
+        public static List<Expense> GetNotificationList(IRecurringRepository _recurringRepository)
+        {
+            List<Expense> notificationList = new();
+            List<ExpenseRecurring> firstFiveIncomingExpenses = _recurringRepository.GetAll().ToList().OrderBy(e => e.Date).Take(3).ToList();
 
+            int k = 0;
+            foreach (var item in firstFiveIncomingExpenses)
+            {
+                if (k == 4) break;
+
+                Expense newExpense = Helper.CreateExpenseFromRecurring(item, item.Date.Value);
+                notificationList.Add(newExpense);
+                k++;
+            }
+
+            return notificationList;
+        }
     }
 }

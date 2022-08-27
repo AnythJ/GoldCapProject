@@ -3,7 +3,6 @@
 }
 
 .modal-backdrop {
-    
 }
 
 .wholeList {
@@ -89,6 +88,10 @@ input[type=number] {
     .navbar-top {
         display: none;
     }
+
+    .nav-side-item {
+        width: 20vw !important;
+    }
 }
 
 @media only screen and (min-width: 1092px) {
@@ -125,6 +128,10 @@ input[type=number] {
 
     main {
         margin-top: 4rem;
+    }
+
+    .nav-side-item:last-child {
+        margin-top: auto;
     }
     /*#endregion */
 

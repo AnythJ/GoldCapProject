@@ -1,7 +1,6 @@
 ﻿showInPopup = (url, title) => {
     if (title == "Recurring payments") document.getElementById("modalDialog").classList.add("modal-lg")
     else document.getElementById("modalDialog").classList.remove("modal-lg");
-
     
     var el = document.getElementsByClassName("modalLoadingSpinner")[0];
     el.style.display = "block";
@@ -13,6 +12,8 @@
             var resp = this.response;
             document.getElementById("form-modal").getElementsByClassName("modal-body")[0].innerHTML = resp;
             document.getElementById("form-modal").getElementsByClassName("modal-title")[0].innerHTML = title;
+
+            FormEventListener(title);
 
             el.classList.add("hidden");
             el.addEventListener("animationend", (event) => {
@@ -31,6 +32,41 @@
     request.send();
 };
 
+FormEventListener = (title) => {
+    console.log(title);
+    switch (title) {
+        case "New expense":
+            document.getElementById("createExpenseForm").addEventListener("keypress", (event) => {
+                if (event.keyCode === 13) {
+                    document.getElementById("submitButton").click();
+                }
+            });
+            break;
+        case "Update expense":
+            document.getElementById("createExpenseForm").addEventListener("keypress", (event) => {
+                if (event.keyCode === 13) {
+                    document.getElementById("submitButton").click();
+                }
+            });
+            break;
+        case "New recurring expense":
+            document.getElementById("createRecurringExpenseForm").addEventListener("keypress", (event) => {
+                if (event.keyCode === 13) {
+                    document.getElementById("submitButton").click();
+                }
+            });
+            break;
+        case "New income":
+            document.getElementById("createIncomeForm").addEventListener("keypress", (event) => {
+                if (event.keyCode === 13) {
+                    document.getElementById("submitButton").click();
+                }
+            });
+            break;
+        default:
+            break;
+    }
+};
 
 RequestSort = (url, title, refresh) => {
     if (refresh == true) sessionStorage.setItem("filtered", "false");
@@ -184,6 +220,8 @@ function collapseSideNavbar() {
         var links = document.getElementsByClassName("link-text");
         for (var i = 0; i < links.length; i++) {
             links[i].style.display = "none";
+            links[i].style.animation = "show-links 0.4s forwards";
+            links[i].style.opacity = "0";
         }
         if (window.location.href.toUpperCase().indexOf("/DASHBOARD") != -1) {
             setTimeout(function () { reloadAreaChart(); }, 150);
@@ -208,6 +246,7 @@ function collapseSideNavbar() {
 }
 
 function showPage() {
+    let period;
     var el = document.getElementsByClassName("loadingBackground")[0];
     el.classList.add("hidden");
     el.addEventListener("animationend", (event) => {

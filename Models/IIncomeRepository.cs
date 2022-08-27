@@ -2,7 +2,7 @@
 
 namespace GoldCap.Models
 {
-    public interface IIncomeRepository : IGeneralRepository<Income>
+    public interface IIncomeRepository : IGenericRepository<Income>
     {
         public IEnumerable<Income> GetAll(string userLogin);
     }

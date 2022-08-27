@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GoldCap.Models
 {
-    public class CategoryRepository : GeneralRepository<Category>, ICategoryRepository
+    public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
     {
         public CategoryRepository(AppDbContext context, IHttpContextAccessor httpContextAccessor) : base(context, httpContextAccessor) { }
 

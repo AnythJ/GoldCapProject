@@ -4,22 +4,16 @@
     ViewData["Title"] = "List of Expenses";
 }
 
-
-<style>
-</style>
-
 <link href="~/css/ExpensesCSS/expenseListViewAll.css" rel="stylesheet" />
 <link href="~/css/ExpensesCSS/CreateOrEdit.css" rel="stylesheet" />
-
 <link href="~/css/ExpensesCSS/table.css" rel="stylesheet" />
-
 <link href="~/lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
 
 <head>
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
+    <script src="~/jss/ExpensesJS/index.js"></script>
 </head>
-
 <div id="view-all" style="height: calc(100vh - 5rem); width: 100%;margin:0;padding:0;">
     @await Html.PartialAsync("_ViewAll", Model)
     <div id="notificationsListBox" class="table-responsive">
@@ -51,14 +45,13 @@
 
 
 <script>
-    
+document.getElementById("notificationLink").onclick = function() {
+    notificationBoxSlide();
+};
 
-    document.getElementById("notificationLink").onclick = function () {
-        notificationBoxSlide();
-    }
-
-    document.getElementById("notificationBtn").onclick = function () {
-        notificationBoxSlide();
-    }
+document.getElementById("notificationBtn").onclick = function() {
+    notificationBoxSlide();
+};
 </script>
+
 

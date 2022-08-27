@@ -54,6 +54,10 @@
         justify-content: center;
     }
 
+    .nav-side-item {
+        width: 20vw !important;
+    }
+
     main {
         margin: 0 !important;
         margin-bottom: 5rem !important;
@@ -119,6 +123,10 @@
 
     main {
         margin-top: 4rem;
+    }
+
+    .nav-side-item:last-child {
+        margin-top: auto;
     }
     /*#endregion */
 

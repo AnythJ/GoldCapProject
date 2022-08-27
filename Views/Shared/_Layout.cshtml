@@ -10,6 +10,7 @@
     <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/LayoutCSS/Layout.css" rel="stylesheet" />
     @*<link rel="shortcut icon" href="#" />*@
+    <link rel="icon" href="~/images/icon.png" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
@@ -53,6 +54,13 @@
             </li>
 
             <li class="nav-side-item">
+                <a asp-action="myprofile" asp-controller="account" class="nav-side-link">
+                    <i class="fas fa-user"></i>
+                    <span class="link-text fa-primary">Account</span>
+                </a>
+            </li>
+
+            <li class="nav-side-item">
                 <a asp-action="logout" asp-controller="account" class="nav-side-link">
                     <i class="fas fa-sign-out-alt"></i>
                     <span class="link-text fa-primary">Logout</span>
@@ -73,7 +81,7 @@
             </div>
             <div id="dropdownAvatar" class="dropdown">
                 <a class="btn btn-secondary dropdown-toggle dropdownAvatar" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-user"></i>
+                    <i id="dropdownIcon" class="fas fa-user"></i>
                 </a>
 
                 <ul id="dropdownMenuList" class="dropdown-menu dropdown-menu-end dropdown-menu-sm-end" aria-labelledby="dropdownMenuLink">
@@ -105,12 +113,10 @@
     </nav>
     <div class="loadingBackground">
         <div class="loadingSpinner">
-
         </div>
     </div>
 
     <div class="modalLoadingSpinner">
-
     </div>
 
     <main class="mainRender">
@@ -127,7 +133,6 @@
                     <button id="modalCloseButton" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
                 </div>
             </div>
         </div>
@@ -143,27 +148,32 @@
     <script src="~/jss/site.js" asp-append-version="true"></script>
     <script src="~/jss/notify.min.js"></script>
     <script>
-        (function () {
-            if (window.location.href.toUpperCase().indexOf("/DASHBOARD") != -1) {
-                document.getElementById("periodButtons").style.display = "flex";
-            }
-            var colorTheme = sessionStorage.getItem("colorTheme");
-            if (colorTheme == null || colorTheme == 'first') {
-                changeColorTheme('first');
-            }
-            if (colorTheme == 'second') {
-                changeColorTheme('second');
-            }
-            if (colorTheme == 'third') {
-                changeColorTheme('third');
-            }
-            if (sessionStorage.getItem("sideNavbarCollapsed") == "true") collapseSideNavbar();
+            (function() {
+                if (window.location.href.toUpperCase().indexOf("/DASHBOARD") != -1) {
+                    document.getElementById("periodButtons").style.display = "flex";
+                }
 
-            showPage();
-        })();
+                if (window.location.href.toUpperCase().indexOf("/ACCOUNT/MYPROFILE") != -1) {
+                    document.getElementById("notificationLink").style.display = "none";
+                }
+
+                var colorTheme = sessionStorage.getItem("colorTheme");
+                if (colorTheme == null || colorTheme == 'first') {
+                    changeColorTheme('first');
+                }
+                if (colorTheme == 'second') {
+                    changeColorTheme('second');
+                }
+                if (colorTheme == 'third') {
+                    changeColorTheme('third');
+                }
+                if (sessionStorage.getItem("sideNavbarCollapsed") == "true") collapseSideNavbar();
+
+                showPage();
+            })();
 
 
-        $("#dropdownAvatar").on('click', '#dropdownMenuList li', function (e) {
+        $("#dropdownAvatar").on('click', '#dropdownMenuList li', function(e) {
             e.stopPropagation();
         });
     </script>

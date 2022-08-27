@@ -35,6 +35,10 @@
 
 function PostSortMenu() {
     var form = document.getElementById("sortMenuForm");
+    if ((0.1).toLocaleString().indexOf(",") > 0) {
+        document.getElementById("priceFromField").value = document.getElementById("priceFromField").value.replace(/,/g, '.');
+        document.getElementById("priceToField").value = document.getElementById("priceToField").value.replace(/,/g, '.');
+    }
     let url = form.action;
 
     if (sessionStorage.getItem("sortOrder") != null) {
@@ -96,7 +100,6 @@ DeleteSort = (url) => {
                 action: function () {
                     var sortForm = document.getElementById('sortMenuForm');
                     var request = new XMLHttpRequest();
-                    console.log(url);
                     request.open('POST', url, true);
                     request.onload = function () {
                         if (this.status >= 200 && this.status < 400) {
@@ -195,6 +198,11 @@ function showMore() {
 function PostExpense() {
 
     var form = document.getElementById("createExpenseForm");
+    
+    if ((0.1).toLocaleString().indexOf(",") > 0)
+        document.getElementById("amountinput").value = document.getElementById("amountinput").value.replace(/,/g, '.');
+    
+
     let url = form.action;
 
     if (sessionStorage.getItem("sortOrder") != null) {
@@ -222,7 +230,10 @@ function PostExpense() {
                 $('#form-modal').modal('hide');
                 PostSortMenu();
             }
-            else document.getElementById("form-modal").getElementsByClassName("modal-body")[0].innerHTML = resp.html;
+            else {
+                document.getElementById("form-modal").getElementsByClassName("modal-body")[0].innerHTML = resp.html;
+                FormEventListener("New expense");
+            }
 
         } else {
             alert("Something went wrong, refresh and try again");

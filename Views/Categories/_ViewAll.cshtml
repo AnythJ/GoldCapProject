@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "List of Categories";
+    string sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm);
 }
 
 
@@ -13,7 +14,7 @@
                 <thead class="sticky-top">
                     <tr class="align-text-top">
                         <th>
-                            <a style="cursor:pointer;" onclick="ListSortCategories('@Url.Action("Sort", "Categories", new { sortOrder = (ViewBag.CategorySortParm == null ? "Category" : ViewBag.CategorySortParm)}, Context.Request.Scheme)','Sort')">Category</a>
+                             <a style="cursor:pointer;" onclick="ListSortCategories('/Categories/Sort?sortOrder=@sortOrder','Sort')">Category</a>
                         </th>
                         <th>
                             <form id="createform" asp-action="Create" asp-route-id="@Model.Category.Id">

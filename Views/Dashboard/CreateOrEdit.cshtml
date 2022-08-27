@@ -13,13 +13,12 @@
 <script type="text/javascript">
     (function() {
         document.getElementById("modalDialog").classList.remove("modal-lg");
-        console.log('xd');
     })();
 </script>
 <div class="row" id="createRecurring">
     <div class="col-md-12">
         <input type="hidden" asp-for="Id" />
-        <form id="createRecurringExpenseForm" asp-action="CreateOrEdit" asp-route-id="@Model.Id" autocomplete="off">
+        <form id="createRecurringExpenseForm" asp-action="CreateOrEdit" onsubmit="return false" asp-route-id="@Model.Id" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -88,7 +87,7 @@
             </div>
 
             <div id="submitRecurring" class="form-group">
-                <input type="button" onclick="PostRecurringOrIncome('createRecurringExpenseForm', 'tableInModal')" value="Submit" class="btn btn-outline-info" />
+                <input id="submitButton" type="button" onclick="PostRecurringOrIncome('createRecurringExpenseForm', 'tableInModal')" value="Submit" class="btn btn-outline-info" />
             </div>
         </form>
     </div>

@@ -10,7 +10,7 @@ namespace GoldCap.Controllers
     public class ErrorController : Controller
     {
         [Route("Error/{statusCode}")]
-        public IActionResult Index(int statusCode)
+        public ViewResult Index(int statusCode)
         {
             ViewBag.ErrorStatusCode = statusCode;
             return View("NotFound");

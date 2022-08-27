@@ -15,44 +15,30 @@ namespace GoldCap.Controllers
 {
     public class ExpensesController : Controller
     {
+        private readonly IUnitOfWork _unitOfWork;
+
         private UserManager<ApplicationUser> userManager;
-        private readonly IExpenseRepository _expenseRepository;
-        private readonly IRecurringRepository _recurringRepository;
-        private readonly ICategoryRepository _categoryRepository;
         private readonly string userLogin;
 
-        public ExpensesController(IExpenseRepository expenseRepository, IRecurringRepository recurringRepository, ICategoryRepository categoryRepository, UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor)
+        public ExpensesController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             this.userManager = userManager;
-            _expenseRepository = expenseRepository;
-            _recurringRepository = recurringRepository;
-            _categoryRepository = categoryRepository;
+            _unitOfWork = unitOfWork;
             this.userLogin = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
         }
 
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            ViewBag.CategoryList = _categoryRepository.GetAll().ToList().OrderBy(c => c.Name);
+            ViewBag.CategoryList = _unitOfWork.CategoryRepository.GetAll().ToList().OrderBy(c => c.Name);
 
-            int k = 0;
-            List<Expense> notificationList = new();
-            List<ExpenseRecurring> firstFiveIncomingExpenses = _recurringRepository.GetAll().ToList().OrderBy(e => e.Date).Take(3).ToList();
-            foreach (var item in firstFiveIncomingExpenses)
-            {
-                if (k == 4) break;
-
-                Expense newExpense = Helper.CreateExpenseFromRecurring(item, item.Date.Value);
-                notificationList.Add(newExpense);
-                k++;
-            }
-            var expenses = await _expenseRepository.GetAllAsync();
+            var expenses = _unitOfWork.ExpenseRepository.GetAll();
             ExpensesListViewModel viewModel = new()
             {
-                Expenses =expenses.Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date),
-                CategoriesList = _categoryRepository.GetAll().ToList().OrderBy(c => c.Name).ToList(),
+                Expenses = expenses.Where(e => e.ExpenseManagerLogin == userLogin).OrderByDescending(e => e.Date),
+                CategoriesList = _unitOfWork.CategoryRepository.GetAll().ToList().OrderBy(c => c.Name).ToList(),
                 SortMenu = null,
-                NotificationList = notificationList
+                NotificationList = Helper.GetNotificationList(_unitOfWork.RecurringRepository)
             };
 
             return View(viewModel);
@@ -64,13 +50,13 @@ namespace GoldCap.Controllers
         [NoDirectAccess]
         public async Task<IActionResult> CreateOrEdit(int id = 0)
         {
-            ViewBag.CategoryList = _categoryRepository.GetAll().ToList().OrderBy(c => c.Name);
+            ViewBag.CategoryList = _unitOfWork.CategoryRepository.GetAll().ToList().OrderBy(c => c.Name);
 
             if (id == 0)
                 return View(new Expense()); //After using create button, pass new model so the form will be empty
             else
             {
-                var expenseModel = await _expenseRepository.GetAsync(id); 
+                var expenseModel = await _unitOfWork.ExpenseRepository.GetAsync(id); 
                 if (expenseModel == null) 
                 {
                     return NotFound(); 
@@ -85,21 +71,23 @@ namespace GoldCap.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateOrEdit(int id, [Bind("Id,Amount,Category,Description,Date,ExpenseManagerLogin")] Expense expense, string sortOrder, bool filtered = false)
         {
-            ViewBag.CategoryList = _categoryRepository.GetAll().ToList().OrderBy(c => c.Name);
+            ViewBag.CategoryList = _unitOfWork.CategoryRepository.GetAll().ToList().OrderBy(c => c.Name);
             expense.ExpenseManagerLogin = userLogin;
 
             if (ModelState.IsValid)
             {
                 if (id == 0)
                 {
-                    await _expenseRepository.AddAsync(expense);
+                    await _unitOfWork.ExpenseRepository.AddAsync(expense);
                 }
                 else
                 {
-                    await _expenseRepository.UpdateAsync(expense);
+                    _unitOfWork.ExpenseRepository.Update(expense);
                 }
 
-                var expenses = await _expenseRepository.GetAllAsync();
+                await _unitOfWork.CompleteAsync();
+
+                var expenses = _unitOfWork.ExpenseRepository.GetAll();
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", expenses.Where(e => e.ExpenseManagerLogin == userLogin)) }); //If form is valid, close modal and show list
             }
             else return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", expense) }); //If form is invalid return the same object in form
@@ -109,16 +97,17 @@ namespace GoldCap.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, string sortOrder, ExpensesListViewModel viewModel, bool filtered = false)
         {
-            await _expenseRepository.DeleteAsync(id);
-            var expenses = await _expenseRepository.GetAllAsync();
+            await _unitOfWork.ExpenseRepository.DeleteAsync(id);
+            await _unitOfWork.CompleteAsync();
+            var expenses = _unitOfWork.ExpenseRepository.GetAll();
             ExpensesListViewModel newViewModel = new()
             {
                 Expenses = expenses.OrderByDescending(e => e.Date),
-                CategoriesList = _categoryRepository.GetAll().ToList().OrderBy(c => c.Name).ToList(),
+                CategoriesList = _unitOfWork.CategoryRepository.GetAll().ToList().OrderBy(c => c.Name).ToList(),
                 SortMenu = viewModel.SortMenu
             };
 
-            return await Sort(sortOrder, newViewModel, filtered, false); //After deleting, sort list like it was before
+            return Sort(sortOrder, newViewModel, filtered, false); //After deleting, sort list like it was before
         }
 
         /// <summary>
@@ -129,11 +118,11 @@ namespace GoldCap.Controllers
         /// <param name="filtered">Parameter to check whether sort menu was used or not</param>
         /// <param name="refresh">If refresh button was used</param>
         /// <returns></returns>
-        public async Task<JsonResult> Sort(string sortOrder, ExpensesListViewModel viewModel, bool filtered = false,  bool refresh = false) 
+        public JsonResult Sort(string sortOrder, ExpensesListViewModel viewModel, bool filtered = false,  bool refresh = false) 
         {
-            ViewBag.CategoryList = _categoryRepository.GetAll().ToList().OrderBy(c => c.Name);
+            ViewBag.CategoryList = _unitOfWork.CategoryRepository.GetAll().ToList().OrderBy(c => c.Name);
             bool isSortEmpty = true;
-            var model = await _expenseRepository.GetAllAsync();
+            var model = _unitOfWork.ExpenseRepository.GetAll();
             if (viewModel.Expenses != null)
                 model = viewModel.Expenses;
 
@@ -174,7 +163,7 @@ namespace GoldCap.Controllers
 
                     if (viewModel.SortMenu.ChosenCategories.Contains(true)) //Categories list with ticked checkboxes
                     {
-                        var cateList = _categoryRepository.GetAll().ToList().Select(e => e.Name).OrderBy(c => c).ToList();
+                        var cateList = _unitOfWork.CategoryRepository.GetAll().ToList().Select(e => e.Name).OrderBy(c => c).ToList();
                         List<string> categoriesList = new();
                         var chosenCategoriesList = viewModel.SortMenu.ChosenCategories.ToList();
                         var cateLength = chosenCategoriesList.Count();
@@ -223,7 +212,7 @@ namespace GoldCap.Controllers
             
 
             ExpensesListViewModel newViewModel = viewModel;
-            newViewModel.CategoriesList = _categoryRepository.GetAll().ToList().OrderBy(c => c.Name).ToList();
+            newViewModel.CategoriesList = _unitOfWork.CategoryRepository.GetAll().ToList().OrderBy(c => c.Name).ToList();
             newViewModel.Expenses = model;
 
             if (isSortEmpty) newViewModel.SortMenu = null;

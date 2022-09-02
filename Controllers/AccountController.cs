@@ -100,8 +100,7 @@ namespace GoldCap.Controllers
                     return RedirectToAction("index", "dashboard");
                 }
 
-                ModelState.AddModelError(string.Empty, "Something went wrong, please try again");
-
+                ModelState.AddModelError(string.Empty, "Email or password is incorrect, please try again");
             }
 
             return View(model);

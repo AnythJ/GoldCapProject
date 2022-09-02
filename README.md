@@ -15,7 +15,7 @@ changed in comparison with previous time periods.
 
 ### Technologies
 <a name="technologies"/>
-ASP.NET Core, MySQL Database, Entity Framework Core, JavaScript, Bootstrap, Jquery
+ASP.NET Core, MySQL Database, Entity Framework Core, JavaScript, Bootstrap, Jquery, HighCharts
 
 ### Screenshots
 Dashboard

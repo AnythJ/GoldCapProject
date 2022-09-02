@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31424.327
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldCap", "GoldCap.csproj", "{49B54693-4B0C-4CB0-802A-5A47A20FEC54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoldCap", "GoldCap.csproj", "{49B54693-4B0C-4CB0-802A-5A47A20FEC54}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoldCap.Tests", "..\GoldCap.Tests\GoldCap.Tests.csproj", "{0961278F-6B53-4D4D-A2A2-DE54E43DD716}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{49B54693-4B0C-4CB0-802A-5A47A20FEC54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49B54693-4B0C-4CB0-802A-5A47A20FEC54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49B54693-4B0C-4CB0-802A-5A47A20FEC54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0961278F-6B53-4D4D-A2A2-DE54E43DD716}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0961278F-6B53-4D4D-A2A2-DE54E43DD716}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0961278F-6B53-4D4D-A2A2-DE54E43DD716}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0961278F-6B53-4D4D-A2A2-DE54E43DD716}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
